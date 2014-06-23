@@ -190,6 +190,20 @@ public class ProductService {
 		return SYSConstant.payTypes.get(product.getPayType() + language);
 		
 	}
+	
+	public Product getProductByCode(String code)
+	{
+		Product c = new Product();
+		c.setBssRangeId(code);
+		
+		Collection<Product> pl =  listAllProducts(c);
+		
+		if(pl == null || pl.isEmpty())
+			return null;
+		
+		return pl.iterator().next();
+	}
+	
 
 	public ProductDao getProductDao() {
 		return productDao;

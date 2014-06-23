@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.AgentOrder;
+import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.SmallLocalFile;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.SmallLocalFileService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.SYSConstant;
@@ -51,7 +53,6 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameAndValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Order;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.PayInfo;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Product;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductCafInfo;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductIdentifier;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductProof;
@@ -66,6 +67,9 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 
 	@Autowired
 	private AgentOrderService agentOrderService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	private UserService userService;
@@ -358,128 +362,134 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 				order.getBillingAddress().setJioCentreId(hw_order.getBillingAddress().getJioCentreId());
 			}
 			
-			if(order.getProducts() != null && order.getProducts().isEmpty() == false)
+			
+			
+			/**********如果有Product则设置下面相关的信息**********/
+			if(StringUtils.isBlank(caf.getOrder().getOfferId()))
 			{
+				Product product = productService.getProductByCode(caf.getOrder().getOfferId());
 				
-//				for(HW0010Request.order.getProducts())
-				order.setProducts(new ArrayList<YD0010Request.Product>(0));
-				Product order_p1 = new Product();
-				order.getProducts().add(order_p1);
-				order_p1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				order_p1.setProductId("P30001");
-				order_p1.setStarterKitCode("");
 				
-				List<NameAndValueObject> chs = new ArrayList<YD0010Request.NameAndValueObject>(0);
-				order_p1.setCharacteristics(chs);
-				NameAndValueObject nv1 = new NameAndValueObject("DND_PREFERENCE","");
-				chs.add(nv1);
-				
-				Dependancy dependancy = new Dependancy();
-				order_p1.setDependancyInfo(dependancy);
-				List<ValueObject> dependancy_identifier= new ArrayList<YD0010Request.ValueObject>(0);
-				dependancy.setIdentifier(dependancy_identifier);
-				ValueObject di1 = new ValueObject("DND_PREFERENCE");
-				dependancy_identifier.add(di1);
-				
-				order_p1.setCafDetails(new ProductCafInfo("", ""));
-				
-				List<ProductProof> p_proofs = new ArrayList<YD0010Request.ProductProof>(0);
-				order_p1.setProofs(p_proofs);
-				ProductProof p_p1 = new ProductProof("POA", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
-				p_proofs.add(p_p1);
-				ProductProof p_p2 = new ProductProof("POI", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
-				p_proofs.add(p_p2);
-				
-				MnpPort mp = new MnpPort();
-				order_p1.setMnpPortDetails(mp);
-				mp.setUniquePortingCode("");
-				mp.setUpcGenerationDate("");
-				mp.setExistingOperatorCode("");
-				mp.setExistingSubscriberType("");
-				mp.setLastPaidBillReceiptURI("");
-				
-				List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
-				order_p1.setIdentifier(pi_list);
-				ProductIdentifier pi = new ProductIdentifier();
-				pi_list.add(pi);
-				pi.setName("");
-				pi.setType("");
-				pi.setValue("");
-				pi.setComponentPrice(new IdObject(""));
-				
-				List<Device> devices = new ArrayList<YD0010Request.Device>(0);
-				order_p1.setDevices(devices);
-				
-				Device d1 = new Device();
-				devices.add(d1);
-				d1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				d1.setProductId("DEV100002");
-				d1.setBoqType("ODU");
-				List<NameAndValueObject> id_list1 = new ArrayList<YD0010Request.NameAndValueObject>(0);
-				d1.setIdentifier(id_list1);
-				id_list1.add(new NameAndValueObject("",""));
-				
-				Device d2 = new Device();
-				devices.add(d2);
-				d2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				d2.setProductId("DEV100002");
-				d2.setBoqType("ODU");
-				List<NameAndValueObject> id_list2 = new ArrayList<YD0010Request.NameAndValueObject>(0);
-				d2.setIdentifier(id_list2);
-				id_list2.add(new NameAndValueObject("",""));
-				
-				List<FacingService> customerFacingServices = new ArrayList<YD0010Request.FacingService>(0);
-				order_p1.setCustomerFacingServices(customerFacingServices);
-				/// 1 freature
-				FacingService fs1 = new FacingService();
-				fs1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				fs1.setServiceId("S30001");
-				fs1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-		
-				FacingService ft1_1 = new FacingService();
-				ft1_1.setBusinessInteraction(new NameObject("ADD"));
-				ft1_1.setFeatureId("F30001");
-				ft1_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-				fs1.getFeatures().add(ft1_1);
-				
-				FacingService ft1_1_1 = new FacingService();
-				ft1_1_1.setBusinessInteraction(new NameObject("ADD"));
-				ft1_1.setFeatureId("");
-				ft1_1.getFeatures().add(ft1_1_1);
-				
-				/// 2 freature
-				FacingService fs2 = new FacingService();
-				fs2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				fs2.setServiceId("S30002");
-				fs2.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-		
-				FacingService ft2_1 = new FacingService();
-				ft2_1.setBusinessInteraction(new NameObject("ADD"));
-				ft2_1.setFeatureId("F30001");
-				ft2_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-				fs2.getFeatures().add(ft2_1);
-				
-				FacingService ft2_1_1 = new FacingService();
-				ft2_1_1.setBusinessInteraction(new NameObject("ADD"));
-				ft2_1_1.setProductId("");
-				ft2_1.getFeatures().add(ft2_1_1);
-				
-				/// 3 freature
-				FacingService fs3 = new FacingService();
-				fs3.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-				fs3.setServiceId("S30003");
-				fs3.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-		
-				FacingService ft3_1 = new FacingService();
-				ft3_1.setBusinessInteraction(new NameObject("ADD"));
-				ft3_1.setFeatureId("F30001");
-				ft3_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-				fs3.getFeatures().add(ft3_1);
-				
-				FacingService ft3_1_1 = new FacingService();
-				ft3_1.setBusinessInteraction(new NameObject("ADD"));
-				ft3_1.setFeatureId("");
-				ft3_1.getFeatures().add(ft3_1_1);
+//				
+//				
+//				order.setProducts(new ArrayList<YD0010Request.Product>(0));
+//				Product order_p1 = new Product();
+//				order.getProducts().add(order_p1);
+//				order_p1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				order_p1.setProductId("P30001");
+//				order_p1.setStarterKitCode("");
+//				
+//				List<NameAndValueObject> chs = new ArrayList<YD0010Request.NameAndValueObject>(0);
+//				order_p1.setCharacteristics(chs);
+//				NameAndValueObject nv1 = new NameAndValueObject("DND_PREFERENCE","");
+//				chs.add(nv1);
+//				
+//				Dependancy dependancy = new Dependancy();
+//				order_p1.setDependancyInfo(dependancy);
+//				List<ValueObject> dependancy_identifier= new ArrayList<YD0010Request.ValueObject>(0);
+//				dependancy.setIdentifier(dependancy_identifier);
+//				ValueObject di1 = new ValueObject("DND_PREFERENCE");
+//				dependancy_identifier.add(di1);
+//				
+//				order_p1.setCafDetails(new ProductCafInfo("", ""));
+//				
+//				List<ProductProof> p_proofs = new ArrayList<YD0010Request.ProductProof>(0);
+//				order_p1.setProofs(p_proofs);
+//				ProductProof p_p1 = new ProductProof("POA", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
+//				p_proofs.add(p_p1);
+//				ProductProof p_p2 = new ProductProof("POI", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
+//				p_proofs.add(p_p2);
+//				
+//				MnpPort mp = new MnpPort();
+//				order_p1.setMnpPortDetails(mp);
+//				mp.setUniquePortingCode("");
+//				mp.setUpcGenerationDate("");
+//				mp.setExistingOperatorCode("");
+//				mp.setExistingSubscriberType("");
+//				mp.setLastPaidBillReceiptURI("");
+//				
+//				List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
+//				order_p1.setIdentifier(pi_list);
+//				ProductIdentifier pi = new ProductIdentifier();
+//				pi_list.add(pi);
+//				pi.setName("");
+//				pi.setType("");
+//				pi.setValue("");
+//				pi.setComponentPrice(new IdObject(""));
+//				
+//				List<Device> devices = new ArrayList<YD0010Request.Device>(0);
+//				order_p1.setDevices(devices);
+//				
+//				Device d1 = new Device();
+//				devices.add(d1);
+//				d1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				d1.setProductId("DEV100002");
+//				d1.setBoqType("ODU");
+//				List<NameAndValueObject> id_list1 = new ArrayList<YD0010Request.NameAndValueObject>(0);
+//				d1.setIdentifier(id_list1);
+//				id_list1.add(new NameAndValueObject("",""));
+//				
+//				Device d2 = new Device();
+//				devices.add(d2);
+//				d2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				d2.setProductId("DEV100002");
+//				d2.setBoqType("ODU");
+//				List<NameAndValueObject> id_list2 = new ArrayList<YD0010Request.NameAndValueObject>(0);
+//				d2.setIdentifier(id_list2);
+//				id_list2.add(new NameAndValueObject("",""));
+//				
+//				List<FacingService> customerFacingServices = new ArrayList<YD0010Request.FacingService>(0);
+//				order_p1.setCustomerFacingServices(customerFacingServices);
+//				/// 1 freature
+//				FacingService fs1 = new FacingService();
+//				fs1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				fs1.setServiceId("S30001");
+//				fs1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//		
+//				FacingService ft1_1 = new FacingService();
+//				ft1_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft1_1.setFeatureId("F30001");
+//				ft1_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//				fs1.getFeatures().add(ft1_1);
+//				
+//				FacingService ft1_1_1 = new FacingService();
+//				ft1_1_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft1_1.setFeatureId("");
+//				ft1_1.getFeatures().add(ft1_1_1);
+//				
+//				/// 2 freature
+//				FacingService fs2 = new FacingService();
+//				fs2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				fs2.setServiceId("S30002");
+//				fs2.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//		
+//				FacingService ft2_1 = new FacingService();
+//				ft2_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft2_1.setFeatureId("F30001");
+//				ft2_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//				fs2.getFeatures().add(ft2_1);
+//				
+//				FacingService ft2_1_1 = new FacingService();
+//				ft2_1_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft2_1_1.setProductId("");
+//				ft2_1.getFeatures().add(ft2_1_1);
+//				
+//				/// 3 freature
+//				FacingService fs3 = new FacingService();
+//				fs3.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
+//				fs3.setServiceId("S30003");
+//				fs3.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//		
+//				FacingService ft3_1 = new FacingService();
+//				ft3_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft3_1.setFeatureId("F30001");
+//				ft3_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+//				fs3.getFeatures().add(ft3_1);
+//				
+//				FacingService ft3_1_1 = new FacingService();
+//				ft3_1.setBusinessInteraction(new NameObject("ADD"));
+//				ft3_1.setFeatureId("");
+//				ft3_1.getFeatures().add(ft3_1_1);
 			}
 		
 		}
