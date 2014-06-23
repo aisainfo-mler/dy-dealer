@@ -74,6 +74,7 @@ public class DataImpService {
 		Map cityNameDisCodeMap = new HashMap();// key为cityname，value为distract的code。来自pincode
 		Map cityNameStateCodeMap = new HashMap();//key为cityname，value为state的code。来自pincode
 		Map cityNamePincodesMap = new HashMap();// key为cityname，value为pincode的集合，逗号分割
+		Map countryMap = new HashMap();// key为countryCode,value为country对象
 
 		Workbook wb = WorkbookFactory.create(fis);
 
@@ -84,9 +85,31 @@ public class DataImpService {
 		parseCity(districtNameCodeMap, cityNameDisCodeMap, cityNamePincodesMap, null,
 				wb,cityNameStateCodeMap);
 
+		parseCountry(wb);
 		fis.close();
 
 	}
+
+	private void parseCountry( Workbook wb) {
+		Sheet districtSheet = wb.getSheet("COUNTRY&NATIONALITY");
+		int rowNumd = districtSheet.getLastRowNum();
+		for (int i = 1; i < rowNumd; i++) {
+			String countryCode = districtSheet.getRow(i).getCell(0)
+					.getStringCellValue();
+			String countryName = districtSheet.getRow(i).getCell(1)
+					.getStringCellValue();
+			String nationalName = districtSheet.getRow(i).getCell(2)
+					.getStringCellValue();
+
+			HwCountry cou = new HwCountry();
+			cou.setCountryCode(countryCode);
+			cou.setCountryName(countryName);
+			cou.setNationalltyName(nationalName);
+			this.hwCountryService.saveCountry(cou);
+			
+		}
+	}
+
 
 	private  void parseCity(Map districtMap,
 			Map cityDisNameMap, Map cityPincodesMap, BufferedWriter bw,

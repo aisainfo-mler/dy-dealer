@@ -1,11 +1,14 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,10 +81,7 @@ public class DealerContextListener implements ServletContextListener {
 		WebApplicationContext wac=WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
 		
 		DataImpService dis = wac.getBean(DataImpService.class);
-		
-		long start = System.currentTimeMillis();
 		dis.cacheDataStartUp();
-		System.err.println((System.currentTimeMillis()-start)+"country***************************************************************");
 		
 	}
 
