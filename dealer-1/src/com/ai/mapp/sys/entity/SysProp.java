@@ -26,7 +26,7 @@ public class SysProp implements Serializable{
     @SequenceGenerator(name="hw_sys_prop_gen",sequenceName="HW_SYS_PROP$SEQ")
 	@Column(name="PROP_ID")
 	private Long id;
-	
+	 
 	@Column(name="PROP_NAME")
 	private String name;
 	
