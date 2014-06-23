@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.HwCity;
@@ -29,10 +30,11 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 		// TODO Auto-generated method stub
 		Collection<HwCity> citys = AreaCache.citys;
 		Map cityInStateMap = new HashMap();
+		String sc = this.request.getStateCode();
 		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
 			HwCity hc = (HwCity) iterator.next();
 			HwState st = hc.getState();
-			if(st!=null){
+			if(StringUtils.equals(sc, st.getStateCode())){
 				String stateCode = st.getStateCode();
 				if(!cityInStateMap.containsKey(stateCode)){
 					List cism = new ArrayList();
