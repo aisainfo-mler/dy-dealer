@@ -32,14 +32,11 @@ public class SysProp implements Serializable{
 	@Column(name="PROP_KEY")
 	private String key;
 	
-	@Column(name="PARENTKEY")
+	@Column(name="PARENT_KEY")
 	private String parentKey;
 	
 	@Column(name="PROP_DESCRIPTION")
 	private String remark;
-	
-	@Column(name="CREATETIME")
-	private Date createTime;
 	
 	@Column(name="UPDATETIME")
 	private Date updateTime;
@@ -50,11 +47,8 @@ public class SysProp implements Serializable{
 	@Column(name="PROP_ORDER")
 	private String order;
 	
-	@Column(name="PROP_VALUE")
-	private String pValue;
-	
-	@Column(name="STRING1")
-	private String string1;
+	@Column(name="PROP_TYPE")
+	private String ptype;
 
 	public Long getId() {
 		return id;
@@ -96,14 +90,6 @@ public class SysProp implements Serializable{
 		this.remark = remark;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
 	public Date getUpdateTime() {
 		return updateTime;
 	}
@@ -126,22 +112,6 @@ public class SysProp implements Serializable{
 
 	public void setOrder(String order) {
 		this.order = order;
-	}
-
-	public String getpValue() {
-		return pValue;
-	}
-
-	public void setpValue(String pValue) {
-		this.pValue = pValue;
-	}
-
-	public String getString1() {
-		return string1;
-	}
-
-	public void setString1(String string1) {
-		this.string1 = string1;
 	}
 	
 }

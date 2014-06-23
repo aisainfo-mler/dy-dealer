@@ -29,16 +29,16 @@ public class HW0033Action extends AbstractYDBaseActionHandler<HW0033Request, HW0
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		SysProp appProp = sysPropService.loadPropByKey(SYSConstant.APP_ITEMKEY_SYSPROP);
-		this.response.setClientVersion(appProp.getpValue());
+//		this.response.setClientVersion(appProp.getKey());
 		this.response.setRemark(appProp.getRemark());
-		this.response.setRequireVersion(appProp.getString1());
+//		this.response.setRequireVersion(appProp.getString1());
 		
 		
 		
 		String updateUrl = "";
 		if("IOS".equalsIgnoreCase(this.request.getClientSystem()) || this.request.getClientSystem().toUpperCase().indexOf("IOS") != -1){
 			SysProp plistProp = sysPropService.loadPropByKey(SYSConstant.PLIST_ADDRESS);
-			updateUrl = SYSConstant.IOS_DOWNLOAD_FRONT + plistProp.getpValue();
+//			updateUrl = SYSConstant.IOS_DOWNLOAD_FRONT + plistProp.getpValue();
 		}
 		this.response.setUpdateUrl(updateUrl);
 	}

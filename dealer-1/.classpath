@@ -45,7 +45,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/freemarker-2.3.19.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/groovy-1.8.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/h2-1.2.132.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-annotations.jar" sourcepath="/Users/luyang/work/maven-reponsitoy/org/hibernate/hibernate-annotations/3.4.0.GA/hibernate-annotations-3.4.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-core.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate3.jar"/>
