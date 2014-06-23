@@ -1,0 +1,32 @@
+<toolbox> 
+  <tool>  
+     <key>rctx</key>  
+     <scope>request</scope>  
+     <class>com.ailk.butterfly.sys.RequestContext</class>  
+  </tool>
+  <!-- 
+  <tool>  
+     <key>rct</key>  
+     <scope>request</scope>  
+     <class>com.ailk.ultranote.context.RequestContext</class>  
+ </tool> -->
+ 
+  <!--<tool>  
+     <key>rederOptions</key>  
+     <scope>request</scope>  
+     <class>com.ailk.web.RenderOptions</class>  
+ </tool>-->
+<tool>
+   <key>cache</key>
+   <scope>application</scope>
+   <class>com.ailk.web.CachedDict</class>
+ </tool>
+ 
+  <tool>
+   <key>file</key>
+   <scope>application</scope>
+   <class>com.ailk.web.FileAddress</class>
+ </tool>
+ 
+ 
+</toolbox>

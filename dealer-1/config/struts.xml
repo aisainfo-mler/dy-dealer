@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>     
+    <!--struts2 config.对所有struts配置文件有效  -->
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.i18n.reload" value="true" />
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<constant name="struts.custom.i18n.resources" value="mappHW" />
+	
+	<package name="crud-default" extends="struts-default">
+    	<interceptors>  
+            <!-- 定义权限拦截器 -->
+			<interceptor name="loginInterceptor"
+				class="com.ai.mapp.base.filter.LoginInterceptor"></interceptor>  
+            <!-- 定义拦截器栈,所谓拦截器栈,是指由一个或多个拦截器组成 -->  
+            <interceptor-stack name="permissionStack">  
+                <!-- struts2 提供的拦截器栈,包含了struts2的很多核心拦截器 -->  
+                <interceptor-ref name="defaultStack" />  
+                <!-- 自己定义的放在最后面,struts2定义的放在前面 -->  
+                <interceptor-ref name="loginInterceptor" />  
+            </interceptor-stack>  
+        </interceptors>
+        <!-- 为此包下的所有action应用拦截器 -->  
+        <default-interceptor-ref name="permissionStack" />
+    
+		<global-results>
+		   <result name="ajaxSuccess">/success.jsp</result>
+		   <result name="index">/index.jsp</result>
+		   <result name="error">/common/error.jsp</result>
+		   <result name="jsonResult">/jsonResult.jsp</result>
+		   <result type="stream">
+		   		<param name="contentDisposition">attachment;</param>
+			</result>
+		</global-results>		
+	</package>
+	
+	<package name="nologin-default" extends="struts-default">
+		<global-results>
+		   <result name="ajaxSuccess">/success.jsp</result>
+		   <result name="index">/index.jsp</result>
+		   <result name="error">/common/error.jsp</result>
+		   <result name="jsonResult">/jsonResult.jsp</result>
+		   <result type="stream">
+		   		<param name="contentDisposition">attachment;</param>
+			</result>
+		</global-results>		
+	</package>
+	
+	
+	<package name="common" namespace="/common" extends="nologin-default">
+    	<action name="logout" method="logout" class="com.ai.mapp.sys.action.LoginAction">
+      		<result type="redirect">/index.jsp</result>
+    	</action>
+    	<action name="check" method="login" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/home.jsp</result>
+    	</action>
+    	<action name="left1" method="left" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/left.jsp</result>
+    	</action>
+    	<action name="left" method="toPage" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/left.jsp</result>
+    	</action>
+    	<action name="subContent" method="toPage" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/subContent.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="common-login" namespace="/commonL" extends="crud-default">
+		<action name="login" method="toPage" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/home.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="lang" namespace="/lang" extends="nologin-default">
+		<action name="*" method="{1}" class="com.ai.mapp.sys.action.LangAction">
+      		<result>/index.jsp</result>
+    	</action>
+    </package>
+	
+	<package name="register-package" namespace="/userRegist" extends="nologin-default">
+		<action name="register" method="register" class="com.ai.mapp.sys.action.LoginAction">
+      		<result>/userRegist/register.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="menu-package" namespace="/menu" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.menu.action.MenuAction">
+      		<result>/menu/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="menuSimple-package" namespace="/menuSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.menu.action.MenuAction">
+      		<result>/menu/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="main-package" namespace="/main" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.main.action.MainAction">
+      		<result>/main/{1}.jsp</result>
+      		<result name="INVENTORY_ORDER_LIST">/main/orderApprove.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="mainSimple-package" namespace="/mainSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.main.action.MainAction">
+      		<result>/main/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<!-- 广告图片维护 -->
+	<package name="promotionSimple-package" namespace="/promotionSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.promotion.action.PromotionAction">
+      		<result>/promotion/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="promotion-package" namespace="/promotion" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.promotion.action.PromotionAction">
+      		<result>/promotion/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<include file="order-struts.xml"></include>
+</struts>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"  "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="order-package" namespace="/order" extends="nologin-default">
+		<action name="*" method="{1}"  class="com.ai.mapp.order.action.OrderAction">
+	     		<result>/order/{1}.jsp</result>
+	   	</action>
+	</package>
+	<package name="orderSimple-package" namespace="/orderSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.order.action.OrderAction">
+      		<result>/order/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="user-package" namespace="/user" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.user.action.UserAction">
+      		<result>/user/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="userSimple-package" namespace="/userSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.user.action.UserAction">
+      		<result>/user/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="agentOrder-package" namespace="/agentOrder" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.agent.action.AgentOrderAction">
+      		<result>/agentOrder/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="agentOrderSimple-package" namespace="/agentOrderSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.agent.action.AgentOrderAction">
+      		<result>/agentOrder/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="commission-package" namespace="/commission" extends="crud-default">
+		<action name="*" method="{1}" class="com.ai.mapp.commission.action.CommissionAction">
+      		<result>/commission/{1}.jsp</result>
+    	</action>
+	</package>
+	
+	<package name="commissionSimple-package" namespace="/commissionSimple" extends="crud-default">
+		<action name="*" method="toPage" class="com.ai.mapp.commission.action.CommissionAction">
+      		<result>/commission/{1}.jsp</result>
+    	</action>
+	</package>
+</struts>

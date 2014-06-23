@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	
+	<appender name="default" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<param name="encoding" value="GBK" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />
+		</layout>
+	</appender>
+	<appender name="App" class="org.apache.log4j.RollingFileAppender">
+    	<param name="File" value="../logs/mapp-server.log" />
+    	<param name="MaxFileSize" value="1024KB" />
+    	<param name="MaxBackupIndex" value="5" />
+    	<param name="encoding" value="gbk" />
+    	<layout class="org.apache.log4j.PatternLayout">
+      		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />
+    	</layout>
+  	</appender>
+	<appender name="Job" class="org.apache.log4j.RollingFileAppender">
+    	<param name="File" value="../logs/mapp-job.log" />
+    	<param name="MaxFileSize" value="1024KB" />
+    	<param name="MaxBackupIndex" value="5" />
+    	<param name="encoding" value="gbk" />
+    	<layout class="org.apache.log4j.PatternLayout">
+      		<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />
+    	</layout>
+  	</appender>
+  	<!-- 查询日期302接口 -->
+   <appender name="Job_Check" class="org.apache.log4j.DailyRollingFileAppender">   
+         	 <param name="File" value="../logs/mapp_mobile/mapp_bi_check.log" />  
+            <param name="DatePattern" value="'.'yyyyMMdd'.log'" /> 
+            <layout class="org.apache.log4j.PatternLayout">   
+                <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />   
+            </layout>   
+   </appender>   
+   <!-- 取报表数据接口 -->
+   <appender name="Job_Data" class="org.apache.log4j.DailyRollingFileAppender">   
+            <param name="File" value="../logs/mapp_mobile/mapp_bi_data.log" />  
+            <param name="DatePattern" value="'.'yyyyMMdd'.log'" />   
+            <layout class="org.apache.log4j.PatternLayout">   
+                <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />   
+            </layout>   
+   </appender>   
+   <appender name="Error_Log" class="org.apache.log4j.DailyRollingFileAppender">   
+            <param name="File" value="../logs/mapp_mobile/mapp_error.log" />  
+            <param name="DatePattern" value="'.'yyyyMMdd" />   
+            <layout class="org.apache.log4j.PatternLayout">   
+                <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />   
+            </layout>   
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">  
+                    <param name="LevelMax" value="ERROR" />  
+                    <param name="LevelMin" value="ERROR" />  
+            </filter>
+   </appender> 
+   <appender name="Info_Log" class="org.apache.log4j.DailyRollingFileAppender">   
+            <param name="File" value="../logs/mapp_mobile/mapp_info.log" />  
+            <param name="DatePattern" value="'.'yyyyMMdd" />   
+            <layout class="org.apache.log4j.PatternLayout">   
+                <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />   
+            </layout>   
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">  
+                    <param name="LevelMax" value="INFO" />  
+                    <param name="LevelMin" value="INFO" />  
+            </filter>
+   </appender>
+
+   <appender name="EH2_Info_Log" class="org.apache.log4j.DailyRollingFileAppender">   
+            <param name="File" value="../logs/EH2/mapp_eh2.log" />  
+            <param name="DatePattern" value="'.'yyyyMMdd" />   
+            <layout class="org.apache.log4j.PatternLayout">   
+                <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c-%L] - %m%n" />   
+            </layout>   
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">  
+                    <param name="LevelMax" value="INFO" />  
+                    <param name="LevelMin" value="INFO" />  
+            </filter>
+   </appender>
+   	<logger name="com.ai.mapp.bss">
+		<level value="debug" />
+		<appender-ref ref="EH2_Info_Log" />
+	</logger>
+   
+    <logger name="com.ai.mapp.bss">
+		<level value="debug" />
+		<appender-ref ref="EH2_Info_Log" />
+	</logger>
+	
+	<logger name="com.ai.mapp">
+		<level value="debug" />
+		<appender-ref ref="App" />
+	</logger>
+	<logger name="com.ai.utils.job">
+		<level value="info" />
+		<appender-ref ref="Job" />
+	</logger>
+	<logger name="com.ai.utils.job.ReportItemCheckTask">
+		<level value="info" />
+		<appender-ref ref="Job_Check" />
+	</logger>
+	<logger name="com.ai.utils.job.BiThread">
+		<level value="info" />
+		<appender-ref ref="Job_Data" />
+	</logger>
+    <logger name="org.springframework">  
+        <level value="debug"/>   
+        <appender-ref ref="console"/> 
+    </logger>
+    <logger name="org.hibernate">  
+        <level value="info"/>   
+        <appender-ref ref="Info_Log"/> 
+    </logger>
+     <logger name="org.hibernate.type">   
+         <level value="TRACE"/>    
+         <appender-ref ref="console"/>  
+     </logger> 
+     
+	<logger name="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">   
+         <level value="debug"/>    
+         <appender-ref ref="console"/>
+     </logger> 
+      <logger name="org.hibernate.sql">   
+         <level value="TRACE"/>    
+         <appender-ref ref="console"/>  
+     </logger>
+	<root>
+		<level value="error" />
+		<appender-ref ref="default" />
+	</root>
+</log4j:configuration>

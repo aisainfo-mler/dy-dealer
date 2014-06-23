@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Reliance:EnterpriseProductCatalog
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Reliance="http://www.tmforum.org/xml/tip/BusEnt/Prod"
+	correlationId="2725" requestGeneratedDateTime="2014-06-06T17:31:21+05:30"
+	viewName="ProvisioningAAA">
+	<Reliance:Policy></Reliance:Policy>
+	<Reliance:PolicyCharacteristic>
+		<Reliance:item>
+			<Reliance:id>PC40003</Reliance:id>
+			<Reliance:name>FUP UPLOAD</Reliance:name>
+			<Reliance:description></Reliance:description>
+			<Reliance:startDate>2014-06-02</Reliance:startDate>
+			<Reliance:endDate></Reliance:endDate>
+			<Reliance:status>1</Reliance:status>
+			<Reliance:valueType></Reliance:valueType>
+			<Reliance:defaultValue></Reliance:defaultValue>
+		</Reliance:item>
+		<Reliance:item>
+			<Reliance:id>PC40005</Reliance:id>
+			<Reliance:name>ACTIVE</Reliance:name>
+			<Reliance:description></Reliance:description>
+			<Reliance:startDate>2014-06-02</Reliance:startDate>
+			<Reliance:endDate></Reliance:endDate>
+			<Reliance:status>1</Reliance:status>
+			<Reliance:valueType></Reliance:valueType>
+			<Reliance:defaultValue></Reliance:defaultValue>
+		</Reliance:item>
+		<Reliance:item>
+			<Reliance:id>PC40004</Reliance:id>
+			<Reliance:name>FUP DOWNLOAD</Reliance:name>
+			<Reliance:description></Reliance:description>
+			<Reliance:startDate>2014-06-02</Reliance:startDate>
+			<Reliance:endDate></Reliance:endDate>
+			<Reliance:status>1</Reliance:status>
+			<Reliance:valueType></Reliance:valueType>
+			<Reliance:defaultValue></Reliance:defaultValue>
+		</Reliance:item>
+		<Reliance:item>
+			<Reliance:id>PC40006</Reliance:id>
+			<Reliance:name>FUP</Reliance:name>
+			<Reliance:description></Reliance:description>
+			<Reliance:startDate>2014-06-02</Reliance:startDate>
+			<Reliance:endDate></Reliance:endDate>
+			<Reliance:status>1</Reliance:status>
+			<Reliance:valueType></Reliance:valueType>
+			<Reliance:defaultValue></Reliance:defaultValue>
+		</Reliance:item>
+	</Reliance:PolicyCharacteristic>
+	<Reliance:ReferenceValueMaster>
+		<Reliance:item>
+			<Reliance:entityName>ALL</Reliance:entityName>
+			<Reliance:itemAttributes>
+				<Reliance:itemAttribute>
+					<Reliance:attributeName>status</Reliance:attributeName>
+					<Reliance:refValueDescriptionItems>
+						<Reliance:value>1</Reliance:value>
+						<Reliance:description>ACTIVE</Reliance:description>
+					</Reliance:refValueDescriptionItems>
+					<Reliance:refValueDescriptionItems>
+						<Reliance:value>2</Reliance:value>
+						<Reliance:description>INACTIVE</Reliance:description>
+					</Reliance:refValueDescriptionItems>
+				</Reliance:itemAttribute>
+			</Reliance:itemAttributes>
+		</Reliance:item>
+	</Reliance:ReferenceValueMaster>
+</Reliance:EnterpriseProductCatalog>
