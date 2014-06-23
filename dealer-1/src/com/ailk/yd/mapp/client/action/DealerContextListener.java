@@ -40,6 +40,8 @@ public class DealerContextListener implements ServletContextListener {
 	private HwCircleService hwCircleService;
 	@Autowired
 	private HwDistrictService hwDirstrictService;
+	@Autowired
+	private DealerDataService dealerDataService;
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
@@ -55,27 +57,10 @@ public class DealerContextListener implements ServletContextListener {
 	
 	}
 	
-	private void initProductProp()
-	{
-		try
-		{
-			String path = TibcoUtil.class.getResource("/").getPath();
-			File file = new File(path+"/tibco_product.xml");
-			SAXReader saxReader = new SAXReader();
-			Document document = saxReader.read(file);
-			TibcoConstant.productPropMap = DealerDataService.handlePropMap(document.getRootElement());
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
-	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		loadCert();
-		initProductProp();
 		
 		WebApplicationContext wac=WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
 		
