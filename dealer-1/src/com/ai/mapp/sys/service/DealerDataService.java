@@ -94,12 +94,12 @@ public class DealerDataService {
 		
 		saveProductAndFilter(products);
 		
-		saveProps(propMap);
-
 	}
 	
-	public void saveProps(Map<String, Map<String,Map<String,Object>>> propMap)
+	public void updateProps(Element root)
 	{
+		Map<String, Map<String,Map<String,Object>>> propMap = handlePropMap(root);
+		
 		List<SysProp> props = new ArrayList<SysProp>(0); 
 		Date time = new Date();
 		
