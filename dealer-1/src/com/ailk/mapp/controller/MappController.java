@@ -41,82 +41,54 @@ public class MappController extends BaseController {
 	@RequestMapping(value = {"/json"})
 	@ResponseBody
 	public String getJsonRsp(String msg, HttpServletRequest request,HttpServletResponse response) throws Exception 
-	{
-		HwCity c = new HwCity();
-		c.setCircleCode("circleId");
-		c.setCityCode("cityCode");
-		c.setCityName("cityName");
-		HwState hs = new HwState();
-		hs.setStateCode("1111111");
-		hs.setStateId(0L);
-		c.setState(hs);
-		hwCityService.saveCity(c);
+	{		
+		log.debug(msg);
 		
+		Map<String,Object> attrMap = new HashMap<String, Object>(0);
+		attrMap.put(MappContext.MAPPCONTEXT_REQUEST_IP,request.getRemoteHost());
+//		attrMap.put(MappContext.MAPPCONTEXT_RIGHT, rights);
+		attrMap.put(MappContext.MAPPCONTEXT_SESSIONID, request.getSession().getId());
 		
-		
-		
-//		Product p = new Product();
-//		
-//		Map<String,Set<Object>> condition = new HashMap<String, Set<Object>>(0);
-//		condition.put(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION, new HashSet<Object>(0));
-//		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40003");
-//		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40002");
-//		p.setFilterCondition(condition);
-//		
-//		Collection<Product> products = productService.listAllProducts(p);
-//		
-//		for(Product p_ : products)
-//			System.out.println(p_.getRangeId()+":"+p_.getBssRangeId()+":"+p_.getPackedName());
-		
-//		initialDataService.updateProductInfoByFile("/Users/luyang/work/Workspaces/MyEclipse 10_20130621/dealer-1/src/qiansh/Complete.xml");
-		
-//		System.out.println(msg);
-//		
-//		Map<String,Object> attrMap = new HashMap<String, Object>(0);
-//		attrMap.put(MappContext.MAPPCONTEXT_REQUEST_IP,request.getRemoteHost());
-////		attrMap.put(MappContext.MAPPCONTEXT_RIGHT, rights);
-//		attrMap.put(MappContext.MAPPCONTEXT_SESSIONID, request.getSession().getId());
-//		
-////		param.setSessionAttr(BSSConstantParam.USERCODE, user.getUserCode());
-////		param.setSessionAttr(BSSConstantParam.USERID, user.getUserId());
-//		IUserinfo user = new UserInfo();
-//		Long userId = (Long)request.getSession().getAttribute(BSSConstantParam.USERID);
-//		String userCode = (String)request.getSession().getAttribute(BSSConstantParam.USERCODE);
-//		if(userId != null){
-//			user.setUserId(userId);
-//			user.setUserName(userCode);
+//		param.setSessionAttr(BSSConstantParam.USERCODE, user.getUserCode());
+//		param.setSessionAttr(BSSConstantParam.USERID, user.getUserId());
+		IUserinfo user = new UserInfo();
+		Long userId = (Long)request.getSession().getAttribute(BSSConstantParam.USERID);
+		String userCode = (String)request.getSession().getAttribute(BSSConstantParam.USERCODE);
+		if(userId != null){
+			user.setUserId(userId);
+			user.setUserName(userCode);
+		}
+//		Object userCode = request.getSession().getAttribute(BSSConstantParam.USERCODE);
+//		if(userCode != null){
+//			user.setUserCode((String)userCode);
 //		}
-////		Object userCode = request.getSession().getAttribute(BSSConstantParam.USERCODE);
-////		if(userCode != null){
-////			user.setUserCode((String)userCode);
-////		}
-//		
-//		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
-//		
-//		MappContext.clearContext();
-//		
-////		IUserinfo u = new UserInfo();
-////		u.setUserId(888l);
-////		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
-//		
-//		try
-//		{
-//			
-//			log.debug(request.getContentType());
-//			
-//			String ret = jsonHandler.doHandle(msg,attrMap);
-//			
-//			updateSession(request);
-//			
-//			log.debug(ret);
-//			
-//			log.debug(response.getContentType());
-//			
-//			return ret;
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		
+		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
+		
+		MappContext.clearContext();
+		
+//		IUserinfo u = new UserInfo();
+//		u.setUserId(888l);
+//		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
+		
+		try
+		{
+			
+			log.debug(request.getContentType());
+			
+			String ret = jsonHandler.doHandle(msg,attrMap);
+			
+			updateSession(request);
+			
+			log.debug(ret);
+			
+			log.debug(response.getContentType());
+			
+			return ret;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return null;
 	}
