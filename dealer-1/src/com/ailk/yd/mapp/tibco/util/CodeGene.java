@@ -37,14 +37,13 @@ public class CodeGene {
 			String key = row.getCell(startCol + 1).getStringCellValue();
 
 			String value = valCell.getStringCellValue();
-
+			key = key.split("\\(")[0];
 			System.err.println("public static String TIBCO_"
 					+ type.replaceAll("-", "").replaceAll("_", "")
 					+ "_"
 					+ key.replaceAll("-", "").replaceAll(" ", "")
-							.replaceAll("/", "").replaceAll("\\(", "")
-							.replaceAll("\\.", "").replaceAll("\\)", "")
-					+ "=\"" + value + "\";");
+							.replaceAll("/", "Or").replaceAll("\\.", "")
+							.replaceAll(",", "") + "=\"" + value + "\";");
 			// continue;
 
 			//
