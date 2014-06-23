@@ -105,8 +105,8 @@ public class DataImpService {
 
 	public  void imp() throws InvalidFormatException,
 			IOException, SQLException, ClassNotFoundException {
-		URL resource = this.getClass().getResource("");
-		String filePath = resource.getPath()+"地域信息以及部分字典信息ReferenceDataInquiry.xlsx";
+		URL resource = this.getClass().getResource("/");
+		String filePath = resource.getPath()+"qiansh/ReferenceDataInquiry.xlsx";
 
 
 		FileInputStream fis = new FileInputStream(new File(filePath));
