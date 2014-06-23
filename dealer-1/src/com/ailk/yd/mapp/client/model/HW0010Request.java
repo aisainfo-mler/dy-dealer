@@ -192,7 +192,7 @@ public class HW0010Request extends YDBody {
 		private String nationality;
 		
 		private Address presentAddress;
-		private Address permanentAddress;
+		private Address permanentAddress;//addressType=PER_ADD
 		private String panNumber;
 		private String preferredLanguage;
 		private String preferredCommunicationChannel;
@@ -836,12 +836,12 @@ public class HW0010Request extends YDBody {
 		private String offerId;
 		private String eWalletReservationReferenceId;
 		private String planOffering;
-		private Address billingAddress;
+		private Address billingAddress;//addressType = billing
 		private String mdn;
 		private BigDecimal mdnFee;
 		private String sim;
 		private Set<String> imei;
-		private List<Device> devices;
+		private Map<String,Map<String,String>> devices;
 		
 		public String getOrderType() {
 			return orderType;
@@ -879,10 +879,10 @@ public class HW0010Request extends YDBody {
 		public void setDeliveryMode(String deliveryMode) {
 			this.deliveryMode = deliveryMode;
 		}
-		public List<Device> getDevices() {
+		public Map<String,Map<String,String>> getDevices() {
 			return devices;
 		}
-		public void setDevices(List<Device> devices) {
+		public void setDevices(Map<String,Map<String,String>> devices) {
 			this.devices = devices;
 		}
 		public String getBusinessInteraction() {
