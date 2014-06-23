@@ -37,11 +37,14 @@ public class CodeGene {
 			String key = row.getCell(startCol + 1).getStringCellValue();
 
 			String value = valCell.getStringCellValue();
-			if (StringUtils.equals("IDENTIFICATION_TYPE", type))
-				continue;
+			key = key.split("\\(")[0];
 			System.err.println("public static String TIBCO_"
-					+ type.replaceAll("-", "").replaceAll("_", "") + "_"
-					+ key.replaceAll("-", "") + "=\"" + value + "\";");
+					+ type.replaceAll("-", "").replaceAll("_", "")
+					+ "_"
+					+ key.replaceAll("-", "").replaceAll(" ", "")
+							.replaceAll("/", "Or").replaceAll("\\.", "")
+							.replaceAll(",", "") + "=\"" + value + "\";");
+			// continue;
 
 			//
 			// if(!StringUtils.equals(preType, type)){
@@ -55,6 +58,13 @@ public class CodeGene {
 			// System.err.println("m.put(\""+key+"\",\""+value+"\");");
 			// }
 		}
+	}
+
+	public static void main(String[] args) throws InvalidFormatException,
+			IOException {
+		CodeGene.parseLOV(
+				"/Users/qianshihua/Documents/亚信工作文件/印度相关/otherDoc/CAF Fields.xlsx",
+				"LOV", 1);
 	}
 
 }

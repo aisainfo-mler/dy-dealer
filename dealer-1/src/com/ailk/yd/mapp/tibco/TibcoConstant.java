@@ -80,6 +80,48 @@ public class TibcoConstant {
 	public static String TIBCO_ServiceType_LTEMobility = "Z0002";
 	public static String TIBCO_ServiceType_LTEVoice = "Z0003";
 	public static String TIBCO_ServiceType_LTEData = "Z0004";
+	public static String TIBCO_IDENTIFICATIONTYPE_VISA="Z00004";
+	public static String TIBCO_IDENTIFICATIONTYPE_AadhaarCard="Z00005";
+	public static String TIBCO_IDENTIFICATIONTYPE_CustomerPictureURLId="Z00006";
+	public static String TIBCO_IDENTIFICATIONTYPE_ElectionCommissionIDcard="Z00008";
+	public static String TIBCO_IDENTIFICATIONTYPE_CGHSOrECHScard="Z00009";
+	public static String TIBCO_IDENTIFICATIONTYPE_CertificateofAddresshavingphotoissuedbyMPorMLAorGazettedOfficerorTehsildaronletterhead="Z00010";
+	public static String TIBCO_IDENTIFICATIONTYPE_CertificateofphotoidentityissuedbyVillagePanchayatheadoritsequivalentauthority="Z00012";
+	public static String TIBCO_IDENTIFICATIONTYPE_PhotoCreditcard="Z00013";
+	public static String TIBCO_IDENTIFICATIONTYPE_SmartcardissuedbyCSDDefenceOrParamilitary="Z00015";
+	public static String TIBCO_IDENTIFICATIONTYPE_CurrentPassbookofPostOfficeOranyscheduledbankhavingPhoto="Z00016";
+	public static String TIBCO_IDENTIFICATIONTYPE_PhotoIdentitycard="Z00017";
+	public static String TIBCO_IDENTIFICATIONTYPE_PhotoIdentityCardissuedbyGovtrecognizededucationalinstitutions="Z00022";
+	public static String TIBCO_IDENTIFICATIONTYPE_UIDAIletter="Z00023";
+	public static String TIBCO_IDENTIFICATIONTYPE_RILEmployeeIdentityCard="Z00024";
+	public static String TIBCO_IDENTIFICATIONTYPE_BankStatementOrPassbook="Z00025";
+	public static String TIBCO_IDENTIFICATIONTYPE_PostOfficeAccountStatementOrPassbook="Z00026";
+	public static String TIBCO_IDENTIFICATIONTYPE_RationCard="Z00027";
+	public static String TIBCO_IDENTIFICATIONTYPE_VoterID="Z00028";
+	public static String TIBCO_IDENTIFICATIONTYPE_GovernmentPhotoIDcardsOrservicephotoidentitycardissuedbyPSU="Z00029";
+	public static String TIBCO_IDENTIFICATIONTYPE_ElectricityBill="Z00030";
+	public static String TIBCO_IDENTIFICATIONTYPE_Waterbill="Z00031";
+	public static String TIBCO_IDENTIFICATIONTYPE_TelephoneLandlineBill="Z00032";
+	public static String TIBCO_IDENTIFICATIONTYPE_PropertyTaxReceipt="Z00033";
+	public static String TIBCO_IDENTIFICATIONTYPE_CreditCardStatement="Z00034";
+	public static String TIBCO_IDENTIFICATIONTYPE_InsurancePolicy="Z00035";
+	public static String TIBCO_IDENTIFICATIONTYPE_SignedLetterhavingPhotofromBankonletterhead="Z00036";
+	public static String TIBCO_IDENTIFICATIONTYPE_SignedLetterhavingPhotoissuedbyregisteredCompanyonletterhead="Z00037";
+	public static String TIBCO_IDENTIFICATIONTYPE_SignedLetterhavingPhotoissuedbyRecognizedEducationalInstructiononletterhead="Z00038";
+	public static String TIBCO_IDENTIFICATIONTYPE_NREGSJobCard="Z00039";
+	public static String TIBCO_IDENTIFICATIONTYPE_ArmsLicense="Z00040";
+	public static String TIBCO_IDENTIFICATIONTYPE_PensionerCard="Z00041";
+	public static String TIBCO_IDENTIFICATIONTYPE_FreedomFighterCard="Z00042";
+	public static String TIBCO_IDENTIFICATIONTYPE_havingPhoto="Z00043";
+	public static String TIBCO_IDENTIFICATIONTYPE_PensionerCardhavingphoto="Z00044";
+	public static String TIBCO_IDENTIFICATIONTYPE_RegisteredSaleOrLeaseOrRentAgreement="Z00045";
+	public static String TIBCO_IDENTIFICATIONTYPE_AddressCardhavingPhotoissuedbyDepartmentofPosts="Z00046";
+	public static String TIBCO_IDENTIFICATIONTYPE_CasteandDomicileCertificatehavingPhotoissuedbyStateGovt="Z00047";
+	public static String TIBCO_IDENTIFICATIONTYPE_DisabilityIDCardOrhandicappedmedicalcertificateissuedbytherespectiveStateOrUTGovernmentsOrAdministrations="Z00048";
+	public static String TIBCO_IDENTIFICATIONTYPE_GasConnectionBill="Z00049";
+	public static String TIBCO_IDENTIFICATIONTYPE_PassportofSpouse="Z00050";
+	public static String TIBCO_IDENTIFICATIONTYPE_PassportofParents="Z00051";
+	
 
 	/**
 	 * 将该类中的静态变量封装成终端要用的格式。 [{MARITALSTATUS={Divorced=3, SINGLE=0, Separated=4,
