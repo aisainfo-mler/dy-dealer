@@ -3644,8 +3644,7 @@
 			</Reliance:itemAttributes>
 		</Reliance:item>
 		<Reliance:item>
-			<Reliance:entityName>PlanSpecToPlanCharacteristicMapping
-			</Reliance:entityName>
+			<Reliance:entityName>PlanSpecToPlanCharacteristicMapping</Reliance:entityName>
 			<Reliance:itemAttributes>
 				<Reliance:itemAttribute>
 					<Reliance:attributeName>unitsOfMeasure</Reliance:attributeName>
@@ -3817,8 +3816,7 @@
 			</Reliance:itemAttributes>
 		</Reliance:item>
 		<Reliance:item>
-			<Reliance:entityName>PolicyToPolicyCharacteristicMapping
-			</Reliance:entityName>
+			<Reliance:entityName>PolicyToPolicyCharacteristicMapping</Reliance:entityName>
 			<Reliance:itemAttributes>
 				<Reliance:itemAttribute>
 					<Reliance:attributeName>unitsOfMeasure</Reliance:attributeName>
