@@ -3,6 +3,8 @@ package com.ailk.yd.mapp.tibco.util;
 import java.io.File;
 import java.io.IOException;
 
+import javassist.compiler.CodeGen;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -35,15 +37,21 @@ public class CodeGene {
 			Cell valCell = row.getCell(startCol + 2);
 			valCell.setCellType(Cell.CELL_TYPE_STRING);
 			String key = row.getCell(startCol + 1).getStringCellValue();
-
 			String value = valCell.getStringCellValue();
+
 			key = key.split("\\(")[0];
-			System.err.println("public static String TIBCO_"
+			String javaString = "public static String TIBCO_"
 					+ type.replaceAll("-", "").replaceAll("_", "")
 					+ "_"
 					+ key.replaceAll("-", "").replaceAll(" ", "")
 							.replaceAll("/", "Or").replaceAll("\\.", "")
-							.replaceAll(",", "") + "=\"" + value + "\";");
+							.replaceAll(",", "") + "=\"" + value + "\";";
+
+			String sqlString = "insert into hw_sys_prop(prop_name,prop_key,prop_description,parent_key) values('type@','key@','value@','TIBCO');";
+			sqlString = sqlString.replaceAll("type@", "TIBCOPARAM_" + type)
+					.replaceAll("key@", value).replaceAll("value@", key);
+
+			System.err.println(sqlString);
 			// continue;
 
 			//
@@ -62,9 +70,9 @@ public class CodeGene {
 
 	public static void main(String[] args) throws InvalidFormatException,
 			IOException {
-		CodeGene.parseLOV(
-				"/Users/qianshihua/Documents/亚信工作文件/印度相关/otherDoc/CAF Fields.xlsx",
-				"LOV", 1);
+		String path = CodeGene.class.getResource("").getPath()
+				+ "/CAF Fields.xlsx";
+		CodeGene.parseLOV(path, "LOV", 1);
 	}
 
 }

@@ -141,6 +141,18 @@ public class TibcoConstant {
 	public static String TIBCO_MSISDNTYPE_GoldPlus      ="GoldPlus";
 	public static String TIBCO_MSISDNTYPE_Silver        ="Silver";
 	public static String TIBCO_MSISDNTYPE_SilverPlus    ="SilverPlus";
+	
+	
+
+	public static String TIBCO_OrderType_NO = "New Order";
+	public static String TIBCO_OrderType_CO = "Change Order";
+	public static String TIBCO_OrderType_BR = "Balance Replenishment";
+	public static String TIBCO_OrderType_DO = "Digital Service Order";
+	public static String TIBCO_OrderType_BT = "Balance Transfer";
+	public static String TIBCO_OrderType_CD = "Charge Redirection";
+	public static String TIBCO_OrderType_SR = "Service Request";
+	public static String TIBCO_OrderType_MR = "Miscellaneous Requests";
+	public static String TIBCO_OrderType_CF = "CAF Number";
 
 	
 

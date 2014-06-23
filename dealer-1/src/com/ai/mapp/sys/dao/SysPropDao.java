@@ -2,6 +2,7 @@ package com.ai.mapp.sys.dao;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,9 @@ public class SysPropDao extends HibernateDao<SysProp, Long> {
 		if(StringUtils.isNotEmpty(t.getValid()))
 		{
 			c.add(Restrictions.eq("valid", t.getValid()));
+		}
+		if(StringUtils.isNotBlank(t.getPropNameLike())){
+			c.add(Restrictions.like("name", t.getPropNameLike() , MatchMode.ANYWHERE));
 		}
 		
 		return c;

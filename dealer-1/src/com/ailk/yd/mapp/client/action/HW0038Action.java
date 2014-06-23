@@ -18,7 +18,7 @@ import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0036Response;
 import com.ailk.yd.mapp.client.model.HW0038Request;
 import com.ailk.yd.mapp.client.model.HW0038Response;
-import com.ailk.yd.mapp.tibco.AreaCache;
+import com.ailk.yd.mapp.tibco.TibcoCache;
 
 @Service("hw0038")
 @Action(bizcode="hw0038",userCheck=true)
@@ -28,7 +28,7 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		// TODO Auto-generated method stub
-		Collection<HwCity> citys = AreaCache.citys;
+		Collection<HwCity> citys = TibcoCache.citys;
 		Map cityInStateMap = new HashMap();
 		String sc = this.request.getStateCode();
 		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {

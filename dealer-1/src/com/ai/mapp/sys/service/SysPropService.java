@@ -45,4 +45,15 @@ public class SysPropService {
 		return null;
 	}
 	
+	public Collection listProp(SysProp sp){
+		return sysPropDao.listAll(sp);
+	}
+	
+	
+	public Collection listPropByNameLike(String nameLike){
+		SysProp cond = new SysProp();
+		cond.setName(nameLike);
+		Collection<SysProp> props = sysPropDao.listAll(cond);
+		return props;
+	}
 }

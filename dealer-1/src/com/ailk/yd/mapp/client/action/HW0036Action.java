@@ -26,7 +26,7 @@ import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0036Request;
 import com.ailk.yd.mapp.client.model.HW0036Response;
-import com.ailk.yd.mapp.tibco.AreaCache;
+import com.ailk.yd.mapp.tibco.TibcoCache;
 import com.ailk.yd.mapp.tibco.TibcoConstant;
 
 /**
@@ -42,15 +42,15 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
-		Map m = TibcoConstant.returnDicMapForTerm();
+		Map m = TibcoCache.dicts;
 
 		this.response = new HW0036Response();
 		response.setDicts(m);
-		Collection<HwCountry> countrys = AreaCache.countrys;
-		Collection<HwState> state = AreaCache.state;
-		Collection<HwCircle> circle =AreaCache.circle;
+		Collection<HwCountry> countrys = TibcoCache.countrys;
+		Collection<HwState> state = TibcoCache.state;
+		Collection<HwCircle> circle =TibcoCache.circle;
 //		Collection<HwCity> citys = AreaCache.citys;
-		Collection<HwDistrict> districts = AreaCache.districts;
+		Collection<HwDistrict> districts = TibcoCache.districts;
 		
 		
 		Map stateMap = new HashMap();
@@ -59,23 +59,8 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 			stateMap.put(hs.getStateCode(), hs.getStateName());
 		}
 		response.setStates(stateMap);
-//		Map cityInStateMap = new HashMap();
-//		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
-//			HwCity hc = (HwCity) iterator.next();
-//			HwState st = hc.getState();
-//			if(st!=null){
-//				String stateCode = st.getStateCode();
-//				if(!cityInStateMap.containsKey(stateCode)){
-//					List cism = new ArrayList();
-//					cism.add(new HW0036Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
-//					cityInStateMap.put(stateCode,cism);
-//				}else{
-//					HW0036Response.City c = new HW0036Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
-//					((List)cityInStateMap.get(stateCode)).add(c);
-//				}
-//			}
-//		}
-//		response.setCityInState(cityInStateMap);
+
+		
 		Map districtInState = new HashMap();
 		for (Iterator it = districts.iterator(); it.hasNext();) {
 			HwDistrict hd = (HwDistrict) it.next();

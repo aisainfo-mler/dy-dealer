@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Zhengwj 
@@ -49,6 +50,9 @@ public class SysProp implements Serializable{
 	
 	@Column(name="PROP_TYPE")
 	private String ptype;
+	
+	@Transient
+	private String propNameLike;
 
 	public Long getId() {
 		return id;
@@ -113,5 +117,22 @@ public class SysProp implements Serializable{
 	public void setOrder(String order) {
 		this.order = order;
 	}
+
+	public String getPtype() {
+		return ptype;
+	}
+
+	public void setPtype(String ptype) {
+		this.ptype = ptype;
+	}
+
+	public String getPropNameLike() {
+		return propNameLike;
+	}
+
+	public void setPropNameLike(String propNameLike) {
+		this.propNameLike = propNameLike;
+	}
+
 	
 }

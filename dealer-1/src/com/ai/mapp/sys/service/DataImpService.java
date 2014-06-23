@@ -30,7 +30,7 @@ import com.ai.mapp.sys.entity.HwCity;
 import com.ai.mapp.sys.entity.HwCountry;
 import com.ai.mapp.sys.entity.HwDistrict;
 import com.ai.mapp.sys.entity.HwState;
-import com.ailk.yd.mapp.tibco.AreaCache;
+import com.ailk.yd.mapp.tibco.TibcoCache;
 
 @Service
 @Scope("prototype")
@@ -53,11 +53,11 @@ public class DataImpService {
 	
 	
 	public void cacheDataStartUp(){
-		AreaCache.countrys = hwCountryService.listAllHwCountry(null);
-		AreaCache.state = hwStateService.listAllHwState(null);
-		AreaCache.circle = hwCircleService.lsitAllHwCircle(null);
-		AreaCache.citys = hwCityService.listAllHwCity(null);
-		AreaCache.districts = hwDirstrictService.lsitAllHwDistrict(null);
+		TibcoCache.countrys = hwCountryService.listAllHwCountry(null);
+		TibcoCache.state = hwStateService.listAllHwState(null);
+		TibcoCache.circle = hwCircleService.lsitAllHwCircle(null);
+		TibcoCache.citys = hwCityService.listAllHwCity(null);
+		TibcoCache.districts = hwDirstrictService.lsitAllHwDistrict(null);
 	}
 
 
