@@ -48,19 +48,19 @@ public class MappController extends BaseController {
 	public String getJsonRsp(String msg, HttpServletRequest request,HttpServletResponse response) throws Exception 
 	{		
 		
-		try
-		{
-			String path = TibcoUtil.class.getResource("/").getPath();
-			File file = new File(path+"/tibco_product.xml");
-			SAXReader saxReader = new SAXReader();
-			Document document = saxReader.read(file);
-			dealerDataService.updateProps(document.getRootElement());
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
+//		try
+//		{
+//			String path = TibcoUtil.class.getResource("/").getPath();
+//			File file = new File(path+"/tibco_product.xml");
+//			SAXReader saxReader = new SAXReader();
+//			Document document = saxReader.read(file);
+//			dealerDataService.updateProps(document.getRootElement());
+//		}
+//		catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		
 		
 		log.debug(msg);
 		

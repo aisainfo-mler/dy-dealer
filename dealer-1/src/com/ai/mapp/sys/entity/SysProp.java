@@ -134,5 +134,19 @@ public class SysProp implements Serializable{
 		this.propNameLike = propNameLike;
 	}
 
+	public SysProp() {
+		super();
+	}
+
+	public SysProp(String name, String key, String parentKey, String remark,
+			String valid) {
+		super();
+		this.name = name;
+		this.key = key;
+		this.parentKey = parentKey;
+		this.remark = remark;
+		this.valid = valid;
+	}
+
 	
 }

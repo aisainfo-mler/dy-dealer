@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,19 +78,22 @@ public class DealerContextListener implements ServletContextListener {
 	private void cacheDictData(WebApplicationContext wac) {
 		SysPropService sps = wac.getBean(SysPropService.class);
 		SysProp param = new SysProp();
-		param.setParentKey("TIBCO");
+//		param.setParentKey("TIBCO");
 		Collection mmm = sps.listProp(param);
 		TibcoCache.dicts = new HashMap();
 		for (Iterator it = mmm.iterator(); it.hasNext();) {
 			SysProp prop = (SysProp) it.next();
-			String mapKey = prop.getName();
-			mapKey = mapKey.replaceAll("TIBCOPARAM_", "");
+			if(StringUtils.isBlank(prop.getParentKey())){
+				continue;
+			}
+			String mapKey = prop.getParentKey();
+//			mapKey = mapKey.replaceAll("TIBCOPARAM_", "");
 			if(!TibcoCache.dicts.containsKey(mapKey)){
 				Map m = new HashMap();
-				m.put(prop.getKey(), prop.getRemark());
+				m.put(prop.getKey(), prop.getName());
 				TibcoCache.dicts.put(mapKey , m);
 			}else{
-				((Map)TibcoCache.dicts.get(mapKey)).put(prop.getKey(), prop.getRemark());
+				((Map)TibcoCache.dicts.get(mapKey)).put(prop.getKey(), prop.getName());
 			}
 		}
 	}

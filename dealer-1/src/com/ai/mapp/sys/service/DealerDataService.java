@@ -108,11 +108,13 @@ public class DealerDataService {
 		
 		for(String pre_key : propMap.keySet())
 		{
+			pre_key = pre_key.trim();
 			if(propMap.get(pre_key) == null || propMap.get(pre_key).isEmpty())
 				continue;
 			
 			for(String key : propMap.get(pre_key).keySet())
 			{
+				key = key.trim();
 				if(propMap.get(pre_key).get(key) == null || propMap.get(pre_key).get(key).isEmpty())
 					continue;
 				
