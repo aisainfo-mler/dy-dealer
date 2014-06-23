@@ -2,6 +2,7 @@ package com.ai.mapp.sys.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import com.ai.mapp.sys.entity.PlanSpecMapping;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductFilter;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
+import com.ai.mapp.sys.entity.SysProp;
 import com.ailk.butterfly.core.util.DateUtils;
 
 @Service
@@ -34,6 +36,9 @@ public class DealerDataService {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private SysPropService sysPropService;
 	
 	@Autowired
 	private ProductFilterService productFilterService;
@@ -88,7 +93,61 @@ public class DealerDataService {
 		products.addAll(plans);
 		
 		saveProductAndFilter(products);
+		
+		saveProps(propMap);
 
+	}
+	
+	public void saveProps(Map<String, Map<String,Map<String,Object>>> propMap)
+	{
+		List<SysProp> props = new ArrayList<SysProp>(0); 
+		Date time = new Date();
+		
+		if(propMap == null || propMap.isEmpty())
+			return;
+		
+		for(String pre_key : propMap.keySet())
+		{
+			if(propMap.get(pre_key) == null || propMap.get(pre_key).isEmpty())
+				continue;
+			
+			for(String key : propMap.get(pre_key).keySet())
+			{
+				if(propMap.get(pre_key).get(key) == null || propMap.get(pre_key).get(key).isEmpty())
+					continue;
+				
+				/*** 加入组属性 ***/
+				SysProp group = new SysProp();
+				group.setKey(pre_key+"_"+key);
+				group.setName(pre_key+"_"+key);
+				group.setValid("1");
+				group.setRemark(pre_key+"_"+key);
+				group.setUpdateTime(time);
+				props.add(group);
+				
+				for(String sub_key : propMap.get(pre_key).get(key).keySet())
+				{
+					SysProp prop = new SysProp();
+					prop.setKey(sub_key);
+					prop.setParentKey(pre_key+"_"+key);
+					prop.setName((String)propMap.get(pre_key).get(key).get(sub_key));
+					prop.setValid("1");
+					prop.setRemark((String)propMap.get(pre_key).get(key).get(sub_key));
+					prop.setUpdateTime(time);
+					props.add(prop);
+				}
+			}
+			
+		}
+		
+		if(props == null || props.isEmpty())
+			return;
+		
+		for(SysProp p : props)
+		{
+			sysPropService.saveSysProp(p);
+		}
+		
 	}
 	
 	private void saveProductAndFilter(List<Product> products) throws Exception

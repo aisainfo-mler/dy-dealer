@@ -407,7 +407,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 							
 							for(String key : deviceMap.get(resourceSpec.getResourceSpecificationId()).keySet())
 							{
-								device.getIdentifier().add(new NameAndValueObject(key, deviceMap.get(resourceSpec.getResourceSpecificationId()).get(key)));
+								device.getIdentifier().add(new NameAndValueObject("SERIAL_NUMBER", deviceMap.get(resourceSpec.getResourceSpecificationId()).get(key)));
 							}
 							
 							
