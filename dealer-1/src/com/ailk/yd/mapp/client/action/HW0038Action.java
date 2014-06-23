@@ -1,23 +1,17 @@
 package com.ailk.yd.mapp.client.action;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.ai.mapp.sys.entity.HwCity;
-import com.ai.mapp.sys.entity.HwState;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
-import com.ailk.yd.mapp.client.model.HW0036Response;
 import com.ailk.yd.mapp.client.model.HW0038Request;
 import com.ailk.yd.mapp.client.model.HW0038Response;
+import com.ailk.yd.mapp.client.model.HW0038Response.City;
 import com.ailk.yd.mapp.tibco.TibcoCache;
 
 @Service("hw0038")
@@ -46,7 +40,10 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 //				}
 //			}
 //		}
-		response.setCityInState(TibcoCache.cityInState);
+		List<City> rm = TibcoCache.cityInState.get(request.getStateCode());
+		Map<String,List<City>> p = new HashMap();
+		p.put(request.getStateCode(),rm);
+		response.setCityInState(p);
 		
 	}
 

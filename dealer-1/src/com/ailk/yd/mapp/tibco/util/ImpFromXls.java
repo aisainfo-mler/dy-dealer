@@ -39,7 +39,7 @@ public class ImpFromXls {
 		String preType = "";
 
 		String preKey = "";
-		for (int i = 1; i < lrn; i++) {
+		for (int i = 1; i <= lrn; i++) {
 			Row row = sheet.getRow(i);
 			String paramType = row.getCell(startCol).getStringCellValue();
 			Cell paramValCell = row.getCell(startCol + 2);
