@@ -16,7 +16,7 @@ public class YD0010Request implements TibcoRequest  {
 	
 	private String referenceNumber;
 	private String customerId;
-	private String orderType;
+	private String orderType;//*CREATE,MODIFY,DRAFT*,INTERIM*/
 	private String circleId;
 	private String appointmentDateTimeFrom;//格式："2014-04-23T12:10:47"
 	private String appointmentDateTimeTo;
@@ -24,7 +24,7 @@ public class YD0010Request implements TibcoRequest  {
 	private String deliveryMode;
 	private Customer customerDetails;
 	private PayInfo paymentDetails;
-	private List<Address> installationAddress;
+	private List<Address> installationAddress;//SHIP_TO
 	private CafInfo cafDetails;
 	private List<Order> orderDetails;
 	
@@ -34,8 +34,8 @@ public class YD0010Request implements TibcoRequest  {
 		private String accountId;
 		private String offerId;
 		private String eWalletReservationReferenceId;
-		private IdObject planOffering;
-		private Address billingAddress;
+		private IdObject planOffering;// Startup Plan Offering  Prepaid - Optional  PostPaid - Mandatory **/
+		private Address billingAddress;//BILL_TO
 		private List<Product> products;
 		
 		public NameObject getBusinessInteraction() {
@@ -88,6 +88,11 @@ public class YD0010Request implements TibcoRequest  {
 		private NameObject businessInteraction;
 		private String productId;
 		private String starterKitCode;
+		/**
+		 * name = DND Preference 
+		 * Applicable only for Voice Services Service" 
+		 * value ="Specify the value 0 - For fully blocked category 1#2#3#4#5#6#7 (Separated by a separator #)"
+		 */
 		private List<NameAndValueObject> characteristics;
 		private Dependancy dependancyInfo;
 		private ProductCafInfo cafDetails;
@@ -505,7 +510,7 @@ public class YD0010Request implements TibcoRequest  {
 		private String visaNo;
 		private String visaValidityDate;
 		private Contact contactDetails;
-		private Address permanentAddress;
+		private Address permanentAddress;//PER_ADD
 		private String panNumber;
 		private String preferredLanguage;
 		private String preferredCommunicationChannel;
@@ -795,7 +800,7 @@ public class YD0010Request implements TibcoRequest  {
 		private String firstName;
 		private String middleName;
 		private String lastName;
-		private Address address;
+		private Address address;//PRE_ADD
 		private String contactNumber;
 		private String eMailId;
 		public String getFirstName() {
@@ -943,6 +948,7 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class PayInfo implements TibcoRequest
 	{
+		/***paymode :Cash,Cheque,Demand Draft,Credit Card,Debit Card,Netbanking,POD,RPayCard"***/
 		private String modeOfPayment;
 		private String totalAmount;
 		private String paymentInstrumentNumber;
@@ -1007,7 +1013,7 @@ public class YD0010Request implements TibcoRequest  {
 	{
 		private String addressId;
 		private String buildingId;
-		private String addressType;
+		private String addressType;//- 类型：Installation- Billing- Shipping
 		private String careOf;
 		private String houseNameORNumber;
 		private String buildingNameORNumber;
@@ -1400,8 +1406,6 @@ public class YD0010Request implements TibcoRequest  {
 		req.setInstallationAddress(install_addess_list);
 		Address in_a = new Address();
 		install_addess_list.add(in_a);
-		
-		customer.setPermanentAddress(pa);
 		in_a.setAddressId("");
 		in_a.setBuildingId("NVMBBD0063702");
 		in_a.setAddressType("SHIP_TO");
@@ -1476,7 +1480,6 @@ public class YD0010Request implements TibcoRequest  {
 		
 		Address lr_a = new Address();
 		lr.setAddress(lr_a);
-		customer.setPermanentAddress(pa);
 		lr_a.setAddressId("");
 		lr_a.setBuildingId("NVMBBD0063702");
 		lr_a.setAddressType("REF_ADD");

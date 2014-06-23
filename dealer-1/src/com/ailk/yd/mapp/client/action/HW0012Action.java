@@ -6,16 +6,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.AgentOrder;
+import com.ai.mapp.sys.entity.PlanSpecMapping;
 import com.ai.mapp.sys.entity.Product;
+import com.ai.mapp.sys.entity.ProductSpecMapping;
 import com.ai.mapp.sys.entity.SmallLocalFile;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.SmallLocalFileService;
 import com.ai.mapp.sys.service.UserService;
@@ -367,11 +371,50 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			/**********如果有Product则设置下面相关的信息**********/
 			if(StringUtils.isBlank(caf.getOrder().getOfferId()))
 			{
-				Product product = productService.getProductByCode(caf.getOrder().getOfferId());
+				Product p = productService.getProductByCode(caf.getOrder().getOfferId());
 				
+				/** 设置resourceSpec **/
+				ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
+				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty())
+				{
+					order.setProducts(new ArrayList<YD0010Request.Product>(0));
+					for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
+					{
+						YD0010Request.Product ps = new YD0010Request.Product();
+						ps.setBusinessInteraction(new NameObject("ADD"));
+						ps.setProductId(productSpec.getProductSpecificationId());
+						ps.setStarterKitCode("");
+						order.getProducts().add(ps);
+						
+						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty() == false)
+							continue;
+						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
+						
+						Map<String,Map<String,String>> deviceMap = caf.getOrder().getDevices();
+						if(deviceMap == null || deviceMap.isEmpty())
+							continue;
+						
+						for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
+						{
+							YD0010Request.Device device = new YD0010Request.Device();
+							device.setBoqType(resourceSpec.getType());
+							device.setBusinessInteraction(new NameObject("ADD"));
+							device.setProductId(resourceSpec.getResourceSpecificationId());
+							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
+							
+							if(deviceMap.get(resourceSpec.getResourceSpecificationId()) == null || deviceMap.get(resourceSpec.getResourceSpecificationId()).isEmpty())
+								continue;
+							
+							for(String key : deviceMap.get(resourceSpec.getResourceSpecificationId()).keySet())
+							{
+								device.getIdentifier().add(new NameAndValueObject(key, deviceMap.get(resourceSpec.getResourceSpecificationId()).get(key)));
+							}
+							
+							
+						}
+					}
+				}
 				
-//				
-//				
 //				order.setProducts(new ArrayList<YD0010Request.Product>(0));
 //				Product order_p1 = new Product();
 //				order.getProducts().add(order_p1);
