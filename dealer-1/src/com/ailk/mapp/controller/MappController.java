@@ -1,5 +1,6 @@
 package com.ailk.mapp.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.entity.HwCity;
 import com.ai.mapp.sys.entity.HwState;
+import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.HwCircleService;
 import com.ai.mapp.sys.service.HwCityService;
 import com.ailk.butterfly.core.security.IUserinfo;
@@ -26,6 +30,7 @@ import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.web.BaseController;
 import com.ailk.yd.mapp.model.UserInfo;
 import com.ailk.yd.mapp.model.YDDatapackage;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 @Controller
 @RequestMapping("/mapp")
@@ -36,12 +41,27 @@ public class MappController extends BaseController {
 	private JsonClientHandler<YDDatapackage> jsonHandler;
 	
 	@Autowired
-	private HwCityService hwCityService;
+	private DealerDataService dealerDataService;
 	
 	@RequestMapping(value = {"/json"})
 	@ResponseBody
 	public String getJsonRsp(String msg, HttpServletRequest request,HttpServletResponse response) throws Exception 
 	{		
+		
+		try
+		{
+			String path = TibcoUtil.class.getResource("/").getPath();
+			File file = new File(path+"/tibco_product.xml");
+			SAXReader saxReader = new SAXReader();
+			Document document = saxReader.read(file);
+			dealerDataService.updateProps(document.getRootElement());
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
 		log.debug(msg);
 		
 		Map<String,Object> attrMap = new HashMap<String, Object>(0);
