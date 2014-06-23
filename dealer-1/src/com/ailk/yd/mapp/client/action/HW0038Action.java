@@ -34,7 +34,7 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
 			HwCity hc = (HwCity) iterator.next();
 			HwState st = hc.getState();
-			if(StringUtils.equals(sc, st.getStateCode())){
+			if(st!=null && StringUtils.equals(sc, st.getStateCode())){
 				String stateCode = st.getStateCode();
 				if(!cityInStateMap.containsKey(stateCode)){
 					List cism = new ArrayList();
