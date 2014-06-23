@@ -122,6 +122,27 @@ public class TibcoConstant {
 	public static String TIBCO_IDENTIFICATIONTYPE_PassportofSpouse="Z00050";
 	public static String TIBCO_IDENTIFICATIONTYPE_PassportofParents="Z00051";
 	
+	
+	
+	public static Integer MSISDNTYPE_Diamond          =30000;
+	public static Integer MSISDNTYPE_Platinum         =25000;
+	public static Integer MSISDNTYPE_PlatinumPlus     =30000;
+	public static Integer MSISDNTYPE_Gold             =10000;
+	public static Integer MSISDNTYPE_GoldPlus         =11000;
+	public static Integer MSISDNTYPE_Silver           =5000;
+	public static Integer MSISDNTYPE_SilverPlus       =5500;
+
+
+
+	public static String TIBCO_MSISDNTYPE_Diamond       ="Diamond";
+	public static String TIBCO_MSISDNTYPE_Platinum      ="Platinum";
+	public static String TIBCO_MSISDNTYPE_PlatinumPlus  ="PlatinumPlus";
+	public static String TIBCO_MSISDNTYPE_Gold          ="Gold";
+	public static String TIBCO_MSISDNTYPE_GoldPlus      ="GoldPlus";
+	public static String TIBCO_MSISDNTYPE_Silver        ="Silver";
+	public static String TIBCO_MSISDNTYPE_SilverPlus    ="SilverPlus";
+
+	
 
 	/**
 	 * 将该类中的静态变量封装成终端要用的格式。 [{MARITALSTATUS={Divorced=3, SINGLE=0, Separated=4,
