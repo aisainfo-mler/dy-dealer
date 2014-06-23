@@ -38,17 +38,6 @@ import com.ailk.yd.mapp.tibco.TibcoConstant;
 @Action(bizcode="hw0036",userCheck=true)
 public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW0036Response>{
 
-	@Autowired
-	private HwCountryService hwCountryService;
-	@Autowired
-	private HwStateService hwStateService;
-	@Autowired
-	private HwCityService hwCitySerice;
-	@Autowired
-	private HwCircleService hwCircleService;
-	@Autowired
-	private HwDistrictService hwDirstrictService;
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
@@ -110,38 +99,6 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 		
 		
 		
-	}
-
-	public HwCountryService getHwCountryService() {
-		return hwCountryService;
-	}
-
-	public void setHwCountryService(HwCountryService hwCountryService) {
-		this.hwCountryService = hwCountryService;
-	}
-
-	public HwStateService getHwStateService() {
-		return hwStateService;
-	}
-
-	public void setHwStateService(HwStateService hwStateService) {
-		this.hwStateService = hwStateService;
-	}
-
-	public HwCityService getHwCitySerice() {
-		return hwCitySerice;
-	}
-
-	public void setHwCitySerice(HwCityService hwCitySerice) {
-		this.hwCitySerice = hwCitySerice;
-	}
-
-	public HwCircleService getHwCircleService() {
-		return hwCircleService;
-	}
-
-	public void setHwCircleService(HwCircleService hwCircleService) {
-		this.hwCircleService = hwCircleService;
 	}
 
 }
