@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,9 +73,12 @@ public class DataImpService {
 			}
 		}
 		
-		TibcoCache.countrys = new HashMap();
+		TibcoCache.countrys = new LinkedHashMap();
+		TibcoCache.countrys.put("IN", "India");//印度排第一个
 		for (Iterator it = hwCountryService.listAllHwCountry(null).iterator(); it.hasNext();) {
 			HwCountry hw = (HwCountry) it.next();
+			if(StringUtils.equals(hw.getCountryCode(), "IN"))
+				continue;
 			TibcoCache.countrys.put(hw.getCountryCode(), hw.getCountryName());
 		}
 		
