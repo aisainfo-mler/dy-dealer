@@ -70,9 +70,10 @@ public class CodeGene {
 
 	public static void main(String[] args) throws InvalidFormatException,
 			IOException {
-		String path = CodeGene.class.getResource("").getPath()
-				+ "/CAF Fields.xlsx";
-		CodeGene.parseLOV(path, "LOV", 1);
+		String path = CodeGene.class.getResource("/").getPath()
+				+ "/qiansh/CAF Fields.xlsx";
+		System.err.println(new File(path).exists());
+//		CodeGene.parseLOV(path, "LOV", 1);
 	}
 
 }
