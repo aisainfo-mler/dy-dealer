@@ -28,25 +28,25 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		// TODO Auto-generated method stub
-		Collection<HwCity> citys = TibcoCache.citys;
-		Map cityInStateMap = new HashMap();
-		String sc = this.request.getStateCode();
-		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
-			HwCity hc = (HwCity) iterator.next();
-			HwState st = hc.getState();
-			if(st!=null && StringUtils.equals(sc, st.getStateCode())){
-				String stateCode = st.getStateCode();
-				if(!cityInStateMap.containsKey(stateCode)){
-					List cism = new ArrayList();
-					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
-					cityInStateMap.put(stateCode,cism);
-				}else{
-					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
-					((List)cityInStateMap.get(stateCode)).add(c);
-				}
-			}
-		}
-		response.setCityInState(cityInStateMap);
+//		Collection<HwCity> citys = TibcoCache.citys;
+//		Map cityInStateMap = new HashMap();
+//		String sc = this.request.getStateCode();
+//		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
+//			HwCity hc = (HwCity) iterator.next();
+//			HwState st = hc.getState();
+//			if(st!=null && StringUtils.equals(sc, st.getStateCode())){
+//				String stateCode = st.getStateCode();
+//				if(!cityInStateMap.containsKey(stateCode)){
+//					List cism = new ArrayList();
+//					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
+//					cityInStateMap.put(stateCode,cism);
+//				}else{
+//					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
+//					((List)cityInStateMap.get(stateCode)).add(c);
+//				}
+//			}
+//		}
+		response.setCityInState(TibcoCache.cityInState);
 		
 	}
 

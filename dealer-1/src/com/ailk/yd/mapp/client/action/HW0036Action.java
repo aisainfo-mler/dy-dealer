@@ -46,40 +46,13 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 
 		this.response = new HW0036Response();
 		response.setDicts(m);
-		Collection<HwCountry> countrys = TibcoCache.countrys;
-		Collection<HwState> state = TibcoCache.state;
-		Collection<HwCircle> circle =TibcoCache.circle;
-//		Collection<HwCity> citys = AreaCache.citys;
-		Collection<HwDistrict> districts = TibcoCache.districts;
 		
-		
-		Map stateMap = new HashMap();
-		for (Iterator it = state.iterator(); it.hasNext();) {
-			HwState hs = (HwState) it.next();
-			stateMap.put(hs.getStateCode(), hs.getStateName());
-		}
-		response.setStates(stateMap);
+		response.setStates(TibcoCache.states);
 
 		
-		Map districtInState = new HashMap();
-		for (Iterator it = districts.iterator(); it.hasNext();) {
-			HwDistrict hd = (HwDistrict) it.next();
-			if(StringUtils.isNotBlank(hd.getStateCode())){
-				if(districtInState.containsKey(hd.getStateCode())){
-					((Map)districtInState.get(hd.getStateCode())).put(hd.getDistrictGisCode(), hd.getDistrictName());
-				}else{
-					districtInState.put(hd.getStateCode(), new HashMap());
-				}
-			}
-		}
-		response.setDistrictInState(districtInState);
+		response.setDistrictInState(TibcoCache.districtInState);
 		
-		Map countrysMap = new HashMap();
-		for (Iterator it = countrys.iterator(); it.hasNext();) {
-			HwCountry hw = (HwCountry) it.next();
-			countrysMap.put(hw.getCountryCode(), hw.getCountryName());
-		}
-		response.setCountrys(countrysMap);
+		response.setCountrys(TibcoCache.countrys);
 		
 		
 		

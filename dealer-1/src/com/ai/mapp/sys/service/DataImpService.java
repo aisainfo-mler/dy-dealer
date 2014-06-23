@@ -3,18 +3,16 @@ package com.ai.mapp.sys.service;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -30,6 +28,7 @@ import com.ai.mapp.sys.entity.HwCity;
 import com.ai.mapp.sys.entity.HwCountry;
 import com.ai.mapp.sys.entity.HwDistrict;
 import com.ai.mapp.sys.entity.HwState;
+import com.ailk.yd.mapp.client.model.HW0038Response;
 import com.ailk.yd.mapp.tibco.TibcoCache;
 
 @Service
@@ -53,11 +52,50 @@ public class DataImpService {
 	
 	
 	public void cacheDataStartUp(){
-		TibcoCache.countrys = hwCountryService.listAllHwCountry(null);
-		TibcoCache.state = hwStateService.listAllHwState(null);
-		TibcoCache.circle = hwCircleService.lsitAllHwCircle(null);
-		TibcoCache.citys = hwCityService.listAllHwCity(null);
-		TibcoCache.districts = hwDirstrictService.lsitAllHwDistrict(null);
+
+		TibcoCache.states = new HashMap();
+		for (Iterator it = hwStateService.listAllHwState(null).iterator(); it.hasNext();) {
+			HwState hs = (HwState) it.next();
+			TibcoCache.states.put(hs.getStateCode(), hs.getStateName());
+		}
+
+		
+		TibcoCache.districtInState = new HashMap();
+		for (Iterator it = hwDirstrictService.lsitAllHwDistrict(null).iterator(); it.hasNext();) {
+			HwDistrict hd = (HwDistrict) it.next();
+			if(StringUtils.isNotBlank(hd.getStateCode())){
+				if(TibcoCache.districtInState.containsKey(hd.getStateCode())){
+					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictGisCode(), hd.getDistrictName());
+				}else{
+					TibcoCache.districtInState.put(hd.getStateCode(), new HashMap());
+				}
+			}
+		}
+		
+		TibcoCache.countrys = new HashMap();
+		for (Iterator it = hwCountryService.listAllHwCountry(null).iterator(); it.hasNext();) {
+			HwCountry hw = (HwCountry) it.next();
+			TibcoCache.countrys.put(hw.getCountryCode(), hw.getCountryName());
+		}
+		
+		TibcoCache.cityInState = new HashMap();
+		for (Iterator iterator = hwCityService.listAllHwCity(null).iterator(); iterator.hasNext();) {
+			HwCity hc = (HwCity) iterator.next();
+			HwState st = hc.getState();
+			if(st!=null){
+				String stateCode = st.getStateCode();
+				if(!TibcoCache.cityInState.containsKey(stateCode)){
+					List cism = new ArrayList();
+					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
+					TibcoCache.cityInState.put(stateCode,cism);
+				}else{
+					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
+					((List)TibcoCache.cityInState.get(stateCode)).add(c);
+				}
+			}
+		}
+		
+		
 	}
 
 
