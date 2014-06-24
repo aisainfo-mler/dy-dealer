@@ -9,8 +9,6 @@ public class HW0036Response  extends IBody{
 	
 	private Map<String,String> states;
 	
-	private Map<String,Map<String,String>> districtInState;
-	
 	private Map<String,String> countrys;
 	
 	private Map dicts;
@@ -33,19 +31,6 @@ public class HW0036Response  extends IBody{
 
 
 	
-
-
-
-	public Map<String, Map<String, String>> getDistrictInState() {
-		return districtInState;
-	}
-
-	public void setDistrictInState(Map<String, Map<String, String>> districtInState) {
-		this.districtInState = districtInState;
-	}
-
-
-
 	public Map<String, String> getCountrys() {
 		return countrys;
 	}

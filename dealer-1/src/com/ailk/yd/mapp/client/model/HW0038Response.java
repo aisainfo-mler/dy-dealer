@@ -9,6 +9,9 @@ public class HW0038Response extends YDBody {
 	
 	private Map<String,List<City>> cityInState;
 	
+	private Map<String,Map<String,String>> districtInState;
+
+	
 	public static class City{
 		private String cityCode;
 		private String cityName;
@@ -50,6 +53,14 @@ public class HW0038Response extends YDBody {
 
 	public void setCityInState(Map<String, List<City>> cityInState) {
 		this.cityInState = cityInState;
+	}
+
+	public Map<String, Map<String, String>> getDistrictInState() {
+		return districtInState;
+	}
+
+	public void setDistrictInState(Map<String, Map<String, String>> districtInState) {
+		this.districtInState = districtInState;
 	}
 
 }

@@ -12,11 +12,23 @@ import com.ailk.yd.mapp.tibco.action.YD0019Action;
 import com.ailk.yd.mapp.tibco.model.YD0019.YD0019Request;
 import com.ailk.yd.mapp.tibco.model.YD0019.YD0019Response;
 
+/**
+ * 获取tibco的订单编号
+ * 
+ * @author qianshihua
+ * 
+ */
 @Action(bizcode = "hw0037", userCheck = true)
 @Service("hw0037")
 public class HW0037Action extends
 		AbstractYDBaseActionHandler<HW0037Request, HW0037Response> {
 
+	/**
+	 * 
+	 New Order (NO), Change Order (CO), Balance Replenishment (BR), Digital
+	 * Service Order (DO), Balance Transfer (BT), Charge Redirection (CD)
+	 * Service Request (SR), Miscellaneous Requests (MR) CAF Number (CF)
+	 */
 	@Autowired
 	private YD0019Action yd0019;
 

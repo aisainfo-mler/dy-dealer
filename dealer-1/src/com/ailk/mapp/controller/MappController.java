@@ -84,9 +84,11 @@ public class MappController extends BaseController {
 		
 		MappContext.clearContext();
 		
-//		IUserinfo u = new UserInfo();
-//		u.setUserId(888l);
-//		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
+		IUserinfo u = new UserInfo();
+		u.setUserId(1l);
+		u.setUserName("m01");
+		
+		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
 		
 		try
 		{
