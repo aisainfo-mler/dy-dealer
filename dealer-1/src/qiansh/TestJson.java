@@ -24,6 +24,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ai.mapp.sys.entity.ProductFilter;
 import com.ailk.yd.mapp.client.model.HW0001Request;
+import com.ailk.yd.mapp.client.model.HW0012Request;
 import com.ailk.yd.mapp.model.YDDatapackage;
 import com.ailk.yd.mapp.model.YDHeader;
 
@@ -156,19 +157,19 @@ public class TestJson {
 		YDDatapackage pkg = new YDDatapackage();
 		YDHeader header = new YDHeader();
 		pkg.setHeader(header);
-		header.setBizCode("hw0001");
+		header.setBizCode("hw0012");
 		header.setIdentityId(System.currentTimeMillis()+"");
-		HW0001Request req = new HW0001Request();
-//		req.setFilterMap(condition);
-//		req.setCodes(codes);
-		req.setPage(0);
-		req.setSize(2);
+		HW0012Request req = new HW0012Request();
 		pkg.setBody(req);
+		req.setOrderCode("2014062403044051");
 		
 		
 		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(pkg));
+		
+		
 		try {
-			String rsp = TestJson.doSend("http://100.112.4.75:8080/dealer/mapp/json.json",mapper.writeValueAsString(pkg),null);
+			String rsp = TestJson.doSend("http://100.112.12.99:8080/dealer/mapp/json.json",mapper.writeValueAsString(pkg),null);
 			System.out.println(rsp);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
