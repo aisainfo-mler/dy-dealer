@@ -97,9 +97,9 @@ public class HW0013Action extends
 		
 		
 		
-		List rm = new ArrayList();
-		for (Iterator it = orders.iterator(); it.hasNext();) {
-			AgentOrder order = (AgentOrder) it.next();
+		List<HW0013Response.Order> rm = new ArrayList<HW0013Response.Order>();
+		for (Iterator<AgentOrder> it = orders.iterator(); it.hasNext();) {
+			AgentOrder order = it.next();
 			
 
 			HW0013Response.Order d = new HW0013Response.Order();
@@ -136,8 +136,6 @@ public class HW0013Action extends
 			
 //			dl.addOrder(d);
 		
-			
-			
 			if(StringUtils.isNotBlank(order.getFeeDetail())){
 				d.setFeeInfos(JsonUtil.fromJsonStringReturnList(order.getFeeDetail(), HW0013Response.Order.FeeInfo.class));
 			}

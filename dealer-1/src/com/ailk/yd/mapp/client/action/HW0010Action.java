@@ -20,14 +20,14 @@ import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.core.security.IUserinfo;
+import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0010Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
-public class HW0010Action extends
-		AbstractYDBaseActionHandler<HW0010Request, HW0010Response> {
+public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0010Response> {
 
 	@Autowired
 	private UserService userService;
@@ -39,11 +39,11 @@ public class HW0010Action extends
 	private AgentOrderService agentOrderService;
 	
 	@Override
-	protected void doAction() throws BusinessException, SystemException,
-			Exception {
+	protected void doAction() throws BusinessException, SystemException,Exception {
 		
-		IUserinfo ui = this.getUserinfo();
+		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
 		User creator = userService.loadUserByUserCode(ui.getUserName());
+		
 		if(request.getCafInfos() == null || request.getCafInfos().isEmpty())
 			throw new Exception("no caf information");
 		
