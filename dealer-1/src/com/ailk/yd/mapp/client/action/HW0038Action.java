@@ -14,6 +14,12 @@ import com.ailk.yd.mapp.client.model.HW0038Response;
 import com.ailk.yd.mapp.client.model.HW0038Response.City;
 import com.ailk.yd.mapp.tibco.TibcoCache;
 
+/**
+ * 根据state返回city列表
+ * 2014-06-24新增district列表.这个原来在36接口中
+ * @author qianshihua
+ *
+ */
 @Service("hw0038")
 @Action(bizcode="hw0038",userCheck=true)
 public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0038Response> {
@@ -41,10 +47,18 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 //			}
 //		}
 		List<City> rm = TibcoCache.cityInState.get(request.getStateCode());
-		Map<String,List<City>> p = new HashMap();
-		p.put(request.getStateCode(),rm);
-		response.setCityInState(p);
-		
+		if(rm!=null && rm.size()>0){
+			Map<String,List<City>> p = new HashMap();
+			p.put(request.getStateCode(),rm);
+			response.setCityInState(p);
+		}
+		Map<String, String> ds = TibcoCache.districtInState.get(request.getStateCode());
+		if(ds!=null && ds.keySet().size()>0){
+			Map<String,Map<String,String>> dsm = new HashMap();
+			dsm.put(request.getStateCode(), ds);
+			response.setDistrictInState(dsm);
+			
+		}
 	}
 
 }

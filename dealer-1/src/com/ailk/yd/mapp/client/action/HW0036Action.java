@@ -31,6 +31,7 @@ import com.ailk.yd.mapp.tibco.TibcoConstant;
 
 /**
  * 查询静态信息。
+ * 2014-06-24移除district的信息，转到38接口中
  * @author qianshihua
  *
  */
@@ -49,8 +50,6 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 		
 		response.setStates(TibcoCache.states);
 
-		
-		response.setDistrictInState(TibcoCache.districtInState);
 		
 		response.setCountrys(TibcoCache.countrys);
 		
