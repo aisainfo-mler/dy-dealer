@@ -146,8 +146,8 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		{
 			return true;
 		}
-		else if((SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()) 
-				&& (SYSConstant.PRODUCT_PAY_TYPE_PREPAID.equals(order.getProduct().getPayType()) || SYSConstant.PRODUCT_PAY_TYPE_DATASIM.equals(order.getProduct().getPayType()))))
+		else if(SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()) 
+				&& (SYSConstant.PRODUCT_PAY_TYPE_PREPAID.equals(order.getProduct().getPayType())))
 		{
 			return true;
 		}

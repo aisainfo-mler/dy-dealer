@@ -104,29 +104,38 @@ public class ProductService {
 		BigDecimal pFee = BigDecimal.ZERO;
 
 		/** 设置planSpec **/
-		PlanSpecMapping planSpecMapping = DealerDataService.mapper.readValue(p.getPlanSpecList(),PlanSpecMapping.class);
-		if(planSpecMapping != null && planSpecMapping.getPlanSpecs() != null && planSpecMapping.getPlanSpecs().isEmpty())
-		{
-			for(PlanSpecMapping.PlanSpec planSpec : planSpecMapping.getPlanSpecs())
-			{
-				if(StringUtils.isBlank(planSpec.getComponentPrice()) == false)
-					pFee = pFee.add(new BigDecimal(planSpec.getComponentPrice()));
-			}
-		}
+//		if(StringUtils.isEmpty(p.getPlanSpecList()) == false)
+//		{		
+//			PlanSpecMapping planSpecMapping = DealerDataService.mapper.readValue(p.getPlanSpecList(),PlanSpecMapping.class);
+//			if(planSpecMapping != null && planSpecMapping.getPlanSpecs() != null && planSpecMapping.getPlanSpecs().isEmpty())
+//			{
+//				for(PlanSpecMapping.PlanSpec planSpec : planSpecMapping.getPlanSpecs())
+//				{
+//					if(StringUtils.isBlank(planSpec.getComponentPrice()) == false)
+//						pFee = pFee.add(new BigDecimal(planSpec.getComponentPrice()));
+//				}
+//			}
+//		}
+		
+		pFee = pFee.add(p.getPrice() == null?BigDecimal.ZERO:new BigDecimal(p.getPrice()));
 		
 		/** 设置resourceSpec **/
-		ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
-		if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty())
+		
+		if(StringUtils.isEmpty(p.getProductSpecList()) == false)
 		{
-			for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
+			ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
+			if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty())
 			{
-				if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty() == false)
-					continue;
-				
-				for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
+				for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
 				{
-					if(StringUtils.isBlank(resourceSpec.getComponentPrice()) == false)
-						pFee = pFee.add(new BigDecimal(resourceSpec.getComponentPrice()));
+					if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty() == false)
+						continue;
+					
+					for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
+					{
+						if(StringUtils.isBlank(resourceSpec.getComponentPrice()) == false)
+							pFee = pFee.add(new BigDecimal(resourceSpec.getComponentPrice()));
+					}
 				}
 			}
 		}

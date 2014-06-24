@@ -455,11 +455,11 @@ public class SYSConstant {
 	public static final String SVC_LEVEL_SILVER = "2";//银牌
 	public static final String SVC_LEVEL_COPPER = "3";//号码铜牌
 	
-	public static final String PRODUCT_PAY_TYPE_PREPAID = "0";//预付合约
-//	public static final String PRODUCT_PAY_TYPE_POSTPAID = "1";//后付合约
-	public static final String PRODUCT_PAY_TYPE_DATASIM = "3";//上网卡合约
-	public static final String PRODUCT_PAY_TYPE_MONTHLY_OFFERS = "1";//带终端合约
-	public static final String PRODUCT_PAY_TYPE_MONTHLY_SIM = "2";//带终端合约
+	public static final String PRODUCT_PAY_TYPE_PREPAID = "1";//预付
+	public static final String PRODUCT_PAY_TYPE_POSTPAID = "2";//后付
+	public static final String PRODUCT_PAY_TYPE_HYBRID = "3";//混合
+//	public static final String PRODUCT_PAY_TYPE_MONTHLY_OFFERS = "1";//带终端合约
+//	public static final String PRODUCT_PAY_TYPE_MONTHLY_SIM = "2";//带终端合约
 	
 	public static final String COMMISSION_TYPE_MARKUP = "0";
 	public static final String COMMISSION_TYPE_COMMISSION = "1";
@@ -503,15 +503,15 @@ public class SYSConstant {
 	static
 	{
 		/**业务类型**/
-		payTypes.put(PRODUCT_PAY_TYPE_PREPAID + LANGUAGE_ENGLISH, "Prepaid Basic");
-		payTypes.put(PRODUCT_PAY_TYPE_DATASIM + LANGUAGE_ENGLISH, "Prepaid Data");
-		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_OFFERS + LANGUAGE_ENGLISH, "Post Paid Offers");
-		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_SIM + LANGUAGE_ENGLISH, "Post Paid SIM");
+		payTypes.put(PRODUCT_PAY_TYPE_PREPAID + LANGUAGE_ENGLISH, "Prepaid");
+		payTypes.put(PRODUCT_PAY_TYPE_POSTPAID + LANGUAGE_ENGLISH, "Postpaid");
+		payTypes.put(PRODUCT_PAY_TYPE_HYBRID + LANGUAGE_ENGLISH, "Hybrid");
+//		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_SIM + LANGUAGE_ENGLISH, "Post Paid SIM");
 		
-		payTypes.put(PRODUCT_PAY_TYPE_PREPAID + LANGUAGE_CHINA, "预付费语音");
-		payTypes.put(PRODUCT_PAY_TYPE_DATASIM + LANGUAGE_CHINA, "预付费流量");
-		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_OFFERS + LANGUAGE_CHINA, "后付费终端合约");
-		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_SIM + LANGUAGE_CHINA, "后付费SIM");
+		payTypes.put(PRODUCT_PAY_TYPE_PREPAID + LANGUAGE_CHINA, "预付费");
+		payTypes.put(PRODUCT_PAY_TYPE_POSTPAID + LANGUAGE_CHINA, "后付费");
+		payTypes.put(PRODUCT_PAY_TYPE_HYBRID + LANGUAGE_CHINA, "混合");
+//		payTypes.put(PRODUCT_PAY_TYPE_MONTHLY_SIM + LANGUAGE_CHINA, "后付费SIM");
 		
 		/**状态**/
 		stateTypes.put(STATE_VALID + LANGUAGE_ENGLISH, "Active");

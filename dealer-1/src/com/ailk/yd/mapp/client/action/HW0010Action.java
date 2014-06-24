@@ -61,7 +61,7 @@ public class HW0010Action extends
 		if(caf.getOrder().getImei()  != null && caf.getOrder().getImei().isEmpty() == false)
 			order.setSim(mapper.writeValueAsString(caf.getOrder().getImei()));
 		//		order.setImsi(req.getImsi());
-		order.setProduct(StringUtil.isEmpty(caf.getOrder().getOfferId())? null : new Product(Long.valueOf(caf.getOrder().getOfferId())));
+		order.setProduct(caf.getOrder().getPid() == null ? null : new Product(caf.getOrder().getPid()));
 		order.setPayMode(caf.getPayInfo() ==null?null:caf.getPayInfo().getModeOfPayment());
 		order.setBankSerial(caf.getPayInfo() ==null?null:caf.getPayInfo().getReceiptNumber());
 		order.setBankCode(caf.getPayInfo() ==null?null:caf.getPayInfo().getBankName());
@@ -74,9 +74,9 @@ public class HW0010Action extends
 			totalFee = totalFee.add(caf.getOrder().getMdnFee());
 		
 		Set<String> pcodes = new HashSet<String>(0);
-		if(StringUtils.isBlank(caf.getOrder().getOfferId()));
+		if(StringUtils.isBlank(caf.getOrder().getOfferId()) == false);
 			pcodes.add(caf.getOrder().getOfferId());
-		if(StringUtils.isBlank(caf.getOrder().getPlanOffering()))
+		if(StringUtils.isBlank(caf.getOrder().getPlanOffering()) == false)
 			pcodes.add(caf.getOrder().getPlanOffering());
 		
 		if(pcodes != null && pcodes.isEmpty()==false)

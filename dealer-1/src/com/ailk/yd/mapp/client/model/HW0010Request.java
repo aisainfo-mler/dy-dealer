@@ -833,6 +833,7 @@ public class HW0010Request extends YDBody {
 		private String deliveryMode;
 		private String businessInteraction;
 		private String accountId;
+		private Long pid;
 		private String offerId;
 		private String eWalletReservationReferenceId;
 		private String planOffering;
@@ -843,6 +844,12 @@ public class HW0010Request extends YDBody {
 		private Set<String> imei;
 		private Map<String,Map<String,String>> devices;
 		
+		public Long getPid() {
+			return pid;
+		}
+		public void setPid(Long pid) {
+			this.pid = pid;
+		}
 		public String getOrderType() {
 			return orderType;
 		}
