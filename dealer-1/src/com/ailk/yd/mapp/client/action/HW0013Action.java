@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
@@ -29,6 +31,7 @@ import com.ailk.yd.mapp.model.UserInfo;
 
 @Service("hw0013")
 @Action(bizcode="hw0013",userCheck=true)
+@Scope("prototype")
 public class HW0013Action extends
 		AbstractYDBaseActionHandler<HW0013Request, HW0013Response> {
 

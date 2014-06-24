@@ -449,7 +449,7 @@ public class SYSConstant {
 	/**
 	 * 预存池账户
 	 */
-	public static final String PAY_STATUS_ACCOUNT = "2";//预存池账户
+	public static final String PAY_MODE_ACCOUNT = "2";//预存池账户
 	
 	public static final String SVC_LEVEL_GOLD = "1";//金牌
 	public static final String SVC_LEVEL_SILVER = "2";//银牌

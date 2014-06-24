@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.bss.entity.ParamObject;
 import com.ai.mapp.bss.util.BSSConstantError;
 import com.ai.mapp.bss.util.BSSConstantParam;
+import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.service.AgentOrderService;
 
 @Service(value="hw0016Service")
@@ -37,6 +38,10 @@ public class HW0016SVImpl extends ISVTemplate {
 			.unmarshal(new StringReader((String)param.getParameter(BSSConstantParam.REQUESTCONTENT)));
 
 		agentOrderService.payOrder(req.getOrderCode(), req.getPayMode(),req.getVoucherNo());
+		
+		AgentOrder order = agentOrderService.loadAgentOrderByOrderCode(req.getOrderCode());
+		
+		System.out.println(order.getCreator() == null?null:order.getCreator().getUserCode());
 		
 		param.setIfSuccess(true);
 		return param;

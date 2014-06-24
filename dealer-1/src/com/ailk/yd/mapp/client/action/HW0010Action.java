@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
@@ -27,6 +28,7 @@ import com.ailk.yd.mapp.client.model.HW0010Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
+@Scope("prototype")
 public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0010Response> {
 
 	@Autowired
@@ -54,7 +56,7 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		
 		AgentOrder order = new AgentOrder();
 		order.setCreator(creator);
-		order.setPayMode(SYSConstant.PAY_STATUS_ACCOUNT);
+		order.setPayMode(SYSConstant.PAY_MODE_ACCOUNT);
 		order.setPackageFee(0L);//
 		order.setSim(caf.getOrder().getSim());
 		order.setSvn(caf.getOrder().getMdn());
