@@ -67,14 +67,12 @@ public class MappController extends BaseController {
 		Map<String,Object> attrMap = new HashMap<String, Object>(0);
 		attrMap.put(MappContext.MAPPCONTEXT_REQUEST_IP,request.getRemoteHost());
 		attrMap.put(MappContext.MAPPCONTEXT_SESSIONID, request.getSession().getId());
-		Long userId = (Long)request.getSession().getAttribute(BSSConstantParam.USERID);
-		String userCode = (String)request.getSession().getAttribute(BSSConstantParam.USERCODE);
-		if(userId != null){
-			IUserinfo user = new UserInfo();
-			user.setUserId(userId);
-			user.setUserName(userCode);
-			attrMap.put(MappContext.MAPPCONTEXT_USER, user);
-		}
+//		Long userId = (Long)request.getSession().getAttribute(BSSConstantParam.USERID);
+//		String userCode = (String)request.getSession().getAttribute(BSSConstantParam.USERCODE);
+		IUserinfo user = new UserInfo();
+		user.setUserId(1L);
+		user.setUserName("m01");
+		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
 //		Object userCode = request.getSession().getAttribute(BSSConstantParam.USERCODE);
 //		if(userCode != null){
 //			user.setUserCode((String)userCode);
