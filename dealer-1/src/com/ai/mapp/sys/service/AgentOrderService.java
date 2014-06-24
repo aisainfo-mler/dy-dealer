@@ -267,7 +267,8 @@ public class AgentOrderService {
 //		float rate = SYSConstant.discountTypes.get(SYSConstant.AGENT_ORDER_TYPE_NEW);
 //		float discountFee = order.getSaleFee()*rate/100;
 		Map<String,String> variantMap = new HashMap<String,String>();
-		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
+//		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
+		BigDecimal fee = (new BigDecimal(order.getSaleFee()));
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDER_AMOUNT, fee.toString());
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_NEW);
 		
@@ -278,7 +279,8 @@ public class AgentOrderService {
 			agentId=agentUser.getUserId();
 		}
 		
-		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
+//		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
+		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
 		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_NEW;
 		
 		order.setCompleteTime(now);
@@ -294,7 +296,7 @@ public class AgentOrderService {
 		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_NEW);
 		order.setPayStatus(SYSConstant.PAY_STATUS_NOT_PAID);
 		order.setPayTime(now);
-		order.setPreStore(product.getPrestore() == null?0:product.getPrestore()*1000);
+		order.setPreStore(product.getPrestore() == null?0:product.getPrestore());
 		order.setRealFee((new BigDecimal(order.getSaleFee())).subtract(discountFeeB).longValue());
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_WAITTING);
 //		order.setBlance(svnInfo.getAmount());
@@ -531,28 +533,29 @@ public class AgentOrderService {
 		
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_COMPLETE);
 		
-		SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(), null);
-		
-		/**
-		 * 新开的时候会在svn_product表中增加记录
-		 */
-		if(SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()))
-		{
-			auditOrder(order);
-			svnInfo.setStatus(SYSConstant.STATE_VALID);
-			svnInfoService.saveSvnInfo(svnInfo);
-			
-		}
-		
-		if (svnInfo != null && order.getProduct() != null
-				&& order.getProduct().getPrestore() != null
-				&& order.getProduct().getPrestore() >= 0) 
-		{
-			Long amount = svnInfo.getAmount() == null ? 0 : svnInfo.getAmount().longValue();
-			Long preStore = order.getProduct().getPrestore() == null ? 0 : order.getProduct().getPrestore().longValue()*1000;
-			svnInfo.setAmount(amount+preStore);
-			svnInfoService.saveSvnInfo(svnInfo);
-		}
+		/** svnInfo相关数据不进行保存 **/
+//		SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(), null);
+//		
+//		/**
+//		 * 新开的时候会在svn_product表中增加记录
+//		 */
+//		if(SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()))
+//		{
+//			auditOrder(order);
+//			svnInfo.setStatus(SYSConstant.STATE_VALID);
+//			svnInfoService.saveSvnInfo(svnInfo);
+//			
+//		}
+//		
+//		if (svnInfo != null && order.getProduct() != null
+//				&& order.getProduct().getPrestore() != null
+//				&& order.getProduct().getPrestore() >= 0) 
+//		{
+//			Long amount = svnInfo.getAmount() == null ? 0 : svnInfo.getAmount().longValue();
+//			Long preStore = order.getProduct().getPrestore() == null ? 0 : order.getProduct().getPrestore().longValue()*1000;
+//			svnInfo.setAmount(amount+preStore);
+//			svnInfoService.saveSvnInfo(svnInfo);
+//		}
 		
 		/** 由于卡号是后录入的，因此在完成之前将sim号存入订单 **/
 		if(goods != null && goods.isEmpty() == false)
@@ -588,6 +591,8 @@ public class AgentOrderService {
 	 */
 	public void auditOrder(AgentOrder order)throws Exception{
 
+		/**
+		对接生产环境，用户订购的套餐，用户数据，号码数据都在CRM侧，本地db不需要进行保存
 		SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_TEMP);
 		
 		SvnProduct svnProduct = new SvnProduct();
@@ -599,6 +604,9 @@ public class AgentOrderService {
 		svnProduct.setProduct(order.getProduct());
 		svnProduct.setUser(svnInfo.getCustomer());
 		svnProductService.saveSvnProduct(svnProduct);
+		
+		
+		**/
 		
 		saveAgentOrder(order);
 		

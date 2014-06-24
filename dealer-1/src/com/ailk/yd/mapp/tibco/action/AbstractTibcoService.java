@@ -23,7 +23,9 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 	
 	public Rsp post2Tibco(Req request,Map<String,?> paramters) throws Exception {
 		
-		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), convertRequest(request), paramters,null,true);
+		String json = convertRequest(request);
+		System.out.println("tibco request:"+json);
+		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), json, paramters,null,true);
 		checkSucc(rsp_string);
 		return convertResponse(rsp_string);
 		
