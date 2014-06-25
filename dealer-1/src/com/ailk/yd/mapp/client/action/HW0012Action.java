@@ -400,7 +400,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 				
 				/** 设置resourceSpec **/
 				ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
-				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty())
+				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
 				{
 					order.setProducts(new ArrayList<YD0010Request.Product>(0));
 					for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
@@ -411,7 +411,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						ps.setStarterKitCode("");
 						order.getProducts().add(ps);
 						
-						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty() == false)
+						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
 							continue;
 						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
 						

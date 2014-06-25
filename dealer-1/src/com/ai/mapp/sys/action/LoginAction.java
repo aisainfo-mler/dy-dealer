@@ -17,6 +17,12 @@ import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.LoginService;
 import com.ai.mapp.sys.service.MenuService;
 import com.ai.mapp.sys.util.SYSConstant;
+import com.ailk.butterfly.core.security.IUserinfo;
+import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
+import com.ailk.butterfly.sys.dal.ibatis.model.SysUser;
+import com.ailk.butterfly.sys.dal.ibatis.model.SysUserInfo;
+import com.ailk.web.SessionUtil;
+import com.ailk.yd.mapp.model.UserInfo;
 
 public class LoginAction extends BaseAction {
 
@@ -78,6 +84,22 @@ public class LoginAction extends BaseAction {
 			
 			putSessionValue(HTTP_SESSION_MAINMENU, mainMenu);
 			putSessionValue(HTTP_SESSION_SUBMENU, subMenuMap);
+			/**
+			 * 构建butterfly session
+			 */
+			IUserInfo userInfo = new SysUserInfo();
+			userInfo.setUserId(user.getUserId());
+			userInfo.setUserName(user.getUserCode());
+			SysUser sysUser = new SysUser();
+			sysUser.setUserLoginName(user.getUserCode());
+			sysUser.setUserName(user.getName());
+			sysUser.setDeptId(user.getNetId().intValue());
+			sysUser.setMobilePhone(user.getMobileNo());
+			sysUser.setEmail(user.getEmail());
+			sysUser.setUserStatus(user.getStatus());
+			userInfo.setUser(sysUser);
+			request.getSession().setAttribute(SessionUtil.SESSION_USER_INFO_KEY, userInfo);
+			
 			
 			if(SYSConstant.LANGUAGE_CHINA.equals(getSessionValue("lang") + "")){
 				 return returnAjaxSuccess("登陆成功", false);

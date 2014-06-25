@@ -1,0 +1,27 @@
+#macro (demo $productList)   
+    #set ($rowCount = 1)               
+    #foreach($product in $productList)             
+    #if ($rowCount % 2 == 0)   
+        #set ($bgcolor = "#FFFFFF")   
+    #else   
+        #set ($bgcolor = "#CCCCCC")            
+    #end   
+        <tr>  
+            <td bgcolor="$bgcolor">$product</td>  
+            <td bgcolor="$bgcolor">$product</td>  
+        </tr>                          
+        #set ($rowCount = $rowCount + 1)   
+    #end   
+#end
+
+#macro (pagination)
+		<form class="p_from">
+    		<input type='hidden' class='p_startRow' name='pageStart' value='${pageinfo.pageStart}'/>
+    		<input type='hidden' class='p_count' name='pageCount' value='$!{pageinfo.pageCount}'/>
+    		<input type='hidden' class='p_total' name='totalCount' value='$!{pageinfo.totalCount}'/>
+		</form>
+#end
+
+#macro(paginationDiv)
+	<div id="pp" class="pageBar" style="background:#afdfe4;border:1px solid #ccc;" ppath="$!{CONTEXT_PATH}"></div>
+#end

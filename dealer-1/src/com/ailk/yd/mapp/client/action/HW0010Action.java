@@ -1,11 +1,19 @@
 package com.ailk.yd.mapp.client.action;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.Bidi;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -13,8 +21,10 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
+import com.ai.mapp.sys.entity.ProductSpecMapping;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.SYSConstant;
@@ -25,6 +35,7 @@ import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0010Response;
+import com.ailk.yd.mapp.client.model.HW0013Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
@@ -60,6 +71,7 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		order.setPackageFee(0L);//
 		order.setSim(caf.getOrder().getSim());
 		order.setSvn(caf.getOrder().getMdn());
+		order.setNumberFee(caf.getOrder().getMdnFee()==null?0L:caf.getOrder().getMdnFee().longValue());
 		if(caf.getOrder().getImei()  != null && caf.getOrder().getImei().isEmpty() == false)
 			order.setSim(mapper.writeValueAsString(caf.getOrder().getImei()));
 		//		order.setImsi(req.getImsi());
@@ -72,14 +84,15 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		
 		//算费接口
 		BigDecimal totalFee = BigDecimal.ZERO;
-		if(caf.getOrder().getMdnFee() != null)
-			totalFee = totalFee.add(caf.getOrder().getMdnFee());
+		BigDecimal numberFee = caf.getOrder().getMdnFee()==null?BigDecimal.ZERO:caf.getOrder().getMdnFee();
 		
 		Set<String> pcodes = new HashSet<String>(0);
 		if(StringUtils.isBlank(caf.getOrder().getOfferId()) == false);
 			pcodes.add(caf.getOrder().getOfferId());
 		if(StringUtils.isBlank(caf.getOrder().getPlanOffering()) == false)
 			pcodes.add(caf.getOrder().getPlanOffering());
+		
+		BigDecimal productFee = BigDecimal.ZERO;
 		
 		if(pcodes != null && pcodes.isEmpty()==false)
 		{
@@ -89,12 +102,66 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 			if(products != null && products.isEmpty() == false)
 			{
 				for(Product p : products)
-					totalFee = totalFee.add(productService.calProductFee(p));
+					productFee = productFee.add(productService.calProductFee(p));
 			}
 		}
-		order.setSaleFee(totalFee.longValue());
+		
+		Map<String,BigDecimal> feeMap = new HashMap<String, BigDecimal>(0);
+		feeMap.put("mdn", numberFee);
+		feeMap.put("product", productFee);
+		feeMap.put("resource", getResourceFee(caf.getOrder().getOfferId()));
+		feeMap.put("plan", BigDecimal.ZERO);
+		if(StringUtils.isBlank(caf.getOrder().getPlanOffering()) == false)
+		{
+			Product plan = productService.getProductByCode(caf.getOrder().getPlanOffering());
+			if(plan != null)
+			feeMap.put("plan", plan.getPrice()==null?BigDecimal.ZERO:BigDecimal.valueOf(plan.getPrice()));	
+		}
+		
+		order.setNumberFee(numberFee.longValue());
+		order.setPackageFee(productFee.longValue());
+		order.setSaleFee(totalFee.add(productFee).add(numberFee).longValue());
+		order.setFeeDetail(mapper.writeValueAsString(feeMap));
 		order = agentOrderService.createNewOrderByAgent(order,creator);
 		this.response.setOrderCode(order.getOrderCode());
 	}
+
+	private BigDecimal getResourceFee(String productCode) throws Exception
+	{
+		BigDecimal resourceFee = BigDecimal.ZERO;
+		
+		if(StringUtils.isBlank(productCode))
+			return resourceFee;
+		
+		Product p = productService.getProductByCode(productCode);
+		
+		if(p == null)
+			return resourceFee;
+		
+		/** 设置resourceSpec **/
+		if(StringUtils.isEmpty(p.getProductSpecList()) == false)
+		{
+			ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
+			if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
+			{
+				for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
+				{
+					if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
+						continue;
+					
+					for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
+					{
+						if(StringUtils.isBlank(resourceSpec.getComponentPrice()) == false)
+						{
+							resourceFee.add(new BigDecimal(resourceSpec.getComponentPrice()));
+						}
+					}
+				}
+			}
+		}
+			
+		return resourceFee;
+	}
+	
 
 }

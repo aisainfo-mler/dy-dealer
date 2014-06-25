@@ -2,6 +2,7 @@ package com.ailk.yd.mapp.client.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import com.ailk.yd.mapp.model.YDBody;
 
@@ -9,7 +10,8 @@ public class HW0013Response extends YDBody {
 
 	private List<Order> orders;
 
-	public static class Order {
+	public static class Order extends YDBody
+	{
 		private java.lang.String orderCode;
 
 		private java.lang.String orderType;
@@ -53,59 +55,8 @@ public class HW0013Response extends YDBody {
 		private java.lang.String numberFee;
 
 		private java.lang.String SIMFee;
-
-		private List<FeeInfo> feeInfos;
-
-		public static class FeeInfo {
-			/**
-			 * 费用分类型
-			 */
-			private Long feeType;
-			/**
-			 * 费用名称
-			 */
-			private String name;
-			/**
-			 * 所需费用(卢比)
-			 */
-			private BigDecimal fee;
-			
-			public Long getFeeType() {
-				return feeType;
-			}
-
-			public void setFeeType(Long feeType) {
-				this.feeType = feeType;
-			}
-
-			public String getName() {
-				return name;
-			}
-
-			public void setName(String name) {
-				this.name = name;
-			}
-
-			public BigDecimal getFee() {
-				return fee;
-			}
-
-			public void setFee(BigDecimal fee) {
-				this.fee = fee;
-			}
-
-			public FeeInfo() {
-				super();
-			}
-
-			public FeeInfo(Long feeType, String name, BigDecimal fee) {
-				super();
-				this.feeType = feeType;
-				this.name = name;
-				this.fee = fee;
-			}
-
-		}
+		
+		private Map<String,BigDecimal> feeDetail;
 
 		public java.lang.String getOrderCode() {
 			return orderCode;
@@ -283,12 +234,107 @@ public class HW0013Response extends YDBody {
 			SIMFee = sIMFee;
 		}
 
-		public List<FeeInfo> getFeeInfos() {
-			return feeInfos;
+		public Map<String,BigDecimal> getFeeDetail() {
+			return feeDetail;
 		}
 
-		public void setFeeInfos(List<FeeInfo> feeInfos) {
-			this.feeInfos = feeInfos;
+		public void setFeeDetail(Map<String,BigDecimal> feeDetail) {
+			this.feeDetail = feeDetail;
+		}
+
+	}
+	
+	public static class ResourceFee  extends YDBody {
+		/**
+		 * 费用分类型
+		 */
+		private String feeType;
+		/**
+		 * 费用名称
+		 */
+		private String name;
+		/**
+		 * 所需费用(卢比)
+		 */
+		private BigDecimal fee;
+		
+		public String getFeeType() {
+			return feeType;
+		}
+
+		public void setFeeType(String feeType) {
+			this.feeType = feeType;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public BigDecimal getFee() {
+			return fee;
+		}
+
+		public void setFee(BigDecimal fee) {
+			this.fee = fee;
+		}
+
+		public ResourceFee() {
+			super();
+		}
+
+		public ResourceFee(String feeType, String name, BigDecimal fee) {
+			super();
+			this.feeType = feeType;
+			this.name = name;
+			this.fee = fee;
+		}
+
+	}
+	
+	public static class FeeDetail 
+	{
+		 private BigDecimal planFee;
+		 
+		 private BigDecimal numberFee;
+		 
+		 private BigDecimal simFee;
+		 
+		 private List<ResourceFee> resourceFeeInfo;
+
+		public BigDecimal getPlanFee() {
+			return planFee;
+		}
+
+		public void setPlanFee(BigDecimal planFee) {
+			this.planFee = planFee;
+		}
+
+		public BigDecimal getNumberFee() {
+			return numberFee;
+		}
+
+		public void setNumberFee(BigDecimal numberFee) {
+			this.numberFee = numberFee;
+		}
+
+		public BigDecimal getSimFee() {
+			return simFee;
+		}
+
+		public void setSimFee(BigDecimal simFee) {
+			this.simFee = simFee;
+		}
+
+		public List<ResourceFee> getResourceFeeInfo() {
+			return resourceFeeInfo;
+		}
+
+		public void setResourceFeeInfo(List<ResourceFee> resourceFeeInfo) {
+			this.resourceFeeInfo = resourceFeeInfo;
 		}
 
 	}
