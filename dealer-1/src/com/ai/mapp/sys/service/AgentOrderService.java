@@ -656,45 +656,47 @@ public class AgentOrderService {
 		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
 		order.setPayTime(new Date());
 		
-		if(SYSConstant.AGENT_ORDER_TYPE_RECHARGE.equals(order.getOrderType()))
-		{
-			/** 充值订单在付款完成后，直接完成订单 **/
-			changeOrderStatus(order.getOrderCode(),SYSConstant.AGENT_ORDER_STATUS_COMPLETE);
-			
-			/** 当充值订单手机号不存在时，默认为打印PIN码的订单 **/
-			if(StringUtil.isEmpty(order.getSvn()) == false)
-			{
-//				SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
+		/**
+		 * 修改，将充值订单和其余类型的订单一致，支付完以后还未完成，等tibco调用top-up成功以后再完成
+		 */
+//		if(SYSConstant.AGENT_ORDER_TYPE_RECHARGE.equals(order.getOrderType()))
+//		{
+//			/** 充值订单在付款完成后，直接完成订单 **/
+//			changeOrderStatus(order.getOrderCode(),SYSConstant.AGENT_ORDER_STATUS_COMPLETE);
 //			
-//				if(svnInfo != null)
-//				{
-//	//				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
-//					/** 充值动作等支付完成后操作 **/
-//					svnInfo.setAmount(( svnInfo.getAmount() == null ? 0 :svnInfo.getAmount() )+order.getSaleFee());
-//				
-//					svnInfoService.saveSvnInfo(svnInfo);
-//				}
-			}
-			else
-			{
-				if(StringUtil.isEmpty(order.getPin()))
-					throw new Exception(LanguageInfo.MUST_HAVE_PIN);
-			}
-			
-		}
-		else
+//			/** 当充值订单手机号不存在时，默认为打印PIN码的订单 **/
+//			if(StringUtil.isEmpty(order.getSvn()) == false)
+//			{
+////				SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
+////			
+////				if(svnInfo != null)
+////				{
+////	//				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
+////					/** 充值动作等支付完成后操作 **/
+////					svnInfo.setAmount(( svnInfo.getAmount() == null ? 0 :svnInfo.getAmount() )+order.getSaleFee());
+////				
+////					svnInfoService.saveSvnInfo(svnInfo);
+////				}
+//			}
+//			else
+//			{
+//				if(StringUtil.isEmpty(order.getPin()))
+//					throw new Exception(LanguageInfo.MUST_HAVE_PIN);
+//			}
+//			
+//		}
+//		else
 		{
 			/** 将订单状态改为已经支付 **/
 			changeOrderStatus(order.getOrderCode(),SYSConstant.AGENT_ORDER_STATUS_HAS_PAID);
 		}
 		
 		/** 将佣金生成放到订单完成后 **/
-//		/** 保存佣金记录 **/
 //		commissionService.addCommissionByAgentOrder(order.getOrderCode());
 		
 		if(SYSConstant.PAY_MODE_ACCOUNT.equals(order.getPayMode()))
 		{
-			//TODO 预存池扣款
+			/** 预存池全额扣款 **/
 			accountInfoService.payAgentOrderFromAccount(order.getOrderCode());
 		}
 		

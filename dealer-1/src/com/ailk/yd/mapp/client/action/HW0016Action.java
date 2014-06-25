@@ -26,13 +26,7 @@ public class HW0016Action extends AbstractYDBaseActionHandler<HW0016Request, IBo
 	@Override
 	protected void doAction() throws BusinessException, SystemException,Exception 
 	{
-		agentOrderService.payOrder(request.getOrderCode(), SYSConstant.PAY_MODE_CREDIT,request.getVoucherNo(),request.getPayPwd());
-//		AgentOrder order = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
-//		System.out.println(order.getCreator() == null?null:order.getCreator().getUserCode());
-//		
-//		System.out.println("================================");
-		
-		
+		agentOrderService.payOrder(request.getOrderCode(), request.getPayMode(),request.getVoucherNo(),request.getPayPwd());
 	}
 
 }

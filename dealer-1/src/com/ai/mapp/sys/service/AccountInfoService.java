@@ -136,23 +136,7 @@ public class AccountInfoService {
 		 *  2014-05-05 mler
 		 **/
 		long needfee =  order.getSaleFee() == null ? 0 : order.getSaleFee().longValue();
-		
-//		long needfee = order.getRealFee() == null ? 0 : order.getRealFee().longValue();
-//		/** 
-//		 * 	如果佣金模式为非立即支付方式，即则为佣金模式，因此扣款先扣全款 
-//		 **/
-//		if(SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()) &&
-//				SYSConstant.PRODUCT_PAY_TYPE_PREPAID.equals(order.getProduct().getPayType()) == false
-//				&& SYSConstant.PRODUCT_PAY_TYPE_DATASIM.equals(order.getProduct().getPayType()) == false)
-//		{
-//			needfee = order.getSaleFee();
-//		}
-//		
-//		if(commissionService.pay_immediately(agentOrderCode))
-//		{
-//			needfee = order.getSaleFee();
-//		}
-		
+
 		long amount = account.getAmount() == null ? 0 : account.getAmount().longValue();
 		if(amount < needfee)
 			throw new Exception(" " + LanguageInfo.ACCOUNT + " : "+amount+" " + LanguageInfo.BE_NO_ENOUGH + " ");
@@ -169,17 +153,17 @@ public class AccountInfoService {
 		log_pay.setAgentOrder(order);
 		accountLogService.saveAccountLog(log_pay);
 		
-		//TODO 预存池充值记录
-		if(commissionService.pay_immediately(agentOrderCode))
-		{
-			AccountLog log_recharge = new AccountLog();
-			log_recharge.setAccount(account);
-			log_recharge.setCreateTime(new Date());
-			log_recharge.setPay(order.getDiscountFee());
-			log_recharge.setLogType(SYSConstant.ACCOUNT_LOG_TYPE_CHARGE);
-			log_recharge.setAgentOrder(order);
-			accountLogService.saveAccountLog(log_recharge);
-		}
+//		//TODO 预存池充值记录
+//		if(commissionService.pay_immediately(agentOrderCode))
+//		{
+//			AccountLog log_recharge = new AccountLog();
+//			log_recharge.setAccount(account);
+//			log_recharge.setCreateTime(new Date());
+//			log_recharge.setPay(order.getDiscountFee());
+//			log_recharge.setLogType(SYSConstant.ACCOUNT_LOG_TYPE_CHARGE);
+//			log_recharge.setAgentOrder(order);
+//			accountLogService.saveAccountLog(log_recharge);
+//		}
 		
 	}
 	

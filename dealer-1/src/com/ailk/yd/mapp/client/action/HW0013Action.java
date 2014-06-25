@@ -112,12 +112,7 @@ public class HW0013Action extends
 			d.setPayStatus(order.getPayStatus()== null?"":order.getPayStatus());
 			d.setPin(order.getPin()== null?"":order.getPin());
 			d.setPackageFee(order.getPackageFee() == null?"0":order.getPackageFee().toString());
-			if(order.getProduct()!=null && order.getProduct().getContract()!=null 
-					&& StringUtils.isNotEmpty(order.getProduct().getContract().getName())){
-				d.setPackageName(order.getProduct().getContract().getName());
-			}else{
-				d.setPackageName("");
-			}
+			d.setPackageName(order.getProduct()==null?"":order.getProduct().getPackedName());
 			d.setSimFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setSIMFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setNumberFee(order.getNumberFee() == null?"0":order.getNumberFee().toString());

@@ -111,8 +111,7 @@ public class YdLogAspect {
 			if(user != null && user.getUserId() != null)
 			log.setUserId(user.getUserId().longValue());
 			log.setCreateTime(new Date(System.currentTimeMillis()));
-			log.setUrl("localhost");
-
+			log.setUrl((String)MappContext.getAttribute(MappContext.MAPPCONTEXT_REQUEST_IP));
 			log.setReq((String)args[0]);
 			log.setRsp((String)result);
 			callLogService.saveCallLog(log);
