@@ -217,7 +217,7 @@ public class OrderInfoService {
 		saveOrderInfo(order);
 		
 		//TODO 预存池扣款
-		if(SYSConstant.PAY_STATUS_ACCOUNT.equals(order.getPayMode()))
+		if(SYSConstant.PAY_MODE_ACCOUNT.equals(order.getPayMode()))
 			accountInfoService.payOrderInfoFromAccount(order.getSerialNumber());
 		
 		

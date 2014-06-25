@@ -13,6 +13,7 @@ import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.LanguageInfo;
 import com.ai.mapp.sys.util.SYSConstant;
+import com.ailk.butterfly.mapp.core.MappContext;
 
 @Service("hw0005Service")
 @Scope("singleton")
@@ -47,7 +48,7 @@ public class Hw0005SVImpl extends ISVTemplate {
 		param.setSessionAttr(BSSConstantParam.IMSI, req.getIMSI());
 		param.setSessionAttr(BSSConstantParam.USERCODE, user.getUserCode());
 		param.setSessionAttr(BSSConstantParam.USERID, user.getUserId());
-		param.setSessionAttr(BSSConstantParam.LANGUAGE, SYSConstant.LANGUAGE_CHINA);//req.getLanguage()
+		param.setSessionAttr(BSSConstantParam.LANGUAGE, SYSConstant.LANGUAGE_ENGLISH);//req.getLanguage()
 		
 		rsp.setRspCode(BSSConstantParam.RESPONSECODE_SUCCESS);
 		rsp.setSessionId((String)param.getParameter(BSSConstantParam.SESSION_ID));

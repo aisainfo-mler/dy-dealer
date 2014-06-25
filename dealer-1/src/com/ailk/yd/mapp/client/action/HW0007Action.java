@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ailk.butterfly.core.exception.BusinessException;
@@ -19,6 +20,7 @@ import com.ailk.yd.mapp.tibco.model.YD0007.YD0007Response;
 
 @Action(bizcode = "hw0007", userCheck = true)
 @Service("hw0007")
+@Scope("prototype")
 public class HW0007Action extends
 		AbstractYDBaseActionHandler<HW0007Request, HW0007Response> {
 

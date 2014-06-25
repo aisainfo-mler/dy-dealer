@@ -1,74 +1,53 @@
 package com.ailk.yd.mapp.client.action;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.AgentOrder;
-import com.ai.mapp.sys.entity.PlanSpecMapping;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
-import com.ai.mapp.sys.entity.SmallLocalFile;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
-import com.ai.mapp.sys.service.SmallLocalFileService;
 import com.ai.mapp.sys.service.UserService;
-import com.ai.mapp.sys.util.SYSConstant;
-import com.ailk.butterfly.common.util.DateUtil;
-import com.ailk.butterfly.core.exception.BusinessException;
-import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.core.util.DateUtils;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
-import com.ailk.util.JsonUtil;
-import com.ailk.util.SetUtil;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0012Request;
-import com.ailk.yd.mapp.model.YDDatapackage;
 import com.ailk.yd.mapp.tibco.action.YD0010Action;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request_diff;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Response;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Address;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.CafInfo;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Connection;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Contact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Customer;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Dependancy;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Device;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FacingService;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FamilyContact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Form61;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.IdObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.LocalRef;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.LocalRefVerify;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.MnpPort;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameAndValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Order;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.PayInfo;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductCafInfo;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductIdentifier;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductProof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Proof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ReferringCustomer;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ValueObject;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Response;
 
 
 @Service("hw0012")
 @Action(bizcode="hw0012",userCheck=true)
+@Scope("prototype")
 public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBody> {
 
 	@Autowired
@@ -87,8 +66,8 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	protected void doAction() throws Exception 
 	{
 		
-		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-		User u = userService.loadUserByUserCode(ui.getUserName());
+//		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+//		User creator = userService.loadUserByUserCode(ui.getUserName());
 		AgentOrder ao = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
 		if(ao == null)
 			throw new Exception(request.getOrderCode()+": not found");
@@ -102,6 +81,10 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		ao.setTibcoSendFlag("1");
 		agentOrderService.saveAgentOrder(ao);
 		agentOrderService.completedOrder(ao.getOrderCode(), null);
+		
+//		AgentOrder order = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
+//		System.out.println(order.getCreator() == null?null:order.getCreator().getUserCode());
+		
 	}
 	
 	public YD0010Request convertByHW0010(HW0010Request hw0010_req) throws Exception

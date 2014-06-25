@@ -280,7 +280,8 @@ public class AgentOrderService {
 		}
 		
 //		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
-		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
+		BigDecimal discountFeeB = BigDecimal.valueOf(commissionRuleService.getImmediateCommissionValue(variantMap,agentId).longValue());
+		
 		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_NEW;
 		
 		order.setCompleteTime(now);
@@ -301,6 +302,7 @@ public class AgentOrderService {
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_WAITTING);
 //		order.setBlance(svnInfo.getAmount());
 		order.setUpdateTime(now);
+		order.setCreator(user);
 		
 		saveAgentOrder(order);
 		
@@ -621,30 +623,28 @@ public class AgentOrderService {
 	 * @param userId 用户id
 	 * @throws Exception
 	 */
-	public void payOrder(String orderCode,String payMode,String voucherNo,String payPwd,Integer userId) throws Exception{
+	public void payOrder(String orderCode,String payMode,String voucherNo,String payPwd) throws Exception{
+		
 		if(StringUtil.isEmpty(orderCode))
 			throw new Exception(LanguageInfo.ORDERCODE_IS_EMPTY);
-		
-		
-		if(userId==null){
-			throw new Exception(orderCode+" " + LanguageInfo.USER_ID_EMPTY);
-		}
-		if(payPwd==null){
-			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_EMPTY);
-		}
-		
-		User user = this.userService.loadUser(userId.longValue());
-		if(user==null){
-			throw new Exception(orderCode+" " + LanguageInfo.USER_NOT_EXIST);
-		}
-		if(!StringUtils.equals(payPwd, user.getPayPwd())){
-			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_WRONG);
-		}
 		
 		AgentOrder order = loadAgentOrderByOrderCode(orderCode);
 		
 		if(order == null)
 			throw new Exception(orderCode+" " + LanguageInfo.ORDER_UNEXIST);
+		
+		User user = order == null?null:order.getCreator();
+		if(user==null)
+			throw new Exception(orderCode+" " + LanguageInfo.USER_NOT_EXIST);
+		
+		if(order.getCreator()==null || order.getCreator().getUserId() == null)
+			throw new Exception(orderCode+" " + LanguageInfo.USER_ID_EMPTY);
+		
+		if(payPwd==null)
+			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_EMPTY);
+		
+		if(!StringUtils.equals(payPwd, user.getPayPwd()))
+			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_WRONG);
 		
 		if(SYSConstant.AGENT_ORDER_STATUS_WAITTING.equals(order.getStatus()) == false)
 			throw new Exception(orderCode+" " + LanguageInfo.ORDER_HAD_PAID);
@@ -664,16 +664,16 @@ public class AgentOrderService {
 			/** 当充值订单手机号不存在时，默认为打印PIN码的订单 **/
 			if(StringUtil.isEmpty(order.getSvn()) == false)
 			{
-				SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
-			
-				if(svnInfo != null)
-				{
-	//				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
-					/** 充值动作等支付完成后操作 **/
-					svnInfo.setAmount(( svnInfo.getAmount() == null ? 0 :svnInfo.getAmount() )+order.getSaleFee());
-				
-					svnInfoService.saveSvnInfo(svnInfo);
-				}
+//				SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
+//			
+//				if(svnInfo != null)
+//				{
+//	//				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
+//					/** 充值动作等支付完成后操作 **/
+//					svnInfo.setAmount(( svnInfo.getAmount() == null ? 0 :svnInfo.getAmount() )+order.getSaleFee());
+//				
+//					svnInfoService.saveSvnInfo(svnInfo);
+//				}
 			}
 			else
 			{
@@ -692,7 +692,7 @@ public class AgentOrderService {
 //		/** 保存佣金记录 **/
 //		commissionService.addCommissionByAgentOrder(order.getOrderCode());
 		
-		if(SYSConstant.PAY_STATUS_ACCOUNT.equals(order.getPayMode()))
+		if(SYSConstant.PAY_MODE_ACCOUNT.equals(order.getPayMode()))
 		{
 			//TODO 预存池扣款
 			accountInfoService.payAgentOrderFromAccount(order.getOrderCode());
@@ -709,7 +709,7 @@ public class AgentOrderService {
 	 */
 	public void payOrder(String orderCode,String payMode,String voucherNo) throws Exception
 	{
-		this.payOrder(orderCode, payMode, voucherNo, null,null);
+		this.payOrder(orderCode, payMode, voucherNo, null);
 	}
 	
 	public void createCommission(String orderCode) throws Exception
@@ -719,7 +719,7 @@ public class AgentOrderService {
 		/** 保存佣金记录 **/
 		commissionService.addCommissionByAgentOrder(order.getOrderCode());
 		
-		if(SYSConstant.PAY_STATUS_ACCOUNT.equals(order.getPayMode()))
+		if(SYSConstant.PAY_MODE_ACCOUNT.equals(order.getPayMode()))
 		{
 			//TODO 预存池扣款
 			accountInfoService.payAgentOrderFromAccount(order.getOrderCode());
@@ -1354,7 +1354,7 @@ public class AgentOrderService {
 			AgentOrder order = new AgentOrder();
 			order.setBankSerial("3939939399"+i);
 			order.setCreator(creator);
-			order.setPayMode(SYSConstant.PAY_STATUS_ACCOUNT);
+			order.setPayMode(SYSConstant.PAY_MODE_ACCOUNT);
 			order.setPackageFee(500000L);
 			order.setSim("123456789000000"+i);
 			order.setImsi("10000000020202"+i);
@@ -1455,7 +1455,7 @@ public class AgentOrderService {
 		
 		order.setBankSerial("99292929112"+i);
 		order.setCreator(new User(creator));
-		order.setPayMode(SYSConstant.PAY_STATUS_ACCOUNT);
+		order.setPayMode(SYSConstant.PAY_MODE_ACCOUNT);
 		order.setPackageFee(chargefee);
 		order.setSvn(svn);
 		order.setOptType("1");
@@ -1539,7 +1539,7 @@ public class AgentOrderService {
 		AgentOrder order = new AgentOrder();
 		order.setBankSerial("9929292929"+i);
 		order.setCreator(new User(creator));
-		order.setPayMode(SYSConstant.PAY_STATUS_ACCOUNT);
+		order.setPayMode(SYSConstant.PAY_MODE_ACCOUNT);
 		order.setSimFee(orderfee);
 		order.setSim("99887484848"+i);
 		order.setImsi("2228182882"+i);
