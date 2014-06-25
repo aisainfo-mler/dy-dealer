@@ -1,8 +1,10 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
+import com.ai.mapp.sys.entity.ProductSpecMapping;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.SYSConstant;
@@ -25,6 +29,7 @@ import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0010Response;
+import com.ailk.yd.mapp.client.model.HW0013Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
@@ -60,6 +65,7 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		order.setPackageFee(0L);//
 		order.setSim(caf.getOrder().getSim());
 		order.setSvn(caf.getOrder().getMdn());
+		order.setNumberFee(caf.getOrder().getMdnFee().longValue());
 		if(caf.getOrder().getImei()  != null && caf.getOrder().getImei().isEmpty() == false)
 			order.setSim(mapper.writeValueAsString(caf.getOrder().getImei()));
 		//		order.setImsi(req.getImsi());
@@ -70,8 +76,10 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		order.setCafInfo(mapper.writeValueAsString(request));
 		order.setTibcoOrderNumber(caf.getOrder().getOrn());
 		
+		
 		//算费接口
 		BigDecimal totalFee = BigDecimal.ZERO;
+		
 		if(caf.getOrder().getMdnFee() != null)
 			totalFee = totalFee.add(caf.getOrder().getMdnFee());
 		
@@ -81,6 +89,8 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		if(StringUtils.isBlank(caf.getOrder().getPlanOffering()) == false)
 			pcodes.add(caf.getOrder().getPlanOffering());
 		
+		BigDecimal productFee = BigDecimal.ZERO;
+		
 		if(pcodes != null && pcodes.isEmpty()==false)
 		{
 			Product condition = new Product();
@@ -89,12 +99,65 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 			if(products != null && products.isEmpty() == false)
 			{
 				for(Product p : products)
-					totalFee = totalFee.add(productService.calProductFee(p));
+					productFee = productFee.add(productService.calProductFee(p));
 			}
 		}
-		order.setSaleFee(totalFee.longValue());
+		
+		order.setPackageFee(productFee.longValue());
+		order.setSaleFee(totalFee.add(productFee).longValue());
+		order.setFeeDetail(getFeeInfo(caf.getOrder().getOfferId()));
 		order = agentOrderService.createNewOrderByAgent(order,creator);
 		this.response.setOrderCode(order.getOrderCode());
 	}
+	
+
+	private String getFeeInfo(String productOfferingId)
+	{
+		try{
+			if(StringUtils.isBlank(productOfferingId))
+				return null;
+			
+			Product p = productService.getProductByCode(productOfferingId);
+			
+			if(p == null)
+				return null;
+			
+			List<HW0013Response.Order.FeeInfo> fees = new ArrayList<HW0013Response.Order.FeeInfo>(0);
+			/** 设置resourceSpec **/
+			if(StringUtils.isEmpty(p.getProductSpecList()) == false)
+			{
+				ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
+				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
+				{
+					
+					
+					for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
+					{
+						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
+							continue;
+						
+						for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
+						{
+							if(StringUtils.isBlank(resourceSpec.getComponentPrice()) == false)
+							{
+								HW0013Response.Order.FeeInfo fee = new HW0013Response.Order.FeeInfo(resourceSpec.getAssociationType(), resourceSpec.getName(), new BigDecimal(resourceSpec.getComponentPrice()));
+								fees.add(fee);
+							}
+						}
+					}
+				}
+			}
+			
+			if(fees.isEmpty())
+				return null;
+		
+			return mapper.writeValueAsString(fees);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 }

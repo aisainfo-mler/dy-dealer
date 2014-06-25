@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
@@ -15,8 +16,11 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.base.util.DateUtils;
 import com.ai.mapp.sys.entity.AgentOrder;
+import com.ai.mapp.sys.entity.Product;
+import com.ai.mapp.sys.entity.ProductSpecMapping;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.util.LanguageInfo;
 import com.ailk.butterfly.core.exception.BusinessException;
@@ -121,8 +125,7 @@ public class HW0013Action extends
 			d.setSaleFee(order.getSaleFee()== null?"":order.getSaleFee().toString());
 			d.setTotalFee(order.getSaleFee()== null?"":order.getSaleFee().toString());
 			String productType=productService.getProductTypeName(order.getProduct(),LanguageInfo.CURR_LANGUAGE);
-			if(productType==null) productType="";
-			d.setProductType(productType);
+			d.setProductType(productType==null?"":productType);
 			d.setOrderStatus(order.getStatus()== null?"":order.getStatus());
 			d.setPayStatus(order.getPayStatus()== null?"":order.getPayStatus());
 			d.setPin(order.getPin()== null?"":order.getPin());
@@ -138,16 +141,17 @@ public class HW0013Action extends
 			d.setNumberFee(order.getNumberFee() == null?"0":order.getNumberFee().toString());
 			
 //			dl.addOrder(d);
-		
-			if(StringUtils.isNotBlank(order.getFeeDetail())){
-				d.setFeeInfos(JsonUtil.fromJsonStringReturnList(order.getFeeDetail(), HW0013Response.Order.FeeInfo.class));
+			
+			if(StringUtils.isNotBlank(order.getFeeDetail()))
+			{
+				List<HW0013Response.Order.FeeInfo> feeList = mapper.readValue(order.getFeeDetail(), new TypeReference<List<HW0013Response.Order.FeeInfo>>(){});
+				d.setFeeInfos(feeList);
 			}
 			rm.add(d);
 		}
 		response.setOrders(rm);
 		
 	}
-	
 	
 	public static void main(String[] args) {
 		

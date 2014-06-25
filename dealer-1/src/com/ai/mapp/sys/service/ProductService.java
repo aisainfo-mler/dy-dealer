@@ -124,11 +124,11 @@ public class ProductService {
 		if(StringUtils.isEmpty(p.getProductSpecList()) == false)
 		{
 			ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
-			if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty())
+			if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
 			{
 				for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
 				{
-					if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty() == false)
+					if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
 						continue;
 					
 					for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())

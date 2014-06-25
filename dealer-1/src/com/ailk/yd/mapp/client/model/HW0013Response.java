@@ -9,7 +9,8 @@ public class HW0013Response extends YDBody {
 
 	private List<Order> orders;
 
-	public static class Order {
+	public static class Order 
+	{
 		private java.lang.String orderCode;
 
 		private java.lang.String orderType;
@@ -60,7 +61,7 @@ public class HW0013Response extends YDBody {
 			/**
 			 * 费用分类型
 			 */
-			private Long feeType;
+			private String feeType;
 			/**
 			 * 费用名称
 			 */
@@ -70,11 +71,11 @@ public class HW0013Response extends YDBody {
 			 */
 			private BigDecimal fee;
 			
-			public Long getFeeType() {
+			public String getFeeType() {
 				return feeType;
 			}
 
-			public void setFeeType(Long feeType) {
+			public void setFeeType(String feeType) {
 				this.feeType = feeType;
 			}
 
@@ -98,7 +99,7 @@ public class HW0013Response extends YDBody {
 				super();
 			}
 
-			public FeeInfo(Long feeType, String name, BigDecimal fee) {
+			public FeeInfo(String feeType, String name, BigDecimal fee) {
 				super();
 				this.feeType = feeType;
 				this.name = name;
