@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.base.util.DateUtils;
 import com.ai.mapp.sys.entity.AgentOrder;
+import com.ai.mapp.sys.entity.Plan2ProductMapping;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
 import com.ai.mapp.sys.entity.User;
@@ -74,35 +76,15 @@ public class HW0013Action extends
 		if(StringUtil.isEmpty(ui.getUsercode()) == false)
 			condition.setCreator(new User(ui.getUsercode()));
 		
-		
 		int start = StringUtil.isEmpty(req.getStart())  ? 0 : Integer.valueOf(req.getStart());
 		int pageSize = StringUtil.isEmpty(req.getSize()) ? 16 : Integer.valueOf(req.getSize());
 		
 		Collection<AgentOrder> orders = null;
-		
-//		if(StringUtils.equals("1", test)){
-//			condition = new AgentOrder();
-//		}
-		
+	
 		if(StringUtil.isEmpty(req.getStart()) == false && Integer.valueOf(req.getStart()) < 0 )
 			orders = agentOrderService.listAllAgentOrders(condition);
 		else
 			orders = agentOrderService.listAgentOrders(condition, start, pageSize);
-		
-//		if(StringUtils.equals("1", test)){
-//			AgentOrder theOne = null;
-//			for (Iterator it = orders.iterator(); it.hasNext();) {
-//				AgentOrder o = (AgentOrder) it.next();
-//				if(StringUtils.isNotBlank(o.getFeeDetail())){
-//					theOne = o;
-//				}
-//			}
-//			orders.clear();
-//			orders.add(theOne);
-//		}
-		
-		
-		
 		
 		List<HW0013Response.Order> rm = new ArrayList<HW0013Response.Order>();
 		for (Iterator<AgentOrder> it = orders.iterator(); it.hasNext();) {
@@ -140,44 +122,14 @@ public class HW0013Action extends
 			d.setSIMFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setNumberFee(order.getNumberFee() == null?"0":order.getNumberFee().toString());
 			
-//			dl.addOrder(d);
-			
 			if(StringUtils.isNotBlank(order.getFeeDetail()))
 			{
-				List<HW0013Response.Order.FeeInfo> feeList = mapper.readValue(order.getFeeDetail(), new TypeReference<List<HW0013Response.Order.FeeInfo>>(){});
-				d.setFeeInfos(feeList);
+				Map<String,BigDecimal> feeDetail = (Map<String,BigDecimal>)mapper.readValue(order.getFeeDetail(), new TypeReference<Map<String,BigDecimal>>(){});
+				d.setFeeDetail(feeDetail);
 			}
 			rm.add(d);
 		}
 		response.setOrders(rm);
-		
-	}
-	
-	public static void main(String[] args) {
-		
-		
-		String t = "999"+"@-@"+"888";
-		System.err.println(t.split("@-@").length);
-		if(true)return;
-		BigDecimal totalFee = new BigDecimal(9921);
-		List l = new ArrayList();
-		FeeInfo fi = new FeeInfo();
-		fi.setFee(new BigDecimal(9000));
-		fi.setFeeType(1l);
-		fi.setName("测试1");
-		FeeInfo fi1 = new FeeInfo();
-		fi1.setFee(new BigDecimal(921));
-		fi1.setFeeType(3l);
-		fi1.setName("222");
-		l.add(fi1);
-		l.add(fi);
-		String feeDtl = JsonUtil.ListToJsonString(l);
-		System.err.println(feeDtl);
-		String s= "{\"feeType\":3,\"name\":\"222\",\"fee\":921}$^-^${\"feeType\":1,\"name\":\"测试1\",\"fee\":9000}$^-^${\"";
-		List ll = JsonUtil.fromJsonStringReturnList(s, HW0013Response.Order.FeeInfo.class);
-		System.err.println(ll);
-		
-		
 	}
 
 }
