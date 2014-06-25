@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ailk.yd.mapp.client.model.TibcoCustomer;
 import com.ailk.yd.mapp.tibco.model.YD0007.YD0007Request;
 import com.ailk.yd.mapp.tibco.model.YD0007.YD0007Response;
 
@@ -34,10 +33,10 @@ public class YD0007Action extends
 		rm.setTotalRecords(totalRecords);
 
 		JSONArray customers = jo.getJSONArray("customers");
-		List<TibcoCustomer> j = new ArrayList();
+		List<YD0007Response.Customer> j = new ArrayList();
 		rm.setCustomers(j);
 		for (int i = 0; i < customers.size(); i++) {
-			TibcoCustomer c = new TibcoCustomer();
+			YD0007Response.Customer c = new YD0007Response.Customer();
 			JSONObject obj = (JSONObject) customers.get(i);
 			JSONObject cd = obj.getJSONObject("contactDetails");
 			JSONObject pd = obj.getJSONObject("personalDetails");

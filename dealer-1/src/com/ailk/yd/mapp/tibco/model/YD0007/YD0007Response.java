@@ -2,7 +2,6 @@ package com.ailk.yd.mapp.tibco.model.YD0007;
 
 import java.util.List;
 
-import com.ailk.yd.mapp.client.model.TibcoCustomer;
 import com.ailk.yd.mapp.model.YDBody;
 
 /**
@@ -12,7 +11,7 @@ import com.ailk.yd.mapp.model.YDBody;
 
 public class YD0007Response extends YDBody {
 
-	private List<TibcoCustomer> customers;
+	private List<Customer> customers;
 
 	private Integer totalRecords;
 
@@ -26,12 +25,91 @@ public class YD0007Response extends YDBody {
 		this.totalRecords = totalRecords;
 	}
 
-	public List<TibcoCustomer> getCustomers() {
+	public static class Customer {
+		private String customerId;
+		private String customerStatus;
+		/**
+		 * salutation,firstName,middleName,lastName
+		 */
+		private String personalDetails;
+		private String customerPictureURL;
+		private String isBlacklisted;
+		private String displayName;
+		private String mobileNumber;
+		private String emailId;
+		
+		
+		public String getCustomerId() {
+			return customerId;
+		}
+
+		public void setCustomerId(String customerId) {
+			this.customerId = customerId;
+		}
+
+		public String getCustomerStatus() {
+			return customerStatus;
+		}
+
+		public void setCustomerStatus(String customerStatus) {
+			this.customerStatus = customerStatus;
+		}
+
+		public String getPersonalDetails() {
+			return personalDetails;
+		}
+
+		public void setPersonalDetails(String personalDetails) {
+			this.personalDetails = personalDetails;
+		}
+
+		public String getCustomerPictureURL() {
+			return customerPictureURL;
+		}
+
+		public void setCustomerPictureURL(String customerPictureURL) {
+			this.customerPictureURL = customerPictureURL;
+		}
+
+		public String getIsBlacklisted() {
+			return isBlacklisted;
+		}
+
+		public void setIsBlacklisted(String isBlacklisted) {
+			this.isBlacklisted = isBlacklisted;
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+		public void setDisplayName(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getEmailId() {
+			return emailId;
+		}
+
+		public void setEmailId(String emailId) {
+			this.emailId = emailId;
+		}
+
+		public String getMobileNumber() {
+			return mobileNumber;
+		}
+
+		public void setMobileNumber(String mobileNumber) {
+			this.mobileNumber = mobileNumber;
+		}
+
+	}
+
+	public List<Customer> getCustomers() {
 		return customers;
 	}
 
-	public void setCustomers(List<TibcoCustomer> customers) {
+	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
-
 }

@@ -55,25 +55,16 @@ public class HW0007Action extends
 		response.setTotalRecords(g2t.getTotalRecords());
 		List cc = new ArrayList();
 		response.setCustomers(cc);
-//		int i=0;
 		for (Iterator it = g2t.getCustomers().iterator(); it.hasNext();) {
-			TibcoCustomer f = (TibcoCustomer) it.next();
-//			if(i==0){
-//				i++;
-//				f.setCustomerId("1100009566");
-//			}
-			cc.add(f);
-			queryCustomer(f);
+			YD0007Response.Customer f = (YD0007Response.Customer) it.next();
+			HW0007Response.Customer t = new HW0007Response.Customer();
+			new SetUtil(f, t).copyAllSameNameProp();
+			cc.add(t);
+//			queryCustomer(f);
 		}
 
 	}
 
-	/**
-	 * 查询
-	 * 
-	 * @param customer
-	 * @throws Exception
-	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void queryCustomer(TibcoCustomer customer) throws Exception {
 		YD0021Request yd0021Request = new YD0021Request();

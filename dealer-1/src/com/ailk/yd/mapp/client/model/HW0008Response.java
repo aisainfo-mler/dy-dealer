@@ -2,6 +2,8 @@ package com.ailk.yd.mapp.client.model;
 
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0008Response extends YDBody {
