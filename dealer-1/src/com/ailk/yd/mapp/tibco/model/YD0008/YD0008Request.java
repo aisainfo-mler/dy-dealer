@@ -12,30 +12,30 @@ public class YD0008Request implements TibcoRequest {
 	/**
 	 * 用户输入的模式串号码
 	 */
-	private String pattern;
+	private String pattern="";
 	
 	private YdPage paging;
 	
 	/**
 	 * MSISDN
 	 */
-	private String type;
+	private String type="";
 	
 	/**
 	 * 靓号级别。 BRONZE, BRONZEPLUS SILVER SILVERPLUS GOLD GOLDPLUS PLATINUM
 	 * PLATINUMPLUS DIAMOND
 	 */
-	private String vanityName;
+	private String vanityName="";
 	
 	/**
 	 * 是否包含靓号。true，false
 	 */
-	private String includeVanityNumbers;
+	private String includeVanityNumbers="";
 	
 	/**
 	 * 区域
 	 */
-	private String ciecleId;
+	private String ciecleId="";
 
 	public String getPattern() {
 		return pattern;

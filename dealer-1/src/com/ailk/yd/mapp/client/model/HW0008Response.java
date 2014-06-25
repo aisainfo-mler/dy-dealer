@@ -13,6 +13,7 @@ public class HW0008Response extends YDBody {
 		 */
 		private String vanityName;
 		private String svnNumber;
+		private String numFee;
 		
 		
 		public String getVanityName() {
@@ -27,13 +28,20 @@ public class HW0008Response extends YDBody {
 		public void setSvnNumber(String svnNumber) {
 			this.svnNumber = svnNumber;
 		}
-		public SvnNumber(String vanityName, String svnNumber) {
+		public SvnNumber(String vanityName, String svnNumber,String numFee) {
 			super();
 			this.vanityName = vanityName;
 			this.svnNumber = svnNumber;
+			this.numFee = numFee;
 		}
 		public SvnNumber() {
 			super();
+		}
+		public String getNumFee() {
+			return numFee;
+		}
+		public void setNumFee(String numFee) {
+			this.numFee = numFee;
 		}
 		
 	}

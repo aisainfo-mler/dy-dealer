@@ -134,7 +134,7 @@ public class User implements Serializable {
 	private Date denyTime;
 	
 	/***印度***/
-	@Transient
+	@Column(name="CIRCLE_ID")
 	private String circleId;//circleid
 	@Transient
 	private String accountId;//sap account

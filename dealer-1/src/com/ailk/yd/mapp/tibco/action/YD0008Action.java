@@ -48,7 +48,8 @@ public class YD0008Action extends AbstractTibcoService<YD0008Request, YD0008Resp
 			return "";
 		}
 		
-		return new ObjectMapper().writeValueAsString(request);
+		String writeValueAsString = new ObjectMapper().writeValueAsString(request);
+		return writeValueAsString;
 //		JSONObject m = new JSONObject();
 //		JSONObject page = new JSONObject();
 //		m.put("circleID", request.getCiecleId());
