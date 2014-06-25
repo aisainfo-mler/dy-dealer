@@ -52,13 +52,29 @@ public class HW0007Action extends
 		yd0007Req.setEmailid(request.getMdn());
 		YD0007Response g2t = yd0007.get2Tibco(yd0007Req.returnGetParam());
 		this.response = new HW0007Response();
-		response.setTotalRecords(g2t.getTotalRecords());
+		String totalRecords = g2t.getTotalRecords();
+		try {
+			response.setTotalRecords(Integer.parseInt(totalRecords)); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		List cc = new ArrayList();
 		response.setCustomers(cc);
 		for (Iterator it = g2t.getCustomers().iterator(); it.hasNext();) {
 			YD0007Response.Customer f = (YD0007Response.Customer) it.next();
 			HW0007Response.Customer t = new HW0007Response.Customer();
-			new SetUtil(f, t).copyAllSameNameProp();
+			t.setCustomerId(f.getCustomerId());
+			t.setCustomerPictureURL(f.getCustomerPictureURL());
+			t.setCustomerStatus(f.getCustomerStatus());
+			t.setDisplayName(f.getDisplayName());
+			if(f.getContactDetails()!=null){
+				t.setEmailId(f.getContactDetails().getEmailId());
+				t.setMobileNumber(f.getContactDetails().getMobileNumber());
+			}
+			if(f.getPersonalDetails()!=null){
+				t.setPersonalDetails(f.getPersonalDetails().getFirstName()+" "+f.getPersonalDetails().getLastName());
+			}
+			t.setIsBlacklisted(f.getIsBlacklisted());
 			cc.add(t);
 //			queryCustomer(f);
 		}

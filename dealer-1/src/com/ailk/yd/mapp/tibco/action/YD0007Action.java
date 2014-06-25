@@ -21,41 +21,38 @@ public class YD0007Action extends
 	private String url;
 	@Override
 	protected YD0007Response convertResponse(String json) throws Exception {
-		YD0007Response rm = new YD0007Response();
-		JSONObject jo = JSONObject.fromObject(json);
-//		if (jo.get("success") != null) {
-//			// 必然是失败
-//			String errMsg = TibcoUtil.findErrMsg(jo);
-//			throw new Exception(errMsg);
+		
+		return YD0007Response.fillVal(json);
+//		YD0007Response rm = new YD0007Response();
+//		JSONObject jo = JSONObject.fromObject(json);
+//		String tmp = (String) jo.get("totalRecords");
+//		Integer totalRecords = Integer.parseInt(tmp);
+//		rm.setTotalRecords(totalRecords);
+//
+//		JSONArray customers = jo.getJSONArray("customers");
+//		List<YD0007Response.Customer> j = new ArrayList();
+//		rm.setCustomers(j);
+//		for (int i = 0; i < customers.size(); i++) {
+//			YD0007Response.Customer c = new YD0007Response.Customer();
+//			JSONObject obj = (JSONObject) customers.get(i);
+//			JSONObject cd = obj.getJSONObject("contactDetails");
+//			JSONObject pd = obj.getJSONObject("personalDetails");
+//			c.setCustomerId(obj.getString("customerId"));
+//			c.setCustomerPictureURL(obj.getString("customerPictureURL"));
+//			c.setCustomerStatus(obj.getString("customerStatus"));
+//			c.setDisplayName(obj.getString("displayName"));
+//			c.setMobileNumber(cd.getString("mobileNumber"));
+//			c.setEmailId(cd.getString("emailId"));
+//			c.setIsBlacklisted(obj.getString("isBlacklisted"));
+//			c.setPersonalDetails(obj.getString("displayName"));
+//			String middleName = StringUtils.isBlank(pd.getString("middleName")) ? ""
+//					: (" " + pd.getString("middleName"));
+//			c.setPersonalDetails(pd.getString("salutation") + " "
+//					+ pd.getString("firstName") + middleName + " "
+//					+ pd.getString("lastName"));
+//			j.add(c);
 //		}
-		String tmp = (String) jo.get("totalRecords");
-		Integer totalRecords = Integer.parseInt(tmp);
-		rm.setTotalRecords(totalRecords);
-
-		JSONArray customers = jo.getJSONArray("customers");
-		List<YD0007Response.Customer> j = new ArrayList();
-		rm.setCustomers(j);
-		for (int i = 0; i < customers.size(); i++) {
-			YD0007Response.Customer c = new YD0007Response.Customer();
-			JSONObject obj = (JSONObject) customers.get(i);
-			JSONObject cd = obj.getJSONObject("contactDetails");
-			JSONObject pd = obj.getJSONObject("personalDetails");
-			c.setCustomerId(obj.getString("customerId"));
-			c.setCustomerPictureURL(obj.getString("customerPictureURL"));
-			c.setCustomerStatus(obj.getString("customerStatus"));
-			c.setDisplayName(obj.getString("displayName"));
-			c.setMobileNumber(cd.getString("mobileNumber"));
-			c.setEmailId(cd.getString("emailId"));
-			c.setIsBlacklisted(obj.getString("isBlacklisted"));
-			c.setPersonalDetails(obj.getString("displayName"));
-			String middleName = StringUtils.isBlank(pd.getString("middleName")) ? ""
-					: (" " + pd.getString("middleName"));
-			c.setPersonalDetails(pd.getString("salutation") + " "
-					+ pd.getString("firstName") + middleName + " "
-					+ pd.getString("lastName"));
-			j.add(c);
-		}
-		return rm;
+//		return rm;
 	}
 
 	
