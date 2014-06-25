@@ -9,9 +9,10 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ailk.yd.mapp.client.model.TibcoAccount;
+import com.ailk.yd.mapp.client.model.TibcoService;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
-import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 @Service("yd0021")
 public class YD0021Action extends AbstractTibcoService<YD0021Request, YD0021Response> {
@@ -35,7 +36,7 @@ public class YD0021Action extends AbstractTibcoService<YD0021Request, YD0021Resp
 		JSONArray acts = jo.getJSONArray("accounts");
 		for(int i=0;i<acts.size();i++){
 			JSONObject accountNode = (JSONObject) acts.get(i);
-			YD0021Response.Account acc = new YD0021Response.Account();
+			TibcoAccount acc = new TibcoAccount();
 			accounts.add(acc);
 			acc.setCompanyCode(accountNode.getString("companyCode"));
 			acc.setPrepaidAccountId(accountNode.getString("prepaidAccountId"));
@@ -48,7 +49,7 @@ public class YD0021Action extends AbstractTibcoService<YD0021Request, YD0021Resp
 					//获取service的记录。这里可能需要改
 					JSONObject service = (JSONObject) servicesNode.get(k);
 					JSONObject idObj = service.getJSONObject("identifier");
-					YD0021Response.Service s = new YD0021Response.Service();
+					TibcoService s = new TibcoService();
 					s.setProductCode(service.getString("productCode"));
 					s.setProductName(service.getString("productName"));
 					s.setSericeName(idObj.getString("name"));
