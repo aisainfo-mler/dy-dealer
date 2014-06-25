@@ -57,7 +57,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/javassist-3.11.0.GA.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jave-1.0.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jeval.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jeval.jar" sourcepath="/Users/luyang/work/maven-reponsitoy/net/sourceforge/jeval/jeval/0.9.4/jeval-0.9.4-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/joda-time-2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsoup-1.7.2.jar"/>
