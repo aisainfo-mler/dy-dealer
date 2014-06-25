@@ -105,8 +105,8 @@
 		<appender-ref ref="Job_Data" />
 	</logger>
     <logger name="org.springframework">  
-        <level value="debug"/>   
-        <appender-ref ref="console"/> 
+        <level value="error"/>   
+        <appender-ref ref="default"/> 
     </logger>
     <logger name="org.hibernate">  
         <level value="info"/>   
@@ -114,16 +114,20 @@
     </logger>
      <logger name="org.hibernate.type">   
          <level value="TRACE"/>    
-         <appender-ref ref="console"/>  
+         <appender-ref ref="default"/>  
      </logger> 
      
 	<logger name="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">   
          <level value="debug"/>    
-         <appender-ref ref="console"/>
+         <appender-ref ref="default"/>
      </logger> 
       <logger name="org.hibernate.sql">   
-         <level value="TRACE"/>    
-         <appender-ref ref="console"/>  
+         <level value="ERROR"/>    
+         <appender-ref ref="default"/>  
+     </logger>
+     <logger name="jdbc.sqltiming" additivity="true">
+     	<appender-ref ref="default"/>
+     	<level value="INFO"></level>
      </logger>
       -->
 	<root>
