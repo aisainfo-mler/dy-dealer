@@ -9,36 +9,14 @@ import org.apache.commons.lang3.StringUtils;
 import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0037Request extends YDBody {
-	
-	
-	private List<TracType> tracTypes;
 
+	private Map<String, Integer> tracTypes;
 
-	public static class TracType{
-		private String transactionType;
-		private Integer size;
-		public String getTransactionType() {
-			return transactionType;
-		}
-		public void setTransactionType(String transactionType) {
-			this.transactionType = transactionType;
-		}
-		public Integer getSize() {
-			return size;
-		}
-		public void setSize(Integer size) {
-			this.size = size;
-		}
-		
-	}
-
-
-	public List<TracType> getTracTypes() {
+	public Map<String, Integer> getTracTypes() {
 		return tracTypes;
 	}
 
-
-	public void setTracTypes(List<TracType> tracTypes) {
+	public void setTracTypes(Map<String, Integer> tracTypes) {
 		this.tracTypes = tracTypes;
 	}
 
