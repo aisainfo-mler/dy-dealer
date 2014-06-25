@@ -1,26 +1,20 @@
 package com.ailk.yd.mapp.client.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0035Request extends YDBody {
-	private String customerId;
+	private List<String> customerIds;
 
-	public String getCustomerId() {
-		return customerId;
+	public List<String> getCustomerIds() {
+		return customerIds;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setCustomerIds(List<String> customerIds) {
+		this.customerIds = customerIds;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public Map returnGetParam() {
-		Map m = new HashMap();
-		m.put("customerId", customerId);
-		return m;
-	}
+
 
 }

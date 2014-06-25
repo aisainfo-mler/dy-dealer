@@ -1,8 +1,10 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,17 +12,18 @@ import org.springframework.stereotype.Service;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
-import com.ailk.util.SetUtil;
 import com.ailk.yd.mapp.client.model.HW0035Request;
 import com.ailk.yd.mapp.client.model.HW0035Response;
-import com.ailk.yd.mapp.client.model.TibcoAccount;
-import com.ailk.yd.mapp.client.model.TibcoService;
 import com.ailk.yd.mapp.tibco.action.YD0021Action;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
+import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Account;
+import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.ServicePackage;
+import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Services;
 
 /**
- * 查询账户信息
+ * 查询账户信息.
+ * 2014-06-26更新：根据多个customer信息，返回service列表
  * 
  * @author qianshihua
  * 
@@ -33,43 +36,65 @@ public class HW0035Action extends
 	@Autowired
 	private YD0021Action yd0021;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		YD0021Request yd0021Request = new YD0021Request();
-		new SetUtil(this.request, yd0021Request).copyAllSameNameProp();
-		YD0021Response get2Tibco = yd0021.get2Tibco(yd0021Request.returnGetParam());
-		this.response = new HW0035Response();
-		response.setCustomerId(get2Tibco.getCustomerId());
-		List accs25 = new ArrayList();
-		this.response.setAccounts(accs25);
-		if(get2Tibco.getAccounts()!=null){
-			for (Iterator it = get2Tibco.getAccounts().iterator(); it.hasNext();) {
-				TibcoAccount acc = (TibcoAccount) it.next();
-				TibcoAccount acc25 = new TibcoAccount();
-				List ss = new ArrayList();
-				accs25.add(acc25);
-				acc25.setCompanyCode(acc.getCompanyCode());
-				acc25.setPrepaidAccountId(acc.getPrepaidAccountId());
-				acc25.setServices(ss);
-				
-				if(acc.getServices()!=null){
-					for (Iterator itt = acc.getServices().iterator(); itt
-							.hasNext();) {
-						TibcoService s = (TibcoService) itt.next();
-						TibcoService s25 = new TibcoService();
-						s25.setProductCode(s.getProductCode());
-						s25.setProductName(s.getProductName());
-						s25.setSericeName(s.getSericeName());
-						s25.setServiceId(s.getServiceId());
-						s25.setServiceType(s.getServiceType());
-						ss.add(s25);
+		response = new HW0035Response();
+		Map m = new HashMap();
+		response.setServices(m);
+		for (Iterator it = request.getCustomerIds().iterator(); it.hasNext();) {
+			String customerId = (String) it.next();
+			yd0021Request.setCustomerId(customerId);
+			YD0021Response get2Tibco = yd0021.get2Tibco(yd0021Request
+					.returnGetParam());
+			if (get2Tibco.getAccounts() != null
+					&& get2Tibco.getAccounts().size() > 0) {
+				for (Iterator itACC = get2Tibco.getAccounts().iterator(); itACC
+						.hasNext();) {
+					Account acc = (Account) itACC.next();
+					if (acc.getServicePackage() != null
+							&& acc.getServicePackage().size() > 0) {
+						for (Iterator itSP = acc.getServicePackage().iterator(); itSP
+								.hasNext();) {
+							ServicePackage sp = (ServicePackage) itSP.next();
+							if (sp.getServices() != null
+									&& sp.getServices().size() > 0) {
+								for (Iterator itSer = sp.getServices()
+										.iterator(); itSer.hasNext();) {
+									Services ser = (Services) itSer.next();
+									if (ser.getIdentifier() != null) {
+										com.ailk.yd.mapp.client.model.HW0035Response.Service s = new com.ailk.yd.mapp.client.model.HW0035Response.Service();
+										s.setCategory(ser.getIdentifier()
+												.getCategory());
+										s.setName(ser.getIdentifier().getName());
+										s.setSubCategory(ser.getIdentifier()
+												.getCategory());
+										s.setType(ser.getIdentifier().getType());
+										s.setValue(ser.getIdentifier()
+												.getValue());
+										if (m.containsKey(customerId)) {
+											((List) m.get(customerId)).add(s);
+										} else {
+											List l = new ArrayList();
+											l.add(s);
+											m.put(customerId, l);
+										}
+
+									}
+								}
+							}
+						}
 					}
+
 				}
-				
-				
+			}else{
+				m.put(customerId, new ArrayList());
 			}
+
 		}
+
 	}
 
 }

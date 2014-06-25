@@ -21,45 +21,7 @@ public class YD0021Action extends AbstractTibcoService<YD0021Request, YD0021Resp
 	private String url;
 	@Override
 	protected YD0021Response convertResponse(String json) throws Exception {
-		YD0021Response res = new YD0021Response();
-		JSONObject jo =  JSONObject.fromObject(json);
-//		if(jo.get("success")!=null){
-//			//必然是出错了
-//			String errMsg = TibcoUtil.findErrMsg(jo);
-//			throw new Exception(errMsg);
-//		}
-		String customerId = jo.getString("customerId");
-		res.setCustomerId(customerId);
-		List accounts = new ArrayList();
-		res.setAccounts(accounts);
-		
-		JSONArray acts = jo.getJSONArray("accounts");
-		for(int i=0;i<acts.size();i++){
-			JSONObject accountNode = (JSONObject) acts.get(i);
-			TibcoAccount acc = new TibcoAccount();
-			accounts.add(acc);
-			acc.setCompanyCode(accountNode.getString("companyCode"));
-			acc.setPrepaidAccountId(accountNode.getString("prepaidAccountId"));
-			List services = new ArrayList();
-			acc.setServices(services);
-			JSONArray servicePackageNode = accountNode.getJSONArray("servicePackage");
-			for(int j=0;j<servicePackageNode.size();j++){
-				JSONArray servicesNode = ((JSONObject) servicePackageNode.get(j)).getJSONArray("services");
-				for(int k=0;k<servicesNode.size();k++){
-					//获取service的记录。这里可能需要改
-					JSONObject service = (JSONObject) servicesNode.get(k);
-					JSONObject idObj = service.getJSONObject("identifier");
-					TibcoService s = new TibcoService();
-					s.setProductCode(service.getString("productCode"));
-					s.setProductName(service.getString("productName"));
-					s.setSericeName(idObj.getString("name"));
-					s.setServiceId(idObj.getString("value"));
-					s.setServiceType(idObj.getString("type"));
-					services.add(s);
-				}
-			}
-		}
-		return res;
+		return YD0021Response.fillVal(json);
 	}
 
 	@Override
