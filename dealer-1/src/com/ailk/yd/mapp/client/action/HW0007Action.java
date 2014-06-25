@@ -55,13 +55,13 @@ public class HW0007Action extends
 		response.setTotalRecords(g2t.getTotalRecords());
 		List cc = new ArrayList();
 		response.setCustomers(cc);
-		int i=0;
+//		int i=0;
 		for (Iterator it = g2t.getCustomers().iterator(); it.hasNext();) {
 			TibcoCustomer f = (TibcoCustomer) it.next();
-			if(i==0){
-				i++;
-				f.setCustomerId("1100009566");
-			}
+//			if(i==0){
+//				i++;
+//				f.setCustomerId("1100009566");
+//			}
 			cc.add(f);
 			queryCustomer(f);
 		}
