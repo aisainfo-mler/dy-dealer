@@ -60,7 +60,7 @@ public class HW0008Action extends
 		if (StringUtils.isNotBlank(request.getPattern())) {
 			r.setSearchPattern("*" + request.getPattern() + "*");
 		}
-		YdPage pg = new YdPage();
+		YdPage pg = new YdPage(); 
 		r.setPaging(pg);
 		pg.setOffset(request.getPage());
 		pg.setPageSize(request.getSize());
