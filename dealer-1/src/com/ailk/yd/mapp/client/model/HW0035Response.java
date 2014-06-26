@@ -15,6 +15,11 @@ public class HW0035Response extends YDBody {
 		private String value;
 		private String category;
 		private String subCategory;
+		
+		private String productCode;
+		private String productName;
+		private String serviceStatus;
+		
 
 		public String getName() {
 			return name;
@@ -54,6 +59,30 @@ public class HW0035Response extends YDBody {
 
 		public void setSubCategory(String subCategory) {
 			this.subCategory = subCategory;
+		}
+
+		public String getProductCode() {
+			return productCode;
+		}
+
+		public void setProductCode(String productCode) {
+			this.productCode = productCode;
+		}
+
+		public String getProductName() {
+			return productName;
+		}
+
+		public void setProductName(String productName) {
+			this.productName = productName;
+		}
+
+		public String getServiceStatus() {
+			return serviceStatus;
+		}
+
+		public void setServiceStatus(String serviceStatus) {
+			this.serviceStatus = serviceStatus;
 		}
 	}
 
