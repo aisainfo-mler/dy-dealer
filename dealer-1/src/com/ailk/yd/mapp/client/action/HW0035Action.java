@@ -18,12 +18,12 @@ import com.ailk.yd.mapp.tibco.action.YD0021Action;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Account;
+import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Identifier;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.ServicePackage;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Services;
 
 /**
- * 查询账户信息.
- * 2014-06-26更新：根据多个customer信息，返回service列表
+ * 查询账户信息. 2014-06-26更新：根据多个customer信息，返回service列表
  * 
  * @author qianshihua
  * 
@@ -64,16 +64,19 @@ public class HW0035Action extends
 								for (Iterator itSer = sp.getServices()
 										.iterator(); itSer.hasNext();) {
 									Services ser = (Services) itSer.next();
-									if (ser.getIdentifier() != null) {
+									Identifier idf = ser.getIdentifier();
+									if (idf != null) {
 										com.ailk.yd.mapp.client.model.HW0035Response.Service s = new com.ailk.yd.mapp.client.model.HW0035Response.Service();
-										s.setCategory(ser.getIdentifier()
-												.getCategory());
-										s.setName(ser.getIdentifier().getName());
-										s.setSubCategory(ser.getIdentifier()
-												.getCategory());
-										s.setType(ser.getIdentifier().getType());
-										s.setValue(ser.getIdentifier()
-												.getValue());
+										s.setCategory(idf.getCategory());
+										s.setName(idf.getName());
+										s.setSubCategory(idf.getCategory());
+										s.setType(idf.getType());
+										s.setValue(idf.getValue());
+										// 下面三个字段从上一层取
+										s.setProductCode(ser.getProductCode());
+										s.setProductName(ser.getProductName());
+										s.setServiceStatus(ser
+												.getServiceStatus());
 										if (m.containsKey(customerId)) {
 											((List) m.get(customerId)).add(s);
 										} else {
@@ -89,7 +92,7 @@ public class HW0035Action extends
 					}
 
 				}
-			}else{
+			} else {
 				m.put(customerId, new ArrayList());
 			}
 
