@@ -101,8 +101,6 @@ public class HW0035Action extends
 				}
 
 			}
-		} else {
-			m.add(new ArrayList());
 		}
 	}
 
