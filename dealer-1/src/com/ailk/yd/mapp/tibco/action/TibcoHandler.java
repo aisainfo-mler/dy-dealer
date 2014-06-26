@@ -12,6 +12,8 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -21,11 +23,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.ailk.yd.mapp.client.action.ExternalRequest;
-import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 @Service
 public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Object,String>{
 
+	public static ObjectMapper mapper = new ObjectMapper();
+	
 	protected Logger logger = LoggerFactory.getLogger(TibcoHandler.class);
 	
 	public ApplicationContext context;
@@ -48,11 +51,8 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 
 	public String sendMsg(String url, Object json , Map<String,?> parameters,String token,boolean isPost) throws Exception
 	{
-		if(isPost==true){
-			logger.info("支撑平台Json请求："+json);
-		}else{
-			logger.info("支撑平台Json请求："+parameters);
-		}
+		System.out.println("支撑平台Json请求："+json);
+		System.out.println("支撑平台Json请求："+parameters);
 		
 //		String url = getTibcoUrl(bizcode);
 		
@@ -124,7 +124,29 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 			int responseCode = httpClient.executeMethod(method);
 			logger.debug("响应编码 responseCode:"+responseCode);
 			
-//			if (responseCode >= 100 && responseCode < 300) {
+			if (responseCode >= 100 && responseCode < 300) {
+				result = method.getResponseBodyAsString();
+			} else {
+				if (responseCode < 400 && responseCode >= 300) {
+					logger.debug(""+method.getStatusLine());
+					
+					String errorMsg = method.getResponseBodyAsString();
+					if(StringUtils.isEmpty(errorMsg) == false)
+						throw new Exception(getError(errorMsg));
+					
+					String redirectLocation;
+					Header locationHeader = method.getResponseHeader("location");
+					if (locationHeader != null) {
+						redirectLocation = locationHeader.getValue();
+						throw new Exception("响应编码："+responseCode+","+method.getStatusLine()+","+redirectLocation);
+					}
+				} else {
+					throw new Exception("响应编码："+responseCode+","+method.getStatusLine());
+				}
+			}
+//			result = method.getResponseBodyAsString();
+//			if (TibcoUtil.isJsonFormat(result)) {
+//				//符合json格式的话就可以直接返回了
 //				result = method.getResponseBodyAsString();
 //			} else {
 //				if (responseCode < 400 && responseCode >= 300) {
@@ -139,23 +161,6 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 //					throw new Exception("响应编码："+responseCode+","+method.getStatusLine());
 //				}
 //			}
-			result = method.getResponseBodyAsString();
-			if (TibcoUtil.isJsonFormat(result)) {
-				//符合json格式的话就可以直接返回了
-				result = method.getResponseBodyAsString();
-			} else {
-				if (responseCode < 400 && responseCode >= 300) {
-					logger.debug(""+method.getStatusLine());
-					String redirectLocation;
-					Header locationHeader = method.getResponseHeader("location");
-					if (locationHeader != null) {
-						redirectLocation = locationHeader.getValue();
-						throw new Exception("响应编码："+responseCode+","+method.getStatusLine()+","+redirectLocation);
-					}
-				} else {
-					throw new Exception("响应编码："+responseCode+","+method.getStatusLine());
-				}
-			}
 			
 		} catch (Exception e) {
 			throw e;
@@ -168,6 +173,19 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 		return result;
 	}
 
+	public String getError(String errorMsg)
+	{
+		try{
+			Map<String,String> errMap = mapper.readValue(errorMsg, new TypeReference<Map<String,String>>(){});
+			return errMap.get("errors");
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public void setApplicationContext(ApplicationContext context)
 			throws BeansException {

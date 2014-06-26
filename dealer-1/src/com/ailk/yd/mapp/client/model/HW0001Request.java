@@ -12,7 +12,14 @@ public class HW0001Request extends YDBody {
 	
 	private Set<String> codes;
 	
-	private String serviceType;
+	private String serviceType;//PRODUCT：PRODUCT，PLAN：PLAN
+	
+	/**
+	 * 必须在选择了serviceType时才会起效
+	 * 如果serviceType=PRODUCT，则查询属性表ProductOffering_type
+	 * 如果serviceType=PLAN，则查询属性表PlanOffering_type
+	 */
+	private String type;
 	
 	private Integer page;
 	
@@ -57,5 +64,15 @@ public class HW0001Request extends YDBody {
 	public void setServiceType(String serviceType) {
 		this.serviceType = serviceType;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 	
 }

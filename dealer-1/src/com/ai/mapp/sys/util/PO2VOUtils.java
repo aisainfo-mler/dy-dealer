@@ -36,7 +36,11 @@ public class PO2VOUtils {
 		{
 //			log.debug(pd.getName()+"--"+pd.getPropertyType().getName());
 			
-			if(Collection.class.isAssignableFrom(pd.getPropertyType()) || pd.getPropertyType().isArray() || pd.getPropertyType() == Class.class)
+			if(pd.getPropertyType() == Class.class)
+			{
+				continue;
+			}
+			else if(Collection.class.isAssignableFrom(pd.getPropertyType()) || pd.getPropertyType().isArray())
 			{
 				continue;
 			}
@@ -55,7 +59,6 @@ public class PO2VOUtils {
 		
 		return dest;
 	}
-	
 	
 	/**
 	 * po转vo collection对象

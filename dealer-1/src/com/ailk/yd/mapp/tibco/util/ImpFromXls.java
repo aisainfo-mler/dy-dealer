@@ -102,7 +102,7 @@ public class ImpFromXls {
 	private static void impProductJiaoZhu(ClassPathXmlApplicationContext ac) {
 		try
 		{
-			String pathh = TibcoUtil.class.getResource("/").getPath();
+			String pathh = ImpFromXls.class.getResource("/").getPath();
 			File file = new File(pathh+"/tibco_product.xml");
 			SAXReader saxReader = new SAXReader();
 			Document document = saxReader.read(file);

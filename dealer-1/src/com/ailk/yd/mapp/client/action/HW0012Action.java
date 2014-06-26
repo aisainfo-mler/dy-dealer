@@ -66,8 +66,8 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	protected void doAction() throws Exception 
 	{
 		
-//		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-//		User creator = userService.loadUserByUserCode(ui.getUserName());
+		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+		User creator = userService.loadUserByUserCode(ui.getUserName());
 		AgentOrder ao = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
 		if(ao == null)
 			throw new Exception(request.getOrderCode()+": not found");
@@ -103,8 +103,8 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		req.setReferenceNumber(hw_caf_order.getOrn()==null?"":hw_caf_order.getOrn());
 		req.setCustomerId(hw_customer.getCustomerId()==null?"":hw_customer.getCustomerId());
-		req.setOrderType(hw_caf_order.getOrderType()==null?"":hw_caf_order.getOrderType());
-		req.setCircleId(hw_caf_order.getCircleId()==null?"":hw_caf_order.getCircleId());
+		req.setOrderType("CREATE");
+		req.setCircleId("TC");
 		req.setAppointmentDateTimeFrom(hw_caf_order.getAppointmentDateTimeFrom()==null?"":hw_caf_order.getAppointmentDateTimeFrom());
 		req.setAppointmentDateTimeTo(hw_caf_order.getAppointmentDateTimeTo()==null?"":hw_caf_order.getAppointmentDateTimeTo());
 		req.setChannel(hw_caf_order.getChannel()==null?"":hw_caf_order.getChannel());
@@ -364,7 +364,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.setOrderDetails(new ArrayList<YD0010Request.Order>(0));
 			Order order = new Order();
 			req.getOrderDetails().add(order);
-			order.setBusinessInteraction(new NameObject(hw_order.getBusinessInteraction()));
+			order.setBusinessInteraction(new NameObject("ADD"));
 			order.setAccountId(hw_order.getAccountId()==null?"":hw_order.getAccountId());
 			order.setOfferId(hw_order.getOfferId()==null?"":hw_order.getOfferId());
 			order.seteWalletReservationReferenceId(hw_order.geteWalletReservationReferenceId()==null?"":hw_order.geteWalletReservationReferenceId());

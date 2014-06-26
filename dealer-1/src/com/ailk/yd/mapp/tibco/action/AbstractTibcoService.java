@@ -2,14 +2,11 @@ package com.ailk.yd.mapp.tibco.action;
 
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 
 public abstract class AbstractTibcoService<Req,Rsp> {
@@ -22,6 +19,8 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 	protected TibcoHandler tibcoHandler;
 	
 	public Rsp post2Tibco(Req request,Map<String,?> paramters) throws Exception {
+		
+		
 		
 		String json = convertRequest(request);
 		System.out.println("tibco request:"+json);
@@ -45,19 +44,18 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 	 * @throws Exception
 	 */
 	private void checkSucc(String rsp_string) throws Exception {
-		JSONObject jo = null;
-		try {
-			/**
-			 * TODO JsonObject==>ObjectMapping
-			 */
-			jo = JSONObject.fromObject(rsp_string);
-		} catch (Exception e) {
+		
+	try {
+			Map jo = mapper.readValue(rsp_string,Map.class);
+			if (jo !=null && jo.get("success") != null) 
+			{
+				String errMsg = (String)jo.get("errors");
+				throw new Exception(errMsg);
+			}
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
-		}
-		if (jo!=null && jo.get("success") != null) {
-			// 必然是失败
-			String errMsg = TibcoUtil.findErrMsg(jo);
-			throw new Exception(errMsg);
+			throw e;
 		}
 	}
 	
@@ -72,6 +70,49 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 		return mapper.writeValueAsString(request);
 	}
 	
+//	/**
+//	 * PO转vo的过程，VO中的简单属性都赋值
+//	 * @param <T>
+//	 * @param dest
+//	 * @param orig
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	public static <T> T po2voNoCollection(T orig) throws Exception
+//	{
+//		Class<?> clazz = orig.getClass();
+//		
+//		if(orig == null) return null;
+//		
+//		T dest = (T)clazz.newInstance();
+//		
+//		PropertyDescriptor[] pds = PropertyUtils.getPropertyDescriptors(clazz);
+//		
+//		for(PropertyDescriptor pd : pds)
+//		{
+//			if(pd.getPropertyType() == Class.class)
+//			{
+//				continue;
+//			}
+//			else if(Collection.class.isAssignableFrom(pd.getPropertyType()) || pd.getPropertyType().isArray())
+//			{
+//				continue;
+//			}
+//			else if(ClassUtils.ifBaseClass(pd.getPropertyType()) == false && onlyBase == false)
+//			{	
+//				PropertyUtils.setProperty(dest, pd.getName(), po2voNoCollection(pd.getPropertyType(),PropertyUtils.getProperty(orig, pd.getName()),onlyBase));
+//			}
+//			else if(ClassUtils.ifBaseClass(pd.getPropertyType()) && PropertyUtils.isWriteable(dest, pd.getName()))
+//			{
+//				PropertyUtils.setSimpleProperty(dest, pd.getName(), PropertyUtils.getProperty(orig, pd.getName()));
+//			}
+//			else
+//				continue;
+//			
+//		}
+//		
+//		return dest;
+//	}
 	
 	
 }
