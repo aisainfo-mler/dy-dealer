@@ -1,7 +1,6 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,25 +42,25 @@ public class HW0035Action extends
 			Exception {
 		YD0021Request yd0021Request = new YD0021Request();
 		response = new HW0035Response();
-		Map m = new HashMap();
-		response.setServices(m);
+		List list = new ArrayList();
+		response.setServices(list); 
 		if(request.getCustomerIds()!=null && request.getCustomerIds().size()>0){
 			for (Iterator it = request.getCustomerIds().iterator(); it.hasNext();) {
 				String customerId = (String) it.next();
 				yd0021Request.setCustomerId(customerId);
-				fetchService(yd0021Request, m);
+				fetchService(yd0021Request, list);
 			}
 		}else if(request.getServiceIds()!=null && request.getServiceIds().size()>0){
 			for (Iterator it = request.getServiceIds().iterator(); it.hasNext();) {
 				String serviceId = (String) it.next();
 				yd0021Request.setServiceId(serviceId);
-				fetchService(yd0021Request, m);
+				fetchService(yd0021Request, list);
 			}
 		}
 
 	}
 
-	private void fetchService(YD0021Request yd0021Request, Map m) throws Exception {
+	private void fetchService(YD0021Request yd0021Request, List m) throws Exception {
 		YD0021Response get2Tibco = yd0021.get2Tibco(yd0021Request
 				.returnGetParam());
 		String customerId = get2Tibco.getCustomerId();
@@ -93,14 +92,8 @@ public class HW0035Action extends
 									s.setProductName(ser.getProductName());
 									s.setServiceStatus(ser
 											.getServiceStatus());
-									if (m.containsKey(customerId)) {
-										((List) m.get(customerId)).add(s);
-									} else {
-										List l = new ArrayList();
-										l.add(s);
-										m.put(customerId, l);
-									}
-
+									s.setCustomerId(customerId);
+									m.add(s);
 								}
 							}
 						}
@@ -109,7 +102,7 @@ public class HW0035Action extends
 
 			}
 		} else {
-			m.put(customerId, new ArrayList());
+			m.add(new ArrayList());
 		}
 	}
 

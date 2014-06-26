@@ -36,6 +36,9 @@ public class SetUtil {
 		Field[] toFields = to.getClass().getDeclaredFields();
 		for (int i = 0; i < fromFields.length; i++) {
 			Field fromField = fromFields[i];
+			if(!fromField.getType().equals(String.class)){
+				continue;
+			}
 			for (int j = 0; j < toFields.length; j++) {
 				Field toField = toFields[j];
 				if(StringUtils.equals(fromField.getName(), toField.getName())){
