@@ -6,57 +6,33 @@ import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0032Request extends YDBody {
 
-	
-	/**
-	 * 代理商ID号
-	 */
-	private Long dealerId;
-	
-	/**
-	 * 手机号
-	 */
-	private String mdn;
-	
-	/**
-	 * 用户付款金额
-	 */
-	private BigDecimal amount;
-	
-	/**
-	 * 充值方式：0 直冲，1 pin码充值
-	 */
-	private String mode;
-
-
-	public Long getDealerId() {
-		return dealerId;
+	private String seriveId;
+	private String amount;
+	private String rrfId;
+	private Boolean accountLevel; 
+	public String getSeriveId() {
+		return seriveId;
 	}
-
-	public void setDealerId(Long dealerId) {
-		this.dealerId = dealerId;
+	public void setSeriveId(String seriveId) {
+		this.seriveId = seriveId;
 	}
-
-	public String getMdn() {
-		return mdn;
-	}
-
-	public void setMdn(String mdn) {
-		this.mdn = mdn;
-	}
-
-	public BigDecimal getAmount() {
+	public String getAmount() {
 		return amount;
 	}
-
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-
-	public String getMode() {
-		return mode;
+	public String getRrfId() {
+		return rrfId;
 	}
-
-	public void setMode(String mode) {
-		this.mode = mode;
+	public void setRrfId(String rrfId) {
+		this.rrfId = rrfId;
 	}
+	public Boolean getAccountLevel() {
+		return accountLevel;
+	}
+	public void setAccountLevel(Boolean accountLevel) {
+		this.accountLevel = accountLevel;
+	}
+	
 }
