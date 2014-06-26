@@ -14,6 +14,10 @@ import com.ailk.yd.mapp.client.model.TibcoService;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
 
+/**
+ * 2014-06-26
+ * 根据customerId查询，用户下的accounts(目前用于根据手机号码获取所有的serviceId)
+ */
 @Service("yd0021")
 public class YD0021Action extends AbstractTibcoService<YD0021Request, YD0021Response> {
 
