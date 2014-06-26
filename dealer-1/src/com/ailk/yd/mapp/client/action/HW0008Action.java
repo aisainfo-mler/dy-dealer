@@ -58,7 +58,7 @@ public class HW0008Action extends
 			r.setIncludeVanityNumbers("false");
 		}
 		if (StringUtils.isNotBlank(request.getPattern())) {
-			r.setPattern("*" + request.getPattern() + "*");
+			r.setSearchPattern("*" + request.getPattern() + "*");
 		}
 		YdPage pg = new YdPage();
 		r.setPaging(pg);
