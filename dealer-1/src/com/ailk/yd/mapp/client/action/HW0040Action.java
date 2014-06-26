@@ -19,6 +19,11 @@ import com.ailk.yd.mapp.tibco.model.YD0022.YD0022Request;
 import com.ailk.yd.mapp.tibco.model.YD0022.YD0022Response;
 import com.ailk.yd.mapp.tibco.model.YD0022.YD0022Response.PersonalDetails;
 
+/**
+ * queryCustomer
+ * @version 2014-06-27 根据customer查询客户的详细信息
+ *
+ */
 @Service("hw0040")
 @Action(bizcode="hw0040",userCheck=true)
 @Scope("prototype")

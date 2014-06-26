@@ -15,6 +15,7 @@ import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
 
 /**
+ * CCI接口
  * 2014-06-26
  * 根据customerId查询，用户下的accounts(目前用于根据手机号码获取所有的serviceId)
  */
