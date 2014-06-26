@@ -77,6 +77,23 @@ public class YD0008Action extends AbstractTibcoService<YD0008Request, YD0008Resp
 		// TODO Auto-generated method stub
 		return url;
 	}
+	
+	public static void main(String[] args) throws Exception {
+		YD0008Action yd8 = new YD0008Action();
+		YD0008Request req =  new YD0008Request();
+		YdPage pg = new YdPage();
+		req.setPaging(pg);
+		req.setSearchPattern("1234");
+		pg.setPageSize("10");
+		pg.setOffset("5");
+		req.setCiecleId("TC");
+		System.err.println(yd8.convertRequest(req));
+		System.err.println(new ObjectMapper().writeValueAsString(req));
+		
+		YD0008Response res = yd8.convertResponse("{\"number\":[{\"id\":\"3334021234\"},{\"id\":\"3334041234\"},{\"id\":\"3334061234\"}],\"vanityName\":\"\"}");
+		res = yd8.convertResponse("{ \"number\":[ ] , \"vanityName\":\"\" }");
+		
+	}
 
 
 
