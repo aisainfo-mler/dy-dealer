@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.mapp.sys.dao.OrderItemDao;
 import com.ailk.butterfly.core.exception.BusinessException;
@@ -16,6 +18,8 @@ import com.ailk.ts.dal.ibatis.model.RepExample;
 import com.ailk.ts.dal.ibatis.model.SelfDefineRep;
 import com.ailk.ts.dal.ibatis.model.RepExample.Criteria;
 
+@Service
+@Transactional(rollbackFor=Exception.class)
 public class RepService {
 
 	@Autowired

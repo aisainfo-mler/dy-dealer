@@ -209,6 +209,35 @@ public class SYSConstant {
 	public static final String OPTTYPE_DELETE = "2";
 	
 	
+	/**
+	 * 商品操作类型： 01. 进货入库;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_2_REP = "01";
+	/**
+	 * 商品操作类型： 03. 销售给普通用户;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_USER = "03";
+	/**
+	 * 商品操作类型：04. 销售给代理商;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL = "04";
+	/**
+	 * 商品操作类型：05.普通用户退货入平台库;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_USER_2_OSOONS = "05";
+	/**
+	 * 商品操作类型：06 代理商退货入平台库 ;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_OSOONS = "06";
+	/**
+	 * 商品操作类型：07 代理商销售给普通用户;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_USER = "07";
+	/**
+	 * 商品操作类型：08 普通用户退货入代理商库
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_USER_2_CHANNEL = "08";
+	
 	
 	public static Map<String,String> variantMap = new LinkedHashMap<String, String>(0);
 	public static List<String> variantMapL = new ArrayList<String>();

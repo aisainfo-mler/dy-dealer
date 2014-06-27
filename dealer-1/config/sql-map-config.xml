@@ -17,6 +17,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/repository_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/sku_entity_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/selfDefine_rep_SqlMap.xml" />
+	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/selfDefine_sku_SqlMap.xml" />
 	
-    
+    <!-- 自定义的数据查询操作SQL -->
+<!--	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/addUtilsSQL.xml"/>-->
  </sqlMapConfig>

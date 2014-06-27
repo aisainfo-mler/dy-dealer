@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ailk.ts.dal.ibatis.CommonQueryDAO;
 import com.ailk.ts.dal.ibatis.model.SelfDefineRep;
+import com.ailk.ts.dal.ibatis.model.SkuEntity;
 
 
 @Service
@@ -35,6 +36,7 @@ public class CommonQueryService {
 		List result=commonQueryDAO.getModels(paraMap, "addUtilsSQL.querySysDate");
 		return result;
 	}
+	/**
 	//querybrand 查询品牌
 	public List querybrand(String BRAND_ID,String PARA_TYPE_ID,Integer limitClauseStart,Integer limitClauseCount) {
 		// TODO Auto-generated method stub
@@ -183,7 +185,7 @@ public class CommonQueryService {
 		List result=commonQueryDAO.getModels(paraMap, "addUtilsSQL.queryParaType");
 		return result;
 	}	
-	
+	*/
 	public List querySKUPara(String SKUID,String PRODUCT_ID,String SKU_NAME,Integer limitClauseStart,Integer limitClauseCount) {
 		// TODO Auto-generated method stub
 		Map paraMap=new java.util.HashMap();
@@ -204,4 +206,23 @@ public class CommonQueryService {
 		List<SelfDefineRep> reps = commonQueryDAO.getModels(cond,"selfDefine_rep.selectSelfRep");
 		return reps;
 	}
+	
+	
+	public SkuEntity selectSkuEntity(String imei, String serial) {
+
+		Map<String, String> cdth = new HashMap<String, String>();
+		
+		cdth.put("imei", imei);
+		cdth.put("serial", serial);
+		
+		
+		List objects = commonQueryDAO.getModels(cdth,"sku.selectSkuEntiryBy_IMEI_OR_SERIAL");
+		if(objects == null || objects.size()==0){
+			return null;
+		}else{
+			return (SkuEntity) objects.get(0);
+		}
+		
+	}
+
 }
