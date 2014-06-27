@@ -1,5 +1,7 @@
 package com.ailk.yd.mapp.tibco.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -41,5 +43,15 @@ public class TibcoUtil {
 			return false;
 		}
 		return true;
+	}
+	
+	public static String getCurTime(){
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		return sdf.format(d);
+	}
+	
+	public static void main(String[] args) {
+		System.err.println(getCurTime());
 	}
 }

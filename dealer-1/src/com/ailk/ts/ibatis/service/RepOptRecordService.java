@@ -16,7 +16,7 @@ import com.ailk.ts.dal.ibatis.model.RepOptRecordExample.Criteria;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
-public class RepOptRecordServiceImpl{
+public class RepOptRecordService{
 
 	@Autowired
 	private RepOptRecordDAO repOptRecordDao;

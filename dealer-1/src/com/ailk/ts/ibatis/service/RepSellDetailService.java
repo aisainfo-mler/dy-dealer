@@ -18,9 +18,9 @@ import com.ailk.ts.dal.ibatis.model.RepSellDetailExample;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
-public class RepSellDetailServiceImpl {
+public class RepSellDetailService {
 	
-	private static final Logger log = LoggerFactory.getLogger(RepSellDetailServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(RepSellDetailService.class);
 	
 	@Autowired
 	private RepSellDetailDAO repSellDetailDAO;
