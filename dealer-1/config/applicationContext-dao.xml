@@ -29,5 +29,4 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="repStockDetailDAO" name="repStockDetailDAO" class="com.ailk.ts.dal.ibatis.RepStockDetailDAOImpl"></bean>
 	<bean id="skuEntityDAO" name="skuEntityDAO" class="com.ailk.ts.dal.ibatis.SkuEntityDAOImpl"></bean>
     <bean id="productSkuDAO" name="productSkuDAO" class="com.ailk.ts.dal.ibatis.ProductSkuDAOImpl"></bean>
-    
  </beans>

@@ -1,24 +1,17 @@
 package com.ailk.yd.mapp.client.action;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.Bidi;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
@@ -35,7 +28,6 @@ import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0010Response;
-import com.ailk.yd.mapp.client.model.HW0013Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
