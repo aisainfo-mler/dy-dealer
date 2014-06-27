@@ -3,6 +3,7 @@ package com.ailk.ts.dal.ibatis;
 import com.ailk.ts.dal.ibatis.model.ProductSku;
 import com.ailk.ts.dal.ibatis.model.ProductSkuExample;
 import java.util.List;
+import java.util.Map;
 
 public interface ProductSkuDAO {
     /**
@@ -92,4 +93,13 @@ public interface ProductSkuDAO {
      * @mbggenerated
      */
     int updateByPrimaryKey(ProductSku record);
+    
+    /**
+     * 查询商品名称信息
+     * @param condition
+     * @return
+     */
+    List selectSkuName(Map condition);
+    
+    List<ProductSku> selectByExampleWithoutBLOBs(ProductSkuExample example);
 }

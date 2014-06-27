@@ -3,6 +3,8 @@ package com.ailk.ts.dal.ibatis;
 import com.ailk.ts.dal.ibatis.model.ProductSku;
 import com.ailk.ts.dal.ibatis.model.ProductSkuExample;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class ProductSkuDAOImpl extends SqlMapClientDaoSupport implements ProductSkuDAO {
@@ -163,4 +165,16 @@ public class ProductSkuDAOImpl extends SqlMapClientDaoSupport implements Product
             return record;
         }
     }
+
+	@Override
+	public List selectSkuName(Map condition) {
+		List list = getSqlMapClientTemplate().queryForList("product_sku.selectSkuName", condition);
+		return list;
+	}
+
+	@Override
+	public List<ProductSku> selectByExampleWithoutBLOBs(ProductSkuExample example) {
+		List<ProductSku> list = getSqlMapClientTemplate().queryForList("product_sku.selectByExample", example);
+        return list;
+	}
 }
