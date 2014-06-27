@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,9 +20,13 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import com.ai.mapp.sys.entity.ProductFilter;
-import com.ailk.yd.mapp.client.model.HW0001Request;
 import com.ailk.yd.mapp.client.model.HW0012Request;
 import com.ailk.yd.mapp.model.YDDatapackage;
 import com.ailk.yd.mapp.model.YDHeader;
@@ -145,59 +148,63 @@ public class TestJson {
 
 	public static void main(String[] args) throws Exception
 	{
-		Map<String,Set<Object>> condition = new HashMap<String, Set<Object>>(0);
-		condition.put(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION, new HashSet<Object>(0));
-//		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40003");
-//		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40002");
+		DateTime dd = new DateTime();
+		System.out.println(dd.toString(ISODateTimeFormat.basicDateTimeNoMillis()));
+//		System.out.println(StringUtils.leftPad("1", 4, "0");
 		
-		Set<String> codes = new HashSet<String>(0);
-		codes.add("OC402");
-		codes.add("3000");
-		
-		YDDatapackage pkg = new YDDatapackage();
-		YDHeader header = new YDHeader();
-		pkg.setHeader(header);
-		header.setBizCode("hw0012");
-		header.setIdentityId(System.currentTimeMillis()+"");
-		HW0012Request req = new HW0012Request();
-		pkg.setBody(req);
-		req.setOrderCode("2014062403044051");
-		
-		
-		ObjectMapper mapper = new ObjectMapper();
-		System.out.println(mapper.writeValueAsString(pkg));
-		
-		
-		try {
-			String rsp = TestJson.doSend("http://100.112.12.99:8080/dealer/mapp/json.json",mapper.writeValueAsString(pkg),null);
-			System.out.println(rsp);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		TestJson test = new TestJson();
+//		Map<String,Set<Object>> condition = new HashMap<String, Set<Object>>(0);
+//		condition.put(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION, new HashSet<Object>(0));
+////		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40003");
+////		condition.get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add("G40002");
 //		
-////		System.setProperty("javax.net.ssl.trustStore", "/Library/Java/JavaVirtualMachines/jdk1.7.0_40.jdk/Contents/Home/jre/lib/security/api-st.ril.com.cer");
-//		System.setProperty("javax.net.ssl.trustStore", "/Users/luyang/.keystore");
-//		System.setProperty("javax.net.ssl.trustStorePassword","password");
+//		Set<String> codes = new HashSet<String>(0);
+//		codes.add("OC402");
+//		codes.add("3000");
+//		
+//		YDDatapackage pkg = new YDDatapackage();
+//		YDHeader header = new YDHeader();
+//		pkg.setHeader(header);
+//		header.setBizCode("hw0012");
+//		header.setIdentityId(System.currentTimeMillis()+"");
+//		HW0012Request req = new HW0012Request();
+//		pkg.setBody(req);
+//		req.setOrderCode("2014062403044051");
 //		
 //		
-//		String a = "{\"customerId\": \"1100009298\",\"dateFrom\":\"\",\"dateTo\":\"\",\"status\":\"\",\"serviceId\":\"\",\"orderType\":\"\", \"referenceNumber\":\"\",\"registeredMobileNumber\":\"\",\"pageSize\":\"1\",\"offset\":\"1\"}";
-//		
-//		String url = "https://api-st.ril.com:8443/v4/customers/orders/find";
-//		
+//		ObjectMapper mapper = new ObjectMapper();
+//		System.out.println(mapper.writeValueAsString(pkg));
 //		
 //		
-//		String result = test.doSend(url,a, null);
+//		try {
+//			String rsp = TestJson.doSend("http://100.112.12.99:8080/dealer/mapp/json.json",mapper.writeValueAsString(pkg),null);
+//			System.out.println(rsp);
+//		} catch (JsonParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JsonMappingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		
-//		System.out.println("返回结果："+result);
+////		TestJson test = new TestJson();
+////		
+//////		System.setProperty("javax.net.ssl.trustStore", "/Library/Java/JavaVirtualMachines/jdk1.7.0_40.jdk/Contents/Home/jre/lib/security/api-st.ril.com.cer");
+////		System.setProperty("javax.net.ssl.trustStore", "/Users/luyang/.keystore");
+////		System.setProperty("javax.net.ssl.trustStorePassword","password");
+////		
+////		
+////		String a = "{\"customerId\": \"1100009298\",\"dateFrom\":\"\",\"dateTo\":\"\",\"status\":\"\",\"serviceId\":\"\",\"orderType\":\"\", \"referenceNumber\":\"\",\"registeredMobileNumber\":\"\",\"pageSize\":\"1\",\"offset\":\"1\"}";
+////		
+////		String url = "https://api-st.ril.com:8443/v4/customers/orders/find";
+////		
+////		
+////		
+////		String result = test.doSend(url,a, null);
+////		
+////		System.out.println("返回结果："+result);
 	}
 
 }
