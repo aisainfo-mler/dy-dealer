@@ -2,6 +2,7 @@ package com.ailk.yd.mapp.client.action;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,12 +18,14 @@ import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
+import com.ai.mapp.sys.util.PO2VOUtils;
 import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.core.util.DateUtils;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
 import com.ailk.yd.mapp.client.model.HW0010Request;
+import com.ailk.yd.mapp.client.model.HW0010Request.MnpPort;
 import com.ailk.yd.mapp.client.model.HW0012Request;
 import com.ailk.yd.mapp.tibco.action.YD0010Action;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request;
@@ -31,6 +34,9 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.CafInfo;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Connection;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Contact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Customer;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Dependancy;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Device;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FacingService;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FamilyContact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Form61;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.IdObject;
@@ -40,8 +46,12 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameAndValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Order;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.PayInfo;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductCafInfo;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductIdentifier;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductProof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Proof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ReferringCustomer;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Response;
 
 
@@ -77,6 +87,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(), HW0010Request.class);
 		YD0010Request yd0010Request = convertByHW0010(hw0010Request);
+		System.out.println(mapper.writeValueAsString(yd0010Request));
 		YD0010Response yd0010Response = yd0010.post2Tibco(yd0010Request, null);
 		ao.setTibcoSendFlag("1");
 		agentOrderService.saveAgentOrder(ao);
@@ -107,14 +118,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.setCircleId("TC");
 		req.setAppointmentDateTimeFrom(hw_caf_order.getAppointmentDateTimeFrom()==null?"":hw_caf_order.getAppointmentDateTimeFrom());
 		req.setAppointmentDateTimeTo(hw_caf_order.getAppointmentDateTimeTo()==null?"":hw_caf_order.getAppointmentDateTimeTo());
+		//测试数据
+		hw_caf_order.setChannel("10");
 		req.setChannel(hw_caf_order.getChannel()==null?"":hw_caf_order.getChannel());
 		req.setDeliveryMode(hw_caf_order.getDeliveryMode()==null?"":hw_caf_order.getDeliveryMode());
 		
 		/********customerDetail 设置***********/
 		req.setCustomerDetails(new Customer());
 		req.getCustomerDetails().setProspectId(hw_customer.getProspectId()==null?"":hw_customer.getProspectId());
-		req.getCustomerDetails().setCustomerCategory(hw_customer.getCustomerCategory()==null?"":hw_customer.getCustomerCategory());
-		req.getCustomerDetails().setSalutation(hw_customer.getSalutation()==null?"":hw_customer.getSalutation());
+		req.getCustomerDetails().setCustomerCategory(hw_customer.getCustomerCategory()==null?"":StringUtils.leftPad(hw_customer.getCustomerCategory(),4,"0"));
+		req.getCustomerDetails().setSalutation(hw_customer.getSalutation()==null?"":StringUtils.leftPad(hw_customer.getSalutation(),4,"0"));
 		req.getCustomerDetails().setFirstName(hw_customer.getFirstName()==null?"":hw_customer.getFirstName());
 		req.getCustomerDetails().setMiddleName(hw_customer.getMiddleName()==null?"":hw_customer.getMiddleName());
 		req.getCustomerDetails().setLastName(hw_customer.getLastName()==null?"":hw_customer.getLastName());
@@ -124,7 +137,9 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCustomerDetails().getFamilyContactDetails().setFirstName(hw_customer.getFamilyFirstName()==null?"":hw_customer.getFamilyFirstName());
 		req.getCustomerDetails().getFamilyContactDetails().setMiddleName(hw_customer.getFamilyMiddleName()==null?"":hw_customer.getFamilyMiddleName());
 		req.getCustomerDetails().getFamilyContactDetails().setLastName(hw_customer.getFamilyLastName()==null?"":hw_customer.getFamilyLastName());
-		req.getCustomerDetails().getFamilyContactDetails().setRelationship(hw_customer.getFamilyRelationship()==null?"":hw_customer.getFamilyRelationship());
+		//测试数据
+		hw_customer.setFamilyRelationship("0001");
+		req.getCustomerDetails().getFamilyContactDetails().setRelationship(hw_customer.getFamilyRelationship()==null?"":StringUtils.leftPad(hw_customer.getFamilyRelationship(),4,"0"));
 		req.getCustomerDetails().setDateOfBirth("");
 		if(hw_customer.getDateOfBirth() != null)
 		{
@@ -142,19 +157,47 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		/*********Contact*********/
 		req.getCustomerDetails().setContactDetails(new Contact());
-		req.getCustomerDetails().getContactDetails().setMobileNumber(hw_customer.getMobileNumber()==null?"":hw_customer.getMobileNumber());
-		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome(hw_customer.getAlternateContactNumberHome()==null?"":hw_customer.getAlternateContactNumberHome());
-		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork(hw_customer.getAlternateContactNumberWork()==null?"":hw_customer.getAlternateContactNumberWork());
-		req.getCustomerDetails().getContactDetails().setEmailId(hw_customer.getEmailId()==null?"":hw_customer.getEmailId());
+		
+		//测试数据
+		req.getCustomerDetails().getContactDetails().setMobileNumber("5885555555");
+		req.getCustomerDetails().getContactDetails().setEmailId("ggyy@bh.com");
+		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome("5666777766");
+		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork("");
+		
+//		req.getCustomerDetails().getContactDetails().setMobileNumber(hw_customer.getMobileNumber()==null?"":hw_customer.getMobileNumber());
+//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome(hw_customer.getAlternateContactNumberHome()==null?"":hw_customer.getAlternateContactNumberHome());
+//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork(hw_customer.getAlternateContactNumberWork()==null?"":hw_customer.getAlternateContactNumberWork());
+//		req.getCustomerDetails().getContactDetails().setEmailId(hw_customer.getEmailId()==null?"":hw_customer.getEmailId());
 		
 		/*********PermanentAddress*********/
 		if(hw_customer.getPermanentAddress() != null)
 		{
 			HW0010Request.Address address = hw_customer.getPermanentAddress();
+			
+			address = new HW0010Request.Address();
+			address.setAddressId("");
+			address.setBuildingId("");
+			address.setAddressType("PER_ADD");
+			address.setCareOf("");
+			address.setHouseNameORNumber("ghh");
+			address.setBuildingNameORNumber("TC23- C Block");
+			address.setSocietyName("");
+			address.setStreetNameORNumber("hjj");
+			address.setLandmark("");
+			address.setSubLocality("");
+			address.setAreaORTehsil("ghh");
+			address.setPincode("666888");
+			address.setVillageORCity("Mumbai");
+			address.setDistrict("mum");
+			address.setState("MH");
+			address.setCountry("IN");
+			address.setTotalFloors("");
+			address.setJioCentreId("JC23");
+			
 			req.getCustomerDetails().setPermanentAddress(new Address());
 			req.getCustomerDetails().getPermanentAddress().setAddressId(address.getAddressId()==null?"":address.getAddressId());
 			req.getCustomerDetails().getPermanentAddress().setBuildingId(address.getBuildingId()==null?"":address.getBuildingId());
-			req.getCustomerDetails().getPermanentAddress().setAddressType(address.getAddressType()==null?"":address.getAddressType());
+			req.getCustomerDetails().getPermanentAddress().setAddressType("PER_ADD");
 			req.getCustomerDetails().getPermanentAddress().setCareOf(address.getCareOf()==null?"":address.getCareOf());
 			req.getCustomerDetails().getPermanentAddress().setHouseNameORNumber(address.getHouseNameORNumber()==null?"":address.getHouseNameORNumber());
 			req.getCustomerDetails().getPermanentAddress().setBuildingNameORNumber(address.getBuildingNameORNumber()==null?"":address.getBuildingNameORNumber());
@@ -183,7 +226,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			Date d = DateUtils.formatDate(hw_customer.getAnniversaryDate(), "dd/MM/yyyy");
 			req.getCustomerDetails().setAnniversaryDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
 		}
-		req.getCustomerDetails().setOccupation(hw_customer.getOccupation()==null?"":hw_customer.getOccupation());
+		req.getCustomerDetails().setOccupation(hw_customer.getOccupation()==null?"":StringUtils.leftPad(hw_customer.getOccupation(), 4, "0"));
 		req.getCustomerDetails().setOccupationDescription(hw_customer.getOccupationDescription()==null?"":hw_customer.getOccupationDescription());
 		req.getCustomerDetails().setTypeOfHouse(hw_customer.getTypeOfHouse()==null?"":hw_customer.getTypeOfHouse());
 		req.getCustomerDetails().setCustomerPictureURL(hw_customer.getCustomerPictureURL()==null?"":hw_customer.getCustomerPictureURL());
@@ -208,16 +251,52 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.getPaymentDetails().setReceiptNumber(payInfo.getReceiptNumber()==null?"":payInfo.getReceiptNumber());
 			req.getPaymentDetails().setCpTransactionId(payInfo.getCpTransactionId()==null?"":payInfo.getCpTransactionId());
 		}
+//		else
+//		{
+//			req.setPaymentDetails(new PayInfo());
+//			req.getPaymentDetails().setModeOfPayment("");
+//			req.getPaymentDetails().setPaymentInstrumentNumber("");
+//			req.getPaymentDetails().setPaymentInstrumentDate("");
+//			req.getPaymentDetails().setPaymentInstrumentDate("");
+//			req.getPaymentDetails().setBankName("");
+//			req.getPaymentDetails().setBranchNameAndAddress("");
+//			req.getPaymentDetails().setReceiptNumber("");
+//			req.getPaymentDetails().setCpTransactionId("");
+//		}
+		
 		
 		/********************InstallationAddress************************/
 		if(hw_customer.getPresentAddress() != null)
 		{
 			HW0010Request.Address address = hw_customer.getPresentAddress();
+			
+			//测试数据
+			address = new HW0010Request.Address();
+			address.setAddressId("");
+			address.setBuildingId("");
+			address.setAddressType("PER_ADD");
+			address.setCareOf("");
+			address.setHouseNameORNumber("ghh");
+			address.setBuildingNameORNumber("TC23- C Block");
+			address.setSocietyName("");
+			address.setStreetNameORNumber("hjj");
+			address.setLandmark("");
+			address.setSubLocality("");
+			address.setAreaORTehsil("ghh");
+			address.setPincode("666888");
+			address.setVillageORCity("Mumbai");
+			address.setDistrict("mum");
+			address.setState("MH");
+			address.setCountry("IN");
+			address.setTotalFloors("");
+			address.setJioCentreId("JC23");
+			
+			
 			req.setInstallationAddress(new ArrayList<YD0010Request.Address>(0));
 			Address install_address = new Address();
 			install_address.setAddressId(address.getAddressId()==null?"":address.getAddressId());
 			install_address.setBuildingId(address.getBuildingId()==null?"":address.getBuildingId());
-			install_address.setAddressType(address.getAddressType()==null?"":address.getAddressType());
+			install_address.setAddressType("SHIP_TO");
 			install_address.setCareOf(address.getCareOf()==null?"":address.getCareOf());
 			install_address.setHouseNameORNumber(address.getHouseNameORNumber()==null?"":address.getHouseNameORNumber());
 			install_address.setBuildingNameORNumber(address.getBuildingNameORNumber()==null?"":address.getBuildingNameORNumber());
@@ -239,6 +318,10 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		/********************cafDetails************************/
 		req.setCafDetails(new CafInfo());
+		
+		//测试数据
+		caf.setPosAgentCode("POSAgent01");
+		caf.setMerchantCode("POSAgent01");
 		req.getCafDetails().setMerchantCode(caf.getMerchantCode()==null?"":caf.getMerchantCode());
 		req.getCafDetails().setPosAgentCode(caf.getPosAgentCode()==null?"":caf.getPosAgentCode());
 		req.getCafDetails().setPosAgentSignatureDate("");
@@ -261,7 +344,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		if(caf.getPoi() != null)
 		{
 			Proof poi = new Proof();
-			poi.setProofIdentifier(caf.getPoi().getProofIdentifier()==null?"":caf.getPoi().getProofIdentifier());
+			poi.setProofIdentifier("POI");
 			poi.setIdProofType(caf.getPoi().getIdProofType()==null?"":caf.getPoi().getIdProofType());
 			poi.setDocumentNumber(caf.getPoi().getDocumentNumber()==null?"":caf.getPoi().getDocumentNumber());
 			poi.setDateOfIssue("");
@@ -277,11 +360,26 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			poi.setAadhaarTransactionRefNo(caf.getPoi().getAadhaarTransactionRefNo()==null?"":caf.getPoi().getAadhaarTransactionRefNo());
 			req.getCafDetails().getProofs().add(poi);
 		}
+//		else
+//		{
+//			Proof poi = new Proof();
+//			poi.setProofIdentifier("");
+//			poi.setIdProofType("");
+//			poi.setDocumentNumber("");
+//			poi.setDateOfIssue("");
+//			poi.setDateOfIssue("");
+////			poi.setDateOfIssue(caf.getPoa().getDateOfIssue()==null?"":caf.getPoa().getDateOfIssue());
+//			poi.setPlaceOfIssue("");
+//			poi.setIssuingAuthority("");
+//			poi.setIdentifierURL("");
+//			poi.setAadhaarTransactionRefNo("");
+//			req.getCafDetails().getProofs().add(poi);
+//		}
 		
 		if(caf.getPoa() != null)
 		{
 			Proof poa = new Proof();
-			poa.setProofIdentifier(caf.getPoa().getProofIdentifier()==null?"":caf.getPoa().getProofIdentifier());
+			poa.setProofIdentifier("POA");
 			poa.setIdProofType(caf.getPoa().getIdProofType()==null?"":caf.getPoa().getIdProofType());
 			poa.setDocumentNumber(caf.getPoa().getDocumentNumber()==null?"":caf.getPoa().getDocumentNumber());
 			poa.setDateOfIssue("");
@@ -303,19 +401,19 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		conn.setOperatorName(caf.getOperatorName()==null?"":caf.getOperatorName());
 		conn.setNoOfConnections(caf.getNoOfConnections()==null?"":caf.getNoOfConnections());
 		req.getCafDetails().getCurrentMobileConnections().add(conn);
-		
+		req.getCafDetails().setForm61Details(new Form61());
 		/***Form61***/
 		if(caf.getForm61() != null)
 		{
-			req.getCafDetails().setForm61Details(new Form61());
+			
 			req.getCafDetails().getForm61Details().setLastTaxReturnFiled(caf.getForm61().getLastTaxReturnFiled()==null?"":caf.getForm61().getLastTaxReturnFiled());
 			req.getCafDetails().getForm61Details().setReasonForNoPAN(caf.getForm61().getReasonForNoPAN()==null?"":caf.getForm61().getReasonForNoPAN());
 		}
 		
+		req.getCafDetails().setLocalReferenceDetails(new LocalRef());
 		if(caf.getLocalReferenceDetails() != null)
 		{
 			HW0010Request.LocalRef lr = caf.getLocalReferenceDetails();
-			req.getCafDetails().setLocalReferenceDetails(new LocalRef());
 			req.getCafDetails().getLocalReferenceDetails().setFirstName(lr.getFirstName()==null?"":lr.getFirstName());
 			req.getCafDetails().getLocalReferenceDetails().setMiddleName(lr.getMiddleName()==null?"":lr.getMiddleName());
 			req.getCafDetails().getLocalReferenceDetails().setLastName(lr.getLastName()==null?"":lr.getLastName());
@@ -325,10 +423,33 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			{
 				HW0010Request.Address hw_lr_address = lr.getAddress();
 				YD0010Request.Address yd_lr_address = new Address();
+				
+				//测试数据
+				hw_lr_address = new HW0010Request.Address();
+				hw_lr_address.setAddressId("");
+				hw_lr_address.setBuildingId("");
+				hw_lr_address.setAddressType("PER_ADD");
+				hw_lr_address.setCareOf("");
+				hw_lr_address.setHouseNameORNumber("ghh");
+				hw_lr_address.setBuildingNameORNumber("TC23- C Block");
+				hw_lr_address.setSocietyName("");
+				hw_lr_address.setStreetNameORNumber("hjj");
+				hw_lr_address.setLandmark("");
+				hw_lr_address.setSubLocality("");
+				hw_lr_address.setAreaORTehsil("ghh");
+				hw_lr_address.setPincode("666888");
+				hw_lr_address.setVillageORCity("Mumbai");
+				hw_lr_address.setDistrict("mum");
+				hw_lr_address.setState("MH");
+				hw_lr_address.setCountry("IN");
+				hw_lr_address.setTotalFloors("");
+				hw_lr_address.setJioCentreId("JC23");
+				
+				
 				req.getCafDetails().getLocalReferenceDetails().setAddress(yd_lr_address);
 				yd_lr_address.setAddressId(hw_lr_address.getAddressId()==null?"":hw_lr_address.getAddressId());
 				yd_lr_address.setBuildingId(hw_lr_address.getBuildingId()==null?"":hw_lr_address.getBuildingId());
-				yd_lr_address.setAddressType(hw_lr_address.getAddressType()==null?"":hw_lr_address.getAddressType());
+				yd_lr_address.setAddressType("REF_ADD");
 				yd_lr_address.setCareOf(hw_lr_address.getCareOf()==null?"":hw_lr_address.getCareOf());
 				yd_lr_address.setHouseNameORNumber(hw_lr_address.getHouseNameORNumber()==null?"":hw_lr_address.getHouseNameORNumber());
 				yd_lr_address.setBuildingNameORNumber(hw_lr_address.getBuildingNameORNumber()==null?"":hw_lr_address.getBuildingNameORNumber());
@@ -352,11 +473,13 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCafDetails().getReferringCustomerDetails().setId(caf.getReferringCustomerId()==null?"":caf.getReferringCustomerId());
 		req.getCafDetails().getReferringCustomerDetails().setReferenceMobileNumber(caf.getReferenceMobileNumber()==null?"":caf.getReferenceMobileNumber());
 		
+		/*************************LocalReference*******************************/
 		if(caf.getLocalReferenceDetails() != null)
 		{
 			req.getCafDetails().setLocalReferenceVerification(new LocalRefVerify());
 			req.getCafDetails().getLocalReferenceVerification().setCallingPartyNumber(caf.getLocalReferenceDetails().getCallingPartyNumber()==null?"":caf.getLocalReferenceDetails().getCallingPartyNumber());
 		}
+		
 		/*************************orderDetails*******************************/
 		if(hw_caf_order != null)
 		{
@@ -364,7 +487,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.setOrderDetails(new ArrayList<YD0010Request.Order>(0));
 			Order order = new Order();
 			req.getOrderDetails().add(order);
-			order.setBusinessInteraction(new NameObject("ADD"));
+			order.setBusinessInteraction(new NameObject(""));
 			order.setAccountId(hw_order.getAccountId()==null?"":hw_order.getAccountId());
 			order.setOfferId(hw_order.getOfferId()==null?"":hw_order.getOfferId());
 			order.seteWalletReservationReferenceId(hw_order.geteWalletReservationReferenceId()==null?"":hw_order.geteWalletReservationReferenceId());
@@ -372,57 +495,91 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			
 			if(hw_order.getBillingAddress() != null)
 			{
+				HW0010Request.Address address = hw_order.getBillingAddress();
+				
+				//测试数据
+				address = new HW0010Request.Address();
+				address.setAddressId("");
+				address.setBuildingId("");
+				address.setAddressType("PER_ADD");
+				address.setCareOf("");
+				address.setHouseNameORNumber("ghh");
+				address.setBuildingNameORNumber("TC23- C Block");
+				address.setSocietyName("");
+				address.setStreetNameORNumber("hjj");
+				address.setLandmark("");
+				address.setSubLocality("");
+				address.setAreaORTehsil("ghh");
+				address.setPincode("666888");
+				address.setVillageORCity("Mumbai");
+				address.setDistrict("mum");
+				address.setState("MH");
+				address.setCountry("IN");
+				address.setTotalFloors("");
+				address.setJioCentreId("JC23");
+				
 				order.setBillingAddress(new Address());
-				order.getBillingAddress().setAddressId(hw_order.getBillingAddress().getAddressId()==null?"":hw_order.getBillingAddress().getAddressId());
-				order.getBillingAddress().setBuildingId(hw_order.getBillingAddress().getBuildingId()==null?"":hw_order.getBillingAddress().getBuildingId());
-				order.getBillingAddress().setAddressType(hw_order.getBillingAddress().getAddressType()==null?"":hw_order.getBillingAddress().getAddressType());
-				order.getBillingAddress().setCareOf(hw_order.getBillingAddress().getCareOf()==null?"":hw_order.getBillingAddress().getCareOf());
-				order.getBillingAddress().setHouseNameORNumber(hw_order.getBillingAddress().getHouseNameORNumber()==null?"":hw_order.getBillingAddress().getHouseNameORNumber());
-				order.getBillingAddress().setBuildingNameORNumber(hw_order.getBillingAddress().getBuildingNameORNumber()==null?"":hw_order.getBillingAddress().getBuildingNameORNumber());
-				order.getBillingAddress().setSocietyName(hw_order.getBillingAddress().getSocietyName()==null?"":hw_order.getBillingAddress().getSocietyName());
-				order.getBillingAddress().setStreetNameORNumber(hw_order.getBillingAddress().getStreetNameORNumber()==null?"":hw_order.getBillingAddress().getStreetNameORNumber());
-				order.getBillingAddress().setLandmark(hw_order.getBillingAddress().getLandmark()==null?"":hw_order.getBillingAddress().getLandmark());
-				order.getBillingAddress().setSubLocality(hw_order.getBillingAddress().getSubLocality()==null?"":hw_order.getBillingAddress().getSubLocality());
-				order.getBillingAddress().setAreaORTehsil(hw_order.getBillingAddress().getAreaORTehsil()==null?"":hw_order.getBillingAddress().getAreaORTehsil());
-				order.getBillingAddress().setPincode(hw_order.getBillingAddress().getPincode()==null?"":hw_order.getBillingAddress().getPincode());
-				order.getBillingAddress().setVillageORCity(hw_order.getBillingAddress().getVillageORCity()==null?"":hw_order.getBillingAddress().getVillageORCity());
-				order.getBillingAddress().setDistrict(hw_order.getBillingAddress().getDistrict()==null?"":hw_order.getBillingAddress().getDistrict());
-				order.getBillingAddress().setState(hw_order.getBillingAddress().getState()==null?"":hw_order.getBillingAddress().getState());
-				order.getBillingAddress().setCountry(hw_order.getBillingAddress().getCountry()==null?"":hw_order.getBillingAddress().getCountry());
-				order.getBillingAddress().setTotalFloors(hw_order.getBillingAddress().getTotalFloors()==null?"":hw_order.getBillingAddress().getTotalFloors());
-				order.getBillingAddress().setJioCentreId(hw_order.getBillingAddress().getJioCentreId()==null?"":hw_order.getBillingAddress().getJioCentreId());
+				order.getBillingAddress().setAddressId(address.getAddressId()==null?"":address.getAddressId());
+				order.getBillingAddress().setBuildingId(address.getBuildingId()==null?"":address.getBuildingId());
+				order.getBillingAddress().setAddressType("BILL_TO");
+				order.getBillingAddress().setCareOf(address.getCareOf()==null?"":address.getCareOf());
+				order.getBillingAddress().setHouseNameORNumber(address.getHouseNameORNumber()==null?"":address.getHouseNameORNumber());
+				order.getBillingAddress().setBuildingNameORNumber(address.getBuildingNameORNumber()==null?"":address.getBuildingNameORNumber());
+				order.getBillingAddress().setSocietyName(address.getSocietyName()==null?"":address.getSocietyName());
+				order.getBillingAddress().setStreetNameORNumber(address.getStreetNameORNumber()==null?"":address.getStreetNameORNumber());
+				order.getBillingAddress().setLandmark(address.getLandmark()==null?"":address.getLandmark());
+				order.getBillingAddress().setSubLocality(address.getSubLocality()==null?"":address.getSubLocality());
+				order.getBillingAddress().setAreaORTehsil(address.getAreaORTehsil()==null?"":address.getAreaORTehsil());
+				order.getBillingAddress().setPincode(address.getPincode()==null?"":address.getPincode());
+				order.getBillingAddress().setVillageORCity(address.getVillageORCity()==null?"":address.getVillageORCity());
+				order.getBillingAddress().setDistrict(address.getDistrict()==null?"":address.getDistrict());
+				order.getBillingAddress().setState(address.getState()==null?"":address.getState());
+				order.getBillingAddress().setCountry(address.getCountry()==null?"":address.getCountry());
+				order.getBillingAddress().setTotalFloors(address.getTotalFloors()==null?"":address.getTotalFloors());
+				order.getBillingAddress().setJioCentreId(address.getJioCentreId()==null?"":address.getJioCentreId());
 			}
 			
 			/**********如果有Product则设置下面相关的信息**********/
-			if(StringUtils.isBlank(hw_caf_order.getOfferId()))
+			if(StringUtils.isBlank(hw_caf_order.getOfferId()) == false)
 			{
-				Product p = productService.getProductByCode(hw_caf_order.getOfferId()==null?"":hw_caf_order.getOrn());
+				Product p = productService.getProductByCode(hw_caf_order.getOfferId()==null?"":hw_caf_order.getOfferId());
 				
 				/** 设置resourceSpec **/
 				ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
+				order.setProducts(new ArrayList<YD0010Request.Product>(0));
+				
 				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
 				{
-					order.setProducts(new ArrayList<YD0010Request.Product>(0));
 					for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
 					{
 						YD0010Request.Product ps = new YD0010Request.Product();
 						ps.setBusinessInteraction(new NameObject("ADD"));
-						ps.setProductId(productSpec.getProductSpecificationId()==null?"":hw_caf_order.getOrn());
-						ps.setStarterKitCode("");
+						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
+						ps.setStarterKitCode("Y");
 						order.getProducts().add(ps);
 						
+//						ps = initProduct(ps);
+						
+						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
 						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
 							continue;
-						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
 						
 						Map<String,Map<String,String>> deviceMap = hw_caf_order.getDevices();
-						if(deviceMap == null || deviceMap.isEmpty())
-							continue;
+//						if(deviceMap == null || deviceMap.isEmpty())
+//						{
+//							YD0010Request.Device device = new YD0010Request.Device();
+//							device.setBoqType("");
+//							device.setBusinessInteraction(new NameObject(""));
+//							device.setProductId("");
+//							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
+//							device.getIdentifier().add(new NameAndValueObject("", ""));
+//							continue;
+//						}
 						
 						for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
 						{
 							YD0010Request.Device device = new YD0010Request.Device();
-							device.setBoqType(resourceSpec.getType()==null?"":hw_caf_order.getOrn());
+							device.setBoqType(resourceSpec.getType()==null?"":resourceSpec.getType());
 							device.setBusinessInteraction(new NameObject("ADD"));
 							device.setProductId(resourceSpec.getResourceSpecificationId()==null?"":resourceSpec.getResourceSpecificationId());
 							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
@@ -440,132 +597,80 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 					}
 				}
 				
-//				order.setProducts(new ArrayList<YD0010Request.Product>(0));
-//				Product order_p1 = new Product();
-//				order.getProducts().add(order_p1);
-//				order_p1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				order_p1.setProductId("P30001");
-//				order_p1.setStarterKitCode("");
-//				
-//				List<NameAndValueObject> chs = new ArrayList<YD0010Request.NameAndValueObject>(0);
-//				order_p1.setCharacteristics(chs);
-//				NameAndValueObject nv1 = new NameAndValueObject("DND_PREFERENCE","");
-//				chs.add(nv1);
-//				
-//				Dependancy dependancy = new Dependancy();
-//				order_p1.setDependancyInfo(dependancy);
-//				List<ValueObject> dependancy_identifier= new ArrayList<YD0010Request.ValueObject>(0);
-//				dependancy.setIdentifier(dependancy_identifier);
-//				ValueObject di1 = new ValueObject("DND_PREFERENCE");
-//				dependancy_identifier.add(di1);
-//				
-//				order_p1.setCafDetails(new ProductCafInfo("", ""));
-//				
-//				List<ProductProof> p_proofs = new ArrayList<YD0010Request.ProductProof>(0);
-//				order_p1.setProofs(p_proofs);
-//				ProductProof p_p1 = new ProductProof("POA", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
-//				p_proofs.add(p_p1);
-//				ProductProof p_p2 = new ProductProof("POI", "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=OT00000001UW_118864_1_181824&ixUser=SIDCDEVOTAS&ixAppl=libdsh");
-//				p_proofs.add(p_p2);
-//				
-//				MnpPort mp = new MnpPort();
-//				order_p1.setMnpPortDetails(mp);
-//				mp.setUniquePortingCode("");
-//				mp.setUpcGenerationDate("");
-//				mp.setExistingOperatorCode("");
-//				mp.setExistingSubscriberType("");
-//				mp.setLastPaidBillReceiptURI("");
-//				
-//				List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
-//				order_p1.setIdentifier(pi_list);
-//				ProductIdentifier pi = new ProductIdentifier();
-//				pi_list.add(pi);
-//				pi.setName("");
-//				pi.setType("");
-//				pi.setValue("");
-//				pi.setComponentPrice(new IdObject(""));
-//				
-//				List<Device> devices = new ArrayList<YD0010Request.Device>(0);
-//				order_p1.setDevices(devices);
-//				
-//				Device d1 = new Device();
-//				devices.add(d1);
-//				d1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				d1.setProductId("DEV100002");
-//				d1.setBoqType("ODU");
-//				List<NameAndValueObject> id_list1 = new ArrayList<YD0010Request.NameAndValueObject>(0);
-//				d1.setIdentifier(id_list1);
-//				id_list1.add(new NameAndValueObject("",""));
-//				
-//				Device d2 = new Device();
-//				devices.add(d2);
-//				d2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				d2.setProductId("DEV100002");
-//				d2.setBoqType("ODU");
-//				List<NameAndValueObject> id_list2 = new ArrayList<YD0010Request.NameAndValueObject>(0);
-//				d2.setIdentifier(id_list2);
-//				id_list2.add(new NameAndValueObject("",""));
-//				
-//				List<FacingService> customerFacingServices = new ArrayList<YD0010Request.FacingService>(0);
-//				order_p1.setCustomerFacingServices(customerFacingServices);
-//				/// 1 freature
-//				FacingService fs1 = new FacingService();
-//				fs1.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				fs1.setServiceId("S30001");
-//				fs1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//		
-//				FacingService ft1_1 = new FacingService();
-//				ft1_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft1_1.setFeatureId("F30001");
-//				ft1_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//				fs1.getFeatures().add(ft1_1);
-//				
-//				FacingService ft1_1_1 = new FacingService();
-//				ft1_1_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft1_1.setFeatureId("");
-//				ft1_1.getFeatures().add(ft1_1_1);
-//				
-//				/// 2 freature
-//				FacingService fs2 = new FacingService();
-//				fs2.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				fs2.setServiceId("S30002");
-//				fs2.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//		
-//				FacingService ft2_1 = new FacingService();
-//				ft2_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft2_1.setFeatureId("F30001");
-//				ft2_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//				fs2.getFeatures().add(ft2_1);
-//				
-//				FacingService ft2_1_1 = new FacingService();
-//				ft2_1_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft2_1_1.setProductId("");
-//				ft2_1.getFeatures().add(ft2_1_1);
-//				
-//				/// 3 freature
-//				FacingService fs3 = new FacingService();
-//				fs3.setBusinessInteraction(new NameObject("OFFER_CHANGE"));
-//				fs3.setServiceId("S30003");
-//				fs3.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//		
-//				FacingService ft3_1 = new FacingService();
-//				ft3_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft3_1.setFeatureId("F30001");
-//				ft3_1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-//				fs3.getFeatures().add(ft3_1);
-//				
-//				FacingService ft3_1_1 = new FacingService();
-//				ft3_1.setBusinessInteraction(new NameObject("ADD"));
-//				ft3_1.setFeatureId("");
-//				ft3_1.getFeatures().add(ft3_1_1);
 			}
+			
+			else
+			{}
 		
 		}
 		
+		req = PO2VOUtils.replaceNull(req);
 		
 		return req;
 	}
 	
 	
+	private YD0010Request.Product initProduct(YD0010Request.Product p)
+	{
+		List<NameAndValueObject> chs = new ArrayList<YD0010Request.NameAndValueObject>(0);
+		p.setCharacteristics(chs);
+		NameAndValueObject nv1 = new NameAndValueObject("","");
+		chs.add(nv1);
+		
+		Dependancy dependancy = new Dependancy();
+		p.setDependancyInfo(dependancy);
+		List<ValueObject> dependancy_identifier= new ArrayList<YD0010Request.ValueObject>(0);
+		dependancy.setIdentifier(dependancy_identifier);
+		ValueObject di1 = new ValueObject("");
+		dependancy_identifier.add(di1);
+		
+		p.setCafDetails(new ProductCafInfo("", ""));
+		
+		List<ProductProof> p_proofs = new ArrayList<YD0010Request.ProductProof>(0);
+		p.setProofs(p_proofs);
+		ProductProof p_p1 = new ProductProof("", "");
+		p_proofs.add(p_p1);
+		ProductProof p_p2 = new ProductProof("", "");
+		p_proofs.add(p_p2);
+		
+		YD0010Request.MnpPort mp = new YD0010Request.MnpPort();
+		p.setMnpPortDetails(mp);
+		mp.setUniquePortingCode("");
+		mp.setUpcGenerationDate("");
+		mp.setExistingOperatorCode("");
+		mp.setExistingSubscriberType("");
+		mp.setLastPaidBillReceiptURI("");
+		
+		List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
+		p.setIdentifier(pi_list);
+		ProductIdentifier pi = new ProductIdentifier();
+		pi_list.add(pi);
+		pi.setName("");
+		pi.setType("");
+		pi.setValue("");
+		pi.setComponentPrice(new IdObject(""));
+		
+		List<Device> devices = new ArrayList<YD0010Request.Device>(0);
+		p.setDevices(devices);
+		
+		Device d1 = new Device();
+		devices.add(d1);
+		d1.setBusinessInteraction(new NameObject(""));
+		d1.setProductId("");
+		d1.setBoqType("");
+		List<NameAndValueObject> id_list1 = new ArrayList<YD0010Request.NameAndValueObject>(0);
+		d1.setIdentifier(id_list1);
+		id_list1.add(new NameAndValueObject("",""));
 	
+		
+		List<FacingService> customerFacingServices = new ArrayList<YD0010Request.FacingService>(0);
+		p.setCustomerFacingServices(customerFacingServices);
+		/// 1 freature
+		FacingService fs1 = new FacingService();
+		fs1.setBusinessInteraction(new NameObject(""));
+		fs1.setServiceId("");
+		fs1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
+		
+		return p;
+	}
 }

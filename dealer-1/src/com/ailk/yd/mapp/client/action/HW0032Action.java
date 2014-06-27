@@ -62,7 +62,7 @@ public class HW0032Action extends
 
 		YD0009Request yd9 = new YD0009Request(request.getSeriveId(),
 				request.getAmount(), request.getRrfId(), circleId,
-				request.getAccountLevel());
+				request.getAccountLevel(), true);
 
 		YD0009Response post2Tibco = this.yd0009.post2Tibco(yd9, null);
 		order.setPin(request.getRrfId());
