@@ -910,4 +910,8 @@ public class SYSConstant {
 	
 	public static Map<String,AgentOrder> orders = new ConcurrentHashMap<String,AgentOrder>(0);
 	
+	/**
+	 * 文件存储关联表  01:表示 orderid取自order_recode
+	 */
+	public static final String ORDER_DOMAIN_ORDER = "01";
 }

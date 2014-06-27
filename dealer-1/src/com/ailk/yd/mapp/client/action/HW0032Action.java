@@ -18,13 +18,19 @@ import com.ailk.util.SetUtil;
 import com.ailk.yd.mapp.client.model.HW0032Request;
 import com.ailk.yd.mapp.client.model.HW0032Response;
 import com.ailk.yd.mapp.model.YDDatapackage;
+import com.ailk.yd.mapp.tibco.action.YD0009Action;
 import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Request;
 import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Response;
 
+/**
+ * 用户充值接口
+ * 
+ */
 @Service("hw0032")
 @Action(bizcode = "hw0032", userCheck = true)
 @Scope("prototype")
-public class HW0032Action extends AbstractYDBaseActionHandler<HW0032Request, HW0032Response> {
+public class HW0032Action extends
+		AbstractYDBaseActionHandler<HW0032Request, HW0032Response> {
 
 	@Autowired
 	private UserService userService;
@@ -32,6 +38,10 @@ public class HW0032Action extends AbstractYDBaseActionHandler<HW0032Request, HW0
 	@Autowired
 	private AgentOrderService agentOrderService;
 
+	@Autowired
+	private YD0009Action yd0009;
+
+	@SuppressWarnings("unused")
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
@@ -41,37 +51,24 @@ public class HW0032Action extends AbstractYDBaseActionHandler<HW0032Request, HW0
 		final HW0032Request req = request;
 		AgentOrder order = new AgentOrder();
 		order.setCreator(creator);
-		order.setSvn(req.getMdn());
-		order.setSaleFee(req.getAmount().longValue());
+		order.setSvn(req.getSeriveId());
+		order.setSaleFee(Long.parseLong(req.getAmount()));
 
 		order = agentOrderService.createTopUpOrder(order);
-		
-		YD0009Request yd9 = new YD0009Request();
-		new SetUtil(req, yd9).copyAllSameNameProp();
-		yd9.setOrderId(order.getOrderId() + "");
-		
-		
-		String sn ="";
-		String pin = "";
-		if(StringUtils.equals("1", test)){
-			sn = "20140511143000";
-			pin = "8819182921918281";
-		}else{
-//			YDDatapackage r = this.sendMsg("yd0009", yd9, (String) MappContext
-//					.getAttribute(MappContext.MAPPCONTEXT_SESSIONID));
-			YDDatapackage r = null;
-			YD0009Response res = (YD0009Response) r.getBody();
-			sn = res.getSn();
-			pin = res.getPin();
+		String circleId = creator.getCircleId();
+		if(StringUtils.isBlank(circleId)){
+			circleId = "TC";
 		}
-		
-		order.setPin(pin);
-		order.setSn(sn);
+
+		YD0009Request yd9 = new YD0009Request(request.getSeriveId(),
+				request.getAmount(), request.getRrfId(), circleId,
+				request.getAccountLevel());
+
+		YD0009Response post2Tibco = this.yd0009.post2Tibco(yd9, null);
+		order.setPin(request.getRrfId());
+		order.setSn(request.getRrfId());
 		agentOrderService.saveAgentOrder(order);
-		
-		
-		
-		
+
 	}
 
 }
