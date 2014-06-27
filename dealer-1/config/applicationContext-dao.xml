@@ -22,12 +22,12 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="repositoryDAO" name="repositoryDAO" class="com.ailk.ts.dal.ibatis.RepositoryDAOImpl"></bean>
 	
 	<!-- START OF ORDER DAO CONFIG 
-	<bean id="productSkuDAO" name="productSkuDAO" class="com.ailk.ts.dal.ibatis.ProductSkuDAOImpl"></bean>
+	<bean id="productSkuDAO" name="productSkuDAO" class="com.ailk.ts.dal.ibatis.ProductSkuDAOImpl"></bean>-->
 	<bean id="repDAO" name="repDAO" class="com.ailk.ts.dal.ibatis.RepDAOImpl"></bean>
 	<bean id="repOptRecordDAO" name="repOptRecordDAO" class="com.ailk.ts.dal.ibatis.RepOptRecordDAOImpl"></bean>
 	<bean id="repSellDetailDAO" name="repSellDetailDAO" class="com.ailk.ts.dal.ibatis.RepSellDetailDAOImpl"></bean>
 	<bean id="repStockDetailDAO" name="repStockDetailDAO" class="com.ailk.ts.dal.ibatis.RepStockDetailDAOImpl"></bean>
 	<bean id="skuEntityDAO" name="skuEntityDAO" class="com.ailk.ts.dal.ibatis.SkuEntityDAOImpl"></bean>
-    -->
+    
     
  </beans>
