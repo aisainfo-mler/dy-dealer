@@ -153,18 +153,6 @@ public class AccountInfoService {
 		log_pay.setAgentOrder(order);
 		accountLogService.saveAccountLog(log_pay);
 		
-//		//TODO 预存池充值记录
-//		if(commissionService.pay_immediately(agentOrderCode))
-//		{
-//			AccountLog log_recharge = new AccountLog();
-//			log_recharge.setAccount(account);
-//			log_recharge.setCreateTime(new Date());
-//			log_recharge.setPay(order.getDiscountFee());
-//			log_recharge.setLogType(SYSConstant.ACCOUNT_LOG_TYPE_CHARGE);
-//			log_recharge.setAgentOrder(order);
-//			accountLogService.saveAccountLog(log_recharge);
-//		}
-		
 	}
 	
 	public void payOrderInfoFromAccount(String orderCode) throws Exception

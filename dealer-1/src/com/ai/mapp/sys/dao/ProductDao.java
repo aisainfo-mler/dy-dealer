@@ -47,6 +47,11 @@ public class ProductDao extends HibernateDao<Product, Long> {
 		if(StringUtil.isEmpty(t.getServicetype()) == false)
 		{
 			c.add(Restrictions.eq("servicetype", t.getServicetype()));
+			
+			if(StringUtils.isBlank(t.getType()) == false)
+			{
+				c.add(Restrictions.eq("type", t.getType()));
+			}
 		}
 		
 		if(t.getIds() != null && t.getIds().isEmpty() == false)

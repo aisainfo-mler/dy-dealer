@@ -10,8 +10,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -26,8 +24,6 @@ import com.ai.mapp.sys.service.HwDistrictService;
 import com.ai.mapp.sys.service.HwStateService;
 import com.ai.mapp.sys.service.SysPropService;
 import com.ailk.yd.mapp.tibco.TibcoCache;
-import com.ailk.yd.mapp.tibco.TibcoConstant;
-import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 public class DealerContextListener implements ServletContextListener {
 
@@ -51,7 +47,7 @@ public class DealerContextListener implements ServletContextListener {
 	}
 
 	private void loadCert(){
-		String path = TibcoUtil.class.getResource("/").getPath();
+		String path = this.getClass().getResource("/").getPath();
 		File f = new File(path+"/tibco.cer");
 		System.setProperty("javax.net.ssl.trustStore", f.getPath());
 		System.setProperty("javax.net.ssl.trustStorePassword", "qiansh");

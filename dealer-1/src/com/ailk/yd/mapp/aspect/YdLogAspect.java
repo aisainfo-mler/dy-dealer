@@ -43,7 +43,7 @@ public class YdLogAspect {
 	 * @return
 	 * @throws Throwable
 	 */
-	@Around("execution(* com.ailk.yd.mapp.client.action.ExternalRequest.sendMsg_String(..))")
+	@Around("execution(* com.ailk.yd.mapp.client.action.ExternalRequest.sendMsg(..))")
 	public Object insertCallLog(ProceedingJoinPoint point) throws Throwable
 	{
 		CallLog log = new CallLog();
@@ -52,26 +52,33 @@ public class YdLogAspect {
 		
 		try{
 			result = point.proceed(args);
-			return result;
-			
 		}catch (Exception e) {
 			/** 设置异常信息 **/
 			log.setMsg(e.getMessage());
+			result = e.getMessage();
 			throw e;
 		}
 		finally
 		{
-			IUserinfo user = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-			if(user != null && user.getUserId() != null)
-			log.setUserId(user.getUserId().longValue());
-			log.setCreateTime(new Date(System.currentTimeMillis()));
-			log.setUrl(serverKey);
-			log.setBizCode((String)args[0]);
-			log.setReq((String)args[1]);
-			log.setRsp((String)result);
-			callLogService.saveCallLog(log);
-			logger.debug("mapp向外部发送请求日志记录完毕");
+			try{
+				IUserinfo user = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+				if(user != null && user.getUserId() != null)
+				log.setUserId(user.getUserId().longValue());
+				log.setCreateTime(new Date(System.currentTimeMillis()));
+				log.setUrl((String)MappContext.getAttribute(MappContext.MAPPCONTEXT_REQUEST_IP));
+				log.setBizCode((String)args[0]);
+				log.setReq((String)args[1]);
+				log.setRsp((String)result);
+				callLogService.saveCallLog(log);
+				logger.debug("mapp向外部发送请求日志记录完毕");
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
+		
+		return result;
+		
 	}
 	
 	/**
@@ -94,6 +101,7 @@ public class YdLogAspect {
 			
 		}catch (Exception e) {
 			log.setMsg(e.getMessage());
+			result = e.getMessage();
 			throw e;
 		}
 		finally
@@ -102,22 +110,27 @@ public class YdLogAspect {
 			{
 				IMappDatapackage pkg = mapper.readValue((String)args[0], IMappDatapackage.class);
 				log.setBizCode(pkg.getHeader().getBizCode());
+				
+				IUserinfo user = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+				if(user != null && user.getUserId() != null)
+				log.setUserId(user.getUserId().longValue());
+				log.setCreateTime(new Date(System.currentTimeMillis()));
+				log.setUrl((String)MappContext.getAttribute(MappContext.MAPPCONTEXT_REQUEST_IP));
+				log.setReq((String)args[0]);
+				log.setRsp((String)result);
+				callLogService.saveCallLog(log);
+				logger.debug("mapp向外部发送请求日志记录完毕");
 			}
 			catch (Exception e) {
 				// TODO: 如果json转化出错则无法获取值bizcode
+				e.printStackTrace();
 			}
 			
-			IUserinfo user = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-			if(user != null && user.getUserId() != null)
-			log.setUserId(user.getUserId().longValue());
-			log.setCreateTime(new Date(System.currentTimeMillis()));
-			log.setUrl((String)MappContext.getAttribute(MappContext.MAPPCONTEXT_REQUEST_IP));
-			log.setReq((String)args[0]);
-			log.setRsp((String)result);
-			callLogService.saveCallLog(log);
-			logger.debug("mapp向外部发送请求日志记录完毕");
+			
 		}
 		return result;
+		
+		
 	}
 	
 	

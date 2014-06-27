@@ -7,14 +7,20 @@ import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0035Response extends YDBody {
 
-	private Map<String, List<Service>> services;
+	private List<Service> services;
 
 	public static class Service {
+		private String customerId;
 		private String name;
 		private String type;
 		private String value;
 		private String category;
 		private String subCategory;
+		
+		private String productCode;
+		private String productName;
+		private String serviceStatus;
+		
 
 		public String getName() {
 			return name;
@@ -55,13 +61,46 @@ public class HW0035Response extends YDBody {
 		public void setSubCategory(String subCategory) {
 			this.subCategory = subCategory;
 		}
+
+		public String getProductCode() {
+			return productCode;
+		}
+
+		public void setProductCode(String productCode) {
+			this.productCode = productCode;
+		}
+
+		public String getProductName() {
+			return productName;
+		}
+
+		public void setProductName(String productName) {
+			this.productName = productName;
+		}
+
+		public String getServiceStatus() {
+			return serviceStatus;
+		}
+
+		public void setServiceStatus(String serviceStatus) {
+			this.serviceStatus = serviceStatus;
+		}
+
+		public String getCustomerId() {
+			return customerId;
+		}
+
+		public void setCustomerId(String customerId) {
+			this.customerId = customerId;
+		}
 	}
 
-	public Map<String, List<Service>> getServices() {
+	public List<Service> getServices() {
 		return services;
 	}
 
-	public void setServices(Map<String, List<Service>> services) {
+	public void setServices(List<Service> services) {
 		this.services = services;
 	}
+
 }

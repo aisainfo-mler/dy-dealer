@@ -350,7 +350,7 @@ public class YD0021Response implements TibcoRequest {
 		return rm;
 	}
 	
-	private static void extractStrValObj(Object mapObj, Object rm)
+	public static void extractStrValObj(Object mapObj, Object rm)
 			throws IllegalAccessException {
 		if (!(mapObj instanceof Map))
 			return;
@@ -366,7 +366,7 @@ public class YD0021Response implements TibcoRequest {
 			}
 		}
 	}
-	private static Object extractStrValClass(Object mapObj, Class clazz)
+	public static Object extractStrValClass(Object mapObj, Class clazz)
 			throws IllegalAccessException, InstantiationException {
 		if (!(mapObj instanceof Map))
 			return null;

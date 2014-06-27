@@ -12,7 +12,7 @@ public class YD0008Request implements TibcoRequest {
 	/**
 	 * 用户输入的模式串号码
 	 */
-	private String pattern="";
+	private String searchPattern="";
 	
 	private YdPage paging;
 	
@@ -37,13 +37,6 @@ public class YD0008Request implements TibcoRequest {
 	 */
 	private String ciecleId="";
 
-	public String getPattern() {
-		return pattern;
-	}
-
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
-	}
 
 
 	public String getType() {
@@ -84,6 +77,14 @@ public class YD0008Request implements TibcoRequest {
 
 	public void setPaging(YdPage paging) {
 		this.paging = paging;
+	}
+
+	public String getSearchPattern() {
+		return searchPattern;
+	}
+
+	public void setSearchPattern(String searchPattern) {
+		this.searchPattern = searchPattern;
 	}
 
 }

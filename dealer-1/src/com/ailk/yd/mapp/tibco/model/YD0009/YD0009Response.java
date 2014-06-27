@@ -5,35 +5,19 @@ import com.ailk.yd.mapp.model.YDBody;
 /**
  * @author Zhengwj 
  * @version 创建时间：2014-4-28 下午06:20:25
+ * @version 2014-06-26 更新
  * 类说明:充值
  */
 
 public class YD0009Response extends YDBody {
-	/**
-	 * TIBCO生成的流水号
-	 */
-	private String sn;
-	
-	/**
-	 * pin码
-	 */
-	private String pin;
+	private String refillId;
 
-	public String getSn() {
-		return sn;
+	public String getRefillId() {
+		return refillId;
 	}
 
-	public void setSn(String sn) {
-		this.sn = sn;
+	public void setRefillId(String refillId) {
+		this.refillId = refillId;
 	}
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
-	
 	
 }
