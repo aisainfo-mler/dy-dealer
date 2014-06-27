@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <beans
 xmlns="http://www.springframework.org/schema/beans"
@@ -71,3 +72,78 @@ xmlns="http://www.springframework.org/schema/beans"
 	<import resource="applicationContext-dao.xml"></import>
 	
 </beans>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	 xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:cache="http://www.springframework.org/schema/cache"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+   	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd" 
+	default-autowire="byName" default-lazy-init="true">
+	
+	<!-- 定义受环境影响易变的变量-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	  	 <property name="url" value="jdbc:mysql://42.121.57.229:3306/yindudb?useUnicode=true&amp;characterEncoding=UTF-8"/>          
+         <property name="username" value="yindu"/>        
+         <property name="password" value="yindu"/>
+<!-- 		 Connection Pooling Info -->
+	</bean>
+	<!-- 数据源配置结束 -->
+	
+	<!-- sessionFactory 配置 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties" ref="hibernateProperties"/>
+		<property name="packagesToScan" value="com.ai.mapp.*.entity" />
+		<property name="useTransactionAwareDataSource" value="true"></property>
+	</bean>
+	
+	<bean name="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">  
+	    <property name="properties">  
+	        <props>
+<!-- 	            <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>  -->
+	            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>  
+	            <prop key="hibernate.show_sql">false</prop>  
+	            <prop key="hibernate.connection.autocommit">false</prop>
+	            <prop key="hibernate.hbm2ddl.auto">none</prop>  
+<!-- 	            <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>   -->
+<!-- 	            <prop key="hibernate.cache.use_query_cache">true</prop>   -->
+	            <prop key="hibernate.default_batch_fetch_size">30</prop>  
+	            <prop key="hibernate.generate_statistics">true</prop>
+	        </props>  
+	    </property>  
+	</bean>
+	
+	<context:property-placeholder location="classpath*:/mapp.properties" ignore-unresolvable="true"/>
+	<context:property-placeholder location="classpath*:/yd.properties" ignore-unresolvable="true"/>
+    <!-- 数据源配置结束 -->
+	<context:annotation-config/>
+	
+	<!-- service下是spring使用注解 -->
+	<context:component-scan base-package="com.ai.mapp,com.ailk.yd.mapp" ></context:component-scan>
+	
+	<!-- 事务 begin -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- 支持 @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	
+	<!-- 支持 @AspectJ -->
+	<aop:aspectj-autoproxy/>
+	<import resource="applicationContext-dao.xml"></import>
+	
+</beans>
+>>>>>>> branch 'master' of https://github.com/aisainfo-mler/dy-dealer.git
