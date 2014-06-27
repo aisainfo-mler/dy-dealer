@@ -54,7 +54,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ibatis-sqlmap-2.3.4.726.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-core-asl-1.9.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-jaxrs-1.9.4.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-mapper-asl-1.9.4.jar" sourcepath="/Users/qianshihua/.m2/repository_ailk/org/codehaus/jackson/jackson-mapper-asl/1.9.4/jackson-mapper-asl-1.9.4-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/javassist-3.11.0.GA.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jave-1.0.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jeval.jar" sourcepath="/Users/luyang/work/maven-reponsitoy/net/sourceforge/jeval/jeval/0.9.4/jeval-0.9.4-sources.jar"/>

@@ -11,6 +11,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ailk.yd.mapp.model.YDBody;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
+import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Request.OrderDetail;
+import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Request.Product;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 /**
  * @author Zhengwj
@@ -36,6 +39,20 @@ public class YD0009Request implements TibcoRequest {
 		private String productId;
 		private String accountId;
 
+		
+		public void addProduct(Product p){
+			if(this.products==null){
+				this.products=new ArrayList<Product>();
+			}
+			this.products.add(p);
+		}
+		
+		public void addCharacteristic(Characteristic c){
+			if(this.characteristics==null){
+				this.characteristics = new ArrayList<Characteristic>();
+			}
+			this.characteristics.add(c);
+		}
 		public String getAmount() {
 			return amount;
 		}
@@ -125,6 +142,13 @@ public class YD0009Request implements TibcoRequest {
 		 */
 		private List<Service> services;
 
+		
+		public void addService(Service s){
+			if(this.services==null){
+				this.services = new ArrayList<Service>();
+			}
+			this.services.add(s);
+		}
 		public String getServiceId() {
 			return serviceId;
 		}
@@ -202,6 +226,13 @@ public class YD0009Request implements TibcoRequest {
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
 	}
+	
+	public void addOrderDetail(OrderDetail od){
+		if(this.orderDetails==null){
+			this.orderDetails = new ArrayList<OrderDetail>();
+		}
+		this.orderDetails.add(od);
+	}
 
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
@@ -235,29 +266,17 @@ public class YD0009Request implements TibcoRequest {
 			JsonMappingException, IOException {
 		YD0009Request yd9 = new YD0009Request();
 		yd9.setRefillId("BR000000LFR1");
-		yd9.setTransactionDateTime(new Date().toString());
-		List ods = new ArrayList();
-		yd9.setOrderDetails(ods);
+		yd9.setTransactionDateTime(TibcoUtil.getCurTime());
 		OrderDetail od = new OrderDetail();
-		ods.add(od);
+		yd9.addOrderDetail(od);
 		od.setAmount("200");
 		od.setCircleId("tc");
 		od.setProductId("11");
-		od.setCharacteristics(new ArrayList() {
-			{
-				new Characteristic("TOPUPSHARED_IND", "ALL");
-			}
-		});
-		List ps = new ArrayList();
+		od.addCharacteristic(new Characteristic("TOPUPSHARED_IND", "ALL"));
 		Product p = new Product();
 		p.setServiceId("18957116664");
-		p.setServices(new ArrayList() {
-			{
-				add(new Service("toppUp"));
-			}
-		});
-		ps.add(p);
-		od.setProducts(ps);
+		p.addService(new Service("toppUp"));
+		od.addProduct(p);
 		System.err.println(new ObjectMapper().writeValueAsString(yd9));
 		;
 	}
@@ -272,31 +291,29 @@ public class YD0009Request implements TibcoRequest {
 	 * @param refId 订单编号
 	 * @param circleId
 	 * @param accountLevel 是否是accountLevel
+	 * @param isTopup 是否是topup。true：topup  false：recharge
 	 */
-	public YD0009Request(String serviceId,String amount,String refId,String circleId,boolean accountLevel) {
+	public YD0009Request(String serviceId,String amount,String refId,String circleId,boolean accountLevel, boolean isTopup) {
 		this.setRefillId(refId);
-		List<OrderDetail>  ods = new ArrayList();
-		this.setOrderDetails(ods);
 		OrderDetail od = new OrderDetail();
-		ods.add(od);
+		this.addOrderDetail(od);
 		od.setAmount(amount);
 		od.setCircleId(circleId);
-		List<Product> ps = new ArrayList();
 		Product p = new Product();
+		od.addProduct(p);
 		p.setServiceId(serviceId);
-		Service s = new Service("");
-		List li = new ArrayList();
-		li.add(s);
-		p.setServices(li);
-		ps.add(p);
-		od.setProducts(ps);
+		if(isTopup==true){
+			Service s = new Service("topup");
+			p.addService(s);
+		}else{
+			Service s = new Service("recharge");
+			p.addService(s);
+		}
 		if(accountLevel==true){
 			Characteristic c = new Characteristic();
 			c.setName("TOPUPSHARED_IND");
 			c.setValue("ALL");
-			List l = new ArrayList();
-			l.add(c);
-			od.setCharacteristics(l);
+			od.addCharacteristic(c);
 		}
 		
 	}
