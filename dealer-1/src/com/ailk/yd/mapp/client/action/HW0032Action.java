@@ -49,12 +49,13 @@ public class HW0032Action extends
 		User creator = userService.loadUser(ui.getUserId().longValue());
 
 		final HW0032Request req = request;
-		AgentOrder order = new AgentOrder();
-		order.setCreator(creator);
-		order.setSvn(req.getSeriveId());
-		order.setSaleFee(Long.parseLong(req.getAmount()));
-
-		order = agentOrderService.createTopUpOrder(order);
+//		AgentOrder order = new AgentOrder();
+//		order.setCreator(creator);
+//		order.setSvn(req.getSeriveId());
+//		order.setSaleFee(Long.parseLong(req.getAmount()));
+//		order = agentOrderService.createTopUpOrder(order);
+		
+		
 		String circleId = creator.getCircleId();
 		if(StringUtils.isBlank(circleId)){
 			circleId = "TC";
@@ -65,9 +66,11 @@ public class HW0032Action extends
 				request.getAccountLevel(), true);
 
 		YD0009Response post2Tibco = this.yd0009.post2Tibco(yd9, null);
-		order.setPin(request.getRrfId());
-		order.setSn(request.getRrfId());
-		agentOrderService.saveAgentOrder(order);
+		
+		
+//		order.setPin(request.getRrfId());
+//		order.setSn(request.getRrfId());
+//		agentOrderService.saveAgentOrder(order);
 
 	}
 

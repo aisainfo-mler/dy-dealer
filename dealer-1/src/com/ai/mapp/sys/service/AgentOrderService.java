@@ -184,7 +184,7 @@ public class AgentOrderService {
 //		float rate = SYSConstant.discountTypes.get(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 //		float discountFee = order.getSaleFee()*rate/100;
 		Map<String,String> variantMap = new HashMap<String,String>();
-		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
+		BigDecimal fee = (new BigDecimal(order.getSaleFee()));
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDER_AMOUNT, fee.toString());
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 		
@@ -195,13 +195,13 @@ public class AgentOrderService {
 			agentId=agentUser.getUserId();
 		}
 		
-		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
+		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
 		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
 		Date now = new Date();
 		
 		order.setCompleteTime(now);
 		order.setCreateTime(now);
-		order.setDesc((order.getDesc() == null?"":order.getDesc())+ " Recharge "+((float)order.getSaleFee()/(float)1000)+ "元");
+		order.setDesc((order.getDesc() == null?"":order.getDesc())+ " Recharge "+((float)order.getSaleFee())+ "元");
 		order.setDiscountFee(discountFeeB.longValue());
 		if(order.getSaleFee().longValue() == 0){
 			order.setDiscountRate((float)0);

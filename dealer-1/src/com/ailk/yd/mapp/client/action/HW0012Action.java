@@ -19,6 +19,7 @@ import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.PO2VOUtils;
+import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.core.util.DateUtils;
 import com.ailk.butterfly.mapp.core.MappContext;
@@ -82,14 +83,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		if(ao == null)
 			throw new Exception(request.getOrderCode()+": not found");
 		
-		if(StringUtils.isBlank(ao.getCafInfo()))
-			throw new Exception("caf information not found");
-		
-		HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(), HW0010Request.class);
-		YD0010Request yd0010Request = convertByHW0010(hw0010Request);
-		System.out.println(mapper.writeValueAsString(yd0010Request));
-		YD0010Response yd0010Response = yd0010.post2Tibco(yd0010Request, null);
-		ao.setTibcoSendFlag("1");
+		if(StringUtils.equals(SYSConstant.AGENT_ORDER_TYPE_NEW, ao.getOrderType())){
+			//心开户订单
+			if(StringUtils.isBlank(ao.getCafInfo()))
+				throw new Exception("caf information not found");
+			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(), HW0010Request.class);
+			YD0010Request yd0010Request = convertByHW0010(hw0010Request);
+			System.out.println(mapper.writeValueAsString(yd0010Request));
+			YD0010Response yd0010Response = yd0010.post2Tibco(yd0010Request, null);
+			ao.setTibcoSendFlag("1");
+		}
 		agentOrderService.saveAgentOrder(ao);
 		agentOrderService.completedOrder(ao.getOrderCode(), null);
 		
