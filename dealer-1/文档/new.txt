@@ -1,0 +1,296 @@
+{
+    "cafDetails": {
+        "posAgentCode": "POSAgent01", 
+        "proofs": [
+            {
+                "proofIdentifier": "POA", 
+                "aadhaarTransactionRefNo": "", 
+                "idProofType": "Z00005", 
+                "placeOfIssue": "jju", 
+                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                "documentNumber": "hh", 
+                "issuingAuthority": "hj", 
+                "dateOfIssue": "2014-06-25"
+            }, 
+            {
+                "proofIdentifier": "POI", 
+                "aadhaarTransactionRefNo": "", 
+                "idProofType": "Z00005", 
+                "placeOfIssue": "jju", 
+                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                "documentNumber": "hh", 
+                "issuingAuthority": "hj", 
+                "dateOfIssue": "2014-06-25"
+            }
+        ], 
+        "form61Details": {
+            "reasonForNoPAN": "", 
+            "lastTaxReturnFiled": ""
+        }, 
+        "customerDeclarationDate": "", 
+        "currentMobileConnections": [
+            {
+                "operatorName": "", 
+                "noOfConnections": ""
+            }
+        ], 
+        "posAgentSignatureDate": "", 
+        "localReferenceVerification": {
+            "callingPartyNumber": ""
+        }, 
+        "referringCustomerDetails": {
+            "id": "", 
+            "referenceMobileNumber": ""
+        }, 
+        "customerDeclarationPlace": "", 
+        "merchantCode": "POSAgent01", 
+        "localReferenceDetails": {
+            "middleName": "", 
+            "lastName": "", 
+            "eMailId": "", 
+            "contactNumber": "", 
+            "firstName": "", 
+            "address": {
+                "villageORCity": "", 
+                "careOf": "", 
+                "jioCentreId": "", 
+                "state": "", 
+                "houseNameORNumber": "", 
+                "buildingNameORNumber": "", 
+                "addressType": "", 
+                "addressId": "", 
+                "country": "", 
+                "pincode": "", 
+                "areaORTehsil": "", 
+                "landmark": "", 
+                "totalFloors": "", 
+                "societyName": "", 
+                "streetNameORNumber": "", 
+                "district": "", 
+                "subLocality": "", 
+                "buildingId": ""
+            }
+        }
+    }, 
+    "orderDetails": [
+        {
+            "planOffering": {
+                "id": "3000"
+            }, 
+            "billingAddress": {
+                "villageORCity": "Mumbai", 
+                "careOf": "", 
+                "jioCentreId": "JC23", 
+                "state": "MH", 
+                "houseNameORNumber": "ghh", 
+                "buildingNameORNumber": "TC23- C Block", 
+                "addressType": "BILL_TO", 
+                "addressId": "", 
+                "country": "IN", 
+                "pincode": "666888", 
+                "areaORTehsil": "ghh", 
+                "landmark": "", 
+                "totalFloors": "", 
+                "societyName": "", 
+                "streetNameORNumber": "hjj", 
+                "district": "mum", 
+                "subLocality": "", 
+                "buildingId": ""
+            }, 
+            "accountId": "", 
+            "businessInteraction": {
+                "name": ""
+            }, 
+            "eWalletReservationReferenceId": "", 
+            "products": [
+                {
+                    "dependancyInfo": {
+                        "identifier": [ ]
+                    }, 
+                    "proofs": [
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POA"
+                        }, 
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POI"
+                        }
+                    ], 
+                    "cafDetails": {
+                        "cafNumber": "", 
+                        "cafURI": ""
+                    }, 
+                    "starterKitCode": "N", 
+                    "characteristics": [ ], 
+                    "componentPrice": {
+                        "id": ""
+                    }, 
+                    "mnpPortDetails": {
+                        "uniquePortingCode": "", 
+                        "upcGenerationDate": "", 
+                        "existingSubscriberType": "", 
+                        "lastPaidBillReceiptURI": "", 
+                        "existingOperatorCode": ""
+                    }, 
+                    "businessInteraction": {
+                        "name": "ADD"
+                    }, 
+                    "customerFacingServices": [ ], 
+                    "devices": [ ], 
+                    "identifier": {
+                        "value": "", 
+                        "type": "", 
+                        "componentPrice": {
+                            "id": ""
+                        }, 
+                        "name": ""
+                    }, 
+                    "productId": "P10009"
+                }, 
+                {
+                    "dependancyInfo": {
+                        "identifier": [ ]
+                    }, 
+                    "proofs": [
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POA"
+                        }, 
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POI"
+                        }
+                    ], 
+                    "cafDetails": {
+                        "cafNumber": "", 
+                        "cafURI": ""
+                    }, 
+                    "starterKitCode": "Y", 
+                    "characteristics": [ ], 
+                    "componentPrice": {
+                        "id": ""
+                    }, 
+                    "mnpPortDetails": {
+                        "uniquePortingCode": "", 
+                        "upcGenerationDate": "", 
+                        "existingSubscriberType": "", 
+                        "lastPaidBillReceiptURI": "", 
+                        "existingOperatorCode": ""
+                    }, 
+                    "businessInteraction": {
+                        "name": "ADD"
+                    }, 
+                    "customerFacingServices": [ ], 
+                    "devices": [ ], 
+                    "identifier": {
+                        "value": "", 
+                        "type": "", 
+                        "componentPrice": {
+                            "id": ""
+                        }, 
+                        "name": ""
+                    }, 
+                    "productId": "P10004"
+                }
+            ], 
+            "offerId": "OC405"
+        }
+    ], 
+    "customerId": "", 
+    "installationAddress": [
+        {
+            "villageORCity": "Mumbai", 
+            "careOf": "", 
+            "jioCentreId": "JC23", 
+            "state": "MH", 
+            "houseNameORNumber": "ghh", 
+            "buildingNameORNumber": "TC23- C Block", 
+            "addressType": "SHIP_TO", 
+            "addressId": "", 
+            "country": "IN", 
+            "pincode": "666888", 
+            "areaORTehsil": "ghh", 
+            "landmark": "", 
+            "totalFloors": "", 
+            "societyName": "", 
+            "streetNameORNumber": "hjj", 
+            "district": "mum", 
+            "subLocality": "", 
+            "buildingId": ""
+        }
+    ], 
+    "orderType": "CREATE", 
+    "referenceNumber": "NO000000LMST", 
+    "customerDetails": {
+        "dateOfBirth": "2014-06-28", 
+        "middleName": "jack", 
+        "prospectId": "", 
+        "lastName": "jason", 
+        "occupation": "", 
+        "passportNo": "123456", 
+        "anniversaryDate": "", 
+        "customerCategory": "0001", 
+        "maritalStatus": "", 
+        "panNumber": "123456", 
+        "visaNo": "123456", 
+        "familyContactDetails": {
+            "firstName": "123456", 
+            "middleName": "123456", 
+            "lastName": "123456", 
+            "relationship": "0001"
+        }, 
+        "preferredLanguage": "", 
+        "occupationDescription": "", 
+        "customerPictureURL": "", 
+        "preferredCommunicationChannel": "", 
+        "nationality": "HR", 
+        "aadhaarNumber": "", 
+        "gender": "2", 
+        "contactDetails": {
+            "mobileNumber": "5885555555", 
+            "alternateContactNumberHome": "5666777766", 
+            "alternateContactNumberWork": "", 
+            "emailId": "ggyy@bh.com"
+        }, 
+        "typeOfHouse": "", 
+        "firstName": "yang", 
+        "salutation": "0002", 
+        "permanentAddress": {
+            "villageORCity": "Mumbai", 
+            "careOf": "", 
+            "jioCentreId": "JC23", 
+            "state": "MH", 
+            "houseNameORNumber": "ghh", 
+            "buildingNameORNumber": "TC23- C Block", 
+            "addressType": "PER_ADD", 
+            "addressId": "", 
+            "country": "IN", 
+            "pincode": "666888", 
+            "areaORTehsil": "ghh", 
+            "landmark": "", 
+            "totalFloors": "", 
+            "societyName": "", 
+            "streetNameORNumber": "hjj", 
+            "district": "mum", 
+            "subLocality": "", 
+            "buildingId": ""
+        }, 
+        "visaValidityDate": ""
+    }, 
+    "deliveryMode": "", 
+    "appointmentDateTimeTo": "", 
+    "appointmentDateTimeFrom": "", 
+    "paymentDetails": {
+        "cpTransactionId": "", 
+        "branchNameAndAddress": "", 
+        "modeOfPayment": "", 
+        "totalAmount": "", 
+        "bankName": "", 
+        "paymentInstrumentDate": "", 
+        "receiptNumber": "", 
+        "paymentInstrumentNumber": ""
+    }, 
+    "channel": "10", 
+    "circleId": "TC"
+}

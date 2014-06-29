@@ -1,0 +1,319 @@
+{
+    "cafDetails": {
+        "posAgentCode": "POSAgent01", 
+        "proofs": [
+            {
+                "proofIdentifier": "POA", 
+                "aadhaarTransactionRefNo": "", 
+                "idProofType": "Z00005", 
+                "placeOfIssue": "jju", 
+                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                "documentNumber": "hh", 
+                "issuingAuthority": "hj", 
+                "dateOfIssue": "2014-06-25"
+            }, 
+            {
+                "proofIdentifier": "POI", 
+                "aadhaarTransactionRefNo": "", 
+                "idProofType": "Z00005", 
+                "placeOfIssue": "jju", 
+                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                "documentNumber": "hh", 
+                "issuingAuthority": "hj", 
+                "dateOfIssue": "2014-06-26"
+            }
+        ], 
+        "form61Details": {
+            "reasonForNoPAN": "", 
+            "lastTaxReturnFiled": ""
+        }, 
+        "customerDeclarationDate": "", 
+        "currentMobileConnections": [ ], 
+        "posAgentSignatureDate": "", 
+        "localReferenceVerification": {
+            "callingPartyNumber": ""
+        }, 
+        "referringCustomerDetails": {
+            "id": "", 
+            "referenceMobileNumber": ""
+        }, 
+        "customerDeclarationPlace": "", 
+        "merchantCode": "POSAgent01", 
+        "localReferenceDetails": {
+            "middleName": "", 
+            "lastName": "", 
+            "eMailId": "", 
+            "contactNumber": "", 
+            "firstName": "", 
+            "address": {
+                "villageORCity": "", 
+                "careOf": "", 
+                "jioCentreId": "JC23", 
+                "state": "", 
+                "houseNameORNumber": "", 
+                "buildingNameORNumber": "", 
+                "addressType": "REF_ADD", 
+                "addressId": "", 
+                "country": "", 
+                "pincode": "", 
+                "areaORTehsil": "", 
+                "landmark": "", 
+                "totalFloors": "", 
+                "societyName": "", 
+                "streetNameORNumber": "", 
+                "district": "", 
+                "subLocality": "", 
+                "buildingId": ""
+            }
+        }
+    }, 
+    "orderDetails": [
+        {
+            "planOffering": {
+                "id": "52"
+            }, 
+            "billingAddress": {
+                "villageORCity": "Mumbai", 
+                "careOf": "", 
+                "state": "MH", 
+                "houseNameORNumber": "ghh", 
+                "buildingNameORNumber": "TC23- C Block", 
+                "addressType": "BILL_TO", 
+                "addressId": "", 
+                "country": "IN", 
+                "pincode": "666888", 
+                "areaORTehsil": "ghh", 
+                "landmark": "", 
+                "societyName": "", 
+                "streetNameORNumber": "hjj", 
+                "district": "mum", 
+                "subLocality": "", 
+                "buildingId": ""
+            }, 
+            "accountId": "", 
+            "businessInteraction": {
+                "name": ""
+            }, 
+            "eWalletReservationReferenceId": "1014689", 
+            "products": [
+                {
+                    "dependancyInfo": {
+                        "identifier": [ ]
+                    }, 
+                    "proofs": [
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POA"
+                        }, 
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POI"
+                        }
+                    ], 
+                    "cafDetails": {
+                        "cafURI": "", 
+                        "cafNumber": ""
+                    }, 
+                    "starterKitCode": "N", 
+                    "characteristics": [ ], 
+                    "componentPrice": {
+                        "id": ""
+                    }, 
+                    "mnpPortDetails": {
+                        "uniquePortingCode": "", 
+                        "upcGenerationDate": "", 
+                        "existingSubscriberType": "", 
+                        "lastPaidBillReceiptURI": "", 
+                        "existingOperatorCode": ""
+                    }, 
+                    "businessInteraction": {
+                        "name": ""
+                    }, 
+                    "customerFacingServices": [
+                        {
+                            "features": [ ], 
+                            "serviceId": "S10009", 
+                            "businessInteraction": {
+                                "name": "ADD"
+                            }
+                        }
+                    ], 
+                    "devices": [ ], 
+                    "productId": "P10009"
+                }, 
+                {
+                    "dependancyInfo": {
+                        "identifier": [ ]
+                    }, 
+                    "proofs": [
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POA"
+                        }, 
+                        {
+                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "proofIdentifier": "POI"
+                        }
+                    ], 
+                    "cafDetails": {
+                        "cafURI": "", 
+                        "cafNumber": ""
+                    }, 
+                    "starterKitCode": "Y", 
+                    "characteristics": [ ], 
+                    "componentPrice": {
+                        "id": ""
+                    }, 
+                    "mnpPortDetails": {
+                        "uniquePortingCode": "", 
+                        "upcGenerationDate": "", 
+                        "existingSubscriberType": "", 
+                        "lastPaidBillReceiptURI": "", 
+                        "existingOperatorCode": ""
+                    }, 
+                    "businessInteraction": {
+                        "name": ""
+                    }, 
+                    "customerFacingServices": [
+                        {
+                            "features": [ ], 
+                            "serviceId": "S10003", 
+                            "businessInteraction": {
+                                "name": "ADD"
+                            }
+                        }
+                    ], 
+                    "devices": [
+                        {
+                            "identifier": [ ], 
+                            "boqType": "MiFi", 
+                            "productId": "DEV100012", 
+                            "businessInteraction": {
+                                "name": ""
+                            }
+                        }, 
+                        {
+                            "identifier": [
+                                {
+                                    "value": "5667766654444556677", 
+                                    "name": "ICCID"
+                                }
+                            ], 
+                            "boqType": "VOLTE SIM", 
+                            "productId": "DEV100022", 
+                            "businessInteraction": {
+                                "name": ""
+                            }
+                        }
+                    ], 
+                    "identifier": {
+                        "value": "4456667778", 
+                        "type": "", 
+                        "componentPrice": {
+                            "id": ""
+                        }, 
+                        "name": "MSISDN"
+                    }, 
+                    "productId": "P10003"
+                }
+            ], 
+            "offerId": "OC402"
+        }
+    ], 
+    "customerId": "", 
+    "installationAddress": [
+        {
+            "villageORCity": "Mumbai", 
+            "careOf": "", 
+            "jioCentreId": "JC23", 
+            "state": "MH", 
+            "houseNameORNumber": "ghh", 
+            "buildingNameORNumber": "TC23- C Block", 
+            "addressType": "SHIP_TO", 
+            "addressId": "", 
+            "country": "IN", 
+            "pincode": "666888", 
+            "areaORTehsil": "ghh", 
+            "landmark": "", 
+            "totalFloors": "", 
+            "societyName": "", 
+            "streetNameORNumber": "hjj", 
+            "district": "mum", 
+            "subLocality": "", 
+            "buildingId": ""
+        }
+    ], 
+    "orderType": "CREATE", 
+    "referenceNumber": "OT000000LTMS", 
+    "customerDetails": {
+        "dateOfBirth": "1996-06-25", 
+        "middleName": "", 
+        "prospectId": "", 
+        "lastName": "GYY", 
+        "occupation": "0005", 
+        "passportNo": "", 
+        "anniversaryDate": "2014-06-26", 
+        "customerCategory": "0001", 
+        "maritalStatus": "", 
+        "panNumber": "AUIPR0027Q", 
+        "visaNo": "", 
+        "familyContactDetails": {
+            "relationship": "0001", 
+            "middleName": "", 
+            "firstName": "GH", 
+            "lastName": "GGYY"
+        }, 
+        "preferredLanguage": "EN", 
+        "occupationDescription": "", 
+        "customerPictureURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167140_20140626_185115&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+        "preferredCommunicationChannel": "INT", 
+        "nationality": "IN", 
+        "aadhaarNumber": "", 
+        "gender": "2", 
+        "contactDetails": {
+            "mobileNumber": "5885555555", 
+            "emailId": "ggyy@bh.com", 
+            "alternateContactNumberWork": "", 
+            "alternateContactNumberHome": "5666777766"
+        }, 
+        "typeOfHouse": "", 
+        "firstName": "HH", 
+        "salutation": "0002", 
+        "permanentAddress": {
+            "villageORCity": "Mumbai", 
+            "careOf": "", 
+            "jioCentreId": "JC23", 
+            "state": "MH", 
+            "houseNameORNumber": "ghh", 
+            "buildingNameORNumber": "TC23- C Block", 
+            "addressType": "PER_ADD", 
+            "addressId": "", 
+            "country": "IN", 
+            "pincode": "666888", 
+            "areaORTehsil": "Mumbai", 
+            "landmark": "", 
+            "totalFloors": "", 
+            "societyName": "", 
+            "streetNameORNumber": "hjj", 
+            "district": "mum", 
+            "subLocality": "", 
+            "buildingId": ""
+        }, 
+        "visaValidityDate": "1996-06-25T00:00:00"
+    }, 
+    "deliveryMode": "", 
+    "appointmentDateTimeTo": "", 
+    "appointmentDateTimeFrom": "", 
+    "paymentDetails": {
+        "cpTransactionId": "", 
+        "branchNameAndAddress": "", 
+        "modeOfPayment": "", 
+        "totalAmount": "", 
+        "bankName": "", 
+        "paymentInstrumentDate": "", 
+        "receiptNumber": "", 
+        "paymentInstrumentNumber": ""
+    }, 
+    "channel": "10", 
+    "circleId": "TC"
+}
