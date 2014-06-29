@@ -449,6 +449,10 @@ public class SYSConstant {
 	 */
 	public static final String AGENT_ORDER_TYPE_RECHARGE="2";
 	/**
+	 * topup
+	 */
+	public static final String AGENT_ORDER_TYPE_TOPUP="4";
+	/**
 	 * 补卡
 	 */
 	public static final String AGENT_ORDER_TYPE_SIMCARD="3";
