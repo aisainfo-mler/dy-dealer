@@ -292,8 +292,9 @@ public class YD0009Request implements TibcoRequest {
 	 * @param circleId
 	 * @param accountLevel 是否是accountLevel
 	 * @param isTopup 是否是topup。true：topup  false：recharge
+	 * @param productId topUp为常量，recharge为planId
 	 */
-	public YD0009Request(String serviceId,String amount,String refId,String circleId,boolean accountLevel, boolean isTopup) {
+	public YD0009Request(String serviceId,String amount,String refId,String circleId,boolean accountLevel, boolean isTopup,String productId) {
 		this.setRefillId(refId);
 		OrderDetail od = new OrderDetail();
 		this.addOrderDetail(od);
@@ -305,9 +306,11 @@ public class YD0009Request implements TibcoRequest {
 		if(isTopup==true){
 			Service s = new Service("topup");
 			p.addService(s);
+			od.setProductId("");
 		}else{
 			Service s = new Service("recharge");
 			p.addService(s);
+			od.setProductId("");
 		}
 		if(accountLevel==true){
 			Characteristic c = new Characteristic();

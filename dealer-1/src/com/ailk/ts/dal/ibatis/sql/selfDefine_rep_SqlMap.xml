@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="selfDefine_rep">
+  <resultMap class="com.ailk.ts.dal.ibatis.model.SelfDefineRep" id="BaseResultMap">
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SKUID" jdbcType="INTEGER" property="skuId" />
+    <result column="REPOSITORY_CODE" jdbcType="VARCHAR" property="repositoryCode" />
+    <result column="COUNT" jdbcType="INTEGER" property="count" />
+    <result column="SKU_NAME" jdbcType="VARCHAR" property="skuName" />
+    <result column="REP_NAME" jdbcType="INTEGER" property="repName" />
+    <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r.ID, r.SKUID, r.REPOSITORY_CODE, r.COUNT, s.SKU_NAME, t.REP_NAME,t.DEPT_ID
+  </sql>
+  <select id="selectSelfRep" parameterClass="java.util.Map" resultMap="BaseResultMap">
+    select
+    <isParameterPresent>
+      <isEqual compareValue="true" property="distinct">
+        distinct
+      </isEqual>
+    </isParameterPresent>
+    <include refid="selfDefine_rep.Base_Column_List" />
+    from rep r,product_sku s,repository t
+    WHERE 
+	r.SKUID=s.SKUID
+	AND t.REP_CODE=r.REPOSITORY_CODE
+<!--    <isNotEmpty prepend="and" property="typeId">-->
+<!--    	INSTR(p.PRODUCT_TYPE_IDS, CONCAT(',' ,#typeId#, ',')) > 0-->
+<!--    </isNotEmpty>-->
+<!--    <isNotEmpty prepend="and" property="notTypeId">-->
+<!--    	INSTR(p.PRODUCT_TYPE_IDS, CONCAT(',' ,#notTypeId#, ',')) = 0-->
+<!--    </isNotEmpty>-->
+<!--    <isNotNull prepend="and" property="brandId" >-->
+<!--       	p.BRAND_ID = #brandId#-->
+<!--    </isNotNull>-->
+<!--    <isNotNull prepend="and" property="productId" >-->
+<!--       	p.PRODUCT_ID = #productId#-->
+<!--    </isNotNull>-->
+    <isNotNull prepend="and" property="skuId" >
+       	r.SKUID = #skuId#
+    </isNotNull>
+    <isNotEmpty prepend="and" property="deptId" >
+       	t.DEPT_ID = #deptId#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="repCode" >
+       	r.REPOSITORY_CODE = #repCode#
+    </isNotEmpty>
+    <isNotNull prepend="and" property="repCodes">
+ 		r.REPOSITORY_CODE in 
+		 <iterate  open="(" close=")" conjunction="," property="repCodes" >  
+          #repCodes[]#  
+         </iterate> 
+	</isNotNull>
+	<isNotNull property="orderByClause" >
+        order by $orderByClause$
+     </isNotNull>
+	 <isNotNull property="limitClauseStart">
+       	limit #limitClauseStart:INTEGER#, #limitClauseCount:INTEGER# 
+     </isNotNull>
+  </select>
+  
+</sqlMap>

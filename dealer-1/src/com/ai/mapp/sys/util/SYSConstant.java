@@ -209,6 +209,35 @@ public class SYSConstant {
 	public static final String OPTTYPE_DELETE = "2";
 	
 	
+	/**
+	 * 商品操作类型： 01. 进货入库;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_2_REP = "01";
+	/**
+	 * 商品操作类型： 03. 销售给普通用户;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_USER = "03";
+	/**
+	 * 商品操作类型：04. 销售给代理商;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL = "04";
+	/**
+	 * 商品操作类型：05.普通用户退货入平台库;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_USER_2_OSOONS = "05";
+	/**
+	 * 商品操作类型：06 代理商退货入平台库 ;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_OSOONS = "06";
+	/**
+	 * 商品操作类型：07 代理商销售给普通用户;
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_USER = "07";
+	/**
+	 * 商品操作类型：08 普通用户退货入代理商库
+	 */
+	public static final String SELL_DETAIL_OPTTYPE_USER_2_CHANNEL = "08";
+	
 	
 	public static Map<String,String> variantMap = new LinkedHashMap<String, String>(0);
 	public static List<String> variantMapL = new ArrayList<String>();
@@ -420,6 +449,10 @@ public class SYSConstant {
 	 */
 	public static final String AGENT_ORDER_TYPE_RECHARGE="2";
 	/**
+	 * topup
+	 */
+	public static final String AGENT_ORDER_TYPE_TOPUP="4";
+	/**
 	 * 补卡
 	 */
 	public static final String AGENT_ORDER_TYPE_SIMCARD="3";
@@ -499,6 +532,34 @@ public class SYSConstant {
 	
 	public static final String SHIPMENT_TYPE_EXPRESS = "1"; //快递
 	public static final String SHIPMENT_TYPE_OTHER = "9"; //其它
+	
+	public static final Map<String,String> skuStatusMap = new LinkedHashMap<String,String>(0);
+	
+	/**
+	 * 关于SKU实体状态 SKU_ENTITY
+	 *  01:在平台库
+	 */
+	public static final String SKU_STATUS_OSOONS = "01";
+	/**
+	 * 关于SKU实体状态 SKU_ENTITY
+	 *  02:在代理商库
+	 */
+	public static final String SKU_STATUS_CHANNEL = "02";
+	/**
+	 * 关于SKU实体状态 SKU_ENTITY
+	 * 03:已销售给普通用户
+	 */
+	public static final String SKU_STATUS_USER = "03";
+	/**
+	 * 关于SKU实体状态 SKU_ENTITY
+	 * 04:已损坏
+	 */
+	public static final String SKU_STATUS_DESTROY = "04";
+	
+	/**
+	 * 预占，暂时不可用状态。撤单之后恢复正常
+	 */
+	public static final String SKU_STATUS_TMP = "05";
 	
 	static
 	{
@@ -898,6 +959,12 @@ public class SYSConstant {
 //		bankTypes.put("CGB", "广发银行");//广发银行---CGB
 //		bankTypes.put("SPD", "浦发银行");//浦发银行--SPD
 //		bankTypes.put("HZBANK", "杭州银行");//杭州银行---HZBANK
+		
+		skuStatusMap.put(SKU_STATUS_OSOONS, "在欧顺库");
+		skuStatusMap.put(SKU_STATUS_CHANNEL, "在库");
+		skuStatusMap.put(SKU_STATUS_USER, "已销售");
+		skuStatusMap.put(SKU_STATUS_DESTROY, "已损坏");
+		skuStatusMap.put(SKU_STATUS_TMP, "预占");
 	}
 
 	public static Object getDictName(String type,Object key)

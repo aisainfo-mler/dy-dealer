@@ -489,5 +489,103 @@ public class DateUtils {
 		return sdf.format(d);
     }
     
-    
+	/**
+	 * 加月
+	 */
+	public static Timestamp addMonth(Timestamp time,int months){
+		Calendar calendar = Calendar.getInstance();
+		if(time != null){
+			calendar.setTimeInMillis(time.getTime());
+		}
+		calendar.add(Calendar.MONTH, months);  //日期加月
+		return new Timestamp(calendar.getTimeInMillis());
+	}
+	
+	/**
+	 * 加秒
+	 */
+	public static Timestamp addSeconds(Timestamp time,int seconds){
+		Calendar calendar = Calendar.getInstance();
+		if(time != null){
+			calendar.setTimeInMillis(time.getTime());
+		}
+		calendar.add(Calendar.SECOND, seconds);  //日期加月
+		return new Timestamp(calendar.getTimeInMillis());
+	}
+	
+	/**
+	 * <p>描述: 获得一个月的零晨时间</p> 
+	 * @param:        @param month 201001
+	 * @param:        @return    20100101 00:00:00
+	 * @return:       Timestamp    
+	 */
+	public static Timestamp getMonthFirstTime(String month){
+		month += "01 00:00:00";
+		Calendar calendar = string2Calendar(month, "yyyyMMdd HH:mm:ss");
+		return calendar2Timestamp(calendar);
+	}
+	
+	/**
+	 * <p>描述: 获得一个月的末时间</p> 
+	 * @param:        @param month 201001
+	 * @param:        @return    20100131 23:59:59
+	 * @return:       Timestamp    
+	 */
+	public static Timestamp getMonthEndTime(String month){
+		Calendar calendar = string2Calendar(month, "yyyyMM");
+		int maxDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		month = month + maxDayOfMonth + " 23:59:59";
+//		System.out.println(month);
+		calendar = string2Calendar(month, "yyyyMMdd HH:mm:ss");
+		return calendar2Timestamp(calendar);
+	}
+	
+	/**
+	 * <p>描述: 获得一天的零晨时间</p> 
+	 * @param:        @param month 20100102
+	 * @param:        @return    201001002 00:00:00
+	 * @return:       Timestamp    
+	 */
+	public static Timestamp getDayFirstTime(String day){
+		day += " 00:00:00";
+		Calendar calendar = string2Calendar(day, "yyyyMMdd HH:mm:ss");
+		return calendar2Timestamp(calendar);
+	}
+	
+	/**
+	 * <p>描述: 获得一天的末时间</p> 
+	 * @param:        @param month 20100102
+	 * @param:        @return    20100102 23:59:59
+	 * @return:       Timestamp    
+	 */
+	public static Timestamp getDayEndTime(String day){
+		day += " 23:59:59";
+//		System.out.println(month);
+		Calendar calendar = string2Calendar(day, "yyyyMMdd HH:mm:ss");
+		return calendar2Timestamp(calendar);
+	}
+	
+	/**
+	 * string-->calendar eg. format:yyyy-MM-dd HH:mm:ss
+	 */
+	public static Calendar string2Calendar(String time,String format){
+		SimpleDateFormat sdf= new SimpleDateFormat(format);
+		Date date = null;
+		try {
+			date = sdf.parse(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
+	}
+	
+	/**
+	 * Calendar-->Timestamp
+	 */
+	public static Timestamp calendar2Timestamp(Calendar calendar){
+		return new Timestamp(calendar.getTimeInMillis());
+	}
 }

@@ -6,8 +6,8 @@ import java.util.List;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 
 /**
- * @author Zhengwj 
- * @version 创建时间：2014-4-28 下午03:20:38
+ * @author mler 
+ * @version 创建时间：2014-6-28 下午03:20:38
  * 类说明:号码预占
  */
 
@@ -34,14 +34,14 @@ public class YD0002Request implements TibcoRequest{
 	}
 	
 	public void setSvcNum(String num){
-		numberList = new ArrayList();
+		numberList = new ArrayList<SvcNumber>();
 		SvcNumber ele = new SvcNumber();
 		ele.setValue(num);
 		ele.setType("MSISDN");
 		numberList.add(ele);
 	}
 	
-	public static class Order{
+	public static class Order  implements TibcoRequest {
 		
 		private String employeeId;
 
@@ -55,7 +55,7 @@ public class YD0002Request implements TibcoRequest{
 		
 	}
 	
-	public static class Channel{
+	public static class Channel implements TibcoRequest {
 		private String name;
 
 		public String getName() {
@@ -68,7 +68,7 @@ public class YD0002Request implements TibcoRequest{
 		
 	}
 	
-	public static class SvcNumber{
+	public static class SvcNumber implements TibcoRequest{
 		private String name;
 		private String value;
 		private String type;

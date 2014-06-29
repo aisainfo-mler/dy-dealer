@@ -7,19 +7,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
 		lazyLoadingEnabled="true" maxRequests="32" maxSessions="10"
 		maxTransactions="5" useStatementNamespaces="true" />
 	
-	<!-- 仓库 start
-	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/channel_info_SqlMap.xml" />
+	<!-- 仓库 start-->
 
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/product_sku_SqlMap.xml" />
-	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/product_special_SqlMap.xml" />
-	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/product_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_opt_record_SqlMap.xml" />
-	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_pre_occupy_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_sell_detail_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_SqlMap.xml" />
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_stock_detail_SqlMap.xml" />
-	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/rep_trans_detail_SqlMap.xml" />-->
 	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/repository_SqlMap.xml" />
+	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/sku_entity_SqlMap.xml" />
+	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/selfDefine_rep_SqlMap.xml" />
+	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/selfDefine_sku_SqlMap.xml" />
 	
-    
+    <!-- 自定义的数据查询操作SQL -->
+<!--	<sqlMap resource="com/ailk/ts/dal/ibatis/sql/addUtilsSQL.xml"/>-->
  </sqlMapConfig>
