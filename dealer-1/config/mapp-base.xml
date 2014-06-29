@@ -19,9 +19,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	<!-- 定义受环境影响易变的变量-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
          <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	  	 <property name="url" value="jdbc:mysql://42.121.57.229:3306/yindudb?useUnicode=true&amp;characterEncoding=UTF-8"/>          
-         <property name="username" value="yindu"/>        
-         <property name="password" value="yindu"/>
+	  	 <property name="url" value="jdbc:mysql://localhost:3306/dydb?useUnicode=true&amp;characterEncoding=UTF-8"/>          
+         <property name="username" value="root"/>        
+         <property name="password" value=""/>
 <!-- 		 Connection Pooling Info -->
 	</bean>
 	<!-- 数据源配置结束 -->
