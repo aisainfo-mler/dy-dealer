@@ -15,32 +15,22 @@ public class HW0025Request extends YDBody {
 	 * TIBCO合约ID(即叠加包产品ID)
 	 * 
 	 */
-	private Long productId;
+	private String productId;
 	/**
 	 * 总费用
 	 * 
 	 */
-	private BigDecimal totalFee;
+	private String totalFee;
 	/**
 	 * 支付方式ID : 0 账户扣款，1 银行
 	 * 
 	 */
 	private String payMethodId;
-	/**
-	 * POS票号
-	 * 
-	 */
-	private String voucherNo;
 	
 	/**
-	 * 校验表的id。用来查找是哪个校验码.终端调用校验接口时回传的返回值
+	 * 印度的tibco流水号
 	 */
-	private String verfyId;
-	
-	/**
-	 * 校验码
-	 */
-	private String verfyCode;
+	private String refNo;
 
 	public String getMdn() {
 		return mdn;
@@ -50,21 +40,6 @@ public class HW0025Request extends YDBody {
 		this.mdn = mdn;
 	}
 
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	public BigDecimal getTotalFee() {
-		return totalFee;
-	}
-
-	public void setTotalFee(BigDecimal totalFee) {
-		this.totalFee = totalFee;
-	}
 
 	public String getPayMethodId() {
 		return payMethodId;
@@ -74,28 +49,29 @@ public class HW0025Request extends YDBody {
 		this.payMethodId = payMethodId;
 	}
 
-	public String getVoucherNo() {
-		return voucherNo;
+	public String getRefNo() {
+		return refNo;
 	}
 
-	public void setVoucherNo(String voucherNo) {
-		this.voucherNo = voucherNo;
+	public void setRefNo(String refNo) {
+		this.refNo = refNo;
 	}
 
-	public String getVerfyId() {
-		return verfyId;
+	public String getProductId() {
+		return productId;
 	}
 
-	public void setVerfyId(String verfyId) {
-		this.verfyId = verfyId;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
-	public String getVerfyCode() {
-		return verfyCode;
+	public String getTotalFee() {
+		return totalFee;
 	}
 
-	public void setVerfyCode(String verfyCode) {
-		this.verfyCode = verfyCode;
+	public void setTotalFee(String totalFee) {
+		this.totalFee = totalFee;
 	}
+
 
 }

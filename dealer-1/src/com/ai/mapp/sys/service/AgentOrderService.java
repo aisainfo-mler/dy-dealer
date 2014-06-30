@@ -159,16 +159,16 @@ public class AgentOrderService {
 		{
 			order.setPin(""+System.currentTimeMillis()+Math.round(5));
 		}
-		else if("2".equals(order.getOptType()) && StringUtil.isEmpty(order.getSvn()) == false)
-		{
-			svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
-			
-			if(svnInfo == null)
-				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
-			
-			//设置该号码的余额
-			order.setBlance(svnInfo.getAmount());
-		}
+//		else if("2".equals(order.getOptType()) && StringUtil.isEmpty(order.getSvn()) == false)
+//		{
+//			svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(),SYSConstant.ITEM_STATUS_USED);
+//			
+//			if(svnInfo == null)
+//				throw new Exception(LanguageInfo.PHONENUM_UNEXIST);
+//			
+//			//设置该号码的余额
+//			order.setBlance(svnInfo.getAmount());
+//		}
 		
 		/** 设置价格 **/
 		order.setNumberFee(Long.valueOf(0));//号码费用
@@ -196,7 +196,7 @@ public class AgentOrderService {
 		}
 		
 		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
-		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
+		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_TOPUP;
 		Date now = new Date();
 		
 		order.setCompleteTime(now);
@@ -410,9 +410,9 @@ public class AgentOrderService {
 		
 		
 		Map<String,String> variantMap = new HashMap<String,String>();
-		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
+		BigDecimal fee = (new BigDecimal(order.getSaleFee()));
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDER_AMOUNT, fee.toString());
-		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_BOLT_ON);
+		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 		
 		//agent rule
 		Long agentId=null;
@@ -425,10 +425,10 @@ public class AgentOrderService {
 			}
 		}
 		
-		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
+		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
 		
 		
-		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_BOLT_ON;
+		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
 		Date now = new Date();
 		
 		order.setCompleteTime(now);
@@ -441,7 +441,7 @@ public class AgentOrderService {
 			order.setDiscountRate(discountFeeB.divide(new BigDecimal(order.getSaleFee()),3,BigDecimal.ROUND_HALF_UP).floatValue());
 		}
 		order.setOrderCode(orderCode);
-		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON);
+		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 		order.setPayStatus(SYSConstant.PAY_STATUS_NOT_PAID);
 		order.setPayTime(now);
 //		order.setPreStore((long)0);
@@ -458,9 +458,9 @@ public class AgentOrderService {
 		
 		
 		Map<String,String> variantMap = new HashMap<String,String>();
-		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
+		BigDecimal fee = (new BigDecimal(order.getSaleFee()));
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDER_AMOUNT, fee.toString());
-		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
+		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_TOPUP);
 		
 		//agent rule
 		Long agentId=null;
@@ -473,7 +473,7 @@ public class AgentOrderService {
 			}
 		}
 		
-		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
+		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId);
 		
 		
 		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_SIMCARD;
@@ -489,7 +489,7 @@ public class AgentOrderService {
 			order.setDiscountRate(discountFeeB.divide(new BigDecimal(order.getSaleFee()),3,BigDecimal.ROUND_HALF_UP).floatValue());
 		}
 		order.setOrderCode(orderCode);
-		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
+		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_TOPUP);
 		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
 		order.setPayTime(now);
 //		order.setPreStore((long)0);
@@ -833,7 +833,7 @@ public class AgentOrderService {
 		
 		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
 //		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValueByFee(fee);
-		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_BOLT_ON;
+		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
 		
 		order.setCompleteTime(now);
 		order.setCreateTime(now);
@@ -845,7 +845,7 @@ public class AgentOrderService {
 			order.setDiscountRate(discountFeeB.divide(new BigDecimal(fee),3,BigDecimal.ROUND_HALF_UP).floatValue());
 		}
 		order.setOrderCode(orderCode);
-		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON);
+		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 		order.setPayStatus(SYSConstant.PAY_STATUS_NOT_PAID);
 		order.setPayTime(now);
 		order.setSvn(svn);
@@ -1499,7 +1499,7 @@ public class AgentOrderService {
 		Map<String,String> variantMap = new HashMap<String,String>();
 		BigDecimal fee = (new BigDecimal(order.getSaleFee()).divide(new BigDecimal(1000)));
 		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDER_AMOUNT, fee.toString());
-		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
+		variantMap.put(SYSConstant.VARIANT_COMMISSION_RULE_ORDERTYPE, SYSConstant.AGENT_ORDER_TYPE_TOPUP);
 		
 		//agent rule
 		Long agentId=null;
@@ -1509,7 +1509,7 @@ public class AgentOrderService {
 		}
 		
 		BigDecimal discountFeeB = commissionRuleService.getImmediateCommissionValue(variantMap,agentId).multiply(new BigDecimal(1000));
-		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
+		String orderCode = DateUtils.getDateString("yyyyMMddhhmmss")+Math.round(5) + SYSConstant.AGENT_ORDER_TYPE_TOPUP;
 		Date now = new Date();
 		
 		order.setCompleteTime(createTime);
@@ -1522,7 +1522,7 @@ public class AgentOrderService {
 			order.setDiscountRate(discountFeeB.divide(new BigDecimal(order.getSaleFee()),3,BigDecimal.ROUND_HALF_UP).floatValue());
 		}
 		order.setOrderCode(orderCode);
-		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
+		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_TOPUP);
 		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
 		order.setPayTime(createTime);
 		order.setPreStore((long)0);
