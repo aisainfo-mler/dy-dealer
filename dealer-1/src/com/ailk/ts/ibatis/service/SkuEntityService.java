@@ -576,7 +576,7 @@ public class SkuEntityService{
 				throw new BusinessException("", "IMEI:" + skuEntity.getImei()
 						+ "  不存在，或者存在多条！");
 			else {
-				if (!SYSConstant.SKU_STATUS_OSOONS.equals(skuEntites.get(0)
+				if (!SYSConstant.SKU_STATUS_TIBCO.equals(skuEntites.get(0)
 						.getStatus())) {
 					// 出库的时候，状态不是1:在平台库。报错
 					throw new BusinessException("", "IMEI:"
@@ -703,7 +703,7 @@ public class SkuEntityService{
 		if(entities != null && entities.size() != 0 ){
 			Map<String,Integer> sku_rep = new HashMap<String,Integer>();
 			for(SkuEntity entity:entities){
-				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER) || StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_OSOONS)){
+				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER) || StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_TIBCO)){
 					throw new BusinessException("9999","商品库存状态已发生变更，无法确认到代理商库");
 				}
 				if(sku_rep.containsKey(entity.getSkuid() + "_" + entity.getRepositoryCode()) == false){
