@@ -45,7 +45,7 @@ public class RepStockDetailDAOImpl extends SqlMapClientDaoSupport implements Rep
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(Integer detailId) {
+    public int deleteByPrimaryKey(Long detailId) {
         RepStockDetail _key = new RepStockDetail();
         _key.setDetailId(detailId);
         int rows = getSqlMapClientTemplate().delete("rep_stock_detail.deleteByPrimaryKey", _key);
@@ -58,9 +58,9 @@ public class RepStockDetailDAOImpl extends SqlMapClientDaoSupport implements Rep
      *
      * @mbggenerated
      */
-    public Integer insert(RepStockDetail record) {
+    public Long insert(RepStockDetail record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_stock_detail.insert", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -69,9 +69,9 @@ public class RepStockDetailDAOImpl extends SqlMapClientDaoSupport implements Rep
      *
      * @mbggenerated
      */
-    public Integer insertSelective(RepStockDetail record) {
+    public Long insertSelective(RepStockDetail record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_stock_detail.insertSelective", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -92,7 +92,7 @@ public class RepStockDetailDAOImpl extends SqlMapClientDaoSupport implements Rep
      *
      * @mbggenerated
      */
-    public RepStockDetail selectByPrimaryKey(Integer detailId) {
+    public RepStockDetail selectByPrimaryKey(Long detailId) {
         RepStockDetail _key = new RepStockDetail();
         _key.setDetailId(detailId);
         RepStockDetail record = (RepStockDetail) getSqlMapClientTemplate().queryForObject("rep_stock_detail.selectByPrimaryKey", _key);

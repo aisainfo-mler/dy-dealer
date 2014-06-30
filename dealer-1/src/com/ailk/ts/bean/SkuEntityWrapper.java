@@ -1,5 +1,6 @@
 package com.ailk.ts.bean;
 
+import com.ai.mapp.sys.entity.GoodsInfo;
 import com.ailk.ts.dal.ibatis.model.ProductSku;
 import com.ailk.ts.dal.ibatis.model.RepSellDetail;
 import com.ailk.ts.dal.ibatis.model.SkuEntity;
@@ -12,7 +13,9 @@ public class SkuEntityWrapper {
 	
 	private RepSellDetail repSellDetail;
 	
-	private ProductSku skuInfo;
+//	private ProductSku skuInfo;
+	
+	private GoodsInfo GoodInfo;
 
 	public SkuEntity getEntity() {
 		return entity;
@@ -38,12 +41,12 @@ public class SkuEntityWrapper {
 		this.repSellDetail = repSellDetail;
 	}
 
-	public ProductSku getSkuInfo() {
-		return skuInfo;
+	public GoodsInfo getGoodInfo() {
+		return GoodInfo;
 	}
 
-	public void setSkuInfo(ProductSku skuInfo) {
-		this.skuInfo = skuInfo;
+	public void setGoodInfo(GoodsInfo goodInfo) {
+		GoodInfo = goodInfo;
 	}
-	
+
 }

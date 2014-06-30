@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.mapp.base.util.DateUtils;
+import com.ai.mapp.sys.entity.GoodsInfo;
+import com.ai.mapp.sys.service.GoodsInfoService;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
@@ -68,9 +70,10 @@ public class SkuEntityService{
 	@Autowired
 	private RepSellDetailService repSellDetailService;
 
+//	@Autowired
+//	private ProductSkuService productSkuService;
 	@Autowired
-	private ProductSkuService productSkuService;
-
+	private GoodsInfoService goodsInfoService;
 
 //	@Autowired
 //	private SkuDAO skuDAO;
@@ -100,9 +103,9 @@ public class SkuEntityService{
 		} else {
 			SkuEntityWrapper wrapper = new SkuEntityWrapper();
 			wrapper.setEntity(skuEntity);
-			ProductSku sku = this.productSkuService.getSkuById(skuEntity
-					.getSkuid());
-			wrapper.setSkuName(sku.getSkuName());
+			GoodsInfo sku = this.goodsInfoService.loadGoodsInfo(skuEntity
+					.getSkuid().longValue());
+			wrapper.setSkuName(sku.getName());
 			return wrapper;
 		}
 	}
@@ -126,7 +129,7 @@ public class SkuEntityService{
 			criteria.andEntityIdEqualTo(entity.getEntityId());
 		}
 		
-		if(StringUtils.isNotEmpty(entity.getRepositoryCode())){
+		if(entity.getRepositoryCode() != null){
 			criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
 		}
 		
@@ -134,11 +137,11 @@ public class SkuEntityService{
 			criteria.andSkuidEqualTo(entity.getSkuid());
 		}
 		
-		if(StringUtils.isNotEmpty(entity.getRepositoryCode())){
+		if(entity.getRepositoryCode() != null){
 			criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
 		}
 		
-		if(StringUtils.isNotEmpty(entity.getTargetRepcode())){
+		if(entity.getTargetRepcode() != null){
 			criteria.andTargetRepcodeEqualTo(entity.getTargetRepcode());
 		}
 		
@@ -157,23 +160,18 @@ public class SkuEntityService{
 			} else {
 				List<ViewCache> cardTypes = this.cacheService
 						.findCacheByKey("CARD_TYPE");
-				List<Integer> skuIds = new ArrayList();
+				List<Long> skuIds = new ArrayList();
 				for (Iterator it = cardTypes.iterator(); it.hasNext();) {
 					ViewCache vc = (ViewCache) it.next();
-					skuIds.add(Integer.parseInt(vc.getpValue()));
+					skuIds.add(Long.parseLong(vc.getpValue()));
 				}
 				criteria.andSkuidIn(skuIds);
 			}
 
 		}
 
-		if (StringUtils.isNotEmpty(entity.getRepositoryCode())) {
-			if (ifExactly) {
-				criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
-			} else {
-				criteria.andRepositoryCodeLike("%" + entity.getRepositoryCode()
-						+ "%");
-			}
+		if (entity.getRepositoryCode() != null) {
+			criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
 		}
 		if (isOnlyForCard == false) {
 			// 查询一般的商品
@@ -236,8 +234,8 @@ public class SkuEntityService{
 	}
 
 	
-	public void updateSkuEntityStatus(String targetStatus, Integer entityId,
-			Integer orderId, Integer optId, String optType)
+	public void updateSkuEntityStatus(String targetStatus, Long entityId,
+			Long orderId, Long optId, String optType)
 			throws BusinessException, SystemException {
 		SkuEntity entity_new = new SkuEntity();
 		entity_new.setStatus(targetStatus);
@@ -245,7 +243,7 @@ public class SkuEntityService{
 		SkuEntityExample example = new SkuEntityExample();
 		example.createCriteria().andEntityIdEqualTo(entityId);
 		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
-			ProductSku product = productSkuService.getSkuById(getSkuEntityById(
+			GoodsInfo product = goodsInfoService.loadGoodsInfo(getSkuEntityById(
 					entityId).getSkuid());
 			Integer months = product.getServiceMonth();// 获得维保时间 单位月
 			Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -264,14 +262,14 @@ public class SkuEntityService{
 
 	}
 	
-	public SkuEntity getSkuEntityById(Integer entityId)
+	public SkuEntity getSkuEntityById(Long entityId)
 		throws BusinessException, SystemException {
 	return skuEntityDAO.selectByPrimaryKey(entityId);
 	
 	}
 	
 	public void updateSkuEntityStatus(String targetStatus,
-			List<Integer> entityIds, Integer orderId, Integer optId,
+			List<Long> entityIds, Long orderId, Long optId,
 			String optType, String orderDomain) throws BusinessException,
 			SystemException {
 
@@ -290,7 +288,7 @@ public class SkuEntityService{
 
 		// 创建销售记录
 //		if (SysConstant.ORDER_DOMAIN_FLOW.equals(orderDomain)) {
-			for (Integer entityId : entityIds) {
+			for (Long entityId : entityIds) {
 				repSellDetailService.createSecondSellDetail(orderId, entityId,
 						optId, optType);
 			}
@@ -312,7 +310,7 @@ public class SkuEntityService{
 		} else {
 			dto = new SkuEntityWrapper();
 			dto.setEntity(list.get(0));
-			productSkuService.getSkuById(list.get(0).getSkuid());
+			goodsInfoService.loadGoodsInfo(list.get(0).getSkuid().longValue());
 		}
 		return dto;
 	}
@@ -333,9 +331,9 @@ public class SkuEntityService{
 		} else {
 			dto = new SkuEntityWrapper();
 			dto.setEntity(list.get(0));
-			ProductSku sku = productSkuService.getSkuById(list.get(0)
-					.getSkuid());
-			dto.setSkuInfo(sku);
+			GoodsInfo sku = goodsInfoService.loadGoodsInfo(list.get(0)
+					.getSkuid().longValue());
+			dto.setGoodInfo(sku);
 			dto.setRepSellDetail(repSellDetailService
 					.findLastByRepSellDetailEntityId(list.get(0).getEntityId()));
 //			if (sku != null && StringUtils.isNotEmpty(sku.getSkuPropValues())) {
@@ -350,7 +348,7 @@ public class SkuEntityService{
 
 	
 	public void updateSkuEntityStatus(String targetStatus, String imeiSerno,
-			Integer orderId, Integer optId, String optType)
+			Long orderId, Long optId, String optType)
 			throws BusinessException, SystemException {
 		SkuEntity entity = commonQueryService.selectSkuEntity(imeiSerno, imeiSerno);
 		updateSkuEntityStatus(targetStatus, entity.getEntityId(), orderId,
@@ -359,12 +357,12 @@ public class SkuEntityService{
 	}
 
 	
-	public void outSkuEntites(List<SkuEntity> entites, Integer optId,
-			Integer orderId) throws BusinessException, SystemException {
+	public void outSkuEntites(List<SkuEntity> entites, Long optId,
+			Long orderId) throws BusinessException, SystemException {
 		Map skuidGroup = new HashMap();
 		for (Iterator it = entites.iterator(); it.hasNext();) {
 			SkuEntity se = (SkuEntity) it.next();
-			Integer skuid = se.getSkuid();
+			Long skuid = se.getSkuid();
 			// String rs = se.getRepositoryCode();
 			if (skuid == null) {
 				throw new BusinessException("", "商品skuid为空，请确认！");
@@ -400,7 +398,7 @@ public class SkuEntityService{
 	 */
 	@SuppressWarnings("unchecked")
 	private void outSkuEntitesGroupBySkuid(List<SkuEntity> entites,
-			Integer optId, Integer orderId) throws BusinessException, SystemException {
+			Long optId, Long orderId) throws BusinessException, SystemException {
 		if (CollectionUtils.isEmpty(entites)) {
 			return;
 		}
@@ -409,15 +407,15 @@ public class SkuEntityService{
 		Map repSkuIdMap = new HashMap();// 保存库存操作表的id
 		Map repSkuCountMap = new HashMap();// 保存库存操作表的操作记录数
 	
-		Map<Integer,String> orderDetailSkuMap = new HashMap<Integer,String>();//detail 库存item_ids的保存
+		Map<Long,String> orderDetailSkuMap = new HashMap<Long,String>();//detail 库存item_ids的保存
 		
 		for (Iterator it = entites.iterator(); it.hasNext();) {
 			SkuEntity skuEntity = (SkuEntity) it.next();
 			
 			SkuEntity seFromDb = checkIfImeiExist(skuEntity,
 					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
-			String rc = seFromDb.getRepositoryCode();
-			Integer si = seFromDb.getSkuid();
+			Long rc = seFromDb.getRepositoryCode();
+			Long si = seFromDb.getSkuid();
 			
 			/**
 			 * 记录下item_ids
@@ -446,7 +444,7 @@ public class SkuEntityService{
 			String repCode = key.split("~")[0];
 			String skuidd = key.split("~")[1];
 			int cnt = ((Integer) repSkuCountMap.get(key)).intValue();
-			Integer sn = recordRepOpt(Integer.parseInt(skuidd), repCode, cnt,
+			Long sn = recordRepOpt(Long.parseLong(skuidd), Long.parseLong(repCode), cnt,
 					optId, SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);// 返回的主键
 			repSkuIdMap.put(key, sn);
 		}
@@ -470,18 +468,18 @@ public class SkuEntityService{
 			// 更新商品实体表
 			SkuEntity seFromDb = checkIfImeiExist(skuEntity,
 					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
-			String repCode = seFromDb.getRepositoryCode();
-			Integer entityId = seFromDb.getEntityId();
-			int skuid = seFromDb.getSkuid();
+			Long repCode = seFromDb.getRepositoryCode();
+			Long entityId = seFromDb.getEntityId();
+			Long skuid = seFromDb.getSkuid();
 			String key = repCode + "~" + skuid;
 			if (!repSkuIdMap.containsKey(key)) {
 				throw new BusinessException("仓库编码：" + repCode + " skuid:"
 						+ skuid + " 找不到操作流水id！");
 			}
-			int optSn = (Integer) repSkuIdMap.get(key);
+			Long optSn = (Long) repSkuIdMap.get(key);
 
 			// 更新库存量
-			int repOptId = freshRep(skuid, repCode, 1,
+			Long repOptId = freshRep(skuid, repCode, 1,
 					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
 			SkuEntity se = new SkuEntity();
 			se.setEntityId(entityId);
@@ -502,8 +500,8 @@ public class SkuEntityService{
 	 * @param serialNo
 	 * @param orderId
 	 */
-	private void recordOutEntity(Integer optId, Integer entityId,
-			Integer serialNo, Integer orderId) {
+	private void recordOutEntity(Long optId, Long entityId,
+			Long serialNo, Long orderId) {
 		RepSellDetail rsdd = new RepSellDetail();
 		rsdd.setEntityId(entityId);
 		rsdd.setOpterId(optId);
@@ -516,7 +514,7 @@ public class SkuEntityService{
 	}
 
 	@SuppressWarnings("unchecked")
-	public void insertSkuEntites(List<SkuEntity> entites, Integer optId)
+	public void insertSkuEntites(List<SkuEntity> entites, Long optId)
 			throws BusinessException, SystemException {
 		// TODO Auto-generated method stub
 		if (CollectionUtils.isEmpty(entites)) {
@@ -524,14 +522,14 @@ public class SkuEntityService{
 		}
 
 		// 沉淀库存量操作记录
-		Integer skuid = entites.get(0).getSkuid();
-		String repCode = entites.get(0).getRepositoryCode();
+		Long skuid = entites.get(0).getSkuid();
+		Long repCode = entites.get(0).getRepositoryCode();
 		int count = entites.size();
 		@SuppressWarnings("unused")
-		Integer serialNo = recordRepOpt(skuid, repCode, count, optId,
+		Long serialNo = recordRepOpt(skuid, repCode, count, optId,
 				SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);// 返回的主键
 		// 更新库存量
-		int repOptId = freshRep(skuid, repCode, count,
+		Long repOptId = freshRep(skuid, repCode, count,
 				SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);
 
 		// 沉淀商品进货明细，沉淀商品实体表
@@ -540,7 +538,7 @@ public class SkuEntityService{
 			// 沉淀商品实体表
 			checkIfImeiExist(skuEntity, SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);
 			this.skuEntityDAO.insert(skuEntity);
-			Integer entityId = skuEntity.getEntityId();
+			Long entityId = skuEntity.getEntityId();
 			// 沉淀进货明细
 			recoderRepStockDetail(optId, serialNo, entityId);
 
@@ -600,8 +598,8 @@ public class SkuEntityService{
 	 * @param entityId
 	 *            商品实体id
 	 */
-	private void recoderRepStockDetail(Integer optId, int repOptId,
-			Integer entityId) {
+	private void recoderRepStockDetail(Long optId, Long repOptId,
+			Long entityId) {
 		RepStockDetail rsd = new RepStockDetail();
 		rsd.setEntityId(entityId);
 		rsd.setOpterId(optId);
@@ -624,7 +622,7 @@ public class SkuEntityService{
 	 * @return
 	 * @throws BusinessException
 	 */
-	private int freshRep(int skuId, String repCode, int count, String optType)
+	private Long freshRep(Long skuId, Long repCode, int count, String optType)
 			throws BusinessException {
 		RepExample re = new RepExample();
 		Criteria cri = re.createCriteria();
@@ -676,8 +674,8 @@ public class SkuEntityService{
 	 * @param optType
 	 * @return
 	 */
-	private int recordRepOpt(int skuId, String repCode, int count,
-			Integer optId, String optType) {
+	private Long recordRepOpt(Long skuId, Long repCode, int count,
+			Long optId, String optType) {
 		RepOptRecord record = new RepOptRecord();
 		record.setCount(count);
 		record.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -696,7 +694,7 @@ public class SkuEntityService{
 		return record.getSerialNo();
 	}
 
-	public void targetRep(List<Integer> entityIds, String inRepCode)
+	public void targetRep(List<Long> entityIds, Long inRepCode)
 			throws BusinessException, SystemException {
 		SkuEntityExample entity_ex = new SkuEntityExample();
 		entity_ex.createCriteria().andEntityIdIn(entityIds);
@@ -720,12 +718,12 @@ public class SkuEntityService{
 	        for (Iterator<String> it = key.iterator(); it.hasNext();) {
 	        	String k = it.next();
 	        	String[] skuId_repCode = k.split("_");
-	        	Integer skuId = Integer.parseInt(skuId_repCode[0]);
+	        	Long skuId = Long.parseLong(skuId_repCode[0]);
 	            String outRepCode = skuId_repCode[1];
 //	            System.out.println(skuId);
 //	            System.out.println(outRepCode);
 //	            System.out.println(sku_rep.get(outRepCode));
-	            repService.updateRepCount(skuId, inRepCode, outRepCode, sku_rep.get(k));//代理商入库
+	            repService.updateRepCount(skuId, inRepCode, Long.parseLong(outRepCode), sku_rep.get(k));//代理商入库
 	        }
 	        
 	        SkuEntity record = new SkuEntity();

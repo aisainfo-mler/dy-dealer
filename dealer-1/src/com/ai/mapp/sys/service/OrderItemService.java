@@ -25,6 +25,7 @@ import com.ai.mapp.sys.entity.OrderItem;
 import com.ai.mapp.sys.util.LanguageInfo;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ai.mapp.sys.entity.User;
+import com.ailk.ts.dal.ibatis.model.SkuEntity;
 
 /**
  * @author Zhengwj 
@@ -193,10 +194,13 @@ public class OrderItemService {
 		if(!StringUtil.isEmpty(itemValues)){
 			String[] valueArr = itemValues.split(",;_");
 			OrderItem item = null;
+			SkuEntity entity = null;
 			String[] tmpArr = null;
 			for(String value:valueArr){
 				if(!StringUtil.isEmpty(value)){
 					item = new OrderItem();
+					entity = new SkuEntity();
+				
 					item.setCreateTime(new Date());
 					item.setStatus(SYSConstant.ITEM_STATUS_TEMP);//先临时 ，后发货中,等客户收到货后才置为未使用,开户成功后才为使用中
 					item.setDetail(detail);
@@ -204,17 +208,23 @@ public class OrderItemService {
 					if(value.indexOf("_") != -1){
 						tmpArr = value.split("_");
 						item.setItemValue(tmpArr[1]);
+						entity.setImei(tmpArr[1]);
 						if(!StringUtil.isEmpty(tmpArr[0])){
 							item.setFrom(tmpArr[0]);//0:scan  1:manual  2:batch
 						}
 					}else{
 						item.setItemValue(value);
+						entity.setImei(value);
 					}
 					item.setGood(detail.getGood());
 					if(operator != null){
 						item.setOperator(operator);
 					}
 					saveOrderItem(item);
+					
+					entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
+					entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前还存在于TIBCO仓库
+					
 				}
 			}
 		}

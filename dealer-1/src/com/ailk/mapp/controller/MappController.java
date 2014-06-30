@@ -1,5 +1,6 @@
 package com.ailk.mapp.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.web.BaseController;
 import com.ailk.yd.mapp.model.UserInfo;
 import com.ailk.yd.mapp.model.YDDatapackage;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 @Controller
 @RequestMapping("/mapp")
@@ -45,7 +49,7 @@ public class MappController extends BaseController {
 //			File file = new File(path+"/tibco_product.xml");
 //			SAXReader saxReader = new SAXReader();
 //			Document document = saxReader.read(file);
-//			dealerDataService.updateProps(document.getRootElement());
+//			dealerDataService.updateProductInfoByFile(file);
 //		}
 //		catch (Exception e) {
 //			// TODO: handle exception
@@ -88,7 +92,7 @@ public class MappController extends BaseController {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return null;
 	}
 	

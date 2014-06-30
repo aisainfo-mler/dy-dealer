@@ -45,7 +45,7 @@ public class SkuEntityDAOImpl extends SqlMapClientDaoSupport implements SkuEntit
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(Integer entityId) {
+    public int deleteByPrimaryKey(Long entityId) {
         SkuEntity _key = new SkuEntity();
         _key.setEntityId(entityId);
         int rows = getSqlMapClientTemplate().delete("sku_entity.deleteByPrimaryKey", _key);
@@ -58,9 +58,9 @@ public class SkuEntityDAOImpl extends SqlMapClientDaoSupport implements SkuEntit
      *
      * @mbggenerated
      */
-    public Integer insert(SkuEntity record) {
+    public Long insert(SkuEntity record) {
         Object newKey = getSqlMapClientTemplate().insert("sku_entity.insert", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -69,9 +69,9 @@ public class SkuEntityDAOImpl extends SqlMapClientDaoSupport implements SkuEntit
      *
      * @mbggenerated
      */
-    public Integer insertSelective(SkuEntity record) {
+    public Long insertSelective(SkuEntity record) {
         Object newKey = getSqlMapClientTemplate().insert("sku_entity.insertSelective", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -92,7 +92,7 @@ public class SkuEntityDAOImpl extends SqlMapClientDaoSupport implements SkuEntit
      *
      * @mbggenerated
      */
-    public SkuEntity selectByPrimaryKey(Integer entityId) {
+    public SkuEntity selectByPrimaryKey(Long entityId) {
         SkuEntity _key = new SkuEntity();
         _key.setEntityId(entityId);
         SkuEntity record = (SkuEntity) getSqlMapClientTemplate().queryForObject("sku_entity.selectByPrimaryKey", _key);

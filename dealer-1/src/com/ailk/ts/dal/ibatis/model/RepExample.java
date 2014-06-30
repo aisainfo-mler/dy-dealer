@@ -341,52 +341,52 @@ public class RepExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -401,52 +401,52 @@ public class RepExample {
             return (Criteria) this;
         }
 
-        public Criteria andSkuidEqualTo(Integer value) {
+        public Criteria andSkuidEqualTo(Long value) {
             addCriterion("SKUID =", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotEqualTo(Integer value) {
+        public Criteria andSkuidNotEqualTo(Long value) {
             addCriterion("SKUID <>", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidGreaterThan(Integer value) {
+        public Criteria andSkuidGreaterThan(Long value) {
             addCriterion("SKUID >", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSkuidGreaterThanOrEqualTo(Long value) {
             addCriterion("SKUID >=", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidLessThan(Integer value) {
+        public Criteria andSkuidLessThan(Long value) {
             addCriterion("SKUID <", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidLessThanOrEqualTo(Integer value) {
+        public Criteria andSkuidLessThanOrEqualTo(Long value) {
             addCriterion("SKUID <=", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidIn(List<Integer> values) {
+        public Criteria andSkuidIn(List<Long> values) {
             addCriterion("SKUID in", values, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotIn(List<Integer> values) {
+        public Criteria andSkuidNotIn(List<Long> values) {
             addCriterion("SKUID not in", values, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidBetween(Integer value1, Integer value2) {
+        public Criteria andSkuidBetween(Long value1, Long value2) {
             addCriterion("SKUID between", value1, value2, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotBetween(Integer value1, Integer value2) {
+        public Criteria andSkuidNotBetween(Long value1, Long value2) {
             addCriterion("SKUID not between", value1, value2, "skuid");
             return (Criteria) this;
         }
@@ -461,62 +461,52 @@ public class RepExample {
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeEqualTo(String value) {
+        public Criteria andRepositoryCodeEqualTo(Long value) {
             addCriterion("REPOSITORY_CODE =", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeNotEqualTo(String value) {
+        public Criteria andRepositoryCodeNotEqualTo(Long value) {
             addCriterion("REPOSITORY_CODE <>", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeGreaterThan(String value) {
+        public Criteria andRepositoryCodeGreaterThan(Long value) {
             addCriterion("REPOSITORY_CODE >", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andRepositoryCodeGreaterThanOrEqualTo(Long value) {
             addCriterion("REPOSITORY_CODE >=", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeLessThan(String value) {
+        public Criteria andRepositoryCodeLessThan(Long value) {
             addCriterion("REPOSITORY_CODE <", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeLessThanOrEqualTo(String value) {
+        public Criteria andRepositoryCodeLessThanOrEqualTo(Long value) {
             addCriterion("REPOSITORY_CODE <=", value, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeLike(String value) {
-            addCriterion("REPOSITORY_CODE like", value, "repositoryCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andRepositoryCodeNotLike(String value) {
-            addCriterion("REPOSITORY_CODE not like", value, "repositoryCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andRepositoryCodeIn(List<String> values) {
+        public Criteria andRepositoryCodeIn(List<Long> values) {
             addCriterion("REPOSITORY_CODE in", values, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeNotIn(List<String> values) {
+        public Criteria andRepositoryCodeNotIn(List<Long> values) {
             addCriterion("REPOSITORY_CODE not in", values, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeBetween(String value1, String value2) {
+        public Criteria andRepositoryCodeBetween(Long value1, Long value2) {
             addCriterion("REPOSITORY_CODE between", value1, value2, "repositoryCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepositoryCodeNotBetween(String value1, String value2) {
+        public Criteria andRepositoryCodeNotBetween(Long value1, Long value2) {
             addCriterion("REPOSITORY_CODE not between", value1, value2, "repositoryCode");
             return (Criteria) this;
         }
@@ -594,48 +584,4 @@ public class RepExample {
             super();
         }
     }
-    
-    
-    private Integer brandId;
-    private Integer productId;
-    private Integer productTypeId;
-
-	public Integer getBrandId() {
-		return brandId;
-	}
-
-	public void setBrandId(Integer brandId) {
-		this.brandId = brandId;
-	}
-
-	public Integer getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-
-	public Integer getProductTypeId() {
-		return productTypeId;
-	}
-
-	public void setProductTypeId(Integer productTypeId) {
-		this.productTypeId = productTypeId;
-	}
-	
-	
-	/**
-	 * 判断，如果3个参数中存在任意一个，则需要关联其他几个表查询。
-	 * @return
-	 */
-	public String getAppend(){
-		boolean b = this.brandId!=null || this.productId!=null || this.productTypeId!=null;
-		if(b==true){
-			return "exist";
-		}
-		return "";
-		
-	}
-    
 }

@@ -247,4 +247,55 @@ public class GoodsInfo implements java.io.Serializable {
 		this.optType = optType;
 	}
 	
+	
+	private Long agentPrice;
+	
+	private Integer serviceMonth;
+	
+	private String ifRangePhone;
+	
+	private Long rangePrice;
+
+
+	@Column(name="AGENT_PRICE")
+	public Long getAgentPrice() {
+		return agentPrice;
+	}
+
+
+	public void setAgentPrice(Long agentPrice) {
+		this.agentPrice = agentPrice;
+	}
+
+	@Column(name="SERVICE_MONTH")
+	public Integer getServiceMonth() {
+		return serviceMonth;
+	}
+
+
+	public void setServiceMonth(Integer serviceMonth) {
+		this.serviceMonth = serviceMonth;
+	}
+
+	@Column(name="IS_RANGEPHONE")
+	public String getIfRangePhone() {
+		return ifRangePhone;
+	}
+
+
+	public void setIfRangePhone(String ifRangePhone) {
+		this.ifRangePhone = ifRangePhone;
+	}
+
+	@Column(name="RANGE_PRICE")
+	public Long getRangePrice() {
+		return rangePrice;
+	}
+
+
+	public void setRangePrice(Long rangePrice) {
+		this.rangePrice = rangePrice;
+	}
+	
+	
 }

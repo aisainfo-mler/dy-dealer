@@ -162,10 +162,10 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCustomerDetails().setContactDetails(new Contact());
 		
 		//测试数据
-		req.getCustomerDetails().getContactDetails().setMobileNumber("5885555555");
-		req.getCustomerDetails().getContactDetails().setEmailId("ggyy@bh.com");
-		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome("5666777766");
-		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork("");
+//		req.getCustomerDetails().getContactDetails().setMobileNumber("5885555555");
+//		req.getCustomerDetails().getContactDetails().setEmailId("ggyy@bh.com");
+//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome("5666777766");
+//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork("");
 		
 //		req.getCustomerDetails().getContactDetails().setMobileNumber(hw_customer.getMobileNumber()==null?"":hw_customer.getMobileNumber());
 //		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome(hw_customer.getAlternateContactNumberHome()==null?"":hw_customer.getAlternateContactNumberHome());
@@ -274,25 +274,25 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			HW0010Request.Address address = hw_customer.getPresentAddress();
 			
 			//测试数据
-			address = new HW0010Request.Address();
-			address.setAddressId("");
-			address.setBuildingId("");
-			address.setAddressType("PER_ADD");
-			address.setCareOf("");
-			address.setHouseNameORNumber("ghh");
-			address.setBuildingNameORNumber("TC23- C Block");
-			address.setSocietyName("");
-			address.setStreetNameORNumber("hjj");
-			address.setLandmark("");
-			address.setSubLocality("");
-			address.setAreaORTehsil("ghh");
-			address.setPincode("666888");
-			address.setVillageORCity("Mumbai");
-			address.setDistrict("mum");
-			address.setState("MH");
-			address.setCountry("IN");
-			address.setTotalFloors("");
-			address.setJioCentreId("JC23");
+//			address = new HW0010Request.Address();
+//			address.setAddressId("");
+//			address.setBuildingId("");
+//			address.setAddressType("PER_ADD");
+//			address.setCareOf("");
+//			address.setHouseNameORNumber("ghh");
+//			address.setBuildingNameORNumber("TC23- C Block");
+//			address.setSocietyName("");
+//			address.setStreetNameORNumber("hjj");
+//			address.setLandmark("");
+//			address.setSubLocality("");
+//			address.setAreaORTehsil("ghh");
+//			address.setPincode("666888");
+//			address.setVillageORCity("Mumbai");
+//			address.setDistrict("mum");
+//			address.setState("MH");
+//			address.setCountry("IN");
+//			address.setTotalFloors("");
+//			address.setJioCentreId("JC23");
 			
 			
 			req.setInstallationAddress(new ArrayList<YD0010Request.Address>(0));
@@ -344,40 +344,6 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 //		req.getCafDetails().setCustomerDeclarationDate(caf.getCustomerDeclarationDate()==null?"":DateUtils.parse(caf.getCustomerDeclarationDate().getTime(),"yyyy-MM-dd"));
 		
 		req.getCafDetails().setProofs(new ArrayList<YD0010Request.Proof>(0));
-		if(caf.getPoi() != null)
-		{
-			Proof poi = new Proof();
-			poi.setProofIdentifier("POI");
-			poi.setIdProofType(caf.getPoi().getIdProofType()==null?"":caf.getPoi().getIdProofType());
-			poi.setDocumentNumber(caf.getPoi().getDocumentNumber()==null?"":caf.getPoi().getDocumentNumber());
-			poi.setDateOfIssue("");
-			if(caf.getPoi().getDateOfIssue() != null)
-			{
-				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "dd/MM/yyyy");
-				poi.setDateOfIssue(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
-			}
-//			poi.setDateOfIssue(caf.getPoi().getDateOfIssue()==null?"":caf.getPoi().getDateOfIssue());
-			poi.setPlaceOfIssue(caf.getPoi().getPlaceOfIssue()==null?"":caf.getPoi().getPlaceOfIssue());
-			poi.setIssuingAuthority(caf.getPoi().getIssuingAuthority()==null?"":caf.getPoi().getIssuingAuthority());
-			poi.setIdentifierURL(caf.getPoi().getIdentifierURL()==null?"":caf.getPoi().getIdentifierURL());
-			poi.setAadhaarTransactionRefNo(caf.getPoi().getAadhaarTransactionRefNo()==null?"":caf.getPoi().getAadhaarTransactionRefNo());
-			req.getCafDetails().getProofs().add(poi);
-		}
-//		else
-//		{
-//			Proof poi = new Proof();
-//			poi.setProofIdentifier("");
-//			poi.setIdProofType("");
-//			poi.setDocumentNumber("");
-//			poi.setDateOfIssue("");
-//			poi.setDateOfIssue("");
-////			poi.setDateOfIssue(caf.getPoa().getDateOfIssue()==null?"":caf.getPoa().getDateOfIssue());
-//			poi.setPlaceOfIssue("");
-//			poi.setIssuingAuthority("");
-//			poi.setIdentifierURL("");
-//			poi.setAadhaarTransactionRefNo("");
-//			req.getCafDetails().getProofs().add(poi);
-//		}
 		
 		if(caf.getPoa() != null)
 		{
@@ -388,7 +354,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			poa.setDateOfIssue("");
 			if(caf.getPoi().getDateOfIssue() != null)
 			{
-				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "dd/MM/yyyy");
+				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "yyyy-MM-dd");
 				poa.setDateOfIssue(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
 			}
 //			poa.setDateOfIssue(caf.getPoa().getDateOfIssue()==null?"":caf.getPoa().getDateOfIssue());
@@ -399,10 +365,31 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.getCafDetails().getProofs().add(poa);
 		}
 		
+		
+		if(caf.getPoi() != null)
+		{
+			Proof poi = new Proof();
+			poi.setProofIdentifier("POI");
+			poi.setIdProofType(caf.getPoi().getIdProofType()==null?"":caf.getPoi().getIdProofType());
+			poi.setDocumentNumber(caf.getPoi().getDocumentNumber()==null?"":caf.getPoi().getDocumentNumber());
+			poi.setDateOfIssue("");
+			if(caf.getPoi().getDateOfIssue() != null)
+			{
+				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "yyyy-MM-dd");
+				poi.setDateOfIssue(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
+			}
+//			poi.setDateOfIssue(caf.getPoi().getDateOfIssue()==null?"":caf.getPoi().getDateOfIssue());
+			poi.setPlaceOfIssue(caf.getPoi().getPlaceOfIssue()==null?"":caf.getPoi().getPlaceOfIssue());
+			poi.setIssuingAuthority(caf.getPoi().getIssuingAuthority()==null?"":caf.getPoi().getIssuingAuthority());
+			poi.setIdentifierURL(caf.getPoi().getIdentifierURL()==null?"":caf.getPoi().getIdentifierURL());
+			poi.setAadhaarTransactionRefNo(caf.getPoi().getAadhaarTransactionRefNo()==null?"":caf.getPoi().getAadhaarTransactionRefNo());
+			req.getCafDetails().getProofs().add(poi);
+		}
+		
 		req.getCafDetails().setCurrentMobileConnections(new ArrayList<YD0010Request.Connection>(0));
 		Connection conn = new Connection();
-		conn.setOperatorName(caf.getOperatorName()==null?"":caf.getOperatorName());
-		conn.setNoOfConnections(caf.getNoOfConnections()==null?"":caf.getNoOfConnections());
+//		conn.setOperatorName(caf.getOperatorName()==null?"":caf.getOperatorName());
+//		conn.setNoOfConnections(caf.getNoOfConnections()==null?"":caf.getNoOfConnections());
 		req.getCafDetails().getCurrentMobileConnections().add(conn);
 		req.getCafDetails().setForm61Details(new Form61());
 		/***Form61***/
@@ -427,26 +414,26 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 				HW0010Request.Address hw_lr_address = lr.getAddress();
 				YD0010Request.Address yd_lr_address = new Address();
 				
-				//测试数据
-				hw_lr_address = new HW0010Request.Address();
-				hw_lr_address.setAddressId("");
-				hw_lr_address.setBuildingId("");
-				hw_lr_address.setAddressType("PER_ADD");
-				hw_lr_address.setCareOf("");
-				hw_lr_address.setHouseNameORNumber("ghh");
-				hw_lr_address.setBuildingNameORNumber("TC23- C Block");
-				hw_lr_address.setSocietyName("");
-				hw_lr_address.setStreetNameORNumber("hjj");
-				hw_lr_address.setLandmark("");
-				hw_lr_address.setSubLocality("");
-				hw_lr_address.setAreaORTehsil("ghh");
-				hw_lr_address.setPincode("666888");
-				hw_lr_address.setVillageORCity("Mumbai");
-				hw_lr_address.setDistrict("mum");
-				hw_lr_address.setState("MH");
-				hw_lr_address.setCountry("IN");
-				hw_lr_address.setTotalFloors("");
-				hw_lr_address.setJioCentreId("JC23");
+//				//测试数据
+//				hw_lr_address = new HW0010Request.Address();
+//				hw_lr_address.setAddressId("");
+//				hw_lr_address.setBuildingId("");
+//				hw_lr_address.setAddressType("PER_ADD");
+//				hw_lr_address.setCareOf("");
+//				hw_lr_address.setHouseNameORNumber("ghh");
+//				hw_lr_address.setBuildingNameORNumber("TC23- C Block");
+//				hw_lr_address.setSocietyName("");
+//				hw_lr_address.setStreetNameORNumber("hjj");
+//				hw_lr_address.setLandmark("");
+//				hw_lr_address.setSubLocality("");
+//				hw_lr_address.setAreaORTehsil("ghh");
+//				hw_lr_address.setPincode("666888");
+//				hw_lr_address.setVillageORCity("Mumbai");
+//				hw_lr_address.setDistrict("mum");
+//				hw_lr_address.setState("MH");
+//				hw_lr_address.setCountry("IN");
+//				hw_lr_address.setTotalFloors("");
+//				hw_lr_address.setJioCentreId("JC23");
 				
 				
 				req.getCafDetails().getLocalReferenceDetails().setAddress(yd_lr_address);
@@ -500,26 +487,26 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			{
 				HW0010Request.Address address = hw_order.getBillingAddress();
 				
-				//测试数据
-				address = new HW0010Request.Address();
-				address.setAddressId("");
-				address.setBuildingId("");
-				address.setAddressType("PER_ADD");
-				address.setCareOf("");
-				address.setHouseNameORNumber("ghh");
-				address.setBuildingNameORNumber("TC23- C Block");
-				address.setSocietyName("");
-				address.setStreetNameORNumber("hjj");
-				address.setLandmark("");
-				address.setSubLocality("");
-				address.setAreaORTehsil("ghh");
-				address.setPincode("666888");
-				address.setVillageORCity("Mumbai");
-				address.setDistrict("mum");
-				address.setState("MH");
-				address.setCountry("IN");
-				address.setTotalFloors("");
-				address.setJioCentreId("JC23");
+//				//测试数据
+//				address = new HW0010Request.Address();
+//				address.setAddressId("");
+//				address.setBuildingId("");
+//				address.setAddressType("PER_ADD");
+//				address.setCareOf("");
+//				address.setHouseNameORNumber("ghh");
+//				address.setBuildingNameORNumber("TC23- C Block");
+//				address.setSocietyName("");
+//				address.setStreetNameORNumber("hjj");
+//				address.setLandmark("");
+//				address.setSubLocality("");
+//				address.setAreaORTehsil("ghh");
+//				address.setPincode("666888");
+//				address.setVillageORCity("Mumbai");
+//				address.setDistrict("mum");
+//				address.setState("MH");
+//				address.setCountry("IN");
+//				address.setTotalFloors("");
+//				address.setJioCentreId("JC23");
 				
 				order.setBillingAddress(new Address());
 				order.getBillingAddress().setAddressId(address.getAddressId()==null?"":address.getAddressId());
@@ -560,9 +547,21 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
 						ps.setStarterKitCode("Y");
 						order.getProducts().add(ps);
+						if(req.getCafDetails() != null && req.getCafDetails().getProofs().isEmpty() == false)
+						{
+							ps.setProofs(new ArrayList<YD0010Request.ProductProof>(0));
+							
+							for(YD0010Request.Proof pf : req.getCafDetails().getProofs())
+							{
+								YD0010Request.ProductProof tmp_pf = new YD0010Request.ProductProof();
+								tmp_pf.setIdentifierURL(pf.getIdentifierURL());
+								tmp_pf.setProofIdentifier(pf.getProofIdentifier());
+								ps.getProofs().add(tmp_pf);
+							}
+						}
 						
 //						ps = initProduct(ps);
-						
+					
 						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
 						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
 							continue;
@@ -645,7 +644,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		mp.setLastPaidBillReceiptURI("");
 		
 		List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
-		p.setIdentifier(pi_list);
+//		p.setIdentifier(pi_list);
 		ProductIdentifier pi = new ProductIdentifier();
 		pi_list.add(pi);
 		pi.setName("");
@@ -676,4 +675,12 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		return p;
 	}
+	
+	
+	private void validate(YD0010Request request) throws Exception
+	{
+		if(request == null)
+			throw new Exception("请求为空");
+	}
+	
 }

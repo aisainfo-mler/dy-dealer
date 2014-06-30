@@ -69,6 +69,7 @@ public class YdLogAspect {
 				log.setBizCode((String)args[0]);
 				log.setReq((String)args[1]);
 				log.setRsp((String)result);
+				System.out.println("size:"+log.getBizCode()==null?null:log.getBizCode().length());
 				callLogService.saveCallLog(log);
 				logger.debug("mapp向外部发送请求日志记录完毕");
 			}catch (Exception e) {

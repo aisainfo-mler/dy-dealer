@@ -14,29 +14,53 @@ import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 
 public class YD0010Request implements TibcoRequest  {
 	
-	private String referenceNumber;
-	private String customerId;
-	private String orderType;//*CREATE,MODIFY,DRAFT*,INTERIM*/
-	private String circleId;
-	private String appointmentDateTimeFrom;//格式："2014-04-23T12:10:47"
-	private String appointmentDateTimeTo;
-	private String channel;
-	private String deliveryMode;
-	private Customer customerDetails;
-	private PayInfo paymentDetails;
-	private List<Address> installationAddress;//SHIP_TO
+//	  "cafDetails": {}, 
+//	    "orderDetails": [], 
+//	    "customerId": "", 
+//	    "installationAddress": [], 
+//	    "orderType": "CREATE", 
+//	    "referenceNumber": "OT000000LTK9", 
+//	    "customerDetails": {}, 
+//	    "deliveryMode": "", 
+//	    "appointmentDateTimeTo": "", 
+//	    "appointmentDateTimeFrom": "", 
+//	    "paymentDetails": {}, 
+//	    "channel": "22", 
+//	    "circleId": "TC"
+	
 	private CafInfo cafDetails;
 	private List<Order> orderDetails;
+	private String customerId;
+	private List<Address> installationAddress;//SHIP_TO
+	private String orderType;//*CREATE,MODIFY,DRAFT*,INTERIM*/
+	private String referenceNumber;
+	private Customer customerDetails;
+	private String deliveryMode;
+	private String appointmentDateTimeTo;
+	private String appointmentDateTimeFrom;//格式："2014-04-23T12:10:47"
+	private PayInfo paymentDetails;
+	private String channel;
+	private String circleId;
 	
 	public static class Order implements TibcoRequest
 	{
-		private NameObject businessInteraction;
-		private String accountId;
-		private String offerId;
-		private String eWalletReservationReferenceId;
+		
+//		  "planOffering": {}, 
+//          "billingAddress": {}, 
+//          "accountId": "", 
+//          "businessInteraction": {}, 
+//          "eWalletReservationReferenceId": "1014689", 
+//          "products": [], 
+//          "offerId": "OC402"
+		
+		
 		private IdObject planOffering;// Startup Plan Offering  Prepaid - Optional  PostPaid - Mandatory **/
 		private Address billingAddress;//BILL_TO
+		private String accountId;
+		private NameObject businessInteraction;
+		private String eWalletReservationReferenceId;
 		private List<Product> products;
+		private String offerId;
 		
 		public NameObject getBusinessInteraction() {
 			return businessInteraction;
@@ -85,8 +109,22 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class Product implements TibcoRequest
 	{
-		private NameObject businessInteraction;
-		private String productId;
+		
+//		"dependancyInfo": {}, 
+//        "proofs": [], 
+//        "cafDetails": {}, 
+//        "starterKitCode": "N", 
+//        "characteristics": [], 
+//        "componentPrice": {}, 
+//        "mnpPortDetails": {}, 
+//        "businessInteraction": {}, 
+//        "customerFacingServices": [], 
+//        "devices": [ ], 
+//        "productId": "P10009"
+		
+		private Dependancy dependancyInfo;
+		private List<ProductProof> proofs;
+		private ProductCafInfo cafDetails;
 		private String starterKitCode;
 		/**
 		 * name = DND Preference 
@@ -94,13 +132,14 @@ public class YD0010Request implements TibcoRequest  {
 		 * value ="Specify the value 0 - For fully blocked category 1#2#3#4#5#6#7 (Separated by a separator #)"
 		 */
 		private List<NameAndValueObject> characteristics;
-		private Dependancy dependancyInfo;
-		private ProductCafInfo cafDetails;
-		private List<ProductProof> proofs;
+		private IdObject componentPrice;
 		private MnpPort mnpPortDetails;
-		private List<ProductIdentifier> identifier;
-		private List<Device> devices;
+		private NameObject businessInteraction;
 		private List<FacingService> customerFacingServices;
+		private List<Device> devices;
+		private ProductIdentifier identifier;
+		private String productId;
+		
 		public NameObject getBusinessInteraction() {
 			return businessInteraction;
 		}
@@ -149,17 +188,23 @@ public class YD0010Request implements TibcoRequest  {
 		public void setMnpPortDetails(MnpPort mnpPortDetails) {
 			this.mnpPortDetails = mnpPortDetails;
 		}
-		public List<ProductIdentifier> getIdentifier() {
-			return identifier;
+		public IdObject getComponentPrice() {
+			return componentPrice;
 		}
-		public void setIdentifier(List<ProductIdentifier> identifier) {
-			this.identifier = identifier;
+		public void setComponentPrice(IdObject componentPrice) {
+			this.componentPrice = componentPrice;
 		}
 		public List<Device> getDevices() {
 			return devices;
 		}
 		public void setDevices(List<Device> devices) {
 			this.devices = devices;
+		}
+		public ProductIdentifier getIdentifier() {
+			return identifier;
+		}
+		public void setIdentifier(ProductIdentifier identifier) {
+			this.identifier = identifier;
 		}
 		public List<FacingService> getCustomerFacingServices() {
 			return customerFacingServices;
@@ -173,11 +218,17 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class FacingService implements TibcoRequest
 	{
-		private NameObject businessInteraction;
+//		 "features": [ ], 
+//         "serviceId": "S10009", 
+//         "businessInteraction": {
+//             "name": "ADD"
+//         }
+		private List<FacingService> features;
 		private String serviceId;
+		private NameObject businessInteraction;
 		private String featureId;
 		private String productId;
-		private List<FacingService> features;
+		
 		public NameObject getBusinessInteraction() {
 			return businessInteraction;
 		}
@@ -248,10 +299,18 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class ProductIdentifier implements TibcoRequest
 	{
-		private String name;
-		private String type;
+//		 "value": "4456667778", 
+//         "type": "", 
+//         "componentPrice": {
+//             "id": ""
+//         }, 
+//         "name": "MSISDN"
+		
 		private String value;
+		private String type;
 		private IdObject componentPrice;
+		private String name;
+		
 		public String getName() {
 			return name;
 		}
@@ -283,11 +342,18 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class MnpPort implements TibcoRequest
 	{
+//		  "uniquePortingCode": "", 
+//          "upcGenerationDate": "", 
+//          "existingSubscriberType": "", 
+//          "lastPaidBillReceiptURI": "", 
+//          "existingOperatorCode": ""
+		
 		private String uniquePortingCode;
 		private String upcGenerationDate;
-		private String existingOperatorCode;
 		private String existingSubscriberType;
 		private String lastPaidBillReceiptURI;
+		private String existingOperatorCode;
+		
 		public String getUniquePortingCode() {
 			return uniquePortingCode;
 		}
@@ -322,8 +388,8 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class ProductProof implements TibcoRequest
 	{
-		private String proofIdentifier;
 		private String identifierURL;
+		private String proofIdentifier;
 		
 		public ProductProof() {
 			super();
@@ -496,31 +562,59 @@ public class YD0010Request implements TibcoRequest  {
 	}
 	public static class Customer implements TibcoRequest
 	{
-		private String prospectId;
-		private String customerCategory;
-		private String salutation;
-		private String firstName;
-		private String middleName;
-		private String lastName;
-		private FamilyContact familyContactDetails;
+		
+//		"dateOfBirth": "1996-06-25", 
+//        "middleName": "", 
+//        "prospectId": "", 
+//        "lastName": "GYY", 
+//        "occupation": "0005", 
+//        "passportNo": "", 
+//        "anniversaryDate": "2014-06-26", 
+//        "customerCategory": "0001", 
+//        "maritalStatus": "", 
+//        "panNumber": "AUIPR0027Q", 
+//        "visaNo": "", 
+//        "familyContactDetails": {}, 
+//        "preferredLanguage": "EN", 
+//        "occupationDescription": "", 
+//        "customerPictureURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167140_20140626_185115&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+//        "preferredCommunicationChannel": "INT", 
+//        "nationality": "IN", 
+//        "aadhaarNumber": "", 
+//        "gender": "2", 
+//        "contactDetails": {}, 
+//        "typeOfHouse": "", 
+//        "firstName": "HH", 
+//        "salutation": "0002", 
+//        "permanentAddress": {}, 
+//        "visaValidityDate": "1996-06-25T00:00:00"
+		
 		private String dateOfBirth;
-		private String gender;
-		private String nationality;
-		private String passportNo;
-		private String visaNo;
-		private String visaValidityDate;
-		private Contact contactDetails;
-		private Address permanentAddress;//PER_ADD
-		private String panNumber;
-		private String preferredLanguage;
-		private String preferredCommunicationChannel;
-		private String aadhaarNumber;
-		private String maritalStatus;
-		private String anniversaryDate;
+		private String middleName;
+		private String prospectId;
+		private String lastName;
 		private String occupation;
+		private String passportNo;
+		private String anniversaryDate;
+		private String customerCategory;
+		private String maritalStatus;
+		private String panNumber;
+		private String visaNo;
+		private FamilyContact familyContactDetails;
+		private String preferredLanguage;
 		private String occupationDescription;
-		private String typeOfHouse;
 		private String customerPictureURL;
+		private String preferredCommunicationChannel;
+		private String nationality;
+		private String aadhaarNumber;
+		private String gender;
+		private Contact contactDetails;
+		private String typeOfHouse;
+		private String firstName;
+		private String salutation;
+		private Address permanentAddress;//PER_ADD
+		private String visaValidityDate;
+		
 		public String getProspectId() {
 			return prospectId;
 		}
@@ -677,17 +771,34 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class CafInfo implements TibcoRequest
 	{
-		private String merchantCode;
+		
+//		 "posAgentCode": "POSAgent01", 
+//        "proofs": [], 
+//        "form61Details": {}, 
+//        "customerDeclarationDate": "", 
+//        "currentMobileConnections": [], 
+//        "posAgentSignatureDate": "", 
+//        "localReferenceVerification": {}, 
+//        "referringCustomerDetails": {}, 
+//        "customerDeclarationPlace": "", 
+//        "merchantCode": "POSAgent01", 
+//        "localReferenceDetails": {}
+		
+		
 		private String posAgentCode;
-		private String posAgentSignatureDate;
-		private String customerDeclarationPlace;
-		private String customerDeclarationDate;
 		private List<Proof> proofs;
-		private List<Connection> currentMobileConnections;
 		private Form61 form61Details;
-		private LocalRef localReferenceDetails;
-		private ReferringCustomer referringCustomerDetails;
+		private String customerDeclarationDate;
+		private List<Connection> currentMobileConnections;
+		private String posAgentSignatureDate;
 		private LocalRefVerify localReferenceVerification;
+		private ReferringCustomer referringCustomerDetails;
+		private String customerDeclarationPlace;
+		private String merchantCode;
+		private LocalRef localReferenceDetails;
+		
+		
+		
 		public String getMerchantCode() {
 			return merchantCode;
 		}
@@ -797,12 +908,20 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class LocalRef implements TibcoRequest
 	{
-		private String firstName;
+		
+//		 "middleName": "", 
+//         "lastName": "", 
+//         "eMailId": "", 
+//         "contactNumber": "", 
+//         "firstName": "", 
+//         "address": {}
 		private String middleName;
 		private String lastName;
-		private Address address;//PRE_ADD
-		private String contactNumber;
 		private String eMailId;
+		private String contactNumber;
+		private String firstName;
+		private Address address;//PRE_ADD
+		
 		public String getFirstName() {
 			return firstName;
 		}
@@ -845,8 +964,8 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class Form61 implements TibcoRequest
 	{
-		private String lastTaxReturnFiled;
 		private String reasonForNoPAN;
+		private String lastTaxReturnFiled;
 		
 		public String getLastTaxReturnFiled() {
 			return lastTaxReturnFiled;
@@ -886,14 +1005,25 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class Proof implements TibcoRequest
 	{
+		
+//		"proofIdentifier": "POA", 
+//        "aadhaarTransactionRefNo": "", 
+//        "idProofType": "Z00005", 
+//        "placeOfIssue": "jju", 
+//        "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+//        "documentNumber": "hh", 
+//        "issuingAuthority": "hj", 
+//        "dateOfIssue": "2014-06-25"
+		
 		private String proofIdentifier;
-		private String idProofType;
-		private String documentNumber;
-		private String dateOfIssue;
-		private String placeOfIssue;
-		private String issuingAuthority;
-		private String identifierURL;
 		private String aadhaarTransactionRefNo;
+		private String idProofType;
+		private String placeOfIssue;
+		private String identifierURL;
+		private String documentNumber;
+		private String issuingAuthority;
+		private String dateOfIssue;
+		
 		public String getProofIdentifier() {
 			return proofIdentifier;
 		}
@@ -948,15 +1078,26 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class PayInfo implements TibcoRequest
 	{
+		
+//		"cpTransactionId": "", 
+//        "branchNameAndAddress": "", 
+//        "modeOfPayment": "01", 
+//        "totalAmount": "5000", 
+//        "bankName": "", 
+//        "paymentInstrumentDate": "", 
+//        "receiptNumber": "", 
+//        "paymentInstrumentNumber": ""
+		
+		private String cpTransactionId;
+		private String branchNameAndAddress;
 		/***paymode :Cash,Cheque,Demand Draft,Credit Card,Debit Card,Netbanking,POD,RPayCard"***/
 		private String modeOfPayment;
 		private String totalAmount;
-		private String paymentInstrumentNumber;
-		private String paymentInstrumentDate;
 		private String bankName;
-		private String branchNameAndAddress;
+		private String paymentInstrumentDate;
 		private String receiptNumber;
-		private String cpTransactionId;
+		private String paymentInstrumentNumber;
+		
 		public String getModeOfPayment() {
 			return modeOfPayment;
 		}
@@ -1011,24 +1152,45 @@ public class YD0010Request implements TibcoRequest  {
 	
 	public static class Address implements TibcoRequest
 	{
-		private String addressId;
-		private String buildingId;
-		private String addressType;//- 类型：Installation- Billing- Shipping
+//		 "villageORCity": "Mumbai", 
+//         "careOf": "", 
+//         "jioCentreId": "JC23", 
+//         "state": "MH", 
+//         "houseNameORNumber": "ghh", 
+//         "buildingNameORNumber": "TC23- C Block", 
+//         "addressType": "SHIP_TO", 
+//         "addressId": "", 
+//         "country": "IN", 
+//         "pincode": "666888", 
+//         "areaORTehsil": "ghh", 
+//         "landmark": "", 
+//         "totalFloors": "", 
+//         "societyName": "", 
+//         "streetNameORNumber": "hjj", 
+//         "district": "mum", 
+//         "subLocality": "", 
+//         "buildingId": ""
+		
+		private String villageORCity;
 		private String careOf;
+		private String jioCentreId;
+		private String state;
 		private String houseNameORNumber;
 		private String buildingNameORNumber;
+		private String addressType;//- 类型：Installation- Billing- Shipping
+		private String addressId;
+		private String country;
+		private String pincode;
+		private String areaORTehsil;
+		private String landmark;
+		private String totalFloors;
 		private String societyName;
 		private String streetNameORNumber;
-		private String landmark;
-		private String subLocality;
-		private String areaORTehsil;
-		private String pincode;
-		private String villageORCity;
 		private String district;
-		private String state;
-		private String country;
-		private String totalFloors;
-		private String jioCentreId;
+		private String subLocality;
+		private String buildingId;
+		
+		
 		public String getAddressId() {
 			return addressId;
 		}
@@ -1579,7 +1741,7 @@ public class YD0010Request implements TibcoRequest  {
 		mp.setLastPaidBillReceiptURI("");
 		
 		List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
-		order_p1.setIdentifier(pi_list);
+//		order_p1.setIdentifier(pi_list);
 		ProductIdentifier pi = new ProductIdentifier();
 		pi_list.add(pi);
 		pi.setName("");

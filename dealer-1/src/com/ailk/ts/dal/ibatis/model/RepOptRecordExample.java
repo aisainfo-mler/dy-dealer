@@ -342,52 +342,52 @@ public class RepOptRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoEqualTo(Integer value) {
+        public Criteria andSerialNoEqualTo(Long value) {
             addCriterion("SERIAL_NO =", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoNotEqualTo(Integer value) {
+        public Criteria andSerialNoNotEqualTo(Long value) {
             addCriterion("SERIAL_NO <>", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoGreaterThan(Integer value) {
+        public Criteria andSerialNoGreaterThan(Long value) {
             addCriterion("SERIAL_NO >", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSerialNoGreaterThanOrEqualTo(Long value) {
             addCriterion("SERIAL_NO >=", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoLessThan(Integer value) {
+        public Criteria andSerialNoLessThan(Long value) {
             addCriterion("SERIAL_NO <", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoLessThanOrEqualTo(Integer value) {
+        public Criteria andSerialNoLessThanOrEqualTo(Long value) {
             addCriterion("SERIAL_NO <=", value, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoIn(List<Integer> values) {
+        public Criteria andSerialNoIn(List<Long> values) {
             addCriterion("SERIAL_NO in", values, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoNotIn(List<Integer> values) {
+        public Criteria andSerialNoNotIn(List<Long> values) {
             addCriterion("SERIAL_NO not in", values, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoBetween(Integer value1, Integer value2) {
+        public Criteria andSerialNoBetween(Long value1, Long value2) {
             addCriterion("SERIAL_NO between", value1, value2, "serialNo");
             return (Criteria) this;
         }
 
-        public Criteria andSerialNoNotBetween(Integer value1, Integer value2) {
+        public Criteria andSerialNoNotBetween(Long value1, Long value2) {
             addCriterion("SERIAL_NO not between", value1, value2, "serialNo");
             return (Criteria) this;
         }
@@ -402,62 +402,52 @@ public class RepOptRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeEqualTo(String value) {
+        public Criteria andInputRepCodeEqualTo(Long value) {
             addCriterion("INPUT_REP_CODE =", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeNotEqualTo(String value) {
+        public Criteria andInputRepCodeNotEqualTo(Long value) {
             addCriterion("INPUT_REP_CODE <>", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeGreaterThan(String value) {
+        public Criteria andInputRepCodeGreaterThan(Long value) {
             addCriterion("INPUT_REP_CODE >", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andInputRepCodeGreaterThanOrEqualTo(Long value) {
             addCriterion("INPUT_REP_CODE >=", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeLessThan(String value) {
+        public Criteria andInputRepCodeLessThan(Long value) {
             addCriterion("INPUT_REP_CODE <", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeLessThanOrEqualTo(String value) {
+        public Criteria andInputRepCodeLessThanOrEqualTo(Long value) {
             addCriterion("INPUT_REP_CODE <=", value, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeLike(String value) {
-            addCriterion("INPUT_REP_CODE like", value, "inputRepCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andInputRepCodeNotLike(String value) {
-            addCriterion("INPUT_REP_CODE not like", value, "inputRepCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andInputRepCodeIn(List<String> values) {
+        public Criteria andInputRepCodeIn(List<Long> values) {
             addCriterion("INPUT_REP_CODE in", values, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeNotIn(List<String> values) {
+        public Criteria andInputRepCodeNotIn(List<Long> values) {
             addCriterion("INPUT_REP_CODE not in", values, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeBetween(String value1, String value2) {
+        public Criteria andInputRepCodeBetween(Long value1, Long value2) {
             addCriterion("INPUT_REP_CODE between", value1, value2, "inputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andInputRepCodeNotBetween(String value1, String value2) {
+        public Criteria andInputRepCodeNotBetween(Long value1, Long value2) {
             addCriterion("INPUT_REP_CODE not between", value1, value2, "inputRepCode");
             return (Criteria) this;
         }
@@ -472,62 +462,52 @@ public class RepOptRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeEqualTo(String value) {
+        public Criteria andOutputRepCodeEqualTo(Long value) {
             addCriterion("OUTPUT_REP_CODE =", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeNotEqualTo(String value) {
+        public Criteria andOutputRepCodeNotEqualTo(Long value) {
             addCriterion("OUTPUT_REP_CODE <>", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeGreaterThan(String value) {
+        public Criteria andOutputRepCodeGreaterThan(Long value) {
             addCriterion("OUTPUT_REP_CODE >", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andOutputRepCodeGreaterThanOrEqualTo(Long value) {
             addCriterion("OUTPUT_REP_CODE >=", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeLessThan(String value) {
+        public Criteria andOutputRepCodeLessThan(Long value) {
             addCriterion("OUTPUT_REP_CODE <", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeLessThanOrEqualTo(String value) {
+        public Criteria andOutputRepCodeLessThanOrEqualTo(Long value) {
             addCriterion("OUTPUT_REP_CODE <=", value, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeLike(String value) {
-            addCriterion("OUTPUT_REP_CODE like", value, "outputRepCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andOutputRepCodeNotLike(String value) {
-            addCriterion("OUTPUT_REP_CODE not like", value, "outputRepCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andOutputRepCodeIn(List<String> values) {
+        public Criteria andOutputRepCodeIn(List<Long> values) {
             addCriterion("OUTPUT_REP_CODE in", values, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeNotIn(List<String> values) {
+        public Criteria andOutputRepCodeNotIn(List<Long> values) {
             addCriterion("OUTPUT_REP_CODE not in", values, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeBetween(String value1, String value2) {
+        public Criteria andOutputRepCodeBetween(Long value1, Long value2) {
             addCriterion("OUTPUT_REP_CODE between", value1, value2, "outputRepCode");
             return (Criteria) this;
         }
 
-        public Criteria andOutputRepCodeNotBetween(String value1, String value2) {
+        public Criteria andOutputRepCodeNotBetween(Long value1, Long value2) {
             addCriterion("OUTPUT_REP_CODE not between", value1, value2, "outputRepCode");
             return (Criteria) this;
         }
@@ -542,52 +522,52 @@ public class RepOptRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andSkuidEqualTo(Integer value) {
+        public Criteria andSkuidEqualTo(Long value) {
             addCriterion("SKUID =", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotEqualTo(Integer value) {
+        public Criteria andSkuidNotEqualTo(Long value) {
             addCriterion("SKUID <>", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidGreaterThan(Integer value) {
+        public Criteria andSkuidGreaterThan(Long value) {
             addCriterion("SKUID >", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSkuidGreaterThanOrEqualTo(Long value) {
             addCriterion("SKUID >=", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidLessThan(Integer value) {
+        public Criteria andSkuidLessThan(Long value) {
             addCriterion("SKUID <", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidLessThanOrEqualTo(Integer value) {
+        public Criteria andSkuidLessThanOrEqualTo(Long value) {
             addCriterion("SKUID <=", value, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidIn(List<Integer> values) {
+        public Criteria andSkuidIn(List<Long> values) {
             addCriterion("SKUID in", values, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotIn(List<Integer> values) {
+        public Criteria andSkuidNotIn(List<Long> values) {
             addCriterion("SKUID not in", values, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidBetween(Integer value1, Integer value2) {
+        public Criteria andSkuidBetween(Long value1, Long value2) {
             addCriterion("SKUID between", value1, value2, "skuid");
             return (Criteria) this;
         }
 
-        public Criteria andSkuidNotBetween(Integer value1, Integer value2) {
+        public Criteria andSkuidNotBetween(Long value1, Long value2) {
             addCriterion("SKUID not between", value1, value2, "skuid");
             return (Criteria) this;
         }
@@ -792,52 +772,52 @@ public class RepOptRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andOptIdEqualTo(Integer value) {
+        public Criteria andOptIdEqualTo(Long value) {
             addCriterion("OPT_ID =", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdNotEqualTo(Integer value) {
+        public Criteria andOptIdNotEqualTo(Long value) {
             addCriterion("OPT_ID <>", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdGreaterThan(Integer value) {
+        public Criteria andOptIdGreaterThan(Long value) {
             addCriterion("OPT_ID >", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOptIdGreaterThanOrEqualTo(Long value) {
             addCriterion("OPT_ID >=", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdLessThan(Integer value) {
+        public Criteria andOptIdLessThan(Long value) {
             addCriterion("OPT_ID <", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdLessThanOrEqualTo(Integer value) {
+        public Criteria andOptIdLessThanOrEqualTo(Long value) {
             addCriterion("OPT_ID <=", value, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdIn(List<Integer> values) {
+        public Criteria andOptIdIn(List<Long> values) {
             addCriterion("OPT_ID in", values, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdNotIn(List<Integer> values) {
+        public Criteria andOptIdNotIn(List<Long> values) {
             addCriterion("OPT_ID not in", values, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdBetween(Integer value1, Integer value2) {
+        public Criteria andOptIdBetween(Long value1, Long value2) {
             addCriterion("OPT_ID between", value1, value2, "optId");
             return (Criteria) this;
         }
 
-        public Criteria andOptIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andOptIdNotBetween(Long value1, Long value2) {
             addCriterion("OPT_ID not between", value1, value2, "optId");
             return (Criteria) this;
         }

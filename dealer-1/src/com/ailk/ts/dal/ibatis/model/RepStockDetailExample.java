@@ -342,52 +342,52 @@ public class RepStockDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdEqualTo(Integer value) {
+        public Criteria andDetailIdEqualTo(Long value) {
             addCriterion("DETAIL_ID =", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdNotEqualTo(Integer value) {
+        public Criteria andDetailIdNotEqualTo(Long value) {
             addCriterion("DETAIL_ID <>", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdGreaterThan(Integer value) {
+        public Criteria andDetailIdGreaterThan(Long value) {
             addCriterion("DETAIL_ID >", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andDetailIdGreaterThanOrEqualTo(Long value) {
             addCriterion("DETAIL_ID >=", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdLessThan(Integer value) {
+        public Criteria andDetailIdLessThan(Long value) {
             addCriterion("DETAIL_ID <", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdLessThanOrEqualTo(Integer value) {
+        public Criteria andDetailIdLessThanOrEqualTo(Long value) {
             addCriterion("DETAIL_ID <=", value, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdIn(List<Integer> values) {
+        public Criteria andDetailIdIn(List<Long> values) {
             addCriterion("DETAIL_ID in", values, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdNotIn(List<Integer> values) {
+        public Criteria andDetailIdNotIn(List<Long> values) {
             addCriterion("DETAIL_ID not in", values, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdBetween(Integer value1, Integer value2) {
+        public Criteria andDetailIdBetween(Long value1, Long value2) {
             addCriterion("DETAIL_ID between", value1, value2, "detailId");
             return (Criteria) this;
         }
 
-        public Criteria andDetailIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andDetailIdNotBetween(Long value1, Long value2) {
             addCriterion("DETAIL_ID not between", value1, value2, "detailId");
             return (Criteria) this;
         }
@@ -402,52 +402,52 @@ public class RepStockDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdEqualTo(Integer value) {
+        public Criteria andRepOptIdEqualTo(Long value) {
             addCriterion("REP_OPT_ID =", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdNotEqualTo(Integer value) {
+        public Criteria andRepOptIdNotEqualTo(Long value) {
             addCriterion("REP_OPT_ID <>", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdGreaterThan(Integer value) {
+        public Criteria andRepOptIdGreaterThan(Long value) {
             addCriterion("REP_OPT_ID >", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andRepOptIdGreaterThanOrEqualTo(Long value) {
             addCriterion("REP_OPT_ID >=", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdLessThan(Integer value) {
+        public Criteria andRepOptIdLessThan(Long value) {
             addCriterion("REP_OPT_ID <", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdLessThanOrEqualTo(Integer value) {
+        public Criteria andRepOptIdLessThanOrEqualTo(Long value) {
             addCriterion("REP_OPT_ID <=", value, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdIn(List<Integer> values) {
+        public Criteria andRepOptIdIn(List<Long> values) {
             addCriterion("REP_OPT_ID in", values, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdNotIn(List<Integer> values) {
+        public Criteria andRepOptIdNotIn(List<Long> values) {
             addCriterion("REP_OPT_ID not in", values, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdBetween(Integer value1, Integer value2) {
+        public Criteria andRepOptIdBetween(Long value1, Long value2) {
             addCriterion("REP_OPT_ID between", value1, value2, "repOptId");
             return (Criteria) this;
         }
 
-        public Criteria andRepOptIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andRepOptIdNotBetween(Long value1, Long value2) {
             addCriterion("REP_OPT_ID not between", value1, value2, "repOptId");
             return (Criteria) this;
         }
@@ -462,52 +462,52 @@ public class RepStockDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdEqualTo(Integer value) {
+        public Criteria andEntityIdEqualTo(Long value) {
             addCriterion("ENTITY_ID =", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdNotEqualTo(Integer value) {
+        public Criteria andEntityIdNotEqualTo(Long value) {
             addCriterion("ENTITY_ID <>", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdGreaterThan(Integer value) {
+        public Criteria andEntityIdGreaterThan(Long value) {
             addCriterion("ENTITY_ID >", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andEntityIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ENTITY_ID >=", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdLessThan(Integer value) {
+        public Criteria andEntityIdLessThan(Long value) {
             addCriterion("ENTITY_ID <", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdLessThanOrEqualTo(Integer value) {
+        public Criteria andEntityIdLessThanOrEqualTo(Long value) {
             addCriterion("ENTITY_ID <=", value, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdIn(List<Integer> values) {
+        public Criteria andEntityIdIn(List<Long> values) {
             addCriterion("ENTITY_ID in", values, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdNotIn(List<Integer> values) {
+        public Criteria andEntityIdNotIn(List<Long> values) {
             addCriterion("ENTITY_ID not in", values, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdBetween(Integer value1, Integer value2) {
+        public Criteria andEntityIdBetween(Long value1, Long value2) {
             addCriterion("ENTITY_ID between", value1, value2, "entityId");
             return (Criteria) this;
         }
 
-        public Criteria andEntityIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andEntityIdNotBetween(Long value1, Long value2) {
             addCriterion("ENTITY_ID not between", value1, value2, "entityId");
             return (Criteria) this;
         }
@@ -592,52 +592,52 @@ public class RepStockDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdEqualTo(Integer value) {
+        public Criteria andOpterIdEqualTo(Long value) {
             addCriterion("OPTER_ID =", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdNotEqualTo(Integer value) {
+        public Criteria andOpterIdNotEqualTo(Long value) {
             addCriterion("OPTER_ID <>", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdGreaterThan(Integer value) {
+        public Criteria andOpterIdGreaterThan(Long value) {
             addCriterion("OPTER_ID >", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOpterIdGreaterThanOrEqualTo(Long value) {
             addCriterion("OPTER_ID >=", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdLessThan(Integer value) {
+        public Criteria andOpterIdLessThan(Long value) {
             addCriterion("OPTER_ID <", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdLessThanOrEqualTo(Integer value) {
+        public Criteria andOpterIdLessThanOrEqualTo(Long value) {
             addCriterion("OPTER_ID <=", value, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdIn(List<Integer> values) {
+        public Criteria andOpterIdIn(List<Long> values) {
             addCriterion("OPTER_ID in", values, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdNotIn(List<Integer> values) {
+        public Criteria andOpterIdNotIn(List<Long> values) {
             addCriterion("OPTER_ID not in", values, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdBetween(Integer value1, Integer value2) {
+        public Criteria andOpterIdBetween(Long value1, Long value2) {
             addCriterion("OPTER_ID between", value1, value2, "opterId");
             return (Criteria) this;
         }
 
-        public Criteria andOpterIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andOpterIdNotBetween(Long value1, Long value2) {
             addCriterion("OPTER_ID not between", value1, value2, "opterId");
             return (Criteria) this;
         }

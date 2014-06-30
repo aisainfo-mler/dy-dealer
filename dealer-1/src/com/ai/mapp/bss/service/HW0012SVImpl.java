@@ -12,8 +12,6 @@ import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.bss.entity.ParamObject;
 import com.ai.mapp.bss.util.BSSConstantError;
 import com.ai.mapp.bss.util.BSSConstantParam;
-import com.ai.mapp.sys.entity.AgentOrder;
-import com.ai.mapp.sys.entity.GoodsInfo;
 import com.ai.mapp.sys.service.AgentOrderService;
 
 @Service(value="hw0012Service")

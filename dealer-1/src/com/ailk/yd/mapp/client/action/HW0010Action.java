@@ -28,6 +28,10 @@ import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0010Response;
+import com.ailk.yd.mapp.tibco.TibcoConstant;
+import com.ailk.yd.mapp.tibco.action.YD0002Action;
+import com.ailk.yd.mapp.tibco.model.YD0002.YD0002Request;
+import com.ailk.yd.mapp.tibco.model.YD0002.YD0002Response;
 
 @Service("hw0010")
 @Action(bizcode="hw0010",userCheck=true)
@@ -43,6 +47,8 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 	@Autowired
 	private AgentOrderService agentOrderService;
 	
+	private YD0002Action yd0002;
+	
 	@Override
 	protected void doAction() throws BusinessException, SystemException,Exception {
 		
@@ -56,6 +62,25 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		
 		if(caf.getOrder() == null)
 			throw new Exception("no order information");
+		
+		if(StringUtils.isBlank(caf.getOrder().getOrn()) && StringUtils.isBlank(caf.getOrder().getMdn()))
+		{
+			YD0002Request yd0002_req = new YD0002Request();
+			yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel());
+			yd0002_req.setChannel(caf.getOrder().getChannel());
+			yd0002_req.setOrderNumber(caf.getOrder().getOrn());
+			yd0002_req.setSvcNum(caf.getOrder().getMdn());
+			
+			YD0002Response yd0002_rsp = yd0002.post2Tibco(yd0002_req, null);
+			
+			String number_orn = yd0002_rsp.getServiceProviderEmployee();
+			String msg = yd0002_rsp.getMessage();
+			String state = yd0002_rsp.getResponse()==null?null:yd0002_rsp.getResponse().getInteractionStatus();
+			
+			if(TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state) == false || caf.getOrder().getOrn().equals(number_orn) == false)
+				throw new Exception("Number has blocked by order: " + number_orn+","+msg);
+		}
+		
 		
 		AgentOrder order = new AgentOrder();
 		order.setCreator(creator);
