@@ -44,6 +44,7 @@ public class HW0035Action extends
 		response = new HW0035Response();
 		List list = new ArrayList();
 		response.setServices(list); 
+		
 		if(request.getCustomerIds()!=null && request.getCustomerIds().size()>0){
 			for (Iterator it = request.getCustomerIds().iterator(); it.hasNext();) {
 				String customerId = (String) it.next();
