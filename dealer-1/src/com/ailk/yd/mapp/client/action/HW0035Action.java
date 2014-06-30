@@ -35,7 +35,7 @@ public class HW0035Action extends
 
 	@Autowired
 	private YD0021Action yd0021;
- 
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void doAction() throws BusinessException, SystemException,Exception {
