@@ -561,6 +561,11 @@ public class SYSConstant {
 	 */
 	public static final String SKU_STATUS_TMP = "05";
 	
+	/**
+	 * tibco仓库ID
+	 */
+	public static final Long REP_CODE_TIBCO = 0L;
+	
 	static
 	{
 		/**业务类型**/
