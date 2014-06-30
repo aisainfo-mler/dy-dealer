@@ -45,7 +45,7 @@ public class RepSellDetailDAOImpl extends SqlMapClientDaoSupport implements RepS
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(Integer rid) {
+    public int deleteByPrimaryKey(Long rid) {
         RepSellDetail _key = new RepSellDetail();
         _key.setRid(rid);
         int rows = getSqlMapClientTemplate().delete("rep_sell_detail.deleteByPrimaryKey", _key);
@@ -58,9 +58,9 @@ public class RepSellDetailDAOImpl extends SqlMapClientDaoSupport implements RepS
      *
      * @mbggenerated
      */
-    public Integer insert(RepSellDetail record) {
+    public Long insert(RepSellDetail record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_sell_detail.insert", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -69,9 +69,9 @@ public class RepSellDetailDAOImpl extends SqlMapClientDaoSupport implements RepS
      *
      * @mbggenerated
      */
-    public Integer insertSelective(RepSellDetail record) {
+    public Long insertSelective(RepSellDetail record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_sell_detail.insertSelective", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -92,7 +92,7 @@ public class RepSellDetailDAOImpl extends SqlMapClientDaoSupport implements RepS
      *
      * @mbggenerated
      */
-    public RepSellDetail selectByPrimaryKey(Integer rid) {
+    public RepSellDetail selectByPrimaryKey(Long rid) {
         RepSellDetail _key = new RepSellDetail();
         _key.setRid(rid);
         RepSellDetail record = (RepSellDetail) getSqlMapClientTemplate().queryForObject("rep_sell_detail.selectByPrimaryKey", _key);

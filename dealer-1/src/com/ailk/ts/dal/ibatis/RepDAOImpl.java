@@ -45,7 +45,7 @@ public class RepDAOImpl extends SqlMapClientDaoSupport implements RepDAO {
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(Integer id) {
+    public int deleteByPrimaryKey(Long id) {
         Rep _key = new Rep();
         _key.setId(id);
         int rows = getSqlMapClientTemplate().delete("rep.deleteByPrimaryKey", _key);
@@ -58,9 +58,9 @@ public class RepDAOImpl extends SqlMapClientDaoSupport implements RepDAO {
      *
      * @mbggenerated
      */
-    public Integer insert(Rep record) {
+    public Long insert(Rep record) {
         Object newKey = getSqlMapClientTemplate().insert("rep.insert", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -69,9 +69,9 @@ public class RepDAOImpl extends SqlMapClientDaoSupport implements RepDAO {
      *
      * @mbggenerated
      */
-    public Integer insertSelective(Rep record) {
+    public Long insertSelective(Rep record) {
         Object newKey = getSqlMapClientTemplate().insert("rep.insertSelective", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -92,7 +92,7 @@ public class RepDAOImpl extends SqlMapClientDaoSupport implements RepDAO {
      *
      * @mbggenerated
      */
-    public Rep selectByPrimaryKey(Integer id) {
+    public Rep selectByPrimaryKey(Long id) {
         Rep _key = new Rep();
         _key.setId(id);
         Rep record = (Rep) getSqlMapClientTemplate().queryForObject("rep.selectByPrimaryKey", _key);

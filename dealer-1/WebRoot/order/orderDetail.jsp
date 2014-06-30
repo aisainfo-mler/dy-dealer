@@ -116,17 +116,17 @@
 							<s:else>
 								<s:set name="orderDetailValueNum" value="%{#orderDetail.items.size}" />
 							</s:else>
-<%--							<s:if test="%{orderMain.status != 0 && orderMain.status != '0'}">--%>
-<%--								<s:if test="%{orderMain.expressNumber == null || orderMain.expressNumber == ''}">--%>
-<%--									&nbsp;&nbsp;(&nbsp;<span class="red"><s:text name="order.detail.hadInput" /> &nbsp;<span name="order_detail_num_${orderDetail.id}"><s:property value="#orderDetailValueNum"/></span> &nbsp;<s:text name="common.unit" /></span>&nbsp;)--%>
-<%--									<input type="hidden" name="order_item_count_processed" id="order_item_count_processed${orderDetail.id}" value="<s:property value="#orderDetailValueNum"/>">--%>
-<%--								</s:if>--%>
-<%--							</s:if>--%>
+							<s:if test="%{orderMain.status != 0 && orderMain.status != '0'}">
+								<s:if test="%{orderMain.expressNumber == null || orderMain.expressNumber == ''}">
+									&nbsp;&nbsp;(&nbsp;<span class="red"><s:text name="order.detail.hadInput" /> &nbsp;<span name="order_detail_num_${orderDetail.id}"><s:property value="#orderDetailValueNum"/></span> &nbsp;<s:text name="common.unit" /></span>&nbsp;)
+									<input type="hidden" name="order_item_count_processed" id="order_item_count_processed${orderDetail.id}" value="<s:property value="#orderDetailValueNum"/>">
+								</s:if>
+							</s:if>
 						</td>
 						<td>
-<%--							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>--%>
-<%--								<a href="javascript:void(0);" onclick="order_itemList('${orderMain.expressNumber}',${orderDetail.id},${orderDetail.good.id},<s:property value="%{#orderDetail.counts}"/>,${orderMain.creator.userId})"><s:text name="order.detail.process" /></a>--%>
-<%--							</s:if>--%>
+							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>
+								<a href="javascript:void(0);" onclick="order_itemList('${orderMain.expressNumber}',${orderDetail.id},${orderDetail.good.id},<s:property value="%{#orderDetail.counts}"/>,${orderMain.creator.userId})"><s:text name="order.detail.process" /></a>
+							</s:if>
 <%--							<s:else>--%>
 								<s:property value="@com.ai.mapp.sys.util.SYSConstant@getDictName('orderTypes',orderMain.status + session.WW_TRANS_I18N_LOCALE)" />
 <%--							</s:else>--%>

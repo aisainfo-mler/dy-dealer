@@ -7,11 +7,11 @@ package com.ailk.ts.dal.ibatis.model;
  */
 
 public class SelfDefineRep {
-    private Integer id;
+    private Long id;
 
-    private Integer skuId;
+    private Long skuId;
 
-    private String repositoryCode;
+    private Long repositoryCode;
 
     private Integer count;
     
@@ -38,19 +38,19 @@ public class SelfDefineRep {
      */
     private String condTypeId;
     
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getRepositoryCode() {
+	public Long getRepositoryCode() {
 		return repositoryCode;
 	}
 
-	public void setRepositoryCode(String repositoryCode) {
+	public void setRepositoryCode(Long repositoryCode) {
 		this.repositoryCode = repositoryCode;
 	}
 
@@ -86,11 +86,11 @@ public class SelfDefineRep {
 		this.repName = repName;
 	}
 
-	public Integer getSkuId() {
+	public Long getSkuId() {
 		return skuId;
 	}
 
-	public void setSkuId(Integer skuId) {
+	public void setSkuId(Long skuId) {
 		this.skuId = skuId;
 	}
 

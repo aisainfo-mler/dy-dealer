@@ -45,7 +45,7 @@ public class RepositoryDAOImpl extends SqlMapClientDaoSupport implements Reposit
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(String repCode) {
+    public int deleteByPrimaryKey(Long repCode) {
         Repository _key = new Repository();
         _key.setRepCode(repCode);
         int rows = getSqlMapClientTemplate().delete("repository.deleteByPrimaryKey", _key);
@@ -58,8 +58,9 @@ public class RepositoryDAOImpl extends SqlMapClientDaoSupport implements Reposit
      *
      * @mbggenerated
      */
-    public void insert(Repository record) {
-        getSqlMapClientTemplate().insert("repository.insert", record);
+    public Long insert(Repository record) {
+        Object newKey = getSqlMapClientTemplate().insert("repository.insert", record);
+        return (Long) newKey;
     }
 
     /**
@@ -68,8 +69,9 @@ public class RepositoryDAOImpl extends SqlMapClientDaoSupport implements Reposit
      *
      * @mbggenerated
      */
-    public void insertSelective(Repository record) {
-        getSqlMapClientTemplate().insert("repository.insertSelective", record);
+    public Long insertSelective(Repository record) {
+        Object newKey = getSqlMapClientTemplate().insert("repository.insertSelective", record);
+        return (Long) newKey;
     }
 
     /**
@@ -90,7 +92,7 @@ public class RepositoryDAOImpl extends SqlMapClientDaoSupport implements Reposit
      *
      * @mbggenerated
      */
-    public Repository selectByPrimaryKey(String repCode) {
+    public Repository selectByPrimaryKey(Long repCode) {
         Repository _key = new Repository();
         _key.setRepCode(repCode);
         Repository record = (Repository) getSqlMapClientTemplate().queryForObject("repository.selectByPrimaryKey", _key);

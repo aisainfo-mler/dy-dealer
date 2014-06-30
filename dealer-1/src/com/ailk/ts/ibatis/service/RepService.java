@@ -73,14 +73,14 @@ public class RepService {
 			if(cond.getDeptId() != null){
 				condM.put("deptId", cond.getDeptId());
 			}
-			if(StringUtils.isNotEmpty(cond.getRepositoryCode())){
+			if(cond.getRepositoryCode() != null){
 				condM.put("repCode", cond.getRepositoryCode());
 			}
 		}
 		return commonQueryService.selectRep(condM, start, limit);
 	}
 
-	public void updateRepCount(Integer skuId,String inRepCode,String outRepCode,Integer count) throws BusinessException, SystemException {
+	public void updateRepCount(Long skuId,Long inRepCode,Long outRepCode,Integer count) throws BusinessException, SystemException {
 		if(count == null || count.intValue() == 0){
 			throw new BusinessException("9999","仓库变更数量不能为零");
 		}
@@ -88,7 +88,7 @@ public class RepService {
 		cond.setSkuId(skuId);
 		
 		//入库操作
-		if(StringUtils.isNotEmpty(inRepCode)){
+		if(inRepCode != null){
 			cond.setRepositoryCode(inRepCode);
 			List<SelfDefineRep> inReps = getSelfRep(cond, -1, -1);
 			if(inReps != null && inReps.isEmpty() == false){
@@ -109,7 +109,7 @@ public class RepService {
 		}
 		
 		//出库操作
-		if(StringUtils.isNotEmpty(outRepCode)){
+		if(outRepCode != null){
 			cond.setRepositoryCode(outRepCode);
 			List<SelfDefineRep> outReps = getSelfRep(cond, -1, -1);
 			if(outReps != null && outReps.isEmpty() == false){

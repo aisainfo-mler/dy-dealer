@@ -342,62 +342,52 @@ public class RepositoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeEqualTo(String value) {
+        public Criteria andRepCodeEqualTo(Long value) {
             addCriterion("REP_CODE =", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeNotEqualTo(String value) {
+        public Criteria andRepCodeNotEqualTo(Long value) {
             addCriterion("REP_CODE <>", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeGreaterThan(String value) {
+        public Criteria andRepCodeGreaterThan(Long value) {
             addCriterion("REP_CODE >", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeGreaterThanOrEqualTo(String value) {
+        public Criteria andRepCodeGreaterThanOrEqualTo(Long value) {
             addCriterion("REP_CODE >=", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeLessThan(String value) {
+        public Criteria andRepCodeLessThan(Long value) {
             addCriterion("REP_CODE <", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeLessThanOrEqualTo(String value) {
+        public Criteria andRepCodeLessThanOrEqualTo(Long value) {
             addCriterion("REP_CODE <=", value, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeLike(String value) {
-            addCriterion("REP_CODE like", value, "repCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andRepCodeNotLike(String value) {
-            addCriterion("REP_CODE not like", value, "repCode");
-            return (Criteria) this;
-        }
-
-        public Criteria andRepCodeIn(List<String> values) {
+        public Criteria andRepCodeIn(List<Long> values) {
             addCriterion("REP_CODE in", values, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeNotIn(List<String> values) {
+        public Criteria andRepCodeNotIn(List<Long> values) {
             addCriterion("REP_CODE not in", values, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeBetween(String value1, String value2) {
+        public Criteria andRepCodeBetween(Long value1, Long value2) {
             addCriterion("REP_CODE between", value1, value2, "repCode");
             return (Criteria) this;
         }
 
-        public Criteria andRepCodeNotBetween(String value1, String value2) {
+        public Criteria andRepCodeNotBetween(Long value1, Long value2) {
             addCriterion("REP_CODE not between", value1, value2, "repCode");
             return (Criteria) this;
         }
@@ -949,6 +939,66 @@ public class RepositoryExample {
 
         public Criteria andRemarkNotBetween(String value1, String value2) {
             addCriterion("REMARK not between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNull() {
+            addCriterion("USER_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("USER_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdEqualTo(Long value) {
+            addCriterion("USER_ID =", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotEqualTo(Long value) {
+            addCriterion("USER_ID <>", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThan(Long value) {
+            addCriterion("USER_ID >", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("USER_ID >=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThan(Long value) {
+            addCriterion("USER_ID <", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("USER_ID <=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<Long> values) {
+            addCriterion("USER_ID in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotIn(List<Long> values) {
+            addCriterion("USER_ID not in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdBetween(Long value1, Long value2) {
+            addCriterion("USER_ID between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("USER_ID not between", value1, value2, "userId");
             return (Criteria) this;
         }
     }

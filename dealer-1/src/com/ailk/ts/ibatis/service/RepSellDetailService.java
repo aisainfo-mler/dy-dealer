@@ -35,8 +35,8 @@ public class RepSellDetailService {
 	 * @return:       Integer    
 	 * @Date          2013-5-13 下午05:12:45
 	 */
-	public Integer createSecondSellDetail(Integer orderId, Integer entityId,
-			Integer optId,String optType) throws BusinessException, SystemException {
+	public Long createSecondSellDetail(Long orderId, Long entityId,
+			Long optId,String optType) throws BusinessException, SystemException {
 		RepSellDetail detail = new RepSellDetail();
 		detail.setEntityId(entityId);
 		detail.setOpterId(optId);
@@ -50,7 +50,7 @@ public class RepSellDetailService {
 	/**
 	 * 寻找一个商品的相关库存操作记录信息
 	 */
-	public List<RepSellDetail> findRepSellDetailByEntityId(Integer entityId)throws BusinessException, SystemException {
+	public List<RepSellDetail> findRepSellDetailByEntityId(Long entityId)throws BusinessException, SystemException {
 		RepSellDetailExample detail_ex = new RepSellDetailExample();
 		RepSellDetailExample.Criteria criteria = detail_ex.createCriteria();
 		criteria.andEntityIdEqualTo(entityId);
@@ -62,7 +62,7 @@ public class RepSellDetailService {
 	/**
 	 * 寻找一个商品的最近库存操作记录信息
 	 */
-	public RepSellDetail findLastByRepSellDetailEntityId(Integer entityId)throws BusinessException, SystemException {
+	public RepSellDetail findLastByRepSellDetailEntityId(Long entityId)throws BusinessException, SystemException {
 		List<RepSellDetail> list = findRepSellDetailByEntityId(entityId);
 		if(list != null && list.isEmpty() == false){
 				return list.get(0);

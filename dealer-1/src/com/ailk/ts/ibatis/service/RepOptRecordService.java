@@ -41,15 +41,15 @@ public class RepOptRecordService{
 		if (ror.getSkuid() != null) {
 			cc.andSkuidEqualTo(ror.getSkuid());
 		}
-		if (StringUtils.isNotBlank(ror.getInputRepCode())) {
+		if (ror.getInputRepCode() != null) {
 			cc.andInputRepCodeEqualTo(ror.getInputRepCode());
 		}
-		if (StringUtils.isNotBlank(ror.getOutputRepCode())) {
+		if (ror.getOutputRepCode() != null) {
 			Criteria cc2 = e.or();
 			if (ror.getSkuid() != null) {
 				cc2.andSkuidEqualTo(ror.getSkuid());
 			}
-			if (StringUtils.isNotBlank(ror.getOutputRepCode())) {
+			if (ror.getOutputRepCode() != null) {
 				cc2.andOutputRepCodeEqualTo(ror.getOutputRepCode());
 			}
 		}

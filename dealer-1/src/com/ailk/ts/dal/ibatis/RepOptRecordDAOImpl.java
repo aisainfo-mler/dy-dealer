@@ -45,7 +45,7 @@ public class RepOptRecordDAOImpl extends SqlMapClientDaoSupport implements RepOp
      *
      * @mbggenerated
      */
-    public int deleteByPrimaryKey(Integer serialNo) {
+    public int deleteByPrimaryKey(Long serialNo) {
         RepOptRecord _key = new RepOptRecord();
         _key.setSerialNo(serialNo);
         int rows = getSqlMapClientTemplate().delete("rep_opt_record.deleteByPrimaryKey", _key);
@@ -58,9 +58,9 @@ public class RepOptRecordDAOImpl extends SqlMapClientDaoSupport implements RepOp
      *
      * @mbggenerated
      */
-    public Integer insert(RepOptRecord record) {
+    public Long insert(RepOptRecord record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_opt_record.insert", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -69,9 +69,9 @@ public class RepOptRecordDAOImpl extends SqlMapClientDaoSupport implements RepOp
      *
      * @mbggenerated
      */
-    public Integer insertSelective(RepOptRecord record) {
+    public Long insertSelective(RepOptRecord record) {
         Object newKey = getSqlMapClientTemplate().insert("rep_opt_record.insertSelective", record);
-        return (Integer) newKey;
+        return (Long) newKey;
     }
 
     /**
@@ -92,7 +92,7 @@ public class RepOptRecordDAOImpl extends SqlMapClientDaoSupport implements RepOp
      *
      * @mbggenerated
      */
-    public RepOptRecord selectByPrimaryKey(Integer serialNo) {
+    public RepOptRecord selectByPrimaryKey(Long serialNo) {
         RepOptRecord _key = new RepOptRecord();
         _key.setSerialNo(serialNo);
         RepOptRecord record = (RepOptRecord) getSqlMapClientTemplate().queryForObject("rep_opt_record.selectByPrimaryKey", _key);
