@@ -38,8 +38,12 @@ public class HW0035Action extends
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	protected void doAction() throws BusinessException, SystemException,
-			Exception {
+	protected void doAction() throws BusinessException, SystemException,Exception {
+		
+		if(request.getCustomerIds()!=null){
+			request.getCustomerIds().add("1100009566");
+		}
+		
 		YD0021Request yd0021Request = new YD0021Request();
 		response = new HW0035Response();
 		List list = new ArrayList();
@@ -61,9 +65,9 @@ public class HW0035Action extends
 
 	}
 
-	private void fetchService(YD0021Request yd0021Request, List m) throws Exception {
-		YD0021Response get2Tibco = yd0021.get2Tibco(yd0021Request
-				.returnGetParam());
+	private void fetchService(YD0021Request yd0021Request, List m) throws Exception 
+	{
+		YD0021Response get2Tibco = yd0021.get2Tibco(yd0021Request.returnGetParam());
 		String customerId = get2Tibco.getCustomerId();
 		if (get2Tibco.getAccounts() != null
 				&& get2Tibco.getAccounts().size() > 0) {
