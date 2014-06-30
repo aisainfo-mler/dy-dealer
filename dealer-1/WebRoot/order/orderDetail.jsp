@@ -127,9 +127,9 @@
 							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>
 								<a href="javascript:void(0);" onclick="order_itemList('${orderMain.expressNumber}',${orderDetail.id},${orderDetail.good.id},<s:property value="%{#orderDetail.counts}"/>,${orderMain.creator.userId})"><s:text name="order.detail.process" /></a>
 							</s:if>
-<%--							<s:else>--%>
+							<s:else>
 								<s:property value="@com.ai.mapp.sys.util.SYSConstant@getDictName('orderTypes',orderMain.status + session.WW_TRANS_I18N_LOCALE)" />
-<%--							</s:else>--%>
+							</s:else>
 						</td>
 						<s:set name="orderMainExpressCharge" value="0"></s:set>
 						<s:if test="%{orderMain.expressCharge != null}" >
