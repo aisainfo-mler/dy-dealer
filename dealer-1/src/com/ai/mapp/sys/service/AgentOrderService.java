@@ -202,7 +202,8 @@ public class AgentOrderService {
 		order.setCompleteTime(now);
 		order.setCreateTime(now);
 		order.setDesc((order.getDesc() == null?"":order.getDesc())+ " Recharge "+((float)order.getSaleFee())+ "元");
-		order.setDiscountFee(discountFeeB.longValue());
+		Long df = (long) discountFeeB.intValue();
+		order.setDiscountFee(df);
 		if(order.getSaleFee().longValue() == 0){
 			order.setDiscountRate((float)0);
 		}else{
@@ -213,7 +214,8 @@ public class AgentOrderService {
 		order.setPayStatus(SYSConstant.PAY_STATUS_NOT_PAID);
 		order.setPayTime(now);
 		order.setPreStore((long)0);
-		order.setRealFee((new BigDecimal(order.getSaleFee())).subtract(discountFeeB).longValue());
+		Long sf = (long) (order.getSaleFee().intValue()-discountFeeB.intValue());
+		order.setRealFee(sf);
 		order.setSaleFee(order.getSaleFee());
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_WAITTING);
 			
@@ -482,7 +484,8 @@ public class AgentOrderService {
 		order.setCompleteTime(now);
 		order.setCreateTime(now);
 		order.setDesc("topUp "+order.getSvn());
-		order.setDiscountFee(discountFeeB.longValue());
+		Long df = (long) discountFeeB.intValue();
+		order.setDiscountFee(df);
 		if(order.getSaleFee().longValue() == 0){
 			order.setDiscountRate((float)0);
 		}else{
@@ -493,7 +496,8 @@ public class AgentOrderService {
 		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
 		order.setPayTime(now);
 //		order.setPreStore((long)0);
-		order.setRealFee((new BigDecimal(order.getSaleFee())).subtract(discountFeeB).longValue());
+		Long rf = (long) (order.getSaleFee().intValue()-discountFeeB.intValue());
+		order.setRealFee(rf);
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_WAITTING);
 //		order.setBlance(svnInfo.getAmount());
 		order.setUpdateTime(now);
