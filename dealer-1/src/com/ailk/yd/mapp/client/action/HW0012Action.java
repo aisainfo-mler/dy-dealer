@@ -409,6 +409,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.getCafDetails().getLocalReferenceDetails().setLastName(lr.getLastName()==null?"":lr.getLastName());
 			req.getCafDetails().getLocalReferenceDetails().setContactNumber(lr.getContactNumber()==null?"":lr.getContactNumber());
 			req.getCafDetails().getLocalReferenceDetails().seteMailId(lr.geteMailId()==null?"":lr.geteMailId());
+			
 			if(lr.getAddress() != null)
 			{
 				HW0010Request.Address hw_lr_address = lr.getAddress();
@@ -545,7 +546,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						YD0010Request.Product ps = new YD0010Request.Product();
 						ps.setBusinessInteraction(new NameObject("ADD"));
 						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
-						ps.setStarterKitCode("Y");
+						ps.setStarterKitCode("N");
 						order.getProducts().add(ps);
 						if(req.getCafDetails() != null && req.getCafDetails().getProofs().isEmpty() == false)
 						{
