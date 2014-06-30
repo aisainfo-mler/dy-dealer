@@ -178,7 +178,7 @@ public class DealerDataService {
 				
 				ProductSpecMapping productSpecMapping = mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
 				if(productSpecMapping == null || productSpecMapping.getProductSpecs()==null || productSpecMapping.getProductSpecs().isEmpty())
-					continue;
+					break;
 				
 				List<ProductSpecMapping.ProductSpec> productSpecList = productSpecMapping.getProductSpecs();
 				
@@ -206,7 +206,7 @@ public class DealerDataService {
 				
 				GeographicLocationMapping geographicLocationMapping = mapper.readValue(p.getGeographicLocationList(), GeographicLocationMapping.class);
 				if(geographicLocationMapping.getGeographicLocations() == null || geographicLocationMapping.getGeographicLocations().isEmpty())
-					continue;
+					break;
 				
 				List<GeographicLocationMapping.GeographicLocation> geographicLocationList = geographicLocationMapping.getGeographicLocations();
 				
@@ -216,6 +216,32 @@ public class DealerDataService {
 					product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add(ggh.getGeographicLocationMasterId());
 				}
 			}
+			
+			/**
+			 * 如果product是plan类型，则将planSpec的serviceType加入过滤条件
+			 */
+			if(StringUtils.isBlank(p.getPlanSpecList()) == false)
+			{
+				if(product_filter_map.get(productId) == null)
+					product_filter_map.put(productId, new HashMap<String,Set<String>>(0));
+				
+				PlanSpecMapping planSpecMapping = mapper.readValue(p.getPlanSpecList(),PlanSpecMapping.class);
+				if(planSpecMapping == null || planSpecMapping.getPlanSpecs()==null || planSpecMapping.getPlanSpecs().isEmpty())
+					continue;
+				
+				List<PlanSpecMapping.PlanSpec> planSpecList = planSpecMapping.getPlanSpecs();
+				
+				if(planSpecList != null && planSpecList.isEmpty() == false)
+				{
+					product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_SERVICE_TYPE, new HashSet<String>(0));
+					for(PlanSpecMapping.PlanSpec ps : planSpecList)
+					{
+						product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_SERVICE_TYPE).add(ps.getServiceType());
+					}
+				}
+			}
+			
+			
 			
 //			/**
 //			 * 如果没有地理信息的筛选条件，即在product级别对地址信息做筛选，则对其下级进行筛选
