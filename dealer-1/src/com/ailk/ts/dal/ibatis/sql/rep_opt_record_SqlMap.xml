@@ -58,7 +58,7 @@
     (select if(INPUT_REP_CODE is null
     ,(select rep_name from REPOSITORY where rep_code=OUTPUT_REP_CODE)
     ,(select rep_name from REPOSITORY where rep_code=INPUT_REP_CODE))) repName,
-    (select sku_name from product_sku p where r.skuid=p.skuid) skuName
+    (select good_name from hw_goods_info p where r.skuid=p.GOOD_ID) skuName
   </sql>
   <select id="selectByExample" parameterClass="com.ailk.ts.dal.ibatis.model.RepOptRecordExample" resultMap="BaseResultMap">
     <!--

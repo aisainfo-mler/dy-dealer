@@ -21,9 +21,9 @@
       </isEqual>
     </isParameterPresent>
     <include refid="selfDefine_rep.Base_Column_List" />
-    from rep r,product_sku s,repository t
+    from rep r,hw_goods_info s,repository t
     WHERE 
-	r.SKUID=s.SKUID
+	r.SKUID=s.GOOD_ID
 	AND t.REP_CODE=r.REPOSITORY_CODE
 <!--    <isNotEmpty prepend="and" property="typeId">-->
 <!--    	INSTR(p.PRODUCT_TYPE_IDS, CONCAT(',' ,#typeId#, ',')) > 0-->

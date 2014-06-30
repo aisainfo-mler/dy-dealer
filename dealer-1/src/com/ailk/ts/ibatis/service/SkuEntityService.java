@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.mapp.base.util.DateUtils;
+import com.ai.mapp.sys.entity.GoodsInfo;
+import com.ai.mapp.sys.service.GoodsInfoService;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
@@ -68,9 +70,10 @@ public class SkuEntityService{
 	@Autowired
 	private RepSellDetailService repSellDetailService;
 
+//	@Autowired
+//	private ProductSkuService productSkuService;
 	@Autowired
-	private ProductSkuService productSkuService;
-
+	private GoodsInfoService goodsInfoService;
 
 //	@Autowired
 //	private SkuDAO skuDAO;
@@ -100,9 +103,9 @@ public class SkuEntityService{
 		} else {
 			SkuEntityWrapper wrapper = new SkuEntityWrapper();
 			wrapper.setEntity(skuEntity);
-			ProductSku sku = this.productSkuService.getSkuById(skuEntity
-					.getSkuid());
-			wrapper.setSkuName(sku.getSkuName());
+			GoodsInfo sku = this.goodsInfoService.loadGoodsInfo(skuEntity
+					.getSkuid().longValue());
+			wrapper.setSkuName(sku.getName());
 			return wrapper;
 		}
 	}
@@ -245,8 +248,8 @@ public class SkuEntityService{
 		SkuEntityExample example = new SkuEntityExample();
 		example.createCriteria().andEntityIdEqualTo(entityId);
 		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
-			ProductSku product = productSkuService.getSkuById(getSkuEntityById(
-					entityId).getSkuid());
+			GoodsInfo product = goodsInfoService.loadGoodsInfo(getSkuEntityById(
+					entityId).getSkuid().longValue());
 			Integer months = product.getServiceMonth();// 获得维保时间 单位月
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			entity_new.setModifyTime(now);
@@ -312,7 +315,7 @@ public class SkuEntityService{
 		} else {
 			dto = new SkuEntityWrapper();
 			dto.setEntity(list.get(0));
-			productSkuService.getSkuById(list.get(0).getSkuid());
+			goodsInfoService.loadGoodsInfo(list.get(0).getSkuid().longValue());
 		}
 		return dto;
 	}
@@ -333,9 +336,9 @@ public class SkuEntityService{
 		} else {
 			dto = new SkuEntityWrapper();
 			dto.setEntity(list.get(0));
-			ProductSku sku = productSkuService.getSkuById(list.get(0)
-					.getSkuid());
-			dto.setSkuInfo(sku);
+			GoodsInfo sku = goodsInfoService.loadGoodsInfo(list.get(0)
+					.getSkuid().longValue());
+			dto.setGoodInfo(sku);
 			dto.setRepSellDetail(repSellDetailService
 					.findLastByRepSellDetailEntityId(list.get(0).getEntityId()));
 //			if (sku != null && StringUtils.isNotEmpty(sku.getSkuPropValues())) {
