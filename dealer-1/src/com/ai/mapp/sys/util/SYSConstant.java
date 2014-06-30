@@ -14,7 +14,7 @@ import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.FileManageCondition;
 
 
-public class SYSConstant {
+public class SYSConstant { 
 	/** 默认的MAPP系统应用key **/
 	public static final String MAPP_APPLICATION_PRODUCTKEY = "MAPP";
 	/** 超级管理员角色 **/
