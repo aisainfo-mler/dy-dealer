@@ -9,6 +9,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.ai.mapp.sys.util.PO2VOUtils;
 import com.ailk.yd.mapp.model.YDBody;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Request.OrderDetail;
@@ -30,6 +31,7 @@ public class YD0009Request implements TibcoRequest {
 	private String refillId;
 	private PaymentDetails paymentDetails;
 	private String transactionDateTime;
+	private String channel;
 
 	public static class OrderDetail {
 		private String amount;
@@ -299,26 +301,47 @@ public class YD0009Request implements TibcoRequest {
 		OrderDetail od = new OrderDetail();
 		this.addOrderDetail(od);
 		od.setAmount(amount);
-		od.setCircleId(circleId);
+//		od.setCircleId(circleId);
 		Product p = new Product();
 		od.addProduct(p);
 		p.setServiceId(serviceId);
 		if(isTopup==true){
 			Service s = new Service("topup");
 			p.addService(s);
-			od.setProductId("");
+			od.setProductId("FTP100005");
 		}else{
 			Service s = new Service("recharge");
 			p.addService(s);
-			od.setProductId("");
+			od.setProductId(productId);
 		}
 		if(accountLevel==true){
 			Characteristic c = new Characteristic();
 			c.setName("TOPUPSHARED_IND");
 			c.setValue("ALL");
 			od.addCharacteristic(c);
+		}else{
+			Characteristic c = new Characteristic();
+			od.addCharacteristic(c);
 		}
+		this.setTransactionDateTime(TibcoUtil.getCurTime());
 		
+		try {
+			PO2VOUtils.replaceNull(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		getPaymentDetails().setTotalAmount(amount);
+		getPaymentDetails().setModeOfPayment("01");//01表示现金支付
+		setChannel("20");//"Channel Indicator:20 - Self Care"
+		
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 
 }
