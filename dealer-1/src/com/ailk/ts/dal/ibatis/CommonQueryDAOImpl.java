@@ -47,6 +47,13 @@ public class CommonQueryDAOImpl extends SqlMapClientDaoSupport implements Common
 		return null;
 	}
 
+
+	@Override
+	public void update(Object obj, String sqlKey) {
+		// TODO Auto-generated method stub
+		getSqlMapClientTemplate().update(sqlKey, obj);
+	}
+
 	
 
 

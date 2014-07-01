@@ -17,4 +17,6 @@ public interface CommonQueryDAO {
   
 	public Object findModel(Object object, String sqlKey);
 	public Object getRealName(Object obj, String sqlKey);
+	
+	public void update(Object obj, String sqlKey);
 }

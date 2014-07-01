@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,6 +224,17 @@ public class CommonQueryService {
 			return (SkuEntity) objects.get(0);
 		}
 		
+	}
+	
+	public void salerSkuEntity(String targetStatus,List<Long> entityIds) {
+		if(entityIds != null && !entityIds.isEmpty()){
+			Map<String,Object> cond = new HashMap<String,Object>();
+			cond.put("entityIds", entityIds);
+			if(StringUtils.isNotEmpty(targetStatus)){
+				cond.put("targetStatus", targetStatus);
+			}
+			this.commonQueryDAO.update(cond, "sku.saleSkuEntity");
+		}
 	}
 
 }

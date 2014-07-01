@@ -233,9 +233,21 @@ public class SkuEntityService{
 		return list;
 	}
 
-	
+	/**
+	 * <p>描述: 商品状态变更 库存变更 </p> 
+	 * @param targetStatus
+	 * @param entityId
+	 * @param orderId
+	 * @param optId
+	 * @param optType
+	 * @param targetRepcode
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-1 下午07:27:45
+	 */
 	public void updateSkuEntityStatus(String targetStatus, Long entityId,
-			Long orderId, Long optId, String optType)
+			Long orderId, Long optId, String optType,Long targetRepcode)
 			throws BusinessException, SystemException {
 		SkuEntity entity_new = new SkuEntity();
 		entity_new.setStatus(targetStatus);
@@ -252,6 +264,10 @@ public class SkuEntityService{
 			if (months != null) {
 				entity_new.setServiceEnd(DateUtils.addMonth(now, months));
 			}
+		}
+		//如果仓库有变，则变
+		if(targetRepcode != null){
+			entity_new.setTargetRepcode(targetRepcode);
 		}
 		skuEntityDAO.updateByExampleSelective(entity_new, example);
 		if (!SYSConstant.SELL_DETAIL_OPTTYPE_USER_2_CHANNEL
@@ -270,31 +286,57 @@ public class SkuEntityService{
 	
 	public void updateSkuEntityStatus(String targetStatus,
 			List<Long> entityIds, Long orderId, Long optId,
-			String optType, String orderDomain) throws BusinessException,
+			String optType, Long targetRepcode) throws BusinessException,
 			SystemException {
 
 		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
-		//----------后改
-			//orderItemDAO.salerSkuEntity(SYSConstant.SKU_STATUS_USER, entityIds);
+			commonQueryService.salerSkuEntity(SYSConstant.SKU_STATUS_USER, entityIds);
 		} else {
 			SkuEntity entity_new = new SkuEntity();
 			entity_new.setStatus(targetStatus);
 			entity_new.setModifyTime(new Timestamp(System.currentTimeMillis()));
 
+			//如果仓库有变，则变
+			if(targetRepcode != null){
+				entity_new.setTargetRepcode(targetRepcode);
+				//要开始改变库存
+				targetRep(entityIds, targetRepcode);
+			}
+			
 			SkuEntityExample example = new SkuEntityExample();
 			example.createCriteria().andEntityIdIn(entityIds);
 			skuEntityDAO.updateByExampleSelective(entity_new, example);
 		}
 
 		// 创建销售记录
-//		if (SysConstant.ORDER_DOMAIN_FLOW.equals(orderDomain)) {
-			for (Long entityId : entityIds) {
-				repSellDetailService.createSecondSellDetail(orderId, entityId,
-						optId, optType);
-			}
-//		}
+		for (Long entityId : entityIds) {
+			repSellDetailService.createSecondSellDetail(orderId, entityId,
+					optId, optType);
+		}
 
 	}
+	
+	
+	public void updateSkuEntityStatusByImeis(String targetStatus,
+			List<String> imeis, Long orderId, Long optId,
+			String optType, Long targetRepcode) throws BusinessException,
+			SystemException {
+		if(imeis != null || imeis.size() != 0){
+			SkuEntityExample example = new SkuEntityExample();
+			example.createCriteria().andImeiIn(imeis);
+			List<SkuEntity> entities = skuEntityDAO.selectByExample(example);
+			if(entities != null && entities.size() != 0){
+				List<Long> itemIds = new ArrayList<Long>();
+				for(SkuEntity entity:entities){
+					itemIds.add(entity.getEntityId());
+				}
+				updateSkuEntityStatus(targetStatus, itemIds, orderId, optId, optType, targetRepcode);
+			}
+			
+		}
+		
+	}
+	
 	// TODO 合约机不现实2G号码 需进一步确认*
 //	mSelectedBusiType = CommConstant.PACKAGE_3G;
 	public SkuEntityWrapper getUniqueEntityFullInfo(SkuEntity entity)
@@ -348,11 +390,11 @@ public class SkuEntityService{
 
 	
 	public void updateSkuEntityStatus(String targetStatus, String imeiSerno,
-			Long orderId, Long optId, String optType)
+			Long orderId, Long optId, String optType,Long targetRepCode)
 			throws BusinessException, SystemException {
 		SkuEntity entity = commonQueryService.selectSkuEntity(imeiSerno, imeiSerno);
 		updateSkuEntityStatus(targetStatus, entity.getEntityId(), orderId,
-				optId, optType);
+				optId,optType,targetRepCode);
 
 	}
 

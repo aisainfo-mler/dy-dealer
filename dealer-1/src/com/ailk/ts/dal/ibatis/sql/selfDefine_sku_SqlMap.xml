@@ -7,6 +7,21 @@
   		where  imei =  #imei:VARCHAR# or serial= #serial:VARCHAR#
   </select>
   
- 
+ <update id="saleSkuEntity" parameterClass="Map">
+  	UPDATE SKU_ENTITY e SET e.SERVICE_START = now() ,
+  		e.SERVICE_END = date_add(now(),interval (SELECT s.SERVICE_MONTH FROM hw_goods_info s where s.GOOD_ID = e.SKUID) month),
+  	 	e.MODIFY_TIME = now()
+  	  	<isNotNull prepend="," property="targetStatus">
+        e.STATUS = #targetStatus:VARCHAR#
+      	</isNotNull>
+	  	<dynamic prepend="where">
+			<isNotNull property="entityIds" prepend="and">
+	  			 e.ENTITY_ID in 
+				 <iterate  open="(" close=")" conjunction="," property="entityIds" >  
+		          #entityIds[]#  
+		         </iterate> 
+			</isNotNull>
+		</dynamic> 
+  </update>
  
 </sqlMap>

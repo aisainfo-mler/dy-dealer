@@ -34,6 +34,13 @@ public class RepositoryService{
 		return this.repDao.selectByExample(re);
 	}
 	
+	public List<Repository> getRepsByUserId(Long userId){
+		RepositoryExample re = new RepositoryExample();
+		re.createCriteria().andUserIdEqualTo(userId);
+		re.setOrderByClause("CREATE_TIME");
+		return this.repDao.selectByExample(re);
+	}
+	
 	public RepositoryDAO getRepDao() {
 		return repDao;
 	}
