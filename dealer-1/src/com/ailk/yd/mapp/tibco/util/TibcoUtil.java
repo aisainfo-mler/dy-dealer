@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.sf.json.JSONObject;
 
 public class TibcoUtil {
@@ -49,6 +51,12 @@ public class TibcoUtil {
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		return sdf.format(d);
+	}
+	
+	public static void checkNotNull(String obj,String name) throws Exception{
+		if(StringUtils.isBlank(obj)){
+			throw new Exception(name + " can't be null!");
+		}
 	}
 	
 	public static void main(String[] args) {

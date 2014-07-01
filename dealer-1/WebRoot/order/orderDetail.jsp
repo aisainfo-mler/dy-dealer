@@ -124,6 +124,7 @@
 							</s:if>
 						</td>
 						<td>
+<%--							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "") && (orderMain.placeTibco == 1 || orderMain.placeTibco == "1")}'>--%>
 							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>
 								<a href="javascript:void(0);" onclick="order_itemList('${orderMain.expressNumber}',${orderDetail.id},${orderDetail.good.id},<s:property value="%{#orderDetail.counts}"/>,${orderMain.creator.userId})"><s:text name="order.detail.process" /></a>
 							</s:if>

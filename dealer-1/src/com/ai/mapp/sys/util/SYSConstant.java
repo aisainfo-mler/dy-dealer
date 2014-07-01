@@ -452,11 +452,11 @@ public class SYSConstant {
 	/**
 	 * 充值
 	 */
-	public static final String AGENT_ORDER_TYPE_RECHARGE="2";
+	public static final String AGENT_ORDER_TYPE_TOPUP="2";
 	/**
 	 * topup
 	 */
-	public static final String AGENT_ORDER_TYPE_TOPUP="4";
+	public static final String AGENT_ORDER_TYPE_ADDON="4";
 	/**
 	 * 补卡
 	 */
@@ -468,7 +468,7 @@ public class SYSConstant {
 	/**
 	 * 叠加包
 	 */
-	public static final String AGENT_ORDER_TYPE_BOLT_ON = "5";
+	public static final String AGENT_ORDER_TYPE_RECHARGE= "5";
 	
 	
 	/**
@@ -700,17 +700,17 @@ public class SYSConstant {
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_NEW);
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_RECHARGE);
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_SIMCARD);
-		agentOrderTypesL.add(AGENT_ORDER_TYPE_BOLT_ON);
+		agentOrderTypesL.add(AGENT_ORDER_TYPE_ADDON);
 		
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_NEW + LANGUAGE_ENGLISH, "New User");
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + LANGUAGE_ENGLISH, "Top Up");//充值
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_SIMCARD + LANGUAGE_ENGLISH, "SIM Care");
-		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON + LANGUAGE_ENGLISH, "Add-On");//叠加包
+		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_ADDON + LANGUAGE_ENGLISH, "Add-On");//叠加包
 		
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_NEW + LANGUAGE_CHINA, "开户");
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + LANGUAGE_CHINA, "充值");//充值
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_SIMCARD + LANGUAGE_CHINA, "补换卡");
-		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON + LANGUAGE_CHINA, "叠加包");//叠加包
+		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_ADDON + LANGUAGE_CHINA, "叠加包");//叠加包
 		
 		/** 代理商订单状态 **/
 //		* Dealer 销售订单 状态 Sales Order Status
@@ -742,7 +742,7 @@ public class SYSConstant {
 		discountTypes.put(SYSConstant.AGENT_ORDER_TYPE_SIMCARD, Float.valueOf("5"));
 		discountTypes.put(SYSConstant.AGENT_ORDER_TYPE_RECHARGE, Float.valueOf("2"));
 		discountTypes.put(SYSConstant.AGENT_ORDER_TYPE_NEW, Float.valueOf("10"));
-		discountTypes.put(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON, Float.valueOf("10"));
+		discountTypes.put(SYSConstant.AGENT_ORDER_TYPE_ADDON, Float.valueOf("10"));
 		
 		
 		/**支付状态**/

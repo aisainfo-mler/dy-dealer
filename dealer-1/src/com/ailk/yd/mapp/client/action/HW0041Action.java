@@ -17,6 +17,7 @@ import com.ailk.yd.mapp.client.model.HW0041Response;
 import com.ailk.yd.mapp.tibco.action.YD0009Action;
 import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Request;
 import com.ailk.yd.mapp.tibco.model.YD0009.YD0009Response;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 /**
  * 用户充值接口
@@ -47,18 +48,24 @@ public class HW0041Action extends
 		if(StringUtils.isBlank(circleId)){
 			circleId = "TC";
 		}
-
+		TibcoUtil.checkNotNull(request.getAmount(), "admout");
+		TibcoUtil.checkNotNull(request.getRrfId(), "refNum");
+		TibcoUtil.checkNotNull(request.getSeriveId(), "serviceId");
 		YD0009Request yd9 = new YD0009Request(request.getSeriveId(),
 				request.getAmount(), request.getRrfId(), circleId,
 				false, true, request.getProductId());
 
 		YD0009Response post2Tibco = this.yd0009.post2Tibco(yd9, null);
 		
-		
+		String rfid = post2Tibco.getRefillId();
+		if(StringUtils.isBlank(rfid)){
+			throw new Exception("refNum from TIBCO is null");
+		}
 //		order.setPin(request.getRrfId());
 //		order.setSn(request.getRrfId());
 //		agentOrderService.saveAgentOrder(order);
 
 	}
+	
 
 }

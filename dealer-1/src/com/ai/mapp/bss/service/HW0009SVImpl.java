@@ -82,14 +82,15 @@ public class HW0009SVImpl extends ISVTemplate {
 			
 			AgentOrder order = new AgentOrder();
 			
-			order.setBankSerial(req.getVoucherNo());
+//			order.setBankSerial(req.getVoucherNo());
 			order.setCreator(new User(userCode));
 			order.setPayMode(req.getPayMethodId());
 			order.setPackageFee(Long.valueOf(req.getPayedAmount()));
 			order.setSvn(req.getMdn());
 			order.setOptType(req.getRechargeTypeId());
-			
-			order = agentOrderService.createRechargeOrderByAgent(order);
+			order.setTibcoOrderNumber(req.getVoucherNo());
+			order.setSaleFee(Long.parseLong(req.getPayedAmount()));
+			order = agentOrderService.createTopUpOrder(order);
 			
 			param.setResult(order);
 		}

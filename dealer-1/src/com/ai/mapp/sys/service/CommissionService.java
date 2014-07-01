@@ -142,7 +142,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		 * 2.预付开户为立即付款做扣
 		 * 3.其他为未付款做扣（后付）
 		 */
-		if(SYSConstant.AGENT_ORDER_TYPE_RECHARGE.equals(order.getOrderType()) || SYSConstant.AGENT_ORDER_TYPE_SIMCARD.equals(order.getOrderType()))
+		if(SYSConstant.AGENT_ORDER_TYPE_TOPUP.equals(order.getOrderType()) || SYSConstant.AGENT_ORDER_TYPE_SIMCARD.equals(order.getOrderType()))
 		{
 			return true;
 		}
@@ -255,7 +255,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		{
 			return SYSConstant.COMMISSION_CHARGE_TYPE_NEW;
 		}
-		else if(SYSConstant.AGENT_ORDER_TYPE_RECHARGE.equals(orderType))
+		else if(SYSConstant.AGENT_ORDER_TYPE_TOPUP.equals(orderType))
 		{
 			return SYSConstant.COMMISSION_CHARGE_TYPE_TOP_UP;
 		}
@@ -263,7 +263,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		{
 			return SYSConstant.COMMISSION_CHARGE_TYPE_SIM;
 		}
-		else if(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON.equals(orderType))
+		else if(SYSConstant.AGENT_ORDER_TYPE_RECHARGE.equals(orderType))
 		{
 			return SYSConstant.COMMISSION_CHARGE_TYPE_BOLT_ON;
 		}
@@ -281,7 +281,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_TOP_UP.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + language);
+			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_TOPUP + language);
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_SIM.equals(chargeType))
 		{
@@ -289,7 +289,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_BOLT_ON.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_BOLT_ON + language);
+			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + language);
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_COMMON.equals(chargeType))
 		{

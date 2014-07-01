@@ -1,6 +1,7 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
+import com.ai.mapp.sys.util.PO2VOUtils;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
@@ -47,6 +49,7 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 	@Autowired
 	private AgentOrderService agentOrderService;
 	
+	@Autowired
 	private YD0002Action yd0002;
 	
 	@Override
@@ -63,21 +66,27 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		if(caf.getOrder() == null)
 			throw new Exception("no order information");
 		
-		if(StringUtils.isBlank(caf.getOrder().getOrn()) && StringUtils.isBlank(caf.getOrder().getMdn()))
+		if(StringUtils.isBlank(caf.getOrder().getOrn()) == false && StringUtils.isBlank(caf.getOrder().getMdn()) == false)
 		{
-			YD0002Request yd0002_req = new YD0002Request();
-			yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel());
-			yd0002_req.setChannel(caf.getOrder().getChannel());
-			yd0002_req.setOrderNumber(caf.getOrder().getOrn());
-			yd0002_req.setSvcNum(caf.getOrder().getMdn());
+//			YD0002Request yd0002_req = new YD0002Request();
+//			yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel());
+//			yd0002_req.setChannel(caf.getOrder().getChannel());
+//			yd0002_req.setOrderNumber(caf.getOrder().getOrn());
 			
-			YD0002Response yd0002_rsp = yd0002.post2Tibco(yd0002_req, null);
+			YD0002Request yd0002_req = new YD0002Request();
+			yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel(caf.getOrder().getChannel()));
+			yd0002_req.setNumberList(new ArrayList<YD0002Request.SvcNumber>(0));
+			yd0002_req.getNumberList().add(new YD0002Request.SvcNumber("TC", caf.getOrder().getMdn(), "MSISDN") );
+			yd0002_req.setServiceProviderEmployee(new YD0002Request.Order(caf.getOrder().getOrn()));
+			
+			YD0002Response yd0002_rsp = yd0002.post2Tibco(PO2VOUtils.replaceNull(yd0002_req), null);
 			
 			String number_orn = yd0002_rsp.getServiceProviderEmployee();
 			String msg = yd0002_rsp.getMessage();
 			String state = yd0002_rsp.getResponse()==null?null:yd0002_rsp.getResponse().getInteractionStatus();
 			
-			if(TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state) == false || caf.getOrder().getOrn().equals(number_orn) == false)
+			if(TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state) 
+					|| (StringUtils.isEmpty(number_orn) == false && caf.getOrder().getOrn().equals(number_orn) == false))
 				throw new Exception("Number has blocked by order: " + number_orn+","+msg);
 		}
 		
@@ -180,5 +189,21 @@ public class HW0010Action extends AbstractYDBaseActionHandler<HW0010Request, HW0
 		return resourceFee;
 	}
 	
+	
+	public final static void main(String[] args) throws Exception
+	{
+		
+//		 "value": "334000268",
+//	      "name": "TC",
+//	      "type": "MSISDN"
+//		YD0002Request yd0002_req = new YD0002Request();
+//		yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel("channel"))
+//		yd0002_req.setNumberList(new ArrayList<YD0002Request.SvcNumber>(0));
+//		yd0002_req.getNumberList().add(new YD0002Request.SvcNumber(name, value, type) );
+//		yd0002_req.setSvcNum("mdn");
+//		
+//		System.out.println(PO2VOUtils.replaceNull(yd0002_req));
+		
+	}
 
 }

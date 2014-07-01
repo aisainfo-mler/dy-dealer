@@ -3,11 +3,16 @@ package com.ailk.yd.mapp.client.action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.sys.entity.AgentOrder;
+import com.ai.mapp.sys.entity.Product;
+import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.service.VerifySmsService;
+import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
+import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0025Request;
 import com.ailk.yd.mapp.client.model.HW0025Response;
@@ -60,23 +65,30 @@ public class HW0025Action extends
 //		
 //
 //		//保存订单
-//		HW0025Request req = request;
-//		IUserinfo ui = this.getUserinfo();
-//		User creator = userService.loadUserByUserCode(ui.getUserName());
+		HW0025Request req = request;
+		IUserinfo ui = this.getUserinfo();
+		User creator = userService.loadUserByUserCode(ui.getUserName());
 //
-//		AgentOrder order = new AgentOrder();
-//		order.setBankSerial(req.getVoucherNo());
-//		order.setCreator(creator);
-//		order.setPayMode(req.getPayMethodId());
-//		order.setPackageFee(req.getTotalFee() != null ? req.getTotalFee()
-//				.longValue() : null);
-//		order.setSvn(req.getMdn());
-//		order.setProduct(req.getProductId()==null ? null
-//				: new Product(Long.valueOf(req.getProductId())));
-//		order.setSaleFee(tf.longValue());
+		AgentOrder order = new AgentOrder();
+		order.setTibcoOrderNumber(request.getRefNo());
+		order.setCreator(creator);
+		order.setPayMode(req.getPayMethodId());
+		Long packageFee = 0l;
+		try {
+			packageFee = req.getTotalFee() != null ? Long.parseLong(req.getTotalFee()) : null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		order.setPackageFee(packageFee);
+		order.setSvn(req.getMdn());
+		order.setProduct(req.getProductId()==null ? null
+				: new Product(Long.valueOf(req.getProductId())));
+		order.setSaleFee(packageFee);
+		order.setOptType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 //		order.setFeeDetail(feeDtl);
-//		
-//		this.agentOrderService.createAddOnOrder(order);
+		
+		this.agentOrderService.createRechargeOrderByAgent(order);
+		
 //		
 //		if(StringUtils.isNotBlank(order.getFeeDetail())){
 //			response.setFeeInfos(JsonUtil.fromJsonStringReturnList(order.getFeeDetail(), HW0025Response.FeeInfo.class));
@@ -121,6 +133,7 @@ public class HW0025Action extends
 		
 		//更新dealer订单状态
 		
+		response.setOrderCode(order.getOrderCode());
 
 	}
 }

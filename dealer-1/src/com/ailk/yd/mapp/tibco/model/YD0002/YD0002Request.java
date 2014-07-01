@@ -22,27 +22,17 @@ public class YD0002Request implements TibcoRequest{
 	
 	private List<SvcNumber> numberList;
 	
-	
-	public void setOrderNumber(String orn){
-		serviceProviderEmployee = new Order();
-		serviceProviderEmployee.setEmployeeId(orn);
-	}
-	
-	public void setChannel(String chnl){
-		businessChannelInteraction=new Channel();
-		businessChannelInteraction.setName(chnl);
-	}
-	
-	public void setSvcNum(String num){
-		numberList = new ArrayList<SvcNumber>();
-		SvcNumber ele = new SvcNumber();
-		ele.setValue(num);
-		ele.setType("MSISDN");
-		numberList.add(ele);
-	}
-	
 	public static class Order  implements TibcoRequest {
 		
+		public Order() {
+			super();
+		}
+		
+		public Order(String employeeId) {
+			super();
+			this.employeeId = employeeId;
+		}
+
 		private String employeeId;
 
 		public String getEmployeeId() {
@@ -55,7 +45,17 @@ public class YD0002Request implements TibcoRequest{
 		
 	}
 	
-	public static class Channel implements TibcoRequest {
+	public static class Channel implements TibcoRequest 
+	{
+		public Channel() {
+			super();
+		}
+		
+		public Channel(String name) {
+			super();
+			this.name = name;
+		}
+
 		private String name;
 
 		public String getName() {
@@ -69,9 +69,22 @@ public class YD0002Request implements TibcoRequest{
 	}
 	
 	public static class SvcNumber implements TibcoRequest{
+		
 		private String name;
 		private String value;
 		private String type;
+		
+		public SvcNumber() {
+			super();
+		}
+		
+		public SvcNumber(String name, String value, String type) {
+			super();
+			this.name = name;
+			this.value = value;
+			this.type = type;
+		}
+		
 		public String getName() {
 			return name;
 		}
@@ -115,8 +128,5 @@ public class YD0002Request implements TibcoRequest{
 	public void setNumberList(List<SvcNumber> numberList) {
 		this.numberList = numberList;
 	}
-	
-	
-	
 	
 }
