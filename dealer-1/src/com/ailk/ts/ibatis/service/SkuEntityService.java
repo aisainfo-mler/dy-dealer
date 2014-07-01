@@ -38,9 +38,11 @@ import com.ailk.ts.dal.ibatis.model.RepExample;
 import com.ailk.ts.dal.ibatis.model.RepOptRecord;
 import com.ailk.ts.dal.ibatis.model.RepSellDetail;
 import com.ailk.ts.dal.ibatis.model.RepStockDetail;
+import com.ailk.ts.dal.ibatis.model.Repository;
 import com.ailk.ts.dal.ibatis.model.SkuEntity;
 import com.ailk.ts.dal.ibatis.model.SkuEntityExample;
 import com.ailk.ts.dal.ibatis.model.RepExample.Criteria;
+import com.ailk.web.BaseController.JsonObject;
 
 /**
  * @author Zhengwj
@@ -93,6 +95,9 @@ public class SkuEntityService{
 	
 	@Autowired
 	private CommonQueryService commonQueryService;
+	
+	@Autowired
+	private RepositoryService repositoryService;
 	
 	
 	public SkuEntityWrapper getSkuByImeiOrSerial(String identfier)
@@ -234,7 +239,7 @@ public class SkuEntityService{
 	}
 
 	/**
-	 * <p>描述: 商品状态变更 库存变更 </p> 
+	 * <p>描述: 商品状态变更 库存变更  ,如销售终端 </p> 
 	 * @param targetStatus
 	 * @param entityId
 	 * @param orderId
@@ -398,7 +403,16 @@ public class SkuEntityService{
 
 	}
 
-	
+	/**
+	 * <p>描述:重庆代码 预留 </p> 
+	 * @param entites
+	 * @param optId
+	 * @param orderId
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-1 下午08:24:15
+	 */
 	public void outSkuEntites(List<SkuEntity> entites, Long optId,
 			Long orderId) throws BusinessException, SystemException {
 		Map skuidGroup = new HashMap();
@@ -455,7 +469,7 @@ public class SkuEntityService{
 			SkuEntity skuEntity = (SkuEntity) it.next();
 			
 			SkuEntity seFromDb = checkIfImeiExist(skuEntity,
-					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
+					SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL);
 			Long rc = seFromDb.getRepositoryCode();
 			Long si = seFromDb.getSkuid();
 			
@@ -487,7 +501,7 @@ public class SkuEntityService{
 			String skuidd = key.split("~")[1];
 			int cnt = ((Integer) repSkuCountMap.get(key)).intValue();
 			Long sn = recordRepOpt(Long.parseLong(skuidd), Long.parseLong(repCode), cnt,
-					optId, SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);// 返回的主键
+					optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL);// 返回的主键
 			repSkuIdMap.put(key, sn);
 		}
 
@@ -509,7 +523,7 @@ public class SkuEntityService{
 			SkuEntity skuEntity = (SkuEntity) it.next();
 			// 更新商品实体表
 			SkuEntity seFromDb = checkIfImeiExist(skuEntity,
-					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
+					SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL);
 			Long repCode = seFromDb.getRepositoryCode();
 			Long entityId = seFromDb.getEntityId();
 			Long skuid = seFromDb.getSkuid();
@@ -522,7 +536,7 @@ public class SkuEntityService{
 
 			// 更新库存量
 			Long repOptId = freshRep(skuid, repCode, 1,
-					SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
+					SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL);
 			SkuEntity se = new SkuEntity();
 			se.setEntityId(entityId);
 			se.setStatus(SYSConstant.SKU_STATUS_CHANNEL);
@@ -548,7 +562,7 @@ public class SkuEntityService{
 		rsdd.setEntityId(entityId);
 		rsdd.setOpterId(optId);
 		rsdd.setOptTime(new Timestamp(System.currentTimeMillis()));
-		rsdd.setOptType(SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL);
+		rsdd.setOptType(SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL);
 		rsdd.setOrderId(orderId);
 		rsdd.setRepOptId(serialNo);
 		rsdd.setOrderDomain("01");
@@ -775,5 +789,150 @@ public class SkuEntityService{
 		
 	}
 
+	/**
+	 * <p>描述:确认产品是否在代理商库</p> 
+	 * @return  
+	 * @author        Zhengwj
+	 * @Date          2014-7-1 下午08:26:12
+	 */
+	public Map<String,Object> checkAgentImeiExist(String imei,Long agentId)throws BusinessException, SystemException {
+		SkuEntityWrapper sku = getSkuByImeiOrSerial(imei);
+		Map<String,Object> result = new HashMap<String, Object>();
+		if(sku == null){
+			result.put("ifExist", false);
+			result.put("msg", "无产品信息");
+		}else{
+			List<Repository> reps = repositoryService.getRepsByUserId(agentId);
+			if(reps == null || reps.size() == 0){
+				result.put("ifExist", false);
+				result.put("msg", "无代理商仓库信息");
+			}else{
+				for(Repository rep:reps){
+					if(rep.getRepCode() == sku.getEntity().getTargetRepcode()){
+						result.put("ifExist", true);
+						result.put("msg", "");
+						break;
+					}
+				}
+				if(result.containsKey("ifExist") == false){
+					result.put("ifExist", false);
+					result.put("msg", "该产品还存在于TIBCO平台库");//默认在平台库,暂未有二级，可后改
+				}
+			}
+			
+		}
+		return result;
+		
+	}
+
+
+	public IViewCacheService getCacheService() {
+		return cacheService;
+	}
+
+
+	public void setCacheService(IViewCacheService cacheService) {
+		this.cacheService = cacheService;
+	}
+
+
+	public SkuEntityDAO getSkuEntityDAO() {
+		return skuEntityDAO;
+	}
+
+
+	public void setSkuEntityDAO(SkuEntityDAO skuEntityDAO) {
+		this.skuEntityDAO = skuEntityDAO;
+	}
+
+
+	public RepDAO getRepDao() {
+		return repDao;
+	}
+
+
+	public void setRepDao(RepDAO repDao) {
+		this.repDao = repDao;
+	}
+
+
+	public RepStockDetailDAO getRepStockDetailDao() {
+		return repStockDetailDao;
+	}
+
+
+	public void setRepStockDetailDao(RepStockDetailDAO repStockDetailDao) {
+		this.repStockDetailDao = repStockDetailDao;
+	}
+
+
+	public RepOptRecordDAO getRepOptRecodDao() {
+		return repOptRecodDao;
+	}
+
+
+	public void setRepOptRecodDao(RepOptRecordDAO repOptRecodDao) {
+		this.repOptRecodDao = repOptRecodDao;
+	}
+
+
+	public RepSellDetailService getRepSellDetailService() {
+		return repSellDetailService;
+	}
+
+
+	public void setRepSellDetailService(RepSellDetailService repSellDetailService) {
+		this.repSellDetailService = repSellDetailService;
+	}
+
+
+	public GoodsInfoService getGoodsInfoService() {
+		return goodsInfoService;
+	}
+
+
+	public void setGoodsInfoService(GoodsInfoService goodsInfoService) {
+		this.goodsInfoService = goodsInfoService;
+	}
+
+
+	public RepSellDetailDAO getRepSellDetailDAO() {
+		return repSellDetailDAO;
+	}
+
+
+	public void setRepSellDetailDAO(RepSellDetailDAO repSellDetailDAO) {
+		this.repSellDetailDAO = repSellDetailDAO;
+	}
+
+
+	public RepService getRepService() {
+		return repService;
+	}
+
+
+	public void setRepService(RepService repService) {
+		this.repService = repService;
+	}
+
+
+	public CommonQueryService getCommonQueryService() {
+		return commonQueryService;
+	}
+
+
+	public void setCommonQueryService(CommonQueryService commonQueryService) {
+		this.commonQueryService = commonQueryService;
+	}
+
+
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
 
 }

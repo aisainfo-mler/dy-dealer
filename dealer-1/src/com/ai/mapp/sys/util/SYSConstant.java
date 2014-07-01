@@ -221,11 +221,11 @@ public class SYSConstant {
 	/**
 	 * 商品操作类型： 03. 销售给普通用户;
 	 */
-	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_USER = "03";
+	public static final String SELL_DETAIL_OPTTYPE_TIBCO_2_USER = "03";
 	/**
 	 * 商品操作类型：04. 销售给代理商;
 	 */
-	public static final String SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL = "04";
+	public static final String SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL = "04";
 	/**
 	 * 商品操作类型：05.普通用户退货入平台库;
 	 */
@@ -233,7 +233,7 @@ public class SYSConstant {
 	/**
 	 * 商品操作类型：06 代理商退货入平台库 ;
 	 */
-	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_OSOONS = "06";
+	public static final String SELL_DETAIL_OPTTYPE_CHANNEL_2_TIBCO = "06";
 	/**
 	 * 商品操作类型：07 代理商销售给普通用户;
 	 */

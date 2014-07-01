@@ -158,7 +158,7 @@ public class OrderInfoService {
 			if(reps == null || reps.size() == 0){
 				throw new Exception("该代理商无仓库，请建仓库");
 			}
-			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_CHANNEL, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_OSOONS_2_CHANNEL, reps.get(0).getRepCode());
+			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_CHANNEL, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL, reps.get(0).getRepCode());
 		}
 		
 	}
