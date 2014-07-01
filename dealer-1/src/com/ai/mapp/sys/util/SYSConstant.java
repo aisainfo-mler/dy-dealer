@@ -15,6 +15,11 @@ import com.ai.mapp.sys.entity.FileManageCondition;
 
 
 public class SYSConstant {
+	/**
+	 * tibco 超级管理员
+	 */
+	public static final Long USER_ID_TIBCO = 0L;
+	
 	/** 默认的MAPP系统应用key **/
 	public static final String MAPP_APPLICATION_PRODUCTKEY = "MAPP";
 	/** 超级管理员角色 **/
@@ -539,7 +544,7 @@ public class SYSConstant {
 	 * 关于SKU实体状态 SKU_ENTITY
 	 *  01:在平台库
 	 */
-	public static final String SKU_STATUS_OSOONS = "01";
+	public static final String SKU_STATUS_TIBCO = "01";
 	/**
 	 * 关于SKU实体状态 SKU_ENTITY
 	 *  02:在代理商库
@@ -965,7 +970,7 @@ public class SYSConstant {
 //		bankTypes.put("SPD", "浦发银行");//浦发银行--SPD
 //		bankTypes.put("HZBANK", "杭州银行");//杭州银行---HZBANK
 		
-		skuStatusMap.put(SKU_STATUS_OSOONS, "在欧顺库");
+		skuStatusMap.put(SKU_STATUS_TIBCO, "在平台库");
 		skuStatusMap.put(SKU_STATUS_CHANNEL, "在库");
 		skuStatusMap.put(SKU_STATUS_USER, "已销售");
 		skuStatusMap.put(SKU_STATUS_DESTROY, "已损坏");
