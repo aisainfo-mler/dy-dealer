@@ -483,7 +483,7 @@ public class AgentOrderService {
 		
 		order.setCompleteTime(now);
 		order.setCreateTime(now);
-		order.setDesc("topUp "+order.getSvn());
+		order.setDesc("topUp "+order.getSvn()+" "+order.getSaleFee());
 		Long df = (long) discountFeeB.intValue();
 		order.setDiscountFee(df);
 		if(order.getSaleFee().longValue() == 0){

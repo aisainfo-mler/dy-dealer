@@ -53,7 +53,7 @@ public class HW0041Action extends
 		TibcoUtil.checkNotNull(request.getSeriveId(), "serviceId");
 		YD0009Request yd9 = new YD0009Request(request.getSeriveId(),
 				request.getAmount(), request.getRrfId(), circleId,
-				false, true, request.getProductId());
+				false, false, request.getProductId());
 
 		YD0009Response post2Tibco = this.yd0009.post2Tibco(yd9, null);
 		
