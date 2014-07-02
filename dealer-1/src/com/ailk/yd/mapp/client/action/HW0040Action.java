@@ -20,7 +20,7 @@ import com.ailk.yd.mapp.tibco.model.YD0022.YD0022Response;
 import com.ailk.yd.mapp.tibco.model.YD0022.YD0022Response.PersonalDetails;
 
 /**
- * queryCustomer
+ * queryCustomer.根据多个customerId查询多个客户信息
  * @version 2014-06-27 根据customer查询客户的详细信息
  *
  */
