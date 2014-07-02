@@ -33,6 +33,10 @@ import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.util.LanguageInfo;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ai.mapp.sys.entity.OrderItem;
+import com.ailk.ts.dal.ibatis.model.Repository;
+import com.ailk.ts.ibatis.service.RepOptRecordService;
+import com.ailk.ts.ibatis.service.RepositoryService;
+import com.ailk.ts.ibatis.service.SkuEntityService;
 
 /**
  * @author Zhengwj 
@@ -59,8 +63,15 @@ public class OrderInfoService {
 	
 	@Autowired
 	private AccountInfoService accountInfoService;
+	
 	@Autowired
 	private HwOrderShipmentService hwOrderShipmentService;
+	
+	@Autowired
+	private SkuEntityService skuEntityService;
+	
+	@Autowired
+	private RepositoryService repositoryService;
 	
 	public Collection<OrderInfo> listOrderInfos(OrderInfo orderInfo,int start,int limit)throws Exception{
 		try{
@@ -110,7 +121,7 @@ public class OrderInfoService {
 		
 	}
 	
-	public void changeOrderStatus(String orderCode,String status) throws Exception
+	public void changeOrderStatus(String orderCode,String status,Long optId) throws Exception
 	{
 		if(StringUtil.isEmpty(orderCode))
 			throw new Exception(LanguageInfo.ORDERCODE_IS_EMPTY);
@@ -124,8 +135,31 @@ public class OrderInfoService {
 		
 		saveOrderInfo(order);
 		
-		
+		//设置item为可用状态
 		orderItemService.setOrderItemHasReceived(order.getSerialNumber());
+		
+		List<OrderDetail> orderDetails = order.getDetails();
+		List<String> imeis = new ArrayList<String>();
+		if(orderDetails != null && orderDetails.size() != 0){
+			List<OrderItem> items = null;
+			for(OrderDetail detail:orderDetails){
+				items = detail.getItems();
+				if(items != null && items.size() != 0){
+					continue;
+				}
+				for(OrderItem item:items){
+					imeis.add(item.getItemValue());
+				}
+			}
+		}
+		if(imeis.size() != 0){//代理商确认收货
+			//获得代理商仓库
+			List<Repository> reps = repositoryService.getRepsByUserId(optId);
+			if(reps == null || reps.size() == 0){
+				throw new Exception("该代理商无仓库，请建仓库");
+			}
+			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_CHANNEL, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL, reps.get(0).getRepCode());
+		}
 		
 	}
 	
@@ -507,4 +541,63 @@ public class OrderInfoService {
 		}
 		return result;
 	}
+
+	public OrderInfoDao getOrderInfoDao() {
+		return orderInfoDao;
+	}
+
+	public void setOrderInfoDao(OrderInfoDao orderInfoDao) {
+		this.orderInfoDao = orderInfoDao;
+	}
+
+	public OrderItemService getOrderItemService() {
+		return orderItemService;
+	}
+
+	public void setOrderItemService(OrderItemService orderItemService) {
+		this.orderItemService = orderItemService;
+	}
+
+	public OrderDetailService getOrderDetailService() {
+		return orderDetailService;
+	}
+
+	public void setOrderDetailService(OrderDetailService orderDetailService) {
+		this.orderDetailService = orderDetailService;
+	}
+
+	public GoodsInfoService getGoodsInfoService() {
+		return goodsInfoService;
+	}
+
+	public void setGoodsInfoService(GoodsInfoService goodsInfoService) {
+		this.goodsInfoService = goodsInfoService;
+	}
+
+	public AccountInfoService getAccountInfoService() {
+		return accountInfoService;
+	}
+
+	public void setAccountInfoService(AccountInfoService accountInfoService) {
+		this.accountInfoService = accountInfoService;
+	}
+
+	public HwOrderShipmentService getHwOrderShipmentService() {
+		return hwOrderShipmentService;
+	}
+
+	public void setHwOrderShipmentService(
+			HwOrderShipmentService hwOrderShipmentService) {
+		this.hwOrderShipmentService = hwOrderShipmentService;
+	}
+
+	public SkuEntityService getSkuEntityService() {
+		return skuEntityService;
+	}
+
+	public void setSkuEntityService(SkuEntityService skuEntityService) {
+		this.skuEntityService = skuEntityService;
+	}
+	
+	
 }

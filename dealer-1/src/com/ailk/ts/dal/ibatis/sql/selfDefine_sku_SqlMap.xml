@@ -7,6 +7,39 @@
   		where  imei =  #imei:VARCHAR# or serial= #serial:VARCHAR#
   </select>
   
- 
+ <update id="saleSkuEntity" parameterClass="Map">
+  	UPDATE SKU_ENTITY e SET e.SERVICE_START = now() ,
+  		e.SERVICE_END = date_add(now(),interval (SELECT s.SERVICE_MONTH FROM hw_goods_info s where s.GOOD_ID = e.SKUID) month),
+  	 	e.MODIFY_TIME = now()
+  	  	<isNotNull prepend="," property="targetStatus">
+        e.STATUS = #targetStatus:VARCHAR#
+      	</isNotNull>
+	  	<dynamic prepend="where">
+			<isNotNull property="entityIds" prepend="and">
+	  			 e.ENTITY_ID in 
+				 <iterate  open="(" close=")" conjunction="," property="entityIds" >  
+		          #entityIds[]#  
+		         </iterate> 
+			</isNotNull>
+		</dynamic> 
+  </update>
+  
+  <select id="countSkuEntityBy_REP_STATUS" parameterClass="com.ailk.ts.dal.ibatis.model.SkuEntity" resultClass="java.util.HashMap">
+  		select SKUID,count(ENTITY_ID) CC  from sku_entity
+  		where 1=1 
+  		<isNotNull property="targetRepcode" prepend="and">
+			TARGET_REPCODE =  #targetRepcode:BIGINT#
+		</isNotNull>
+		
+		<isNotNull property="skuid" prepend="and">
+			SKUID =  #skuid:BIGINT#
+		</isNotNull>
+		
+		<isNotEmpty property="status" prepend="and">
+			STATUS =  #status:VARCHAR#
+		</isNotEmpty>
+  		 
+  		  group by SKUID order by SKUID
+  </select>
  
 </sqlMap>
