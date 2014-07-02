@@ -246,7 +246,7 @@ public class OrderItemService {
 					
 					entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
 					entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-//					entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+					entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
 					entity.setSkuid(detail.getGood().getId());
 					entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
 //					entity.setOper

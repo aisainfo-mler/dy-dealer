@@ -23,5 +23,23 @@
 			</isNotNull>
 		</dynamic> 
   </update>
+  
+  <select id="countSkuEntityBy_REP_STATUS" parameterClass="com.ailk.ts.dal.ibatis.model.SkuEntity" resultClass="java.util.HashMap">
+  		select SKUID,count(ENTITY_ID) CC  from sku_entity
+  		where 1=1 
+  		<isNotNull property="targetRepcode" prepend="and">
+			TARGET_REPCODE =  #targetRepcode:BIGINT#
+		</isNotNull>
+		
+		<isNotNull property="skuid" prepend="and">
+			SKUID =  #skuid:BIGINT#
+		</isNotNull>
+		
+		<isNotEmpty property="status" prepend="and">
+			STATUS =  #status:VARCHAR#
+		</isNotEmpty>
+  		 
+  		  group by SKUID order by SKUID
+  </select>
  
 </sqlMap>
