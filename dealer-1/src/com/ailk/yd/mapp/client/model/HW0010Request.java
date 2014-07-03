@@ -842,6 +842,7 @@ public class HW0010Request extends YDBody {
 		private BigDecimal mdnFee;
 		private String sim;
 		private Set<String> imei;
+		//Map<productId,Map<imei,deviceType>>
 		private Map<String,Map<String,String>> devices;
 		
 		public Long getPid() {

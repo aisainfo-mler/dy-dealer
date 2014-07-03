@@ -76,16 +76,11 @@ public class MappController extends BaseController {
 		
 		try
 		{
-			
-			log.debug(request.getContentType());
-			
 			String ret = jsonHandler.doHandle(msg,attrMap);
 			
 			updateSession(request);
 			
-			log.debug(ret);
-			
-			log.debug(response.getContentType());
+			System.out.println(ret);
 			
 			return ret;
 		}

@@ -3,6 +3,8 @@ package com.ai.mapp.base.http;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.poifs.crypt.Decryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +30,7 @@ import com.ai.mapp.bss.service.ISVTemplate;
 import com.ai.mapp.bss.util.BSSConstantError;
 import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.model.MAPP.MAPP;
+import com.ailk.butterfly.core.util.GZipUtils;
 
 /**
  * 手机终端统一接口
@@ -35,7 +39,7 @@ import com.ai.mapp.model.MAPP.MAPP;
  */
 public class MAPPHTTPService extends HttpServlet {	
 	
-	private static final String DES_PWD = "_mapp_hz_server_";
+	private static final String DES_PWD = "MAPP_DESKEY";
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerFactory.getLogger(MAPPHTTPService.class); 
 	/**
@@ -91,29 +95,26 @@ public class MAPPHTTPService extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String str = request.getParameter("xmlmsg").trim();
 		
-		if(ifDes(request))
-		{
-			response.addHeader("cryptType", "DES");
-			System.out.println("start 解密");
-			str = DESUtils.decrypt(str, DES_PWD).trim();
-			System.out.println(str);
-		}
-		
-		if(StringUtils.isBlank(str)){
-			out.print("xmlmsg 为空");
-			return;
-		}	
+		response.addHeader("cryptType", "DES");
+		System.out.println("start 解密");
+		System.out.println(str);
 		
 		try
 		{		
+			str = decrypt(str);
+			System.out.println(str);
 			
+			if(StringUtils.isBlank(str)){
+				out.print("xmlmsg 为空");
+				return;
+			}	
 			
 			String rspXML = "";
 			//解析包头
 			StringReader reader = new StringReader(str);
 			MAPP send = MAPP.unmarshal(reader);	
 			String svcContent = send.getSvcContent();	
-			svcContent = updateSvcContent(svcContent);
+//			svcContent = updateSvcContent(svcContent);
 			String bizCode = send.getBizCode();		
 			logger.debug("请求参数:"+str);
 			//System.out.println("请求参数:"+str);
@@ -184,10 +185,7 @@ public class MAPPHTTPService extends HttpServlet {
 			/**
 			 * 判断包头是否要加密
 			 */
-			if (ifDes(request))	
-			{
-				rspXML = DESUtils.encrypt(rspXML, DES_PWD);
-			}
+			rspXML = URLEncoder.encode(encrypt(rspXML), "utf-8");
 			
             //注意以下这一行,wls环境有影响
             response.setContentLength(rspXML.getBytes("utf-8").length);     
@@ -244,12 +242,50 @@ public class MAPPHTTPService extends HttpServlet {
         return WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());  
 	}
 	
-	private boolean ifDes(HttpServletRequest request)
+	public String decrypt(String str) throws Exception
 	{
-		//TODO 是否需要加密的逻辑实现
-		return false;
+		
+		/**
+		 * 当拦截的方法第一个参数对象为String类型时，将参数进行解密操作
+		 */
+		if(ifCryptPermission())
+		{
+			logger.debug("对参数进行解密操作。");
+			
+			byte[] arg0_byte = str.getBytes("utf-8");
+			arg0_byte = DESUtils.decryptBASE64(str);
+			arg0_byte = GZipUtils.decompress(arg0_byte);
+			
+			/** 将加密的包文体解密，并将解密后的包文体转化，设置到包文中 **/
+			str = DESUtils.decrypt(new String(arg0_byte), DES_PWD);
+			
+			return str;
+		}
+		else
+			return str;
+			
 	}
 
+	public String encrypt(String str) throws Exception
+	{
+		if(ifCryptPermission())
+		{
+			String encrypt = DESUtils.encrypt(str, DES_PWD);
+			byte[] ret_byte = encrypt.getBytes("utf-8");
+			ret_byte = GZipUtils.compress(ret_byte);
+			ret_byte = DESUtils.encryptBASE64(ret_byte).getBytes("utf-8");
+			/** 生成加密的包文体 **/
+			String cs = new String(ret_byte,"utf-8");
+			return cs;
+		}
+		
+		return str;
+	}
+	
+	private boolean ifCryptPermission()
+	{
+		return true;
+	}
 
 	/**
 	 * <p>描述: </p> 
@@ -283,5 +319,17 @@ public class MAPPHTTPService extends HttpServlet {
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
+	}
+	
+	
+	public static void main(String[] args) throws Exception
+	{
+		MAPPHTTPService m = new MAPPHTTPService();
+		String a = "H4sIAAAAAAAAAxWTuRUEMQhDWzKYyyFn/yUNE2wy+wzoS8Iy1rxtGOF9h4AnJ8SpW+lx+STIAyWs0n5zD841liZArFP8QHqi6Zb1vSrOnaFKIAFjEHQe0JWcS3Sy3JCH0uncGIwuz9lhejSuvG7ioIIyFzrT4E8TLQezVVDp6Knakaquis9B+Q5MmiecV2mPlTgptdUs887gC78AI3E6gZ/LYyiAOmBmtyLn6K3x0hNY0ScRWWaFMpPvjkEYDrAWfjWPIpdPAlo89VXjtJ+a5fmEkthFttop4Af0ccqisqAoerqrsatLfpG30BdA+I4xMOd99IxLSI3govhSC6AkBFJJeth9kBR0RaBdcR3IfLnwegFHLHqENmMUbq6zI1m0AxOo73lDzWn8FjMk0nLrqOI+Uym7944oPF9f80X9ZyjmQjtPmA6zwop3jSBSlIn1Mu9Zd9vgHjLVY42c+6ZkL5ZaLmkNNC2xM1lMEjX06i/unLtBqMk3uzbuM7V1ai1ya35XCJcLbQp3LvHTLr7YCyTk0N45jChF1QKHcJMrfODMXZEZzxvHz7rTMstTg9dT3N31Ht8+ctjv/guMZ7/1qrXcX927ZOrRdU3YFHs/gjDqohBbL6874XSnNAT4JvqCghx8TaWMLbv+Cjzwdj9GZrWRqGvVJNsMrD3HOmZt3/d7J690RvYx3A60ZvzWrAhVqM0uyobjWFXJEvW6f9SjZYXNxhg3C7yqx4jPfVtOpaqH58Cqd9hgl2wVvMEC/qK/yxSOtazftmf7dM7mZZfijTdZ6QGdWzj1kcuYcS7bs8VsE/DOmXRz5aWUvRrL1qnsOXvWhmo5vl/FBvUa4uQHal62n3AEAAA=";
+		System.out.println(m.decrypt(a));
+		String str = "测试解密—123123——：{}AD";
+		str = m.encrypt(str);
+		System.out.println(m.decrypt(str));
+		
 	}
 }

@@ -2,7 +2,9 @@ package com.ailk.yd.mapp.client.action;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,20 +65,18 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	private UserService userService;
 	
 	@Autowired
-	private SkuEntityService skuEntityService;
-	
-	@Autowired
 	private YD0010Action yd0010;
 
 	@Override
 	protected void doAction() throws Exception 
 	{
-		
-		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-		User creator = userService.loadUserByUserCode(ui.getUserName());
+//		IUserinfo ui = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+//		User creator = userService.loadUserByUserCode(ui.getUserName());
 		AgentOrder ao = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
 		if(ao == null)
 			throw new Exception(request.getOrderCode()+": not found");
+		
+		Map<String,String> resourceMap =  new HashMap<String, String>(0);
 		
 		if(StringUtils.equals(SYSConstant.AGENT_ORDER_TYPE_NEW, ao.getOrderType())){
 			//心开户订单
@@ -86,14 +86,43 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			YD0010Request yd0010Request = convertByHW0010(hw0010Request);
 			System.out.println(mapper.writeValueAsString(yd0010Request));
 			YD0010Response yd0010Response = yd0010.post2Tibco(PO2VOUtils.replaceNull(yd0010Request), null);
+			/**
+			 * 如果成功，设置订单上tibco发送成功的标记位
+			 */
 			ao.setTibcoSendFlag("1");
+			agentOrderService.saveAgentOrder(ao);
+			resourceMap = getResource(hw0010Request);
 		}
-		agentOrderService.saveAgentOrder(ao);
-		agentOrderService.completedOrder(ao.getOrderCode(), null);
+		agentOrderService.completedOrder(ao.getOrderCode(), resourceMap);
+	}
+	
+	protected Map<String,String> getResource(HW0010Request hw0010_req) throws Exception
+	{
+		if(hw0010_req.getCafInfos() == null || hw0010_req.getCafInfos().isEmpty())
+			throw new Exception("no caf information");
 		
-//		AgentOrder order = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
-//		System.out.println(order.getCreator() == null?null:order.getCreator().getUserCode());
+		HW0010Request.CafInfo caf = hw0010_req.getCafInfos().get(0);
+		HW0010Request.Order hw_caf_order = caf.getOrder();
 		
+		Map<String,Map<String,String>> deviceMap = hw_caf_order.getDevices();
+		
+		if(deviceMap == null || deviceMap.isEmpty())
+			return null;
+		
+		Map<String,String> resourceMap = new HashMap<String, String>(0);
+		
+		for(String key : deviceMap.keySet())
+		{
+			if(deviceMap.get(key) == null || deviceMap.get(key).isEmpty())
+				continue;
+			
+			for(Entry<String,String> entry : deviceMap.get(key).entrySet())
+			{
+				resourceMap.put(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return resourceMap;
 	}
 	
 	public YD0010Request convertByHW0010(HW0010Request hw0010_req) throws Exception

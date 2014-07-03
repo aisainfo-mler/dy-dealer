@@ -33,6 +33,7 @@ import com.ai.mapp.sys.entity.SvnProduct;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.util.LanguageInfo;
 import com.ai.mapp.sys.util.SYSConstant;
+import com.ailk.ts.ibatis.service.SkuEntityService;
 
 @Service
 @Transactional(propagation=Propagation.REQUIRED,readOnly=false,rollbackFor=Exception.class)
@@ -72,6 +73,9 @@ public class AgentOrderService {
 	
 	@Autowired
 	private SmallLocalFileService slfs;
+	
+	@Autowired
+	private SkuEntityService skuEntityService;
 
 	private Class<CommonBean> engine;
 	
@@ -539,50 +543,24 @@ public class AgentOrderService {
 		
 		order.setStatus(SYSConstant.AGENT_ORDER_STATUS_COMPLETE);
 		
-		/** svnInfo相关数据不进行保存 **/
-//		SvnInfo svnInfo = svnInfoService.loadSvnInfoBySvn(order.getSvn(), null);
-//		
-//		/**
-//		 * 新开的时候会在svn_product表中增加记录
-//		 */
-//		if(SYSConstant.AGENT_ORDER_TYPE_NEW.equals(order.getOrderType()))
-//		{
-//			auditOrder(order);
-//			svnInfo.setStatus(SYSConstant.STATE_VALID);
-//			svnInfoService.saveSvnInfo(svnInfo);
-//			
-//		}
-//		
-//		if (svnInfo != null && order.getProduct() != null
-//				&& order.getProduct().getPrestore() != null
-//				&& order.getProduct().getPrestore() >= 0) 
-//		{
-//			Long amount = svnInfo.getAmount() == null ? 0 : svnInfo.getAmount().longValue();
-//			Long preStore = order.getProduct().getPrestore() == null ? 0 : order.getProduct().getPrestore().longValue()*1000;
-//			svnInfo.setAmount(amount+preStore);
-//			svnInfoService.saveSvnInfo(svnInfo);
-//		}
-		
 		/** 由于卡号是后录入的，因此在完成之前将sim号存入订单 **/
-		if(goods != null && goods.isEmpty() == false)
-		{
-			if(StringUtil.isEmpty(goods.get(SYSConstant.GOOD_TYPE_SIM)) == false)
-			{
-				order.setSim(goods.get(SYSConstant.GOOD_TYPE_SIM));
-				saveAgentOrder(order);
-			}
-			else if(StringUtil.isEmpty(goods.get("2")) == false)
-			{
-				order.setSim(goods.get("2"));
-				saveAgentOrder(order);
-			}
-		}
-		
 		if(StringUtil.isEmpty(order.getImei()) == false)
 			orderItemService.useItem(order.getCreator().getUserId(),SYSConstant.GOOD_TYPE_MOBILE,order.getImei());
 		
+		List<String> imeiList = new ArrayList<String>(0);
+		
 		if(StringUtil.isEmpty(order.getSim()) == false)
-			orderItemService.useItem(order.getCreator().getUserId(),SYSConstant.GOOD_TYPE_SIM,order.getSim());
+			imeiList.add(order.getSim());
+		
+		if(goods != null && goods.isEmpty() == false)
+		{
+			for(String imei : goods.keySet())
+				imeiList.add(imei);
+		}
+		/**
+		 * 设置库存相关信息
+		 */
+//		skuEntityService.saleSkuEntity(imeiList, order.getOrderId(), order.getCreator().getUserId());
 		
 		/** 保存佣金记录 **/
 		commissionService.addCommissionByAgentOrder(order.getOrderCode());
