@@ -2,7 +2,6 @@ package com.ailk.yd.mapp.client.action;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,8 +24,8 @@ import com.ailk.butterfly.core.util.DateUtils;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
+import com.ailk.ts.ibatis.service.SkuEntityService;
 import com.ailk.yd.mapp.client.model.HW0010Request;
-import com.ailk.yd.mapp.client.model.HW0010Request.MnpPort;
 import com.ailk.yd.mapp.client.model.HW0012Request;
 import com.ailk.yd.mapp.tibco.action.YD0010Action;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request;
@@ -35,9 +34,6 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.CafInfo;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Connection;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Contact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Customer;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Dependancy;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Device;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FacingService;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.FamilyContact;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Form61;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.IdObject;
@@ -47,12 +43,8 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameAndValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Order;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.PayInfo;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductCafInfo;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductIdentifier;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductProof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Proof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ReferringCustomer;
-import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Response;
 
 
@@ -69,6 +61,9 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SkuEntityService skuEntityService;
 	
 	@Autowired
 	private YD0010Action yd0010;
@@ -90,7 +85,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(), HW0010Request.class);
 			YD0010Request yd0010Request = convertByHW0010(hw0010Request);
 			System.out.println(mapper.writeValueAsString(yd0010Request));
-			YD0010Response yd0010Response = yd0010.post2Tibco(yd0010Request, null);
+			YD0010Response yd0010Response = yd0010.post2Tibco(PO2VOUtils.replaceNull(yd0010Request), null);
 			ao.setTibcoSendFlag("1");
 		}
 		agentOrderService.saveAgentOrder(ao);
@@ -167,10 +162,10 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 //		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome("5666777766");
 //		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork("");
 		
-//		req.getCustomerDetails().getContactDetails().setMobileNumber(hw_customer.getMobileNumber()==null?"":hw_customer.getMobileNumber());
-//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome(hw_customer.getAlternateContactNumberHome()==null?"":hw_customer.getAlternateContactNumberHome());
-//		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork(hw_customer.getAlternateContactNumberWork()==null?"":hw_customer.getAlternateContactNumberWork());
-//		req.getCustomerDetails().getContactDetails().setEmailId(hw_customer.getEmailId()==null?"":hw_customer.getEmailId());
+		req.getCustomerDetails().getContactDetails().setMobileNumber(hw_customer.getMobileNumber()==null?"":hw_customer.getMobileNumber());
+		req.getCustomerDetails().getContactDetails().setAlternateContactNumberHome(hw_customer.getAlternateContactNumberHome()==null?"":hw_customer.getAlternateContactNumberHome());
+		req.getCustomerDetails().getContactDetails().setAlternateContactNumberWork(hw_customer.getAlternateContactNumberWork()==null?"":hw_customer.getAlternateContactNumberWork());
+		req.getCustomerDetails().getContactDetails().setEmailId(hw_customer.getEmailId()==null?"":hw_customer.getEmailId());
 		
 		/*********PermanentAddress*********/
 		if(hw_customer.getPermanentAddress() != null)
@@ -354,7 +349,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			poa.setDateOfIssue("");
 			if(caf.getPoi().getDateOfIssue() != null)
 			{
-				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "yyyy-MM-dd");
+				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "dd/MM/yyyy");
 				poa.setDateOfIssue(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
 			}
 //			poa.setDateOfIssue(caf.getPoa().getDateOfIssue()==null?"":caf.getPoa().getDateOfIssue());
@@ -375,7 +370,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			poi.setDateOfIssue("");
 			if(caf.getPoi().getDateOfIssue() != null)
 			{
-				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "yyyy-MM-dd");
+				Date d = DateUtils.formatDate(caf.getPoi().getDateOfIssue(), "dd/MM/yyyy");
 				poi.setDateOfIssue(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
 			}
 //			poi.setDateOfIssue(caf.getPoi().getDateOfIssue()==null?"":caf.getPoi().getDateOfIssue());
@@ -546,7 +541,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						YD0010Request.Product ps = new YD0010Request.Product();
 						ps.setBusinessInteraction(new NameObject("ADD"));
 						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
-						ps.setStarterKitCode("N");
+						ps.setStarterKitCode("Y");
 						order.getProducts().add(ps);
 						if(req.getCafDetails() != null && req.getCafDetails().getProofs().isEmpty() == false)
 						{
@@ -561,24 +556,11 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 							}
 						}
 						
-//						ps = initProduct(ps);
-					
 						ps.setDevices(new ArrayList<YD0010Request.Device>(0));
 						if(productSpec.getResourceSpecList() == null || productSpec.getResourceSpecList().isEmpty())
 							continue;
 						
 						Map<String,Map<String,String>> deviceMap = hw_caf_order.getDevices();
-//						if(deviceMap == null || deviceMap.isEmpty())
-//						{
-//							YD0010Request.Device device = new YD0010Request.Device();
-//							device.setBoqType("");
-//							device.setBusinessInteraction(new NameObject(""));
-//							device.setProductId("");
-//							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
-//							device.getIdentifier().add(new NameAndValueObject("", ""));
-//							continue;
-//						}
-						
 						for(ProductSpecMapping.ResourceSpec resourceSpec : productSpec.getResourceSpecList())
 						{
 							YD0010Request.Device device = new YD0010Request.Device();
@@ -594,8 +576,6 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 							{
 								device.getIdentifier().add(new NameAndValueObject("SERIAL_NUMBER", deviceMap.get(resourceSpec.getResourceSpecificationId()).get(key)));
 							}
-							
-							
 						}
 					}
 				}
@@ -607,76 +587,8 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		}
 		
-		req = PO2VOUtils.replaceNull(req);
-		
 		return req;
 	}
-	
-	
-	private YD0010Request.Product initProduct(YD0010Request.Product p)
-	{
-		List<NameAndValueObject> chs = new ArrayList<YD0010Request.NameAndValueObject>(0);
-		p.setCharacteristics(chs);
-		NameAndValueObject nv1 = new NameAndValueObject("","");
-		chs.add(nv1);
-		
-		Dependancy dependancy = new Dependancy();
-		p.setDependancyInfo(dependancy);
-		List<ValueObject> dependancy_identifier= new ArrayList<YD0010Request.ValueObject>(0);
-		dependancy.setIdentifier(dependancy_identifier);
-		ValueObject di1 = new ValueObject("");
-		dependancy_identifier.add(di1);
-		
-		p.setCafDetails(new ProductCafInfo("", ""));
-		
-		List<ProductProof> p_proofs = new ArrayList<YD0010Request.ProductProof>(0);
-		p.setProofs(p_proofs);
-		ProductProof p_p1 = new ProductProof("", "");
-		p_proofs.add(p_p1);
-		ProductProof p_p2 = new ProductProof("", "");
-		p_proofs.add(p_p2);
-		
-		YD0010Request.MnpPort mp = new YD0010Request.MnpPort();
-		p.setMnpPortDetails(mp);
-		mp.setUniquePortingCode("");
-		mp.setUpcGenerationDate("");
-		mp.setExistingOperatorCode("");
-		mp.setExistingSubscriberType("");
-		mp.setLastPaidBillReceiptURI("");
-		
-		List<ProductIdentifier> pi_list = new ArrayList<YD0010Request.ProductIdentifier>(0);
-//		p.setIdentifier(pi_list);
-		ProductIdentifier pi = new ProductIdentifier();
-		pi_list.add(pi);
-		pi.setName("");
-		pi.setType("");
-		pi.setValue("");
-		pi.setComponentPrice(new IdObject(""));
-		
-		List<Device> devices = new ArrayList<YD0010Request.Device>(0);
-		p.setDevices(devices);
-		
-		Device d1 = new Device();
-		devices.add(d1);
-		d1.setBusinessInteraction(new NameObject(""));
-		d1.setProductId("");
-		d1.setBoqType("");
-		List<NameAndValueObject> id_list1 = new ArrayList<YD0010Request.NameAndValueObject>(0);
-		d1.setIdentifier(id_list1);
-		id_list1.add(new NameAndValueObject("",""));
-	
-		
-		List<FacingService> customerFacingServices = new ArrayList<YD0010Request.FacingService>(0);
-		p.setCustomerFacingServices(customerFacingServices);
-		/// 1 freature
-		FacingService fs1 = new FacingService();
-		fs1.setBusinessInteraction(new NameObject(""));
-		fs1.setServiceId("");
-		fs1.setFeatures(new ArrayList<YD0010Request.FacingService>(0));
-		
-		return p;
-	}
-	
 	
 	private void validate(YD0010Request request) throws Exception
 	{

@@ -82,6 +82,7 @@ public class HW0008Action extends
 		Object sid = MappContext
 				.getAttribute(MappContext.MAPPCONTEXT_SESSIONID);
 		YD0008Response yd8resp = yd0008.post2Tibco(r, null);
+		
 		this.response = new HW0008Response();
 		if (yd8resp.getSvnList() != null) {
 			List svcNums = new ArrayList();

@@ -273,6 +273,7 @@ public class PO2VOUtils {
 		
 		return dest;
 	}
+	
 //	public static <T> T po2voSimpleProperty(Class<T> clazz,Object orig) throws Exception
 //	{
 //		if(orig == null) return null;
