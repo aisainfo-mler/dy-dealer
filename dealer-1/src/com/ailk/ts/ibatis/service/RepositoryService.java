@@ -41,6 +41,10 @@ public class RepositoryService{
 		return this.repDao.selectByExample(re);
 	}
 	
+	public void updateRepBySaleSkuEntity(){
+		
+	}
+	
 	public RepositoryDAO getRepDao() {
 		return repDao;
 	}

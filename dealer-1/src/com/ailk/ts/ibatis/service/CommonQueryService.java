@@ -226,6 +226,13 @@ public class CommonQueryService {
 		
 	}
 	
+	/**
+	 * <p>描述: 销售终端 改变终端的一些基本信息</p> 
+	 * @param targetStatus
+	 * @param entityIds  
+	 * @author        Zhengwj
+	 * @Date          2014-7-2 下午04:07:19
+	 */
 	public void salerSkuEntity(String targetStatus,List<Long> entityIds) {
 		if(entityIds != null && !entityIds.isEmpty()){
 			Map<String,Object> cond = new HashMap<String,Object>();
@@ -237,4 +244,16 @@ public class CommonQueryService {
 		}
 	}
 
+	/**
+	 * <p>描述:根据条件统计sku_entity的数量 </p> 
+	 * @param cond
+	 * @return  
+	 * @author        Zhengwj
+	 * @Date          2014-7-2 下午04:08:55
+	 */
+	public List countSkuEntity(SkuEntity entity) {
+		// TODO Auto-generated method stub
+		List result=commonQueryDAO.getModels(entity, "sku.countSkuEntityBy_REP_STATUS");
+		return result;
+	}
 }

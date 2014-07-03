@@ -116,12 +116,9 @@ public class SkuEntityService{
 	}
 
 	
-	public SkuEntityExample convert2Example(SkuEntity entity, boolean ifExactly) {
-		return this.convert2ExampleWithParam(entity, ifExactly, false);
-	}
 
-	public SkuEntityExample convert2ExampleWithParam(SkuEntity entity,
-			boolean ifExactly, boolean isOnlyForCard) {
+	public SkuEntityExample convert2Example(SkuEntity entity,
+			boolean ifExactly) {
 
 		SkuEntityExample entity_ex = new SkuEntityExample();
 		SkuEntityExample.Criteria criteria = entity_ex.createCriteria();
@@ -141,11 +138,15 @@ public class SkuEntityService{
 		if(entity.getSkuid() != null){
 			criteria.andSkuidEqualTo(entity.getSkuid());
 		}
-		
-		if(entity.getRepositoryCode() != null){
-			criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
+		if(ifExactly){
+			if(StringUtils.isNotEmpty(entity.getImei())){
+				criteria.andImeiEqualTo(entity.getImei());
+			}
+		}else{
+			if(StringUtils.isNotEmpty(entity.getImei())){
+				criteria.andImeiLike("%" + entity.getImei() + "%");
+			}
 		}
-		
 		if(entity.getTargetRepcode() != null){
 			criteria.andTargetRepcodeEqualTo(entity.getTargetRepcode());
 		}
@@ -153,43 +154,7 @@ public class SkuEntityService{
 		if(entity.getSkuid() != null){
 			criteria.andSkuidEqualTo(entity.getSkuid());
 		}
-		if (isOnlyForCard == false) {
-			// 查询一般的商品时
-			if (entity.getSkuid() != null) {
-				criteria.andSkuidEqualTo(entity.getSkuid());
-			}
-		} else {
-			// 查询卡时，如果没有传skuid，则查询出全部的白卡+成卡
-			if (entity.getSkuid() != null) {
-				criteria.andSkuidEqualTo(entity.getSkuid());
-			} else {
-				List<ViewCache> cardTypes = this.cacheService
-						.findCacheByKey("CARD_TYPE");
-				List<Long> skuIds = new ArrayList();
-				for (Iterator it = cardTypes.iterator(); it.hasNext();) {
-					ViewCache vc = (ViewCache) it.next();
-					skuIds.add(Long.parseLong(vc.getpValue()));
-				}
-				criteria.andSkuidIn(skuIds);
-			}
-
-		}
-
-		if (entity.getRepositoryCode() != null) {
-			criteria.andRepositoryCodeEqualTo(entity.getRepositoryCode());
-		}
-		if (isOnlyForCard == false) {
-			// 查询一般的商品
-			if (StringUtils.isNotEmpty(entity.getImei())) {
-				criteria.andImeiEqualTo(entity.getImei());
-			}
-		} else {
-			// 查询卡
-			if (StringUtils.isNotEmpty(entity.getImei())) {
-				criteria.andImeiLike("%" + entity.getImei() + "%");
-			}
-		}
-
+		
 		if (StringUtils.isNotEmpty(entity.getSerial())) {
 			criteria.andSerialEqualTo(entity.getSerial());
 		}
@@ -202,31 +167,54 @@ public class SkuEntityService{
 
 	}
 
+	public List<SkuEntity> getSkuEntityByGoodIdAndStatus(Long goodId,String status,int start, int limit)throws Exception{
+		SkuEntity entity = new SkuEntity();
+		entity.setSkuid(goodId);
+		entity.setStatus(status);
+		
+		return getSkuEntity(entity, start, limit);
+	}
+	
+	/**
+	 * <p>描述: 统计sku_entity</p> 
+	 * @param goodId
+	 * @param status
+	 * @param targetRep
+	 * @return
+	 * @throws Exception  
+	 * @author        Zhengwj
+	 * @Date          2014-7-2 下午03:55:28
+	 */
+	public Map<Long,Integer> countSkuEntityByGoodIdAndStatus(Long goodId,String status,Long targetRep)throws Exception{
+		SkuEntity entity = new SkuEntity();
+		entity.setSkuid(goodId);
+		entity.setStatus(status);
+		entity.setTargetRepcode(targetRep);
+		List<Map> result = commonQueryService.countSkuEntity(entity);
+		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
+		if(result != null && result.size() != 0){
+			for(Map tmp:result){
+				goodId_count.put((Long)(tmp.get("SKUID")), (Integer)(tmp.get("CC")));
+			}
+		}
+		return goodId_count;
+	}
 	
 	public int countSkuEntity(SkuEntity entity) throws BusinessException,
 			SystemException {
 		return this.countSkuEntity(entity, false);
 	}
 
-	public int countSkuEntity(SkuEntity entity, boolean onlyForCard)
+	public int countSkuEntity(SkuEntity entity,boolean ifExactly)
 			throws BusinessException, SystemException {
-		SkuEntityExample entity_ex = convert2ExampleWithParam(entity, false,
-				onlyForCard);
+		SkuEntityExample entity_ex = convert2Example(entity, ifExactly);
 		// mode_ex.setDistinct(true);
 		return skuEntityDAO.countByExample(entity_ex);
 	}
 
 	
-	public List<SkuEntity> getSkuEntity(SkuEntity entity, int start, int limit)
-			throws BusinessException, SystemException {
-		return this.getSkuEntity(entity, start, limit, false);
-	}
-
-	
-	public List<SkuEntity> getSkuEntity(SkuEntity entity, int start, int limit,
-			boolean onlyForCard) throws BusinessException, SystemException {
-		SkuEntityExample entity_ex = convert2ExampleWithParam(entity, false,
-				onlyForCard);
+	public List<SkuEntity> getSkuEntity(SkuEntity entity, int start, int limit) throws BusinessException, SystemException {
+		SkuEntityExample entity_ex = convert2Example(entity, false);
 		// mode_ex.setDistinct(true);
 		if (start >= 0) {
 			entity_ex.setLimitClauseCount(limit);
@@ -240,7 +228,7 @@ public class SkuEntityService{
 
 	/**
 	 * <p>描述: 商品状态变更 库存变更  ,如销售终端 </p> 
-	 * @param targetStatus
+	 * @param targetStatus  SKU_STATUS_USER 表示销售给用户  此时一定要传targetRepcode
 	 * @param entityId
 	 * @param orderId
 	 * @param optId
@@ -254,33 +242,30 @@ public class SkuEntityService{
 	public void updateSkuEntityStatus(String targetStatus, Long entityId,
 			Long orderId, Long optId, String optType,Long targetRepcode)
 			throws BusinessException, SystemException {
-		SkuEntity entity_new = new SkuEntity();
-		entity_new.setStatus(targetStatus);
+		SkuEntity entity = skuEntityDAO.selectByPrimaryKey(entityId);
+		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
+		List<Long> entityIds = new ArrayList<Long>();
+		entityIds.add(entityId);
+		goodId_count.put(entity.getEntityId(), 1);
+		updateSkuEntityStatus(targetStatus, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
 
-		SkuEntityExample example = new SkuEntityExample();
-		example.createCriteria().andEntityIdEqualTo(entityId);
-		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
-			GoodsInfo product = goodsInfoService.loadGoodsInfo(getSkuEntityById(
-					entityId).getSkuid());
-			Integer months = product.getServiceMonth();// 获得维保时间 单位月
-			Timestamp now = new Timestamp(System.currentTimeMillis());
-			entity_new.setModifyTime(now);
-			entity_new.setServiceStart(now);
-			if (months != null) {
-				entity_new.setServiceEnd(DateUtils.addMonth(now, months));
-			}
+	}
+	
+	/**
+	 * <p>描述: 销售终端或卡</p> 
+	 * @param entityId
+	 * @param orderId
+	 * @param userId
+	 * @throws Exception  
+	 * @author        Zhengwj
+	 * @Date          2014-7-2 下午03:33:35
+	 */
+	public void saleSkuEntity(Long entityId,Long orderId, Long userId)throws Exception{
+		List<Repository> reps = repositoryService.getRepsByUserId(userId);
+		if(reps == null || reps.size() == 0){
+			throw new Exception("该代理商无仓库，请建仓库");
 		}
-		//如果仓库有变，则变
-		if(targetRepcode != null){
-			entity_new.setTargetRepcode(targetRepcode);
-		}
-		skuEntityDAO.updateByExampleSelective(entity_new, example);
-		if (!SYSConstant.SELL_DETAIL_OPTTYPE_USER_2_CHANNEL
-						.equals(optType)) {
-			repSellDetailService.createSecondSellDetail(orderId, entityId,
-					optId, optType);
-		}
-
+		updateSkuEntityStatus(SYSConstant.SKU_STATUS_USER, entityId, orderId, userId, SYSConstant.SELL_DETAIL_OPTTYPE_CHANNEL_2_USER, reps.get(0).getRepCode());
 	}
 	
 	public SkuEntity getSkuEntityById(Long entityId)
@@ -290,12 +275,19 @@ public class SkuEntityService{
 	}
 	
 	public void updateSkuEntityStatus(String targetStatus,
-			List<Long> entityIds, Long orderId, Long optId,
+			List<Long> entityIds,Map<Long,Integer> goodId_count, Long orderId, Long optId,
 			String optType, Long targetRepcode) throws BusinessException,
 			SystemException {
 
 		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
 			commonQueryService.salerSkuEntity(SYSConstant.SKU_STATUS_USER, entityIds);
+			//卖出去的东西要减库存
+			Set<Long> key = goodId_count.keySet();
+	        for (Iterator<Long> it = key.iterator(); it.hasNext();) {
+	            Long s = it.next();
+	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));
+	        }
+			
 		} else {
 			SkuEntity entity_new = new SkuEntity();
 			entity_new.setStatus(targetStatus);
@@ -332,10 +324,19 @@ public class SkuEntityService{
 			List<SkuEntity> entities = skuEntityDAO.selectByExample(example);
 			if(entities != null && entities.size() != 0){
 				List<Long> itemIds = new ArrayList<Long>();
+				Map<Long,Integer> skuId_count = new HashMap<Long, Integer>();
+				int c = 0;
 				for(SkuEntity entity:entities){
 					itemIds.add(entity.getEntityId());
+					if(skuId_count.containsKey(entity.getSkuid())){
+						skuId_count.put(entity.getSkuid(), 1);
+					}else{
+						c = skuId_count.get(entity.getSkuid());
+						skuId_count.put(entity.getSkuid(), c + 1);
+					}
+					
 				}
-				updateSkuEntityStatus(targetStatus, itemIds, orderId, optId, optType, targetRepcode);
+				updateSkuEntityStatus(targetStatus, itemIds, skuId_count,orderId, optId, optType, targetRepcode);
 			}
 			
 		}
