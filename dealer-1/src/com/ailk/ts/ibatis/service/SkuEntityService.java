@@ -260,13 +260,42 @@ public class SkuEntityService{
 	 * @author        Zhengwj
 	 * @Date          2014-7-2 下午03:33:35
 	 */
-	public void saleSkuEntity(Long entityId,Long orderId, Long userId)throws Exception{
+	public void saleSkuEntity(List<String> imeiList,Long orderId, Long userId)throws Exception
+	{
+		if(imeiList == null || imeiList.isEmpty())
+		{
+			log.info("no resource sale");
+			return;
+		}
+		
 		List<Repository> reps = repositoryService.getRepsByUserId(userId);
 		if(reps == null || reps.size() == 0){
 			throw new Exception("该代理商无仓库，请建仓库");
 		}
-		updateSkuEntityStatus(SYSConstant.SKU_STATUS_USER, entityId, orderId, userId, SYSConstant.SELL_DETAIL_OPTTYPE_CHANNEL_2_USER, reps.get(0).getRepCode());
+		updateSkuEntityStatusByIMEI(SYSConstant.SKU_STATUS_USER, imeiList, orderId, userId, SYSConstant.SELL_DETAIL_OPTTYPE_CHANNEL_2_USER, reps.get(0).getRepCode());
 	}
+	
+	public void updateSkuEntityStatusByIMEI(String targetStatus, List<String> imeiList,Long orderId, Long optId, String optType,Long targetRepcode)
+			throws BusinessException, SystemException {
+		
+		SkuEntityExample entity_ex = new SkuEntityExample();
+		SkuEntityExample.Criteria criteria = entity_ex.createCriteria();
+		criteria.andImeiIn(imeiList);
+		List<SkuEntity> entitys = skuEntityDAO.selectByExample(entity_ex);
+		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
+		if(entitys == null || entitys.isEmpty())
+			return;
+		
+		List<Long> entityIds = new ArrayList<Long>();
+		
+		for(SkuEntity se : entitys)
+		{
+			entityIds.add(se.getEntityId());
+			goodId_count.put(se.getEntityId(), 1);
+		}
+		updateSkuEntityStatus(targetStatus, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
+	}
+	
 	
 	public SkuEntity getSkuEntityById(Long entityId)
 		throws BusinessException, SystemException {
