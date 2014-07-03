@@ -1,6 +1,7 @@
 package com.ailk.mapp.controller;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,6 +82,8 @@ public class MappController extends BaseController {
 			updateSession(request);
 			
 			System.out.println(ret);
+			
+//			ret = URLEncoder.encode(ret, "utf-8");
 			
 			return ret;
 		}

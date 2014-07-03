@@ -2,6 +2,7 @@ package com.ai.mapp.sys.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -148,5 +149,14 @@ public class SysProp implements Serializable{
 		this.valid = valid;
 	}
 
-	
+	@Transient
+	private Set<String> propertiesKeys;
+
+	public Set<String> getPropertiesKeys() {
+		return propertiesKeys;
+	}
+
+	public void setPropertiesKeys(Set<String> propertiesKeys) {
+		this.propertiesKeys = propertiesKeys;
+	}
 }

@@ -101,19 +101,35 @@ public class SYSConstant {
 	//上传的文件类型
 	public static final String IPHONE_SYSTEM = "iphone";
 	
-	/**
-	 * app版本号的系统参数关键字
-	 */
-	public static final String APP_ITEMKEY_SYSPROP = "APP_UPDATE";
-	/**
-	 * ipa下载前路径
-	 */
-	public static final String IOS_DOWNLOAD_FRONT = "itms-services://?action=download-manifest&url=";
-	/**
-	 * plist所在文件的系统参数关键字
-	 */
-	public static final String PLIST_ADDRESS = "PLIST_ADDRESS";
+	public static final String SYSPROP_PROPERTIES_PARENTKEY = "MAPP_PROPERTIES";
 	
+	/**
+	 * IPHONE管理参数系统参数关键字
+	 */
+	public static final String IPHONE_APP_CUR_VERSION = "IPHONE_APP_CUR_VERSION";
+	public static final String IPHONE_APP_REQ_VERSION = "IPHONE_APP_REQ_VERSION";
+	public static final String IPHONE_PLIST_ADDRESS = "IPHONE_PLIST_ADDRESS";
+	
+	/**
+	 * IPAD管理参数系统参数关键字
+	 */
+	public static final String IPAD_APP_CUR_VERSION = "IPAD_APP_CUR_VERSION";
+	public static final String IPAD_APP_REQ_VERSION = "IPAD_APP_REQ_VERSION";
+	public static final String IPAD_PLIST_ADDRESS = "IPAD_PLIST_ADDRESS";
+	public static final String IOS_DOWNLOAD_FRONT = "itms-services://?action=download-manifest&url=";
+
+	/**
+	 * ANDROID手机管理参数系统参数关键字
+	 */
+	public static final String APHONE_APP_CUR_VERSION = "APHONE_APP_CUR_VERSION";
+	public static final String APHONE_APP_REQ_VERSION = "APHONE_APP_REQ_VERSION";
+	public static final String APHONE_APK_ADDRESS="APHONE_APK_ADDRESS";// apk所在文件的地址
+	/**
+	 * ANDROID PAD管理参数系统参数关键字
+	 */
+	public static final String APAD_APP_CUR_VERSION = "APAD_APP_CUR_VERSION";
+	public static final String APAD_APP_REQ_VERSION = "APAD_APP_REQ_VERSION";
+	public static final String APAD_APK_ADDRESS="APAD_APK_ADDRESS";// apk所在文件的地址
 	
 	//web工程的目录 
 	public static String REAL_PATH = "";

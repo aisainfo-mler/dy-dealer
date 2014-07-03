@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ai.mapp.base.dao.HibernateDao;
 import com.ai.mapp.sys.entity.SysProp;
+import com.ai.mapp.sys.util.SYSConstant;
 
 /**
  * @author Zhengwj 
@@ -29,7 +30,6 @@ public class SysPropDao extends HibernateDao<SysProp, Long> {
 			c.add(Restrictions.eq("key", t.getKey()));
 		}
 		
-		
 		if(StringUtils.isNotEmpty(t.getParentKey()))
 		{
 			c.add(Restrictions.eq("parentKey", t.getParentKey()));
@@ -41,6 +41,12 @@ public class SysPropDao extends HibernateDao<SysProp, Long> {
 		}
 		if(StringUtils.isNotBlank(t.getPropNameLike())){
 			c.add(Restrictions.like("name", t.getPropNameLike() , MatchMode.ANYWHERE));
+		}
+		
+		if(t.getPropertiesKeys() != null && t.getPropertiesKeys().isEmpty() == false)
+		{
+			c.add(Restrictions.eq("parentKey", SYSConstant.SYSPROP_PROPERTIES_PARENTKEY));
+			c.add(Restrictions.in("key", t.getPropertiesKeys()));
 		}
 		
 		return c;
