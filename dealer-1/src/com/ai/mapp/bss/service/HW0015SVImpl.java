@@ -19,6 +19,11 @@ import com.ai.mapp.sys.entity.GoodsInfo;
 import com.ai.mapp.sys.service.GoodsInfoService;
 import com.ai.mapp.sys.service.OrderItemService;
 import com.ai.mapp.sys.util.SYSConstant;
+import com.ailk.ts.dal.ibatis.model.Repository;
+import com.ailk.ts.dal.ibatis.model.SelfDefineRep;
+import com.ailk.ts.ibatis.service.RepService;
+import com.ailk.ts.ibatis.service.RepositoryService;
+import com.ailk.ts.ibatis.service.SkuEntityService;
 
 @Service(value="hw0015Service")
 @Scope(value="singleton")
@@ -29,6 +34,15 @@ public class HW0015SVImpl extends ISVTemplate {
 	
 	@Autowired
 	private GoodsInfoService goodsInfoService;
+	
+	@Autowired
+	private RepositoryService repositoryService;
+	
+	@Autowired
+	private SkuEntityService skuEntityService;
+	
+	@Autowired
+	private RepService repService;
 	
 	@Override
 	protected Object convertResponse(ParamObject param) throws Exception {
@@ -101,16 +115,53 @@ public class HW0015SVImpl extends ISVTemplate {
 		
 		String userCode = (String)param.getParameter(BSSConstantParam.USERCODE);
 		
+		Long userId = Long.parseLong((String)param.getParameter(BSSConstantParam.USERID));
+		
+		List<Repository> reps = repositoryService.getRepsByUserId(userId);
+		
+		if(reps == null || reps.size() == 0){
+			param.setIfSuccess(false);
+			param.addError("该代理商不存在仓库");
+			return param;
+		}
+		
+		Repository rep = reps.get(0);
+		
 		Long gId = StringUtil.isEmpty(req.getGoodId())?null:Long.valueOf(req.getGoodId());
 		
-		Map<Long,Long> unsale= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_UNUSE);
+//		Map<Long,Long> unsale= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_UNUSE);
+//		
+//		Map<Long,Long> sale= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_USED);
+//		
+//		Map<Long,Long> cancel= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_CANCEL);
 		
-		Map<Long,Long> sale= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_USED);
+		SelfDefineRep cond = new SelfDefineRep();
+		cond.setSkuId(gId);
+		cond.setRepositoryCode(rep.getRepCode());
 		
-		Map<Long,Long> cancel= orderItemService.countGood(userCode, req.getGoodType(),gId, SYSConstant.ITEM_STATUS_CANCEL);
+		List<SelfDefineRep> unsale= repService.getSelfRep(cond, -1, 0);
+		
+//		Map<Long,Integer> sale = skuEntityService.countSkuEntityByGoodIdAndStatus(goodId, status, targetRep);
+		
 		
 		Map<Long,Long[]> count_map = new HashMap<Long, Long[]>(0);
 		
+		if(unsale != null && unsale.isEmpty() == false)
+		{
+		
+			for(SelfDefineRep tmp : unsale)
+			{
+				if(count_map.containsKey(tmp.getSkuId()) == false)
+					count_map.put(tmp.getSkuId(), new Long[3]);
+				
+				if(count_map.get(tmp.getSkuId()) == null || count_map.get(tmp.getSkuId()).length == 0)
+					count_map.put(tmp.getSkuId(), new Long[3]);
+				
+				count_map.get(tmp.getSkuId())[0] = tmp.getCount().longValue();
+			}
+		
+		}
+		/**
 		if(unsale != null && unsale.isEmpty() == false)
 		{
 		
@@ -154,7 +205,7 @@ public class HW0015SVImpl extends ISVTemplate {
 				count_map.get(goodId)[2] = cancel.get(goodId);
 			}
 		}
-
+*/
 		GoodsInfo condition = new GoodsInfo();
 		condition.setGoodIds(count_map.keySet());
 		
@@ -168,6 +219,46 @@ public class HW0015SVImpl extends ISVTemplate {
 		param.setIfSuccess(true);
 		param.setResult(goods);
 		return param;
+	}
+
+	public OrderItemService getOrderItemService() {
+		return orderItemService;
+	}
+
+	public void setOrderItemService(OrderItemService orderItemService) {
+		this.orderItemService = orderItemService;
+	}
+
+	public GoodsInfoService getGoodsInfoService() {
+		return goodsInfoService;
+	}
+
+	public void setGoodsInfoService(GoodsInfoService goodsInfoService) {
+		this.goodsInfoService = goodsInfoService;
+	}
+
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
+
+	public SkuEntityService getSkuEntityService() {
+		return skuEntityService;
+	}
+
+	public void setSkuEntityService(SkuEntityService skuEntityService) {
+		this.skuEntityService = skuEntityService;
+	}
+
+	public RepService getRepService() {
+		return repService;
+	}
+
+	public void setRepService(RepService repService) {
+		this.repService = repService;
 	}
 	
 }

@@ -22,8 +22,8 @@ import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.ServicePackage;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response.Services;
 
 /**
- * 查询账户信息. 2014-06-26更新：根据多个customer信息，返回service列表
- * 
+ * 查询账户信息. 2014-06-26更新：根据多个customer信息或者serviceId，返回service列表
+ *  就是印度的CCI接口
  * @author qianshihua
  * @version 2014-06-27 更新：根据customerId或者serviceId来查询
  * 
