@@ -272,30 +272,8 @@ public class SkuEntityService{
 		if(reps == null || reps.size() == 0){
 			throw new Exception("该代理商无仓库，请建仓库");
 		}
-		updateSkuEntityStatusByIMEI(SYSConstant.SKU_STATUS_USER, imeiList, orderId, userId, SYSConstant.SELL_DETAIL_OPTTYPE_CHANNEL_2_USER, reps.get(0).getRepCode());
+		updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_USER, imeiList, orderId, userId, SYSConstant.SELL_DETAIL_OPTTYPE_CHANNEL_2_USER, reps.get(0).getRepCode());
 	}
-	
-	public void updateSkuEntityStatusByIMEI(String targetStatus, List<String> imeiList,Long orderId, Long optId, String optType,Long targetRepcode)
-			throws BusinessException, SystemException {
-		
-		SkuEntityExample entity_ex = new SkuEntityExample();
-		SkuEntityExample.Criteria criteria = entity_ex.createCriteria();
-		criteria.andImeiIn(imeiList);
-		List<SkuEntity> entitys = skuEntityDAO.selectByExample(entity_ex);
-		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
-		if(entitys == null || entitys.isEmpty())
-			return;
-		
-		List<Long> entityIds = new ArrayList<Long>();
-		
-		for(SkuEntity se : entitys)
-		{
-			entityIds.add(se.getEntityId());
-			goodId_count.put(se.getEntityId(), 1);
-		}
-		updateSkuEntityStatus(targetStatus, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
-	}
-	
 	
 	public SkuEntity getSkuEntityById(Long entityId)
 		throws BusinessException, SystemException {
