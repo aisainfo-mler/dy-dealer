@@ -19,23 +19,30 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 	protected TibcoHandler tibcoHandler;
 	
 	public Rsp post2Tibco(Req request,Map<String,?> paramters) throws Exception {
-		
-		
-		
+		return post2Tibco(request, paramters, true);
+	}
+	public Rsp post2Tibco(Req request,Map<String,?> paramters,boolean autoCheck) throws Exception {
 		String json = convertRequest(request);
 		System.out.println("tibco request:"+json);
 		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), json, paramters,null,true);
-		checkSucc(rsp_string);
+		if(autoCheck==true)
+			checkSucc(rsp_string);
 		return convertResponse(rsp_string);
 		
 	}
 	
+	
+	
 	public Rsp get2Tibco(Map<String,?> paramters) throws Exception {
-		
+		return get2Tibco(paramters, true);
+	}
+	
+	public Rsp get2Tibco(Map<String,?> paramters,boolean autoCheck) throws Exception {
 		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), null , paramters,null,false);
-		checkSucc(rsp_string);
+		if(autoCheck==true){
+			checkSucc(rsp_string);
+		}
 		return convertResponse(rsp_string);
-		
 	}
 
 	/**
