@@ -55,7 +55,7 @@ public class RepositoryService{
 
 	public Long createRepository(String deptId, String province,
 			String areaId, String countyId, String streetId, String repName,
-			String remark) throws BusinessException, SystemException {
+			String remark,Long userId) throws BusinessException, SystemException {
 		Repository repository = new Repository();
 		repository.setDeptId(deptId);
 		repository.setProvince(province);
@@ -65,7 +65,7 @@ public class RepositoryService{
 		repository.setRepName(repName);
 		repository.setStreet(streetId);
 		repository.setRemark(remark);
-		
+		repository.setUserId(userId);
 //		String repCode = sysCommonCoreDAO.getNextSequence("SEQ_REPOSITORY");
 //		repository.setRepCode(repCode);
 		return repDao.insertSelective(repository);
@@ -81,10 +81,10 @@ public class RepositoryService{
 
 	public Long createSignalRepository(String deptId, String province,
 			String areaId, String countyId, String streetId, String repName,
-			String remark) throws BusinessException, SystemException {
+			String remark,Long userId) throws BusinessException, SystemException {
 		List<Repository> reps = getRepsByDeptId(deptId);
 		if(reps == null || reps.size() == 0){
-			return createRepository(deptId, province, areaId, countyId, streetId, repName, remark);
+			return createRepository(deptId, province, areaId, countyId, streetId, repName, remark,userId);
 		}else{
 			return null;
 		}
