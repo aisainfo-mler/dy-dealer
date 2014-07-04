@@ -6,12 +6,12 @@
     <result column="SKUID" jdbcType="INTEGER" property="skuId" />
     <result column="REPOSITORY_CODE" jdbcType="VARCHAR" property="repositoryCode" />
     <result column="COUNT" jdbcType="INTEGER" property="count" />
-    <result column="SKU_NAME" jdbcType="VARCHAR" property="skuName" />
+    <result column="GOOD_NAME" jdbcType="VARCHAR" property="skuName" />
     <result column="REP_NAME" jdbcType="INTEGER" property="repName" />
     <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
   </resultMap>
   <sql id="Base_Column_List">
-    r.ID, r.SKUID, r.REPOSITORY_CODE, r.COUNT, s.SKU_NAME, t.REP_NAME,t.DEPT_ID
+    r.ID, r.SKUID, r.REPOSITORY_CODE, r.COUNT, s.GOOD_NAME, t.REP_NAME,t.DEPT_ID
   </sql>
   <select id="selectSelfRep" parameterClass="java.util.Map" resultMap="BaseResultMap">
     select
