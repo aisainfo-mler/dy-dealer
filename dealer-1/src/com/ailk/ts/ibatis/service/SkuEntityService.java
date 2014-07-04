@@ -302,14 +302,15 @@ public class SkuEntityService{
 
 			//如果仓库有变，则变
 			if(targetRepcode != null){
-				entity_new.setTargetRepcode(targetRepcode);
+//				entity_new.setTargetRepcode(targetRepcode);
 				//要开始改变库存
-				targetRep(entityIds, targetRepcode);
+				targetRep(entityIds, targetRepcode);//里面有对targetRepcode的变化保存
 			}
+				SkuEntityExample example = new SkuEntityExample();
+				example.createCriteria().andEntityIdIn(entityIds);
+				skuEntityDAO.updateByExampleSelective(entity_new, example);
 			
-			SkuEntityExample example = new SkuEntityExample();
-			example.createCriteria().andEntityIdIn(entityIds);
-			skuEntityDAO.updateByExampleSelective(entity_new, example);
+			
 		}
 
 		// 创建销售记录

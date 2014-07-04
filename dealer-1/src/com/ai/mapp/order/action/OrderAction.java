@@ -419,7 +419,7 @@ public class OrderAction extends BaseAction{
 			}
 			
 			YDDatapackage pkg =null;
-//			YDDatapackage pkg = tibcoHandler.sendMsg("yd0012", ydReq, sessionId);
+//			YDDatapackage pkg = tibcoHandler.sendMsg(url, json, parameters, token, isPost)("yd0012", ydReq, sessionId);
 			YD0012Response ydResp = (YD0012Response)pkg.getBody();
 			String sn = ydResp.getSn();
 //			String sn = "goTo_tibco_1";
