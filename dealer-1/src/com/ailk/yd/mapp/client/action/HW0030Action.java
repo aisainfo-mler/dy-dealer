@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.VerifySms;
@@ -25,6 +26,7 @@ import com.ailk.yd.mapp.tibco.model.YD0018.YD0018Request;
  */
 @Service("hw0030")
 @Action(bizcode = "hw0030", userCheck = true)
+@Scope("prototype")
 public class HW0030Action extends
 		AbstractYDBaseActionHandler<HW0030Request, HW0030Response> {
 
