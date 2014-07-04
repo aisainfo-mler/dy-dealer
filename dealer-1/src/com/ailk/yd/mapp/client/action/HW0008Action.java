@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.SysProp;
@@ -31,6 +32,7 @@ import com.ailk.yd.mapp.tibco.model.YD0008.YD0008Response;
  */
 @Service("hw0008")
 @Action(bizcode = "hw0008", userCheck = true)
+@Scope("prototype")
 public class HW0008Action extends
 		AbstractYDBaseActionHandler<HW0008Request, HW0008Response> {
 

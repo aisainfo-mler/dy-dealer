@@ -1,6 +1,7 @@
 package com.ailk.yd.mapp.client.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.AgentOrder;
@@ -25,6 +26,7 @@ import com.ailk.yd.mapp.client.model.HW0025Response;
  */
 @Service("hw0025")
 @Action(bizcode = "hw0025", userCheck = true)
+@Scope("prototype")
 public class HW0025Action extends
 		AbstractYDBaseActionHandler<HW0025Request, HW0025Response> {
 

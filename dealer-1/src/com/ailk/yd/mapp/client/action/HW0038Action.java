@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ailk.butterfly.core.exception.BusinessException;
@@ -22,6 +23,7 @@ import com.ailk.yd.mapp.tibco.TibcoCache;
  */
 @Service("hw0038")
 @Action(bizcode="hw0038",userCheck=true)
+@Scope("prototype")
 public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0038Response> {
 
 	@Override
