@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.mapp.bss.util.BSSConstant;
+import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.MappConstant;
@@ -64,16 +66,7 @@ public class MappController extends BaseController {
 		Map<String,Object> attrMap = new HashMap<String, Object>(0);
 		attrMap.put(MappContext.MAPPCONTEXT_REQUEST_IP,request.getRemoteHost());
 		attrMap.put(MappContext.MAPPCONTEXT_SESSIONID, request.getSession().getId());
-		IUserinfo user = new UserInfo();
-		user.setUserId(1L);
-		user.setUserName("m01");
-		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
-		
-		IUserinfo u = new UserInfo();
-		u.setUserId(1l);
-		u.setUserName("m01");
-		
-		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
+		attrMap.put(MappContext.MAPPCONTEXT_USER, request.getSession().getAttribute(MappConstant.MAPP_SESSION_USER));
 		
 		try
 		{
@@ -99,6 +92,18 @@ public class MappController extends BaseController {
 		System.out.println("==================MappContext.context:"+MappContext.getContext().hashCode()+"======================");
 		
 		for(String key : MappConstant.sessionKeys)
+		{
+			if(MappContext.getAttribute(key) != null)
+			{
+				if(MappContext.getAttribute(key) instanceof IUserInfo)
+				{
+					System.out.println(((IUserInfo)MappContext.getAttribute(key)).getUserName()+"======"+((IUserInfo)MappContext.getAttribute(key)).getUser().getUserLoginName());
+				}
+				request.getSession().setAttribute(key, MappContext.getAttribute(key));
+			}
+		}
+		
+		for(String key : BSSConstantParam.PARAMKEYS)
 		{
 			if(MappContext.getAttribute(key) != null)
 			{

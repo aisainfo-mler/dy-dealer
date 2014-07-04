@@ -115,7 +115,9 @@ public class HW0015SVImpl extends ISVTemplate {
 		
 		String userCode = (String)param.getParameter(BSSConstantParam.USERCODE);
 		
-		Long userId = Long.parseLong((String)param.getParameter(BSSConstantParam.USERID));
+		Object uid = param.getParameter(BSSConstantParam.USERID);
+		
+		Long userId = Long.valueOf(uid.toString());
 		
 		List<Repository> reps = repositoryService.getRepsByUserId(userId);
 		

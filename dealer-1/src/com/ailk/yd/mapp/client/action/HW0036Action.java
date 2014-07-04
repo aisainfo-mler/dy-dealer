@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.sys.entity.HwCircle;
@@ -37,6 +38,7 @@ import com.ailk.yd.mapp.tibco.TibcoConstant;
  */
 @Service("hw0036")
 @Action(bizcode="hw0036",userCheck=true)
+@Scope("prototype")
 public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW0036Response>{
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

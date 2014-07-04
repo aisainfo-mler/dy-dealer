@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class BSSConstantError {
 	
-	public static final String CODE_LOGIN_ERROR = "0001";//帐号或密码错误
+	public static final String CODE_TIME_OUT_ERROR = "0001";//超时
 	public static final String CODE_PWD_ERROR = "0002";//密码错误
 	public static final String CODE_RIGHT_ERROR = "0003";//权限不存在
 	public static final String CODE_ORDER_SUBMIT_ERROR = "0004";//订单提交失败
 	public static final String CODE_IDCARD_ERROR = "0005";//身份证
 	public static final String CODE_MDN_ERROR = "0007";//号码错误
 		
-	public static final String CODE_TIME_OUT_ERROR = "5000";//超时
+	public static final String CODE_LOGIN_ERROR = "5000";//帐号或密码错误
 	public static final String CODE_DATA_ERROR = "5001";//数据异常
 	public static final String CODE_NORESPONSE = "5002"; //无响应数据包
 	public static final String CODE_UNKNOW_ERROR = "5003";//未知异常

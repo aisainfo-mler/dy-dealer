@@ -46,7 +46,9 @@ public class HW0018SVImpl extends ISVTemplate {
 			.unmarshal(new StringReader((String)param.getParameter(BSSConstantParam.REQUESTCONTENT)));
 		
 		String userCode = (String)param.getParameter(BSSConstantParam.USERCODE);
-		Long userId = Long.parseLong((String)param.getParameter(BSSConstantParam.USERID));
+		Object uid = param.getParameter(BSSConstantParam.USERID);
+		Long userId = Long.valueOf(uid.toString());
+		
 		orderInfoService.changeOrderStatus(req.getOrderCode(), SYSConstant.ORDER_STATUS_SUCCESS,userId);
 		
 		//shipment information

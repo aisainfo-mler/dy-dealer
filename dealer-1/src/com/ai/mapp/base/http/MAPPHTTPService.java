@@ -3,8 +3,6 @@ package com.ai.mapp.base.http;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.poifs.crypt.Decryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -185,7 +182,7 @@ public class MAPPHTTPService extends HttpServlet {
 			/**
 			 * 判断包头是否要加密
 			 */
-			rspXML = URLEncoder.encode(encrypt(rspXML), "utf-8");
+			rspXML = encrypt(rspXML);
 			
             //注意以下这一行,wls环境有影响
             response.setContentLength(rspXML.getBytes("utf-8").length);     
