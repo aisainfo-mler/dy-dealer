@@ -245,9 +245,11 @@ public class SkuEntityService{
 		SkuEntity entity = skuEntityDAO.selectByPrimaryKey(entityId);
 		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
 		List<Long> entityIds = new ArrayList<Long>();
+		List<SkuEntity> entities = new ArrayList<SkuEntity>();
 		entityIds.add(entityId);
+		entities.add(entity);
 		goodId_count.put(entity.getEntityId(), 1);
-		updateSkuEntityStatus(targetStatus, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
+		updateSkuEntityStatus(targetStatus,entities, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
 
 	}
 	
@@ -281,12 +283,27 @@ public class SkuEntityService{
 	
 	}
 	
-	public void updateSkuEntityStatus(String targetStatus,
+	/**
+	 * <p>描述: </p> 
+	 * @param targetStatus
+	 * @param entities
+	 * @param entityIds
+	 * @param goodId_count
+	 * @param orderId
+	 * @param optId
+	 * @param optType
+	 * @param targetRepcode  目标仓库  代理商销售出去时，目标仓库是他自己的库，代理商确认收货时该值也要传，目标仓库也是他自己的库
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-5 下午12:19:42
+	 */
+	private void updateSkuEntityStatus(String targetStatus,List<SkuEntity> entities,
 			List<Long> entityIds,Map<Long,Integer> goodId_count, Long orderId, Long optId,
 			String optType, Long targetRepcode) throws BusinessException,
 			SystemException {
 
-		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
+		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {//代理商销售出去时
 			commonQueryService.salerSkuEntity(SYSConstant.SKU_STATUS_USER, entityIds);
 			//卖出去的东西要减库存
 			Set<Long> key = goodId_count.keySet();
@@ -295,6 +312,15 @@ public class SkuEntityService{
 	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));
 	        }
 			
+	      //当一个渠道（或人）有多个仓库时就应该走这个方法 ,目前是登陆人一人一个仓库,代理商确认收货时只入他的 一个库
+	      if(entities != null && entities.size() != 0){
+	    	  for(SkuEntity entity:entities){
+	  				repService.updateRepCount(entity.getSkuid(), null, entity.getTargetRepcode(), 1);
+				}
+	      }
+			
+			
+	        
 		} else {
 			SkuEntity entity_new = new SkuEntity();
 			entity_new.setStatus(targetStatus);
@@ -344,7 +370,7 @@ public class SkuEntityService{
 					}
 					
 				}
-				updateSkuEntityStatus(targetStatus, itemIds, skuId_count,orderId, optId, optType, targetRepcode);
+				updateSkuEntityStatus(targetStatus, entities,itemIds, skuId_count,orderId, optId, optType, targetRepcode);
 			}
 			
 		}
@@ -768,7 +794,7 @@ public class SkuEntityService{
 		if(entities != null && entities.size() != 0 ){
 			Map<String,Integer> sku_rep = new HashMap<String,Integer>();
 			for(SkuEntity entity:entities){
-				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER) || StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_TIBCO)){
+				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER)){
 					throw new BusinessException("9999","商品库存状态已发生变更，无法确认到代理商库");
 				}
 				if(sku_rep.containsKey(entity.getSkuid() + "_" + entity.getRepositoryCode()) == false){
