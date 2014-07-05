@@ -311,14 +311,14 @@ public class SkuEntityService{
 	            Long s = it.next();
 	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));
 	        }
-			
+			/**
 	      //当一个渠道（或人）有多个仓库时就应该走这个方法 ,目前是登陆人一人一个仓库,代理商确认收货时只入他的 一个库
 	      if(entities != null && entities.size() != 0){
 	    	  for(SkuEntity entity:entities){
 	  				repService.updateRepCount(entity.getSkuid(), null, entity.getTargetRepcode(), 1);
 				}
 	      }
-			
+			*/
 			
 	        
 		} else {
@@ -347,7 +347,19 @@ public class SkuEntityService{
 
 	}
 	
-	
+	/**
+	 * <p>描述: </p> 
+	 * @param targetStatus
+	 * @param imeis
+	 * @param orderId
+	 * @param optId
+	 * @param optType
+	 * @param targetRepcode 目标仓库  代理商销售出去时，目标仓库是他自己的库，代理商确认收货时该值也要传，目标仓库也是他自己的库
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-5 下午12:32:04
+	 */
 	public void updateSkuEntityStatusByImeis(String targetStatus,
 			List<String> imeis, Long orderId, Long optId,
 			String optType, Long targetRepcode) throws BusinessException,
