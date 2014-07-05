@@ -364,6 +364,7 @@ public class SkuEntityService{
 			List<String> imeis, Long orderId, Long optId,
 			String optType, Long targetRepcode) throws BusinessException,
 			SystemException {
+		
 		if(imeis != null || imeis.size() != 0){
 			SkuEntityExample example = new SkuEntityExample();
 			example.createCriteria().andImeiIn(imeis);
