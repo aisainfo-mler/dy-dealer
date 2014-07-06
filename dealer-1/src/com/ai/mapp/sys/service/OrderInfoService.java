@@ -34,6 +34,7 @@ import com.ai.mapp.sys.util.LanguageInfo;
 import com.ai.mapp.sys.util.SYSConstant;
 import com.ai.mapp.sys.entity.OrderItem;
 import com.ailk.ts.dal.ibatis.model.Repository;
+import com.ailk.ts.dal.ibatis.model.SkuEntity;
 import com.ailk.ts.ibatis.service.RepOptRecordService;
 import com.ailk.ts.ibatis.service.RepositoryService;
 import com.ailk.ts.ibatis.service.SkuEntityService;
@@ -45,7 +46,7 @@ import com.ailk.ts.ibatis.service.SkuEntityService;
  */
 
 @Service
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 public class OrderInfoService {
 	public final Log log = LogFactory.getLog(OrderInfoService.class);
 	
@@ -144,9 +145,9 @@ public class OrderInfoService {
 			List<OrderItem> items = null;
 			for(OrderDetail detail:orderDetails){
 				items = detail.getItems();
-				if(items != null && items.size() != 0){
+				if(items == null || items.isEmpty())
 					continue;
-				}
+				
 				for(OrderItem item:items){
 					imeis.add(item.getItemValue());
 				}
@@ -173,6 +174,8 @@ public class OrderInfoService {
 		}
 		//再改定单
 		saveOrderInfo(order);
+		//入库SKU_ENTITY
+		saveSkuEntityByOrderId(order, order.getOperator().getUserId());
 	}
 	
 	
@@ -373,6 +376,7 @@ public class OrderInfoService {
 		/**
 		 * 大状态值 不变，仍为 processing
 		 */
+		order.setStatus(SYSConstant.ORDER_STATUS_SEND);
 		order.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_YES);
 		order.setBssOrderCode(sn);
 		orderInfoDao.save(order);
@@ -599,5 +603,39 @@ public class OrderInfoService {
 		this.skuEntityService = skuEntityService;
 	}
 	
+	public void saveSkuEntityByOrderId(OrderInfo order,Long optId) throws Exception{
+		if(order != null && StringUtils.equals(order.getPlaceTibco(), "1") ){
+			List<OrderDetail> details = order.getDetails();
+			if(details != null && details.isEmpty() == false){
+				SkuEntity entity = null;
+				List<SkuEntity> entities = new ArrayList<SkuEntity>();
+				List<OrderItem> items = null;
+				for(OrderDetail detail:details){
+					items = detail.getItems();
+					if(items != null && items.isEmpty() == false){
+						for(OrderItem item:items){
+							entity = new SkuEntity();
+							entity.setImei(item.getItemValue());
+							entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
+							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+							entity.setSkuid(detail.getGood().getId());
+							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
+//							entity.setOper
+							entities.add(entity);
+						}
+					}
+				}
+				if(entities != null && entities.isEmpty() == false){
+					skuEntityService.insertSkuEntites(entities, optId);
+				}
+			}
+		}else{
+			throw new Exception("订单不存在，或订单未向tibco确认");
+		}
+		
+		
+		
+	}
 	
 }

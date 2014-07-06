@@ -399,30 +399,28 @@ public class OrderAction extends BaseAction{
 	public String placeTibco(){
 		try{
 //			IUserinfo user = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
-			String sessionId = this.request.getSession().getId();
-			
-			OrderInfo order = orderInfoService.loadOrderInfo(orderMain.getId());
-			YD0012Request ydReq = new YD0012Request();
-			ydReq.setDealerId(order.getCreator().getUserId());
-			ydReq.setOrderId(order.getId().toString());
-			ydReq.setRecipient(order.getCreator().getFirstName()+" "+order.getCreator().getLastName());
-			ydReq.setRecipientAddress(order.getCreator().getStreet()+", "+(order.getCreator().getCity() ==null ? "" : order.getCreator().getCity().getCityName()));
-			ydReq.setRecipientTel(order.getCreator().getMobileNo());
-			
-			if(order.getDetails() != null || order.getDetails().size() != 0){
-				Map<String,String> goodM = new HashMap<String, String>();
-				for(OrderDetail detail:order.getDetails()){
-					detail.getGood().getId();
-					goodM.put(detail.getGood().getBssId(), detail.getCounts() + "");
-				}
-				ydReq.setGood(goodM);
-			}
-			
-			YDDatapackage pkg =null;
+//			String sessionId = this.request.getSession().getId();
+//			OrderInfo order = orderInfoService.loadOrderInfo(orderMain.getId());
+//			YD0012Request ydReq = new YD0012Request();
+//			ydReq.setDealerId(order.getCreator().getUserId());
+//			ydReq.setOrderId(order.getId().toString());
+//			ydReq.setRecipient(order.getCreator().getFirstName()+" "+order.getCreator().getLastName());
+//			ydReq.setRecipientAddress(order.getCreator().getStreet()+", "+(order.getCreator().getCity() ==null ? "" : order.getCreator().getCity().getCityName()));
+//			ydReq.setRecipientTel(order.getCreator().getMobileNo());
+//			
+//			if(order.getDetails() != null || order.getDetails().size() != 0){
+//				Map<String,String> goodM = new HashMap<String, String>();
+//				for(OrderDetail detail:order.getDetails()){
+//					detail.getGood().getId();
+//					goodM.put(detail.getGood().getBssId(), detail.getCounts() + "");
+//				}
+//				ydReq.setGood(goodM);
+//			}
+//			YDDatapackage pkg =null;
 //			YDDatapackage pkg = tibcoHandler.sendMsg("yd0012", ydReq, sessionId);
-			YD0012Response ydResp = (YD0012Response)pkg.getBody();
-			String sn = ydResp.getSn();
-//			String sn = "goTo_tibco_1";
+//			YD0012Response ydResp = (YD0012Response)pkg.getBody();
+//			String sn = ydResp.getSn();
+			String sn = "goTo_tibco_1";
 			orderInfoService.tibcoReplace(orderMain.getId(), sn);
 		}catch(Exception e){
 			e.printStackTrace();

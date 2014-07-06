@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -35,14 +33,13 @@ import com.ailk.ts.dal.ibatis.SkuEntityDAO;
 import com.ailk.ts.dal.ibatis.model.ProductSku;
 import com.ailk.ts.dal.ibatis.model.Rep;
 import com.ailk.ts.dal.ibatis.model.RepExample;
+import com.ailk.ts.dal.ibatis.model.RepExample.Criteria;
 import com.ailk.ts.dal.ibatis.model.RepOptRecord;
 import com.ailk.ts.dal.ibatis.model.RepSellDetail;
 import com.ailk.ts.dal.ibatis.model.RepStockDetail;
 import com.ailk.ts.dal.ibatis.model.Repository;
 import com.ailk.ts.dal.ibatis.model.SkuEntity;
 import com.ailk.ts.dal.ibatis.model.SkuEntityExample;
-import com.ailk.ts.dal.ibatis.model.RepExample.Criteria;
-import com.ailk.web.BaseController.JsonObject;
 
 /**
  * @author Zhengwj
@@ -245,9 +242,11 @@ public class SkuEntityService{
 		SkuEntity entity = skuEntityDAO.selectByPrimaryKey(entityId);
 		Map<Long,Integer> goodId_count = new HashMap<Long, Integer>();
 		List<Long> entityIds = new ArrayList<Long>();
+		List<SkuEntity> entities = new ArrayList<SkuEntity>();
 		entityIds.add(entityId);
+		entities.add(entity);
 		goodId_count.put(entity.getEntityId(), 1);
-		updateSkuEntityStatus(targetStatus, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
+		updateSkuEntityStatus(targetStatus,entities, entityIds, goodId_count, orderId, optId, optType, targetRepcode);
 
 	}
 	
@@ -281,12 +280,27 @@ public class SkuEntityService{
 	
 	}
 	
-	public void updateSkuEntityStatus(String targetStatus,
+	/**
+	 * <p>描述: </p> 
+	 * @param targetStatus
+	 * @param entities
+	 * @param entityIds
+	 * @param goodId_count
+	 * @param orderId
+	 * @param optId
+	 * @param optType
+	 * @param targetRepcode  目标仓库  代理商销售出去时，目标仓库是他自己的库，代理商确认收货时该值也要传，目标仓库也是他自己的库
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-5 下午12:19:42
+	 */
+	private void updateSkuEntityStatus(String targetStatus,List<SkuEntity> entities,
 			List<Long> entityIds,Map<Long,Integer> goodId_count, Long orderId, Long optId,
 			String optType, Long targetRepcode) throws BusinessException,
 			SystemException {
 
-		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {
+		if (SYSConstant.SKU_STATUS_USER.equals(targetStatus)) {//代理商销售出去时
 			commonQueryService.salerSkuEntity(SYSConstant.SKU_STATUS_USER, entityIds);
 			//卖出去的东西要减库存
 			Set<Long> key = goodId_count.keySet();
@@ -294,7 +308,16 @@ public class SkuEntityService{
 	            Long s = it.next();
 	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));
 	        }
+			/**
+	      //当一个渠道（或人）有多个仓库时就应该走这个方法 ,目前是登陆人一人一个仓库,代理商确认收货时只入他的 一个库
+	      if(entities != null && entities.size() != 0){
+	    	  for(SkuEntity entity:entities){
+	  				repService.updateRepCount(entity.getSkuid(), null, entity.getTargetRepcode(), 1);
+				}
+	      }
+			*/
 			
+	        
 		} else {
 			SkuEntity entity_new = new SkuEntity();
 			entity_new.setStatus(targetStatus);
@@ -302,14 +325,15 @@ public class SkuEntityService{
 
 			//如果仓库有变，则变
 			if(targetRepcode != null){
-				entity_new.setTargetRepcode(targetRepcode);
+//				entity_new.setTargetRepcode(targetRepcode);
 				//要开始改变库存
-				targetRep(entityIds, targetRepcode);
+				targetRep(entityIds, targetRepcode);//里面有对targetRepcode的变化保存
 			}
+				SkuEntityExample example = new SkuEntityExample();
+				example.createCriteria().andEntityIdIn(entityIds);
+				skuEntityDAO.updateByExampleSelective(entity_new, example);
 			
-			SkuEntityExample example = new SkuEntityExample();
-			example.createCriteria().andEntityIdIn(entityIds);
-			skuEntityDAO.updateByExampleSelective(entity_new, example);
+			
 		}
 
 		// 创建销售记录
@@ -320,30 +344,51 @@ public class SkuEntityService{
 
 	}
 	
-	
-	public void updateSkuEntityStatusByImeis(String targetStatus,
-			List<String> imeis, Long orderId, Long optId,
-			String optType, Long targetRepcode) throws BusinessException,
-			SystemException {
-		if(imeis != null || imeis.size() != 0){
+	/**
+	 * <p>描述: </p> 
+	 * @param targetStatus
+	 * @param imeis
+	 * @param orderId
+	 * @param optId
+	 * @param optType
+	 * @param targetRepcode 目标仓库  代理商销售出去时，目标仓库是他自己的库，代理商确认收货时该值也要传，目标仓库也是他自己的库
+	 * @throws BusinessException
+	 * @throws SystemException  
+	 * @author        Zhengwj
+	 * @Date          2014-7-5 下午12:32:04
+	 */
+	public void updateSkuEntityStatusByImeis(String targetStatus,List<String> imeis, Long orderId, Long optId,String optType, Long targetRepcode) throws BusinessException,SystemException {
+		if(imeis != null && imeis.size() != 0){
 			SkuEntityExample example = new SkuEntityExample();
 			example.createCriteria().andImeiIn(imeis);
 			List<SkuEntity> entities = skuEntityDAO.selectByExample(example);
-			if(entities != null && entities.size() != 0){
+			if(entities != null && entities.size() != 0)
+			{
 				List<Long> itemIds = new ArrayList<Long>();
 				Map<Long,Integer> skuId_count = new HashMap<Long, Integer>();
-				int c = 0;
-				for(SkuEntity entity:entities){
+				for(SkuEntity entity:entities)
+				{
 					itemIds.add(entity.getEntityId());
-					if(skuId_count.containsKey(entity.getSkuid())){
-						skuId_count.put(entity.getSkuid(), 1);
-					}else{
-						c = skuId_count.get(entity.getSkuid());
-						skuId_count.put(entity.getSkuid(), c + 1);
-					}
 					
+					if(skuId_count.containsKey(entity.getSkuid())){
+						skuId_count.put(entity.getSkuid(), skuId_count.get(entity.getSkuid()) + 1);
+					}else{
+						skuId_count.put(entity.getSkuid(), 1);
+					}
 				}
-				updateSkuEntityStatus(targetStatus, itemIds, skuId_count,orderId, optId, optType, targetRepcode);
+				
+//				int c = 0;
+//				for(SkuEntity entity:entities){
+//					itemIds.add(entity.getEntityId());
+//					if(skuId_count.containsKey(entity.getSkuid()) == false){
+//						skuId_count.put(entity.getSkuid(), 1);
+//					}else{
+//						c = skuId_count.get(entity.getSkuid());
+//						skuId_count.put(entity.getSkuid(), c + 1);
+//					}
+//					
+//				}
+				updateSkuEntityStatus(targetStatus, entities,itemIds, skuId_count,orderId, optId, optType, targetRepcode);
 			}
 			
 		}
@@ -758,8 +803,7 @@ public class SkuEntityService{
 		return record.getSerialNo();
 	}
 
-	public void targetRep(List<Long> entityIds, Long inRepCode)
-			throws BusinessException, SystemException {
+	public void targetRep(List<Long> entityIds, Long inRepCode) throws BusinessException, SystemException {
 		SkuEntityExample entity_ex = new SkuEntityExample();
 		entity_ex.createCriteria().andEntityIdIn(entityIds);
 		List<SkuEntity> entities = skuEntityDAO.selectByExample(entity_ex);
@@ -767,7 +811,10 @@ public class SkuEntityService{
 		if(entities != null && entities.size() != 0 ){
 			Map<String,Integer> sku_rep = new HashMap<String,Integer>();
 			for(SkuEntity entity:entities){
-				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER) || StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_TIBCO)){
+				if(StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_USER)
+//						|| StringUtils.equals(entity.getStatus(), SYSConstant.SKU_STATUS_TIBCO)
+				)
+				{
 					throw new BusinessException("9999","商品库存状态已发生变更，无法确认到代理商库");
 				}
 				if(sku_rep.containsKey(entity.getSkuid() + "_" + entity.getRepositoryCode()) == false){
