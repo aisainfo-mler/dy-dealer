@@ -121,15 +121,20 @@
          <level value="debug"/>    
          <appender-ref ref="default"/>
      </logger> 
-      <logger name="org.hibernate.sql">   
-         <level value="ERROR"/>    
-         <appender-ref ref="default"/>  
-     </logger>
+      
      <logger name="jdbc.sqltiming" additivity="true">
      	<appender-ref ref="default"/>
      	<level value="INFO"></level>
      </logger>
       -->
+      <logger name="org.hibernate.sql">   
+         <level value="debug"/>    
+         <appender-ref ref="default"/>  
+     </logger>
+     	<logger name="com.ailk.mapp">
+		<level value="debug" />
+		<appender-ref ref="default" />
+	</logger>
 	<root>
 		<level value="error" />
 		<appender-ref ref="default" />

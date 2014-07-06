@@ -421,6 +421,7 @@ public class OrderAction extends BaseAction{
 //			YD0012Response ydResp = (YD0012Response)pkg.getBody();
 //			String sn = ydResp.getSn();
 			String sn = "goTo_tibco_1";
+			
 			orderInfoService.tibcoReplace(orderMain.getId(), sn);
 		}catch(Exception e){
 			e.printStackTrace();

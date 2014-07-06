@@ -29,28 +29,22 @@ public class HW0020Request extends YDBody{
 		/**
 		 * 商品ID
 		 */
-		private String goodId;
+		private Long goodId;
 		/**
 		 * 商品数量
 		 */
-		private String count;
-		
-
-		public String getGoodId() {
+		private Long count;
+		public Long getGoodId() {
 			return goodId;
 		}
-
-		public void setGoodId(String goodId) {
+		public void setGoodId(Long goodId) {
 			this.goodId = goodId;
 		}
-
-		public String getCount() {
+		public Long getCount() {
 			return count;
 		}
-
-		public void setCount(String count) {
+		public void setCount(Long count) {
 			this.count = count;
 		}
-
 	}
 }

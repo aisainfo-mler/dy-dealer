@@ -14,6 +14,7 @@ import com.ai.mapp.sys.entity.OrderDetail;
 import com.ai.mapp.sys.entity.OrderInfo;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.OrderInfoService;
+import com.ai.mapp.sys.service.UserService;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.MappContext;
@@ -36,23 +37,29 @@ public class HW0020Action extends AbstractYDBaseActionHandler<HW0020Request, HW0
 	@Autowired
 	private OrderInfoService orderInfoService;
 
+	@Autowired
+	private UserService userService;
+	
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
+		
+		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
+		User user = userService.loadUserByUserCode(userCode);
+		
 		OrderDetail orderDetail = null;
 		List<OrderDetail> list = new ArrayList<OrderDetail>();
 		List<Good> goodList = this.request.getGoodList();
 		if(goodList != null && goodList.isEmpty() == false){
 			for(Good g:goodList){
 				orderDetail = new OrderDetail();
-				orderDetail.setCounts(Long.parseLong(g.getCount()));
-				orderDetail.setGood(new GoodsInfo(Long.parseLong(g.getGoodId())));
+				orderDetail.setCounts(g.getCount());
+				orderDetail.setGood(new GoodsInfo(g.getGoodId()));
 				orderDetail.setCreateTime(new Date());
 				list.add(orderDetail);
 			}
-			User u = (User)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
 			
-			OrderInfo orderInfo = orderInfoService.generateOrder(list, u);
+			OrderInfo orderInfo = orderInfoService.generateOrder(list, user);
 			this.response.setOrderCode(orderInfo.getSerialNumber());
 		}
 	}

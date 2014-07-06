@@ -83,7 +83,7 @@ public class MoneyUtils {
 		BigDecimal mon = BigDecimal.ZERO;
 		try {
 			mon = new BigDecimal(d);
-			mon = mon.divide(new BigDecimal(1000));
+//			mon = mon.divide(new BigDecimal(1000));
 			return nf.format(mon);
 		} catch(Exception e) {
 			return String.valueOf(d);

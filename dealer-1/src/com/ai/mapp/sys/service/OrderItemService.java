@@ -215,13 +215,13 @@ public class OrderItemService {
 		if(!StringUtil.isEmpty(itemValues)){
 			String[] valueArr = itemValues.split(",;_");
 			OrderItem item = null;
-			SkuEntity entity = null;
-			List<SkuEntity> entities = new ArrayList<SkuEntity>();
+//			SkuEntity entity = null;
+//			List<SkuEntity> entities = new ArrayList<SkuEntity>();
 			String[] tmpArr = null;
 			for(String value:valueArr){
 				if(!StringUtil.isEmpty(value)){
 					item = new OrderItem();
-					entity = new SkuEntity();
+//					entity = new SkuEntity();
 				
 					item.setCreateTime(new Date());
 					item.setStatus(SYSConstant.ITEM_STATUS_TEMP);//先临时 ，后发货中,等客户收到货后才置为未使用,开户成功后才为使用中
@@ -230,13 +230,13 @@ public class OrderItemService {
 					if(value.indexOf("_") != -1){
 						tmpArr = value.split("_");
 						item.setItemValue(tmpArr[1]);
-						entity.setImei(tmpArr[1]);
+//						entity.setImei(tmpArr[1]);
 						if(!StringUtil.isEmpty(tmpArr[0])){
 							item.setFrom(tmpArr[0]);//0:scan  1:manual  2:batch
 						}
 					}else{
 						item.setItemValue(value);
-						entity.setImei(value);
+//						entity.setImei(value);
 					}
 					item.setGood(detail.getGood());
 					if(operator != null){
@@ -244,16 +244,16 @@ public class OrderItemService {
 					}
 					saveOrderItem(item);
 					
-					entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
-					entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-					entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-					entity.setSkuid(detail.getGood().getId());
-					entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
-//					entity.setOper
-					entities.add(entity);
+//					entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
+//					entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+//					entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+//					entity.setSkuid(detail.getGood().getId());
+//					entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
+////					entity.setOper
+//					entities.add(entity);
 					
 				}
-				skuEntityService.insertSkuEntites(entities, operator.getUserId());
+//				skuEntityService.insertSkuEntites(entities, operator.getUserId());
 			}
 		}
 		if(!StringUtil.isEmpty(orderItemBatchValues)){
@@ -261,6 +261,8 @@ public class OrderItemService {
 			saveItemValuesByBatch(detail,orderItemBatchValues,operator);
 		}
 	}
+	
+	
 	
 	public long countItem(String userCode,String goodType,String status) throws Exception
 	{

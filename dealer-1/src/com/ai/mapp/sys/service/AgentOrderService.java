@@ -560,7 +560,7 @@ public class AgentOrderService {
 		/**
 		 * 设置库存相关信息
 		 */
-//		skuEntityService.saleSkuEntity(imeiList, order.getOrderId(), order.getCreator().getUserId());
+		skuEntityService.saleSkuEntity(imeiList, order.getOrderId(), order.getCreator().getUserId());
 		
 		/** 保存佣金记录 **/
 		commissionService.addCommissionByAgentOrder(order.getOrderCode());

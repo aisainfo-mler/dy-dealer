@@ -21,6 +21,9 @@
 			<s:if test="%{orderMain.placeTibco == null || orderMain.placeTibco == 0 || orderMain.placeTibco == '0'}">
 				<input type="button" value="<s:text name="order.send" />" class="d_button4" onclick="order_tibco(${orderMain.id})"/>
 			</s:if>
+			<s:elseif test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "") && (orderMain.placeTibco == 1 || orderMain.placeTibco == "1")}'>
+				<input type="button" value="<s:text name="order.send" />" class="d_button4" onclick="order_open_send(${orderMain.id})"/>
+			</s:elseif>
 		</s:if>
 		<s:if test="%{isHome == null || isHome == '0' || isHome == 0}">
 			<input type="button" value="<< &nbsp;<s:text name="order.return" />" class="d_button4" onclick="order_detail_return()"/>
@@ -124,8 +127,8 @@
 							</s:if>
 						</td>
 						<td>
-<%--							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "") && (orderMain.placeTibco == 1 || orderMain.placeTibco == "1")}'>--%>
-							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>
+							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "") && (orderMain.placeTibco == 1 || orderMain.placeTibco == "1")}'>
+<%--							<s:if test='%{orderMain.status == "2" && (orderMain.expressNumber == null || orderMain.expressNumber == "")}'>--%>
 								<a href="javascript:void(0);" onclick="order_itemList('${orderMain.expressNumber}',${orderDetail.id},${orderDetail.good.id},<s:property value="%{#orderDetail.counts}"/>,${orderMain.creator.userId})"><s:text name="order.detail.process" /></a>
 							</s:if>
 							<s:else>

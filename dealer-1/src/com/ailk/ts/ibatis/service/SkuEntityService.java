@@ -376,18 +376,6 @@ public class SkuEntityService{
 						skuId_count.put(entity.getSkuid(), 1);
 					}
 				}
-				
-//				int c = 0;
-//				for(SkuEntity entity:entities){
-//					itemIds.add(entity.getEntityId());
-//					if(skuId_count.containsKey(entity.getSkuid()) == false){
-//						skuId_count.put(entity.getSkuid(), 1);
-//					}else{
-//						c = skuId_count.get(entity.getSkuid());
-//						skuId_count.put(entity.getSkuid(), c + 1);
-//					}
-//					
-//				}
 				updateSkuEntityStatus(targetStatus, entities,itemIds, skuId_count,orderId, optId, optType, targetRepcode);
 			}
 			

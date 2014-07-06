@@ -108,7 +108,7 @@ public class MAPPHTTPService extends HttpServlet {
 			
 			String rspXML = "";
 			//解析包头
-			StringReader reader = new StringReader(str);
+			StringReader reader = new StringReader(str.trim());
 			MAPP send = MAPP.unmarshal(reader);	
 			String svcContent = send.getSvcContent();	
 //			svcContent = updateSvcContent(svcContent);
