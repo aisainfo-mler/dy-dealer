@@ -329,9 +329,10 @@ public class SkuEntityService{
 				//要开始改变库存
 				targetRep(entityIds, targetRepcode);//里面有对targetRepcode的变化保存
 			}
-				SkuEntityExample example = new SkuEntityExample();
-				example.createCriteria().andEntityIdIn(entityIds);
-				skuEntityDAO.updateByExampleSelective(entity_new, example);
+			
+			SkuEntityExample example = new SkuEntityExample();
+			example.createCriteria().andEntityIdIn(entityIds);
+			skuEntityDAO.updateByExampleSelective(entity_new, example);
 			
 			
 		}

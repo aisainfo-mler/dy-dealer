@@ -475,7 +475,7 @@ public class OrderItemService {
 							entity.setImei(value);
 							entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
 							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-//							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
 							entity.setSkuid(detail.getGood().getId());
 							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
 //							entity.setOper
@@ -487,7 +487,10 @@ public class OrderItemService {
 				
 			}
 		}
-		skuEntityService.insertSkuEntites(entities, operator.getUserId());
+		/**
+		 * saveItem时先不做插入差错
+		 */
+//		skuEntityService.insertSkuEntites(entities, operator.getUserId());
 	}
 	
 }

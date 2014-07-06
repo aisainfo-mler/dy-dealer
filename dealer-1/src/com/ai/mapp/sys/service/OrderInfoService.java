@@ -159,7 +159,7 @@ public class OrderInfoService {
 			if(reps == null || reps.size() == 0){
 				throw new Exception("该代理商无仓库，请建仓库");
 			}
-			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_CHANNEL, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL, reps.get(0).getRepCode());
+			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_TIBCO, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL, reps.get(0).getRepCode());
 		}
 		
 	}
@@ -212,7 +212,11 @@ public class OrderInfoService {
 					}
 				}
 			}
-			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_NO);
+			/**
+			 * 现在不往tibco发订单，因此将此状态值为1
+			 */
+//			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_NO);
+			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_YES);
 			info.setStatus(SYSConstant.ORDER_STATUS_WAIT_PAY);//待支付状态
 			info.setCreator(creator);
 			info.setCreateTime(new Date());
