@@ -994,6 +994,7 @@ public class SYSConstant {
 //		bankTypes.put("HZBANK", "杭州银行");//杭州银行---HZBANK
 		
 //		skuStatusMap.put(SKU_STATUS_TIBCO, "在平台库");
+		
 		skuStatusMap.put(SKU_STATUS_CHANNEL, "在库");
 		skuStatusMap.put(SKU_STATUS_USER, "已销售");
 		skuStatusMap.put(SKU_STATUS_DESTROY, "已损坏");
