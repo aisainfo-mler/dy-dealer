@@ -15,7 +15,6 @@ import com.ai.mapp.sys.entity.FileManageCondition;
 
 
 public class SYSConstant {
-	
 	/**
 	 * tibco 超级管理员
 	 */
@@ -592,6 +591,8 @@ public class SYSConstant {
 	 * tibco仓库ID
 	 */
 	public static final Long REP_CODE_TIBCO = 0L;
+	
+	
 	
 	static
 	{
