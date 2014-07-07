@@ -714,12 +714,14 @@ public class SYSConstant {
 		
 		/** 代理商订单类型 **/
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_NEW);
+		agentOrderTypesL.add(AGENT_ORDER_TYPE_TOPUP);
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_RECHARGE);
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_SIMCARD);
 		agentOrderTypesL.add(AGENT_ORDER_TYPE_ADDON);
 		
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_NEW + LANGUAGE_ENGLISH, "New User");
-		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + LANGUAGE_ENGLISH, "Top Up");//充值
+		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_TOPUP + LANGUAGE_ENGLISH, "Top Up");//充值
+		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + LANGUAGE_ENGLISH, "Recharge");//Recharge
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_SIMCARD + LANGUAGE_ENGLISH, "SIM Care");
 		agentOrderTypes.put(SYSConstant.AGENT_ORDER_TYPE_ADDON + LANGUAGE_ENGLISH, "Add-On");//叠加包
 		
