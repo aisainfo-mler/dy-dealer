@@ -863,6 +863,7 @@ public class SYSConstant {
 		useDomainTypes.put("mapp_mobile_info","手机附件");
 		useDomainTypes.put("mapp_article_title","文章附件");
 		
+		
 		//文章状态 0-已审核 1-需要审核 2-已忽略
 		titleStatus.put(0,"已审核");
 		titleStatus.put(1,"需要审核");
