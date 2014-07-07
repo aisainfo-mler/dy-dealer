@@ -15,6 +15,7 @@ import com.ai.mapp.sys.entity.FileManageCondition;
 
 
 public class SYSConstant {
+	
 	/**
 	 * tibco 超级管理员
 	 */
