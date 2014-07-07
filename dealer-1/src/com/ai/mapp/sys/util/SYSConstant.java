@@ -560,7 +560,7 @@ public class SYSConstant {
 	 * 关于SKU实体状态 SKU_ENTITY
 	 *  01:在平台库
 	 */
-//	public static final String SKU_STATUS_TIBCO = "01";
+	public static final String SKU_STATUS_TIBCO = "01";
 	/**
 	 * 关于SKU实体状态 SKU_ENTITY
 	 *  02:在代理商库
