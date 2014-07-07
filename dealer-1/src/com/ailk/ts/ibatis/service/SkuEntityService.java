@@ -325,9 +325,9 @@ public class SkuEntityService{
 
 			//如果仓库有变，则变
 			if(targetRepcode != null){
-//				entity_new.setTargetRepcode(targetRepcode);
 				//要开始改变库存
-				targetRep(entityIds, targetRepcode);//里面有对targetRepcode的变化保存
+				targetRep(entityIds,entities, targetRepcode);//里面有对targetRepcode的变化保存
+				entity_new.setTargetRepcode(targetRepcode);
 			}
 			
 			SkuEntityExample example = new SkuEntityExample();
@@ -792,10 +792,10 @@ public class SkuEntityService{
 		return record.getSerialNo();
 	}
 
-	public void targetRep(List<Long> entityIds, Long inRepCode) throws BusinessException, SystemException {
+	public void targetRep(List<Long> entityIds,List<SkuEntity> entities, Long inRepCode) throws BusinessException, SystemException {
 		SkuEntityExample entity_ex = new SkuEntityExample();
 		entity_ex.createCriteria().andEntityIdIn(entityIds);
-		List<SkuEntity> entities = skuEntityDAO.selectByExample(entity_ex);
+//		List<SkuEntity> entities = skuEntityDAO.selectByExample(entity_ex);
 		
 		if(entities != null && entities.size() != 0 ){
 			Map<String,Integer> sku_rep = new HashMap<String,Integer>();
@@ -806,6 +806,7 @@ public class SkuEntityService{
 				{
 					throw new BusinessException("9999","商品库存状态已发生变更，无法确认到代理商库");
 				}
+				//获得原始仓库
 				if(sku_rep.containsKey(entity.getSkuid() + "_" + entity.getRepositoryCode()) == false){
 					sku_rep.put(entity.getSkuid() + "_" + entity.getRepositoryCode(), 1);
 				}else{
@@ -826,9 +827,6 @@ public class SkuEntityService{
 	            repService.updateRepCount(skuId, inRepCode, Long.parseLong(outRepCode), sku_rep.get(k));//代理商入库
 	        }
 	        
-	        SkuEntity record = new SkuEntity();
-	        record.setTargetRepcode(inRepCode);
-	        skuEntityDAO.updateByExampleSelective(record, entity_ex);
 		}
 		
 	}
