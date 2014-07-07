@@ -441,8 +441,8 @@ public class OrderItemService {
 		}
 		String[] remarkArr = batchString.split(";");
 		String[] fromEndNumArr = null;
-		SkuEntity entity = null;
-		List<SkuEntity> entities = new ArrayList<SkuEntity>();
+//		SkuEntity entity = null;
+//		List<SkuEntity> entities = new ArrayList<SkuEntity>();
 		OrderItem item = null;
 		int i = 0;
 		for(String unitRemark:remarkArr){
@@ -471,15 +471,15 @@ public class OrderItemService {
 							}
 							saveOrderItem(item);
 							
-							entity = new SkuEntity();
-							entity.setImei(value);
-							entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
-							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-							entity.setSkuid(detail.getGood().getId());
-							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
+//							entity = new SkuEntity();
+//							entity.setImei(value);
+//							entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
+//							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+//							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+//							entity.setSkuid(detail.getGood().getId());
+//							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
 //							entity.setOper
-							entities.add(entity);
+//							entities.add(entity);
 
 						}
 					}

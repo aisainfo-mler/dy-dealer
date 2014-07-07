@@ -306,7 +306,7 @@ public class SkuEntityService{
 			Set<Long> key = goodId_count.keySet();
 	        for (Iterator<Long> it = key.iterator(); it.hasNext();) {
 	            Long s = it.next();
-	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));
+	            repService.updateRepCount(s, null, targetRepcode, goodId_count.get(s));//出库操作
 	        }
 			/**
 	      //当一个渠道（或人）有多个仓库时就应该走这个方法 ,目前是登陆人一人一个仓库,代理商确认收货时只入他的 一个库
@@ -323,10 +323,17 @@ public class SkuEntityService{
 			entity_new.setStatus(targetStatus);
 			entity_new.setModifyTime(new Timestamp(System.currentTimeMillis()));
 
-			//如果仓库有变，则变
+			//如果仓库有变，则变--
 			if(targetRepcode != null){
 				//要开始改变库存
+				/**目前只有平台商到代理商仓库一说  ,平台商不做出库操作
 				targetRep(entityIds,entities, targetRepcode);//里面有对targetRepcode的变化保存
+				*/
+				Set<Long> key = goodId_count.keySet();
+		        for (Iterator<Long> it = key.iterator(); it.hasNext();) {
+		            Long s = it.next();
+		            repService.updateRepCount(s, targetRepcode,null , goodId_count.get(s));//入库操作
+		        }
 				entity_new.setTargetRepcode(targetRepcode);
 			}
 			
@@ -627,8 +634,11 @@ public class SkuEntityService{
 		Long serialNo = recordRepOpt(skuid, repCode, count, optId,
 				SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);// 返回的主键
 		// 更新库存量
-		Long repOptId = freshRep(skuid, repCode, count,
-				SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);
+		if(!SYSConstant.REP_CODE_TIBCO.equals(repCode)){//平台库没有入仓出仓概念,但可以有录入的日志值
+			Long repOptId = freshRep(skuid, repCode, count,
+					SYSConstant.SELL_DETAIL_OPTTYPE_2_REP);
+		}
+		
 
 		// 沉淀商品进货明细，沉淀商品实体表
 		for (Iterator it = entites.iterator(); it.hasNext();) {
@@ -674,13 +684,14 @@ public class SkuEntityService{
 				throw new BusinessException("", "IMEI:" + skuEntity.getImei()
 						+ "  不存在，或者存在多条！");
 			else {
+				/**没有平台库的概念了
 				if (!SYSConstant.SKU_STATUS_TIBCO.equals(skuEntites.get(0)
 						.getStatus())) {
 					// 出库的时候，状态不是1:在平台库。报错
 					throw new BusinessException("", "IMEI:"
 							+ skuEntity.getImei() + "  状态不正确，应该为01 在平台库，实际上为"
 							+ skuEntites.get(0).getStatus() + " 在代理商库");
-				}
+				}*/
 				return skuEntites.get(0);
 			}
 		}
