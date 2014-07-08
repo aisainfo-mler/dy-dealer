@@ -159,6 +159,7 @@ public class OrderInfoService {
 			if(reps == null || reps.size() == 0){
 				throw new Exception("该代理商无仓库，请建仓库");
 			}
+			
 			skuEntityService.updateSkuEntityStatusByImeis(SYSConstant.SKU_STATUS_CHANNEL, imeis, order.getId(), optId, SYSConstant.SELL_DETAIL_OPTTYPE_TIBCO_2_CHANNEL, reps.get(0).getRepCode());
 		}
 		
@@ -621,10 +622,12 @@ public class OrderInfoService {
 							entity = new SkuEntity();
 							entity.setImei(item.getItemValue());
 							entity.setModifyTime(com.ailk.butterfly.core.util.DateUtils.getCurrent());
-							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
-							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库
+							entity.setRepositoryCode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库--虚拟起点，不记录任何入出仓库
+							entity.setTargetRepcode(SYSConstant.REP_CODE_TIBCO);//目前存在于TIBCO仓库,始于TIBCO仓库--虚拟起点，不记录任何入出仓库
 							entity.setSkuid(detail.getGood().getId());
-							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
+//							entity.setStatus(SYSConstant.SKU_STATUS_TIBCO);
+							entity.setStatus(SYSConstant.SKU_STATUS_ON_ROAD);//实体在途状态
+							
 //							entity.setOper
 							entities.add(entity);
 						}

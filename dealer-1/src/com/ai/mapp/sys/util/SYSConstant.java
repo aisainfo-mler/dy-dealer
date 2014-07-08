@@ -583,6 +583,11 @@ public class SYSConstant {
 	public static final String SKU_STATUS_TMP = "05";
 	
 	/**
+	 * 在途
+	 */
+	public static final String SKU_STATUS_ON_ROAD = "06";
+	
+	/**
 	 * tibco仓库ID
 	 */
 	public static final Long REP_CODE_TIBCO = 0L;
@@ -988,11 +993,12 @@ public class SYSConstant {
 //		bankTypes.put("SPD", "浦发银行");//浦发银行--SPD
 //		bankTypes.put("HZBANK", "杭州银行");//杭州银行---HZBANK
 		
-		skuStatusMap.put(SKU_STATUS_TIBCO, "在平台库");
+//		skuStatusMap.put(SKU_STATUS_TIBCO, "在平台库");
 		skuStatusMap.put(SKU_STATUS_CHANNEL, "在库");
 		skuStatusMap.put(SKU_STATUS_USER, "已销售");
 		skuStatusMap.put(SKU_STATUS_DESTROY, "已损坏");
 		skuStatusMap.put(SKU_STATUS_TMP, "预占");
+		skuStatusMap.put(SKU_STATUS_ON_ROAD, "在途");
 	}
 
 	public static Object getDictName(String type,Object key)
