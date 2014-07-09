@@ -15,6 +15,8 @@ public class HW0013Request extends YDBody {
     private java.lang.String payStatus;
 
     private java.lang.String payType;
+    
+    private java.lang.String orn;
 
     private java.lang.String startTime;
 
@@ -23,6 +25,14 @@ public class HW0013Request extends YDBody {
     private java.lang.String start;
 
     private java.lang.String size;
+
+	public java.lang.String getOrn() {
+		return orn;
+	}
+
+	public void setOrn(java.lang.String orn) {
+		this.orn = orn;
+	}
 
 	public java.lang.String getOrderCode() {
 		return orderCode;

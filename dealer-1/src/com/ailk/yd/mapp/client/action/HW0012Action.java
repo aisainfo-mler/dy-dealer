@@ -201,25 +201,25 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		{
 			HW0010Request.Address address = hw_customer.getPermanentAddress();
 			
-			address = new HW0010Request.Address();
-			address.setAddressId("");
-			address.setBuildingId("");
-			address.setAddressType("PER_ADD");
-			address.setCareOf("");
-			address.setHouseNameORNumber("ghh");
-			address.setBuildingNameORNumber("TC23- C Block");
-			address.setSocietyName("");
-			address.setStreetNameORNumber("hjj");
-			address.setLandmark("");
-			address.setSubLocality("");
-			address.setAreaORTehsil("ghh");
-			address.setPincode("666888");
-			address.setVillageORCity("Mumbai");
-			address.setDistrict("mum");
-			address.setState("MH");
-			address.setCountry("IN");
-			address.setTotalFloors("");
-			address.setJioCentreId("JC23");
+//			address = new HW0010Request.Address();
+//			address.setAddressId("");
+//			address.setBuildingId("");
+//			address.setAddressType("PER_ADD");
+//			address.setCareOf("");
+//			address.setHouseNameORNumber("ghh");
+//			address.setBuildingNameORNumber("TC23- C Block");
+//			address.setSocietyName("");
+//			address.setStreetNameORNumber("hjj");
+//			address.setLandmark("");
+//			address.setSubLocality("");
+//			address.setAreaORTehsil("ghh");
+//			address.setPincode("666888");
+//			address.setVillageORCity("Mumbai");
+//			address.setDistrict("mum");
+//			address.setState("MH");
+//			address.setCountry("IN");
+//			address.setTotalFloors("");
+//			address.setJioCentreId("JC23");
 			
 			req.getCustomerDetails().setPermanentAddress(new Address());
 			req.getCustomerDetails().getPermanentAddress().setAddressId(address.getAddressId()==null?"":address.getAddressId());
@@ -419,9 +419,8 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		/***Form61***/
 		if(caf.getForm61() != null)
 		{
-			
-			req.getCafDetails().getForm61Details().setLastTaxReturnFiled(caf.getForm61().getLastTaxReturnFiled()==null?"":caf.getForm61().getLastTaxReturnFiled());
-			req.getCafDetails().getForm61Details().setReasonForNoPAN(caf.getForm61().getReasonForNoPAN()==null?"":caf.getForm61().getReasonForNoPAN());
+//			req.getCafDetails().getForm61Details().setLastTaxReturnFiled(caf.getForm61().getLastTaxReturnFiled()==null?"":caf.getForm61().getLastTaxReturnFiled());
+//			req.getCafDetails().getForm61Details().setReasonForNoPAN(caf.getForm61().getReasonForNoPAN()==null?"":caf.getForm61().getReasonForNoPAN());
 		}
 		
 		req.getCafDetails().setLocalReferenceDetails(new LocalRef());
@@ -621,8 +620,20 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	
 	private void validate(YD0010Request request) throws Exception
 	{
-		if(request == null)
-			throw new Exception("请求为空");
+		if(request == null || request.getCustomerDetails() == null || request.getCafDetails() == null)
+			throw new Exception("request Incomplete");
+		
+		YD0010Request.Customer customer =  request.getCustomerDetails();
+		YD0010Request.CafInfo caf =  request.getCafDetails();
+		
+		if(StringUtils.isEmpty(customer.getPanNumber()) && caf.getForm61Details() == null)
+			throw new Exception("PanNumber is null,form61 to be filled");
+		
+		if("5".equals(customer.getCustomerCategory()) && caf.getLocalReferenceDetails() == null)
+		{
+			throw new Exception("Outstation Customer to be filled Local Reference info");
+		}
+		
 	}
 	
 }

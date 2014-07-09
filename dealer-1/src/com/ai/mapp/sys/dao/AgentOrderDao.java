@@ -39,6 +39,11 @@ public class AgentOrderDao extends HibernateDao<AgentOrder, Long> {
 			c.add(Restrictions.eq("orderId", t.getOrderId()));
 		}
 		
+		if(t.getTibcoOrderNumber() != null)
+		{
+			c.add(Restrictions.eq("tibcoOrderNumber", t.getTibcoOrderNumber()));
+		}
+		
 		if(StringUtil.isEmpty(t.getOrderCode()) == false)
 		{
 			c.add(Restrictions.like("orderCode", t.getOrderCode(),MatchMode.ANYWHERE).ignoreCase());

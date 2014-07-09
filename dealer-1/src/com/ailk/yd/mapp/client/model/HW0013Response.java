@@ -56,7 +56,17 @@ public class HW0013Response extends YDBody {
 
 		private java.lang.String SIMFee;
 		
+		private java.lang.String orn;
+		
 		private Map<String,BigDecimal> feeDetail;
+		
+		public java.lang.String getOrn() {
+			return orn;
+		}
+
+		public void setOrn(java.lang.String orn) {
+			this.orn = orn;
+		}
 
 		public java.lang.String getOrderCode() {
 			return orderCode;

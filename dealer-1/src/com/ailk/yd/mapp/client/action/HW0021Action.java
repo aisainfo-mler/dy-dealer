@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.ai.mapp.model.HW0021.HW0021Request;
 import com.ai.mapp.sys.entity.OrderDetail;
 import com.ai.mapp.sys.entity.OrderInfo;
 import com.ai.mapp.sys.entity.User;
@@ -19,6 +18,7 @@ import com.ailk.butterfly.mapp.core.ErrorCodeDefine;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
+import com.ailk.yd.mapp.client.model.HW0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0012.YD0012Request;
 
 /**

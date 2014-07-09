@@ -68,6 +68,8 @@ public class HW0013Action extends
 			condition.setSvn(req.getSvn());
 		if(StringUtil.isEmpty(ui.getUsercode()) == false)
 			condition.setCreator(new User(ui.getUsercode()));
+		if(StringUtil.isEmpty(req.getOrn()) == false)
+			condition.setTibcoOrderNumber(req.getOrn());
 		
 		int start = StringUtil.isEmpty(req.getStart())  ? 0 : Integer.valueOf(req.getStart());
 		int pageSize = StringUtil.isEmpty(req.getSize()) ? 16 : Integer.valueOf(req.getSize());
@@ -109,6 +111,7 @@ public class HW0013Action extends
 			d.setSimFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setSIMFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setNumberFee(order.getNumberFee() == null?"0":order.getNumberFee().toString());
+			d.setOrn(order.getTibcoOrderNumber() == null?"":order.getTibcoOrderNumber());
 			
 			if(StringUtils.isNotBlank(order.getFeeDetail()))
 			{
