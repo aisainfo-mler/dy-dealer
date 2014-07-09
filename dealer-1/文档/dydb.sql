@@ -879,3 +879,12 @@ INSERT INTO `hw_sys_prop` VALUES ('2601', 'Gender', 'Gender', null, 'Gender', nu
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+insert into hw_product(rangeid,bss_accept_range_id,servicetype,packedname,product_desc,paytype,status)
+values(88888,'FTP100005','PLAN','FLEXI TOP-UP','FLEXI TOP-UP','1','1')
+;
+
+
+
+
