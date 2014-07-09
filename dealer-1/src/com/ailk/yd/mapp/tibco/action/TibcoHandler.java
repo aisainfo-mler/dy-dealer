@@ -127,7 +127,7 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 			if (responseCode >= 100 && responseCode < 300) {
 				result = method.getResponseBodyAsString();
 			} else {
-				if (responseCode < 400 && responseCode >= 300) {
+//				if (responseCode < 400 && responseCode >= 300) {
 					logger.debug(""+method.getStatusLine());
 					
 					String errorMsg = method.getResponseBodyAsString();
@@ -140,9 +140,9 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 						redirectLocation = locationHeader.getValue();
 						throw new Exception("响应编码："+responseCode+","+method.getStatusLine()+","+redirectLocation);
 					}
-				} else {
-					throw new Exception("响应编码："+responseCode+","+method.getStatusLine());
-				}
+//				} else {
+//					throw new Exception("响应编码："+responseCode+","+method.getStatusLine());
+//				}
 			}
 //			result = method.getResponseBodyAsString();
 //			if (TibcoUtil.isJsonFormat(result)) {
@@ -176,8 +176,8 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 	public String getError(String errorMsg)
 	{
 		try{
-			Map<String,String> errMap = mapper.readValue(errorMsg, new TypeReference<Map<String,String>>(){});
-			return errMap.get("errors");
+			Map errMap = mapper.readValue(errorMsg, Map.class);
+			return mapper.writeValueAsString(errMap.get("errors"));
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
