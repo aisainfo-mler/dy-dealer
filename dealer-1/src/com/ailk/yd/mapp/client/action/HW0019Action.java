@@ -52,7 +52,8 @@ public class HW0019Action extends AbstractYDBaseActionHandler<HW0019Request, HW0
 			condition.setType(this.request.getGoodType());
 		
 		Collection<GoodsInfo> goods = goodsInfoService.listAllGoodsInfos(condition);
-		if(goods != null || goods.isEmpty() == false)
+		
+		if(goods != null && goods.isEmpty() == false)
 		{
 			Map<String,List<Good>> good_map = new LinkedHashMap<String,List<Good>>(0);
 			Good g = null;
