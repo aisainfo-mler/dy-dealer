@@ -177,7 +177,7 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 	{
 		try{
 			Map errMap = mapper.readValue(errorMsg, Map.class);
-			return mapper.writeValueAsString(errMap.get("errors"));
+			return errMap.get("errors") == null?"tibco interface is error,can't fetch the error info":mapper.writeValueAsString(errMap.get("errors"));
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
