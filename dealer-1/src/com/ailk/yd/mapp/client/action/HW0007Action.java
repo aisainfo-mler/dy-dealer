@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,18 @@ public class HW0007Action extends
 			Exception {
 		// TODO Auto-generated method stub
 		YD0007Request yd0007Req = new YD0007Request();
-		new SetUtil(this.request, yd0007Req).copyAllSameNameProp();
-		yd0007Req.setEmailid(request.getMdn());
+//		new SetUtil(this.request, yd0007Req).copyAllSameNameProp();
+//		yd0007Req.setEmailid(request.getMdn());
+		yd0007Req.setPage(request.getPage());
+		yd0007Req.setSize(request.getSize());
+		if(StringUtils.indexOf(request.getMdn(), "@")>-1){
+			yd0007Req.setEmailid(request.getMdn());
+		}else{
+			yd0007Req.setMdn(request.getMdn());
+		}
+		
+		yd0007Req.setPage(request.getPage());
+		yd0007Req.setSize(request.getSize());
 		YD0007Response g2t = yd0007.get2Tibco(yd0007Req.returnGetParam());
 		this.response = new HW0007Response();
 		String totalRecords = g2t.getTotalRecords();
