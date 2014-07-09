@@ -613,23 +613,23 @@ public class AgentOrderService {
 		AgentOrder order = loadAgentOrderByOrderCode(orderCode);
 		
 		if(order == null)
-			throw new Exception(orderCode+" " + LanguageInfo.ORDER_UNEXIST);
+			throw new Exception(""+" " + LanguageInfo.ORDER_UNEXIST);
 		
 		User user = order == null?null:order.getCreator();
 		if(user==null)
-			throw new Exception(orderCode+" " + LanguageInfo.USER_NOT_EXIST);
+			throw new Exception(""+" " + LanguageInfo.USER_NOT_EXIST);
 		
 		if(order.getCreator()==null || order.getCreator().getUserId() == null)
-			throw new Exception(orderCode+" " + LanguageInfo.USER_ID_EMPTY);
+			throw new Exception(""+" " + LanguageInfo.USER_ID_EMPTY);
 		
 		if(payPwd==null)
-			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_EMPTY);
+			throw new Exception(""+" " + LanguageInfo.PAY_PWD_EMPTY);
 		
 		if(!StringUtils.equals(payPwd, user.getPayPwd()))
-			throw new Exception(orderCode+" " + LanguageInfo.PAY_PWD_WRONG);
+			throw new Exception(""+" " + LanguageInfo.PAY_PWD_WRONG);
 		
 		if(SYSConstant.AGENT_ORDER_STATUS_WAITTING.equals(order.getStatus()) == false)
-			throw new Exception(orderCode+" " + LanguageInfo.ORDER_HAD_PAID);
+			throw new Exception(""+" " + LanguageInfo.ORDER_HAD_PAID);
 		/**
 		 * 填写，实际支付费用，支付方式，流水号，更改支付状态，支付时间
 		 */

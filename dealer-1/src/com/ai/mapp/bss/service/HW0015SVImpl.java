@@ -212,14 +212,15 @@ public class HW0015SVImpl extends ISVTemplate {
 		condition.setGoodIds(count_map.keySet());
 		
 		Collection<GoodsInfo> goods = goodsInfoService.listAllGoodsInfos(condition);
-		
-		for(GoodsInfo good : goods)
-		{
-			good.setGoodNum(count_map.get(good.getId()));
+		if(goods!=null){
+			for(GoodsInfo good : goods)
+			{
+				good.setGoodNum(count_map.get(good.getId()));
+			}
+			param.setResult(goods);
 		}
 		
 		param.setIfSuccess(true);
-		param.setResult(goods);
 		return param;
 	}
 

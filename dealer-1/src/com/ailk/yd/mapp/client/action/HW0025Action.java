@@ -8,6 +8,7 @@ import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
+import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.service.VerifySmsService;
 import com.ai.mapp.sys.util.SYSConstant;
@@ -17,6 +18,7 @@ import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0025Request;
 import com.ailk.yd.mapp.client.model.HW0025Response;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 /**
  * 叠加包下单接口 同yd0016
@@ -38,6 +40,10 @@ public class HW0025Action extends
 	
 	@Autowired
 	private VerifySmsService verifySmsService;
+	
+	@Autowired
+	private ProductService productService;
+	
 
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
@@ -68,6 +74,11 @@ public class HW0025Action extends
 //
 //		//保存订单
 		HW0025Request req = request;
+		
+		TibcoUtil.checkNotNull(req.getProductId(), "productId ");
+		TibcoUtil.checkNotNull(req.getMdn(), "serviceId ");
+		TibcoUtil.checkNotNull(req.getRefNo(), "regNo ");
+		
 		IUserinfo ui = this.getUserinfo();
 		User creator = userService.loadUserByUserCode(ui.getUserName());
 //
@@ -83,12 +94,19 @@ public class HW0025Action extends
 		}
 		order.setPackageFee(packageFee);
 		order.setSvn(req.getMdn());
-		order.setProduct(req.getProductId()==null ? null
-				: new Product(Long.valueOf(req.getProductId())));
+		Product p = new Product();
+		
+		p.setRangeId(Long.parseLong(req.getProductId()));
+		Product pro = productService.loadProductByBSSId(req.getProductId());
+		if(pro!=null){
+			order.setProduct(pro);
+		}
+//		order.setProduct(req.getProductId()==null ? null
+//				: new Product(Long.valueOf(req.getProductId())));
+		order.setProduct(p);
 		order.setSaleFee(packageFee);
 		order.setOptType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 //		order.setFeeDetail(feeDtl);
-		
 		this.agentOrderService.createRechargeOrderByAgent(order);
 		
 //		
