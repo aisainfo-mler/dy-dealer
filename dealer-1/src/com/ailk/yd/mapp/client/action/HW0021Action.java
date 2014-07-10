@@ -12,12 +12,15 @@ import com.ai.mapp.sys.entity.OrderDetail;
 import com.ai.mapp.sys.entity.OrderInfo;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.OrderInfoService;
+import com.ai.mapp.sys.service.UserService;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
+import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.ErrorCodeDefine;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
+import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.yd.mapp.client.model.HW0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0012.YD0012Request;
 
@@ -34,6 +37,9 @@ public class HW0021Action extends AbstractYDBaseActionHandler<HW0021Request, IBo
 	@Autowired
 	private OrderInfoService orderInfoService; 
 
+	@Autowired
+	private UserService userService;
+	
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
@@ -41,7 +47,8 @@ public class HW0021Action extends AbstractYDBaseActionHandler<HW0021Request, IBo
 			throw new BusinessException(ErrorCodeDefine.EXPECT_ERROR,"订单流水号为空");
 		}
 		orderInfoService.payOrderInfo(this.request.getOrderCode(), this.request.getPayMode(), this.request.getVoucherNo());
-		User user = (User)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+		IUserinfo u = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+		User user = userService.loadUserByUserCode(u.getUserName());
 		OrderInfo order = orderInfoService.loadOrderInfoByOrderCode(this.request.getOrderCode());
 		YD0012Request ydReq = new YD0012Request();
 		ydReq.setDealerId(user.getUserId());
