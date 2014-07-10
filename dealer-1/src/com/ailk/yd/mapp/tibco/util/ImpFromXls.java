@@ -2,6 +2,7 @@ package com.ailk.yd.mapp.tibco.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -15,6 +16,7 @@ import org.dom4j.io.SAXReader;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ai.mapp.sys.entity.SysProp;
+import com.ai.mapp.sys.service.DataImpService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.SysPropService;
 import com.ai.mapp.sys.util.SYSConstant;
@@ -80,7 +82,7 @@ public class ImpFromXls {
 	
 
 	public static void main(String[] args) throws InvalidFormatException,
-			IOException {
+			IOException, SQLException, ClassNotFoundException {
 		String path = ImpFromXls.class.getResource("/").getPath()
 				+ "/qiansh/CAF Fields.xlsx";
 		// System.err.println(new File(path).exists());
@@ -89,10 +91,13 @@ public class ImpFromXls {
 				"classpath:mapp-base.xml", "classpath:applicationContext*.xml",
 				"classpath*:com/ailk/butterfly/**/*applicationContext-butterfly.xml");
 		SysPropService sps = ac.getBean(SysPropService.class);
+		//从CAF里面导入LOV常量
 		new ImpFromXls().parseLOV(path, "LOV", 1,sps);
-		
+		//教主写的导入产品信息
 		impProductJiaoZhu(ac);
-		
+		//导入地域信息
+		DataImpService dis = ac.getBean(DataImpService.class);
+		dis.imp();
 		
 	}
 

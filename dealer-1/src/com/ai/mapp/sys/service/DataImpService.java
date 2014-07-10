@@ -102,6 +102,7 @@ public class DataImpService {
 		
 	}
 
+	
 
 	public  void imp() throws InvalidFormatException,
 			IOException, SQLException, ClassNotFoundException {
@@ -165,12 +166,20 @@ public class DataImpService {
 					.getStringCellValue();
 			String cityName = citySheet.getRow(i).getCell(1)
 					.getStringCellValue();
-			String circleCode = citySheet.getRow(i).getCell(2)
+			String districtCode = citySheet.getRow(i).getCell(2)
 					.getStringCellValue();
-			String districtCode = (String) cityDisNameMap
-					.get(cityName);
-			Object tmp = cityStateNameMap.get(cityName);
-			String stateCode = tmp == null ? "" : tmp.toString();
+			Cell stateCell = citySheet.getRow(i).getCell(3);
+			String stateCode = stateCell.getStringCellValue();
+			String circleCode = citySheet.getRow(i).getCell(4)
+					.getStringCellValue();
+			
+			
+//			String circleCode = citySheet.getRow(i).getCell(2)
+//					.getStringCellValue();
+//			String districtCode = (String) cityDisNameMap
+//					.get(cityName);
+//			Object tmp = cityStateNameMap.get(cityName);
+//			String stateCode = tmp == null ? "" : tmp.toString();
 
 			Object pincodes = cityPincodesMap.get(cityName);
 			HwCity c = new HwCity();
