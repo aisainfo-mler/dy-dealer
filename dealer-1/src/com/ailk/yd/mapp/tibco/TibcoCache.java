@@ -49,5 +49,6 @@ public class TibcoCache {
 	 * 静态常量。提供给终端使用的。取自hw_sys_prop表。应用启动时加载一次
 	 */
 	public static Map dicts;
+	
 
 }

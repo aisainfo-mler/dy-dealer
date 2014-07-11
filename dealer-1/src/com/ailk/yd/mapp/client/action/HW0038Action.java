@@ -1,12 +1,14 @@
 package com.ailk.yd.mapp.client.action;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.sys.service.DataImpService;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
@@ -50,13 +52,13 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 //		}
 		List<City> rm = TibcoCache.cityInState.get(request.getStateCode());
 		if(rm!=null && rm.size()>0){
-			Map<String,List<City>> p = new HashMap();
+			Map<String,List<City>> p = new LinkedHashMap();
 			p.put(request.getStateCode(),rm);
 			response.setCityInState(p);
 		}
 		Map<String, String> ds = TibcoCache.districtInState.get(request.getStateCode());
 		if(ds!=null && ds.keySet().size()>0){
-			Map<String,Map<String,String>> dsm = new HashMap();
+			Map<String,Map<String,String>> dsm = new LinkedHashMap();
 			dsm.put(request.getStateCode(), ds);
 			response.setDistrictInState(dsm);
 			
