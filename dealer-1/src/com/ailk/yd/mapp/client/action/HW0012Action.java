@@ -14,19 +14,15 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
-import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
 import com.ai.mapp.sys.service.UserService;
 import com.ai.mapp.sys.util.PO2VOUtils;
 import com.ai.mapp.sys.util.SYSConstant;
-import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.core.util.DateUtils;
-import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.butterfly.mapp.core.model.IBody;
-import com.ailk.ts.ibatis.service.SkuEntityService;
 import com.ailk.yd.mapp.client.model.HW0010Request;
 import com.ailk.yd.mapp.client.model.HW0012Request;
 import com.ailk.yd.mapp.tibco.action.YD0010Action;
@@ -628,10 +624,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		
 		if(StringUtils.isEmpty(customer.getPanNumber()) && caf.getForm61Details() == null)
 			throw new Exception("PanNumber is null,form61 to be filled");
-		
+		//Outstation 类型为 5
 		if("5".equals(customer.getCustomerCategory()) && caf.getLocalReferenceDetails() == null)
 		{
 			throw new Exception("Outstation Customer to be filled Local Reference info");
+		}
+		
+		//visa号码不为空，而visa有效期为空
+		if(StringUtils.isBlank(customer.getVisaNo()) == false && StringUtils.isBlank(customer.getVisaValidityDate()))
+		{
+			throw new Exception("Visa Validity Date is null ");
 		}
 		
 	}
