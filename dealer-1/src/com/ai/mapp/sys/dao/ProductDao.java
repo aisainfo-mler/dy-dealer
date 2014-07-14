@@ -36,6 +36,11 @@ public class ProductDao extends HibernateDao<Product, Long> {
 			c.add(Restrictions.eq("bssRangeId", t.getBssRangeId()));
 		}
 		
+		if(StringUtils.isBlank(t.getPackedName()))
+		{
+			c.add(Restrictions.like("packedName", t.getPackedName(),MatchMode.ANYWHERE));
+		}
+		
 		if(StringUtil.isEmpty(t.getTerms()) == false)
 		{
 			c.add(Restrictions.eq("terms", t.getTerms()));
@@ -44,6 +49,7 @@ public class ProductDao extends HibernateDao<Product, Long> {
 		{
 			c.add(Restrictions.eq("payType", t.getPayType()));
 		}
+		
 		if(StringUtil.isEmpty(t.getServicetype()) == false)
 		{
 			c.add(Restrictions.eq("servicetype", t.getServicetype()));

@@ -19,10 +19,9 @@ import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
-import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.yd.mapp.client.model.HW0020Request;
-import com.ailk.yd.mapp.client.model.HW0020Response;
 import com.ailk.yd.mapp.client.model.HW0020Request.Good;
+import com.ailk.yd.mapp.client.model.HW0020Response;
 
 /**
  * @author Zhengwj 

@@ -44,6 +44,7 @@ public class HW0001Action extends AbstractYDBaseActionHandler<HW0001Request, HW0
 		condition.setFilterCondition(request.getFilterMap());
 		condition.setServicetype(request.getServiceType());
 		condition.setType(request.getType());
+		condition.setPackedName(request.getName());
 		
 		Collection<Product> products = null;
 		if(request.getCodes() != null && request.getCodes().isEmpty() == false)

@@ -8,6 +8,8 @@ import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0001Request extends YDBody {
 	
+	private String name;
+	
 	private Map<String,Set<Object>> filterMap;
 	
 	private Set<String> codes;
@@ -72,7 +74,13 @@ public class HW0001Request extends YDBody {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
