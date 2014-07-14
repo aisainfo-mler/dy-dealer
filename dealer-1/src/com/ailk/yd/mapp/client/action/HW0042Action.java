@@ -58,7 +58,7 @@ public class HW0042Action extends
 		if(StringUtils.equalsIgnoreCase(request.getIfReturnUrl(), "true")){
 			uploadFile(fc, ornNum, dir);
 			File poaFile = new File(dir+"/"+ornNum+"_poa");
-			File poiFile = new File(dir+"/"+ornNum+"_poa");
+			File poiFile = new File(dir+"/"+ornNum+"_poi");
 			File cusFile = new File(dir+"/"+ornNum+"_cus");
 			if(poaFile.exists()==false) throw new Exception(ornNum+" no POA img");
 			if(poiFile.exists()==false) throw new Exception(ornNum+" no POI img");
@@ -80,6 +80,11 @@ public class HW0042Action extends
 				throw new Exception("url from tibco is null");
 			}
 			response.setUrl(url);
+			//成功的话清除临时文件
+			poaFile.delete();
+			poiFile.delete();
+			cusFile.delete();
+			new File(pdfFile).delete();
 		}else{
 			uploadFile(fc, ornNum, dir);
 		}
