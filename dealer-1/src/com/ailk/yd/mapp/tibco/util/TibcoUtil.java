@@ -1,13 +1,29 @@
 package com.ailk.yd.mapp.tibco.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 
-import net.sf.json.JSONObject;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class TibcoUtil {
 
@@ -59,7 +75,99 @@ public class TibcoUtil {
 		}
 	}
 	
-	public static void main(String[] args) {
+	
+
+	/**
+	 * 一页pdf放一张照片
+	 * 
+	 * @param imgs
+	 *            图片的地址
+	 * @param pdfFilePath
+	 *            pdf的地址
+	 * @throws DocumentException
+	 * @throws FileNotFoundException
+	 * @throws BadElementException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
+	public static void converImgToPdf(List<String> imgs, String pdfFilePath)
+			throws DocumentException, FileNotFoundException,
+			BadElementException, MalformedURLException, IOException {
+		/*
+		 * A4尺寸：595,842
+		 */
+		final Rectangle pageSize = PageSize.A4;
+		Document document = new Document(pageSize);
+		PdfWriter writer = PdfWriter.getInstance(document,
+				new FileOutputStream(pdfFilePath));
+		document.open();
+		for (Iterator<String> it = imgs.iterator(); it.hasNext();) {
+			String imgFilePath = (String) it.next();
+			document.newPage();
+			addImg(pageSize, writer, imgFilePath);
+		}
+		document.close();
+	}
+
+	/**
+	 * 添加照片到pdf文件
+	 * 
+	 * @param pageSize
+	 * @param writer
+	 * @param picFilePath
+	 * @throws BadElementException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
+	private static void addImg(final Rectangle pageSize, PdfWriter writer,
+			final String picFilePath) throws BadElementException,
+			MalformedURLException, IOException, DocumentException {
+		Image img = Image.getInstance(picFilePath);
+		/*
+		 * pdf的左下角的坐标为：0，0 img.setAbsolutePosition(0, absoluteY);
+		 * 这个方法的x，y的坐标是指图片左下角再pdf文件中的位置。所以：0，0表示图片的左下角和pdf的左下角一致
+		 * width：可以理解成图片的左上角在pdf上的坐标。pdf左边界为0 0：顶到边 正数：图片左上角再pdf边界的右边
+		 * 负数：图片左上角再pdf左边界的左边
+		 */
+		// 图片占据pdf的比例，横向全屏显示
+		// 计算出图片和pdf的比例
+		int percent = (int) (pageSize.getWidth() / img.getScaledWidth() * 100);
+		if(percent<100)
+			img.scalePercent(percent);
+		// 计算图片纵向的坐标
+		final int absoluteY = (int) (pageSize.getHeight() - img
+				.getScaledHeight()) / 2;
+		img.setAbsolutePosition(0, absoluteY);
+		writer.getDirectContent().addImage(img);
+	}
+	
+	
+	/**
+	 * 将文件转成base64的字符串
+	 * @param filePath
+	 * @return
+	 */
+	public static  String convertFileToBase64Str(String filePath) throws Exception{
+		File f = new File(filePath);
+		FileInputStream fis = new FileInputStream(f);
+		int available = fis.available();
+		byte[] r = new byte[available];
+		fis.read(r);
+		String encode = BASE64EncoderWithoutWrap.encode(r);
+		return encode;
+		
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException, BadElementException, MalformedURLException, DocumentException, IOException {
 		System.err.println(getCurTime());
+
+		List<String> imgs = new ArrayList<String>();
+		String pdfFile = "/Users/qianshihua/Downloads/forTest.pdf";
+		imgs.add("/Users/qianshihua/Pictures/com.tencent.ScreenCapture/Snip20140422_1.png");
+		imgs.add("/Users/qianshihua/Pictures/com.tencent.ScreenCapture/QQ20140710-1.png");
+		imgs.add("/Users/qianshihua/Pictures/com.tencent.ScreenCapture/QQ20140630-1.png");
+		converImgToPdf(imgs, pdfFile);
+	
 	}
 }

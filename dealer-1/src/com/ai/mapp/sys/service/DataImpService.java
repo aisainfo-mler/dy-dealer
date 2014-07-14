@@ -68,11 +68,11 @@ public class DataImpService {
 
 			@Override
 			public int compare(String key1, String key2) {
-				if(StringUtils.equalsIgnoreCase(key1, "in")&&StringUtils.equalsIgnoreCase(m.get(key1).toString(), "india")){
-					//印度国家优先排第一个
-					return -1;
-				}
-				return m.get(key1).toString().compareTo(m.get(key2).toString());
+//				if(StringUtils.equalsIgnoreCase(key1, "in")&&StringUtils.equalsIgnoreCase(m.get(key1).toString(), "india")){
+//					//印度国家优先排第一个
+//					return -1;
+//				}
+				return key1.compareTo(key2);
 			}
 		});
 		for(int i=0;i<list.size();i++){
@@ -91,7 +91,7 @@ public class DataImpService {
 		TibcoCache.states = new LinkedHashMap<String,String>();
 		for (Iterator it = hwStateService.listAllHwState(null).iterator(); it.hasNext();) {
 			HwState hs = (HwState) it.next();
-			TibcoCache.states.put(hs.getStateCode(), hs.getStateName());
+			TibcoCache.states.put(hs.getStateName(), hs.getStateCode());
 		}
 
 		
@@ -100,7 +100,7 @@ public class DataImpService {
 			HwDistrict hd = (HwDistrict) it.next();
 			if(StringUtils.isNotBlank(hd.getStateCode())){
 				if(TibcoCache.districtInState.containsKey(hd.getStateCode())){
-					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictGisCode(), hd.getDistrictName());
+					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictName(), hd.getDistrictGisCode());
 				}else{
 					TibcoCache.districtInState.put(hd.getStateCode(), new LinkedHashMap());
 				}
@@ -108,12 +108,12 @@ public class DataImpService {
 		}
 		
 		TibcoCache.countrys = new LinkedHashMap<String,String>();
-		TibcoCache.countrys.put("IN", "India");//印度排第一个
+		TibcoCache.countrys.put("India", "IN");//印度排第一个
 		for (Iterator it = hwCountryService.listAllHwCountry(null).iterator(); it.hasNext();) {
 			HwCountry hw = (HwCountry) it.next();
 			if(StringUtils.equals(hw.getCountryCode(), "IN"))
 				continue;
-			TibcoCache.countrys.put(hw.getCountryCode(), hw.getCountryName());
+			TibcoCache.countrys.put(hw.getCountryName(), hw.getCountryCode());
 		}
 		
 		TibcoCache.cityInState = new LinkedHashMap();
@@ -136,27 +136,33 @@ public class DataImpService {
 		TibcoCache.circles = new LinkedHashMap<String,String>();
 		for (Iterator it = hwCircleService.lsitAllHwCircle(null).iterator(); it.hasNext();) {
 			HwCircle hc = (HwCircle) it.next();
-			TibcoCache.circles.put(hc.getCircle_code(), hc.getCircle_name());
+			TibcoCache.circles.put(hc.getCircle_name(), hc.getCircle_code());
 		}
 
 		//排序
-		sort(TibcoCache.circles);
-		sort(TibcoCache.countrys);
-		sort(TibcoCache.states);
-		Set<String> ks = TibcoCache.cityInState.keySet();
-		for (Iterator it = ks.iterator(); it.hasNext();) {
-			String key = (String) it.next();
-			List<City> list = TibcoCache.cityInState.get(key);
-			if(list!=null && list.size()>0){
-				Collections.sort(list, new Comparator<City>() {
-					@Override
-					public int compare(City c1, City c2) {
-						return c1.getCityName().compareTo(c2.getCityName());
-					}
-				});
-			}
-		}
-		
+//		sort(TibcoCache.circles);
+//		sort(TibcoCache.countrys);
+//		sort(TibcoCache.states);
+//		Set<String> ks = TibcoCache.cityInState.keySet();
+//		for (Iterator it = ks.iterator(); it.hasNext();) {
+//			String key = (String) it.next();
+//			List<City> list = TibcoCache.cityInState.get(key);
+//			if(list!=null && list.size()>0){
+//				Collections.sort(list, new Comparator<City>() {
+//					@Override
+//					public int compare(City c1, City c2) {
+//						return c1.getCityName().compareTo(c2.getCityName());
+//					}
+//				});
+//			}
+//		}
+//		
+//		Set<String> kss = TibcoCache.districtInState.keySet();
+//		for (Iterator it = kss.iterator(); it.hasNext();) {
+//			String key = (String) it.next();
+//			Map<String, String> districts = TibcoCache.districtInState.get(key);
+//			sort(districts);
+//		}
 		
 		
 	}
