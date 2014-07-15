@@ -83,6 +83,4 @@ public class SysPropService {
 		return prop_map;
 		
 	}
-	
-	
 }

@@ -123,6 +123,14 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 	
 	public YD0010Request convertByHW0010(HW0010Request hw0010_req) throws Exception
 	{
+		
+		/**
+		 * 出错过的字段
+		 *  "nationality": "Andorra"-->'HR' 
+			"salutation": "Z001", -->'0001'
+			"anniversaryDate": ""-->'2014-09-08', 
+		 */
+		
 		if(hw0010_req.getCafInfos() == null || hw0010_req.getCafInfos().isEmpty())
 			throw new Exception("no caf information");
 		
@@ -142,6 +150,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.setAppointmentDateTimeFrom(hw_caf_order.getAppointmentDateTimeFrom()==null?"":hw_caf_order.getAppointmentDateTimeFrom());
 		req.setAppointmentDateTimeTo(hw_caf_order.getAppointmentDateTimeTo()==null?"":hw_caf_order.getAppointmentDateTimeTo());
 		//测试数据
+		
 		hw_caf_order.setChannel("10");
 		req.setChannel(hw_caf_order.getChannel()==null?"":hw_caf_order.getChannel());
 		req.setDeliveryMode(hw_caf_order.getDeliveryMode()==null?"":hw_caf_order.getDeliveryMode());
@@ -175,7 +184,14 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		{
 			req.getCustomerDetails().setPassportNo(hw_customer.getForeignNational().getPassportNo()==null?"":hw_customer.getForeignNational().getPassportNo());
 			req.getCustomerDetails().setVisaNo(hw_customer.getForeignNational().getVisaNo()==null?"":hw_customer.getForeignNational().getVisaNo());
-			req.getCustomerDetails().setVisaValidityDate(hw_customer.getForeignNational().getVisaValidityDate()==null?"":hw_customer.getForeignNational().getVisaValidityDate());
+			
+			if(hw_customer.getDateOfBirth() != null)
+			{
+				Date d = DateUtils.formatDate(hw_customer.getForeignNational().getVisaValidityDate(), "dd/MM/yyyy");
+				req.getCustomerDetails().setVisaValidityDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
+			}
+			
+			req.getCustomerDetails().setVisaValidityDate("1996-06-25T00:00:00");
 		}
 		
 		/*********Contact*********/
@@ -243,7 +259,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCustomerDetails().setPreferredCommunicationChannel(hw_customer.getPreferredCommunicationChannel()==null?"":hw_customer.getPreferredCommunicationChannel());
 		req.getCustomerDetails().setAadhaarNumber(hw_customer.getAadhaarNumber()==null?"":hw_customer.getAadhaarNumber());
 		req.getCustomerDetails().setMaritalStatus(hw_customer.getMaritalStatus()==null?"":hw_customer.getMaritalStatus());
-		req.getCustomerDetails().setAnniversaryDate("");
+		req.getCustomerDetails().setAnniversaryDate("2014-06-26");
 		if(hw_customer.getAnniversaryDate() != null)
 		{
 			Date d = DateUtils.formatDate(hw_customer.getAnniversaryDate(), "dd/MM/yyyy");
@@ -407,6 +423,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		}
 		
 		req.getCafDetails().setCurrentMobileConnections(new ArrayList<YD0010Request.Connection>(0));
+		if(caf.getOperators() != null && caf.getOperators().isEmpty() == false)
+		{
+			for(String name : caf.getOperators().keySet())
+			{
+				YD0010Request.Connection conn = new YD0010Request.Connection();
+				conn.setOperatorName(name);
+				conn.setNoOfConnections(caf.getOperators().get(name));
+			}
+		}
+		
 		Connection conn = new Connection();
 //		conn.setOperatorName(caf.getOperatorName()==null?"":caf.getOperatorName());
 //		conn.setNoOfConnections(caf.getNoOfConnections()==null?"":caf.getNoOfConnections());
