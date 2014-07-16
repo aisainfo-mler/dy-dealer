@@ -1,0 +1,35 @@
+
+https://fqdn/v3/numbers/select
+
+Request:
+
+{
+  "serviceProviderEmployee": {
+    "employeeId": "OT00000004MA"
+  },
+  "businessChannelInteraction": {
+    "name": "SelfCare"
+  },
+  "numberList": [
+    {
+      "value": "7127801017",
+      "name": "TN",
+      "type": "MSISDN"
+    }
+  ]
+}
+
+
+Response
+{
+  "serviceProviderEmployee": null,
+  "customerAccountIdentifier": {
+    "value": "7127801017",
+    "name": "TN",
+    "type": "MSISDN"
+  },
+  "response": {
+    "interactionStatus": "0"
+  },
+  "message": null
+}

@@ -1,0 +1,20 @@
+
+https://fqdn/v3/customers/transactions/?transactionType=CC
+
+HTTP GET Request
+
+
+HTTP Successful Response
+
+{
+    "transactionRefNumber":"CC00000001UC"
+}
+
+
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

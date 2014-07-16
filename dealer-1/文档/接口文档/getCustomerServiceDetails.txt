@@ -1,0 +1,89 @@
+HTTP GET Request
+
+https://fqdn:8443/v4/customers/services/get?customerId=1100001248&serviceId=&chargingId=&prepaidAccountId=&channel=01
+
+HTTP Successful Response
+
+{
+  "customerId": "1100001248",
+  "accounts": [
+    {
+      "prepaidAccountId": "001000002274",
+     
+      "companyCode": "0300",
+      "circleId": "TC",
+      "accountType": "Prepaid",
+      "servicePackage": [
+        {
+          "packageCode": "OC300005",
+          "packageName": "LTE Residential Premium Offer with ECS",
+          "services": [
+            {
+              "productCode": "P30001",
+              "productName": "Enhanced Communication Service",
+              "Identifiers": {
+                "name": "",
+                "type": "",
+                " value ": "",
+                " category ": "",
+                " subCategory ": ""
+              },
+              "serviceContractReferenceNo": "00050044250000000020",
+              "serviceStatus": "Z020",
+              "statusDescription": "",
+              "serviceAlias": "",
+              "activationDate": "",
+              "dependancyInfo": {
+                "parentProductId ": "",
+                "identifier": [
+                  {
+                    "name": "",
+                    "value": "",
+                    "category": "",
+                    "subcategory": "",
+                    "type": ""
+                  }
+                ]
+              },
+              "action": [""],
+              "characteristics": [
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "associatedUsers": [
+                {
+                  "customerId": "1100001248",
+                  "userRole": "P",
+                  "userRoleDescription": ""
+                }
+              ],
+              "customerFacingServices": [
+                {
+                  "serviceId": "",
+                  "serviceName": "",
+                  "serviceType": "",
+                  "identifier": {
+                    "name": "",
+                    "value": "",
+                    "category": "",
+                    "subcategory": "",
+                    "type": ""
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

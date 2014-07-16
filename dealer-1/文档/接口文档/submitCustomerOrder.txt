@@ -1,0 +1,264 @@
+URL: https://fqdn/v3/customers/orders/
+
+Request json:
+
+{
+  "referenceNumber": "NO00000001GW",
+  "customerId": "",
+  "orderType": "",
+  "circleId": "TC",
+  "appointmentDateTime": "",
+  "channel": "01",
+  "deliveryMode": "",
+  "customerDetails": {
+    "prospectId": "",
+    "customerCategory": "0001",
+    "salutation": "0002",
+    "firstName": "mel",
+    "middleName": "",
+    "lastName": "jad",
+    "familyContactDetails": {
+      "firstName": "mel",
+      "middleName": "",
+      "lastName": "jad",
+      "relationship": "0001"
+    },
+    "dateOfBirth": "1993-02-06",
+    "gender": "2",
+    "nationality": "IN",
+    "passportNo": "",
+    "visaNo": "",
+    "visaValidityDate": "",
+    "contactDetails": {
+      "mobileNumber": "9988776651",
+      "alternateContactNumberHome": "9988776651",
+      "alternateContactNumberWork": "",
+      "emailId": "mas@bdc.com"
+    },
+    "permanentAddress": {
+                "addressId": "",
+        "buildingId": "NVMBBD0063702",
+        "addressType": "PER_ADD",
+        "houseNameORNumber": "yuu",
+        "buildingNameORNumber": "TC23- C Block",
+        "streetNameORNumber": "yui",
+        "landmark": "",
+        "areaORTehsil": "Ghansoli",
+        "pincode": "400096",
+        "villageORCity": "Mumbai",
+        "district": "Mumbai-City",
+        "state": "MH",
+        "country": "IN"
+    },
+    "panNumber": "sdfff1234H",
+    "preferredLanguage": "E",
+    "preferredCommunicationChannel": "INT",
+    "aadhaarNumber": "343456567876",
+    "maritalStatus": "1",
+    "anniversaryDate": "",
+    "occupation": "0003",
+    "occupationDescription": "",
+    "typeOfHouse": "RENTED",
+    "customerPictureURL": ""
+  },
+  "paymentDetails": {
+    "modeOfPayment": "01",
+    "totalAmount": "1000",
+    "paymentInstrumentNumber": "",
+    "paymentInstrumentDate": "",
+    "bankName": "",
+    "branchNameAndAddress": "",
+    "receiptNumber": ""
+  },
+  "installationAddress": [
+    {
+           "addressId": "",
+        "buildingId": "NVMBBD0063702",
+        "addressType": "SHIP_TO",
+        "houseNameORNumber": "yuu",
+        "buildingNameORNumber": "TC23- C Block",
+        "streetNameORNumber": "yui",
+        "landmark": "",
+        "areaORTehsil": "Ghansoli",
+        "pincode": "400096",
+        "villageORCity": "Mumbai",
+        "district": "Mumbai-City",
+        "state": "MH",
+        "country": "IN"
+    }
+  ],
+  "cafDetails": {
+    "merchantCode": "RT013",
+    "mpin": "1234",
+    "posAgentCode": "RT013",
+    "posAgentSignatureDate": "",
+    "customerDeclarationPlace": "",
+    "customerDeclarationDate": "",
+    "proofs": [
+      {
+        "proofIdentifier": "POA",
+        "idProofType": "Z00005",
+        "documentNumber": "343456567876",
+        "dateOfIssue": "2011-02-06",
+        "placeOfIssue": "mumbai",
+        "issuingAuthority": "gov",
+        "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh"
+      },
+      {
+        "proofIdentifier": "POI",
+        "idProofType": "Z00005",
+        "documentNumber": "343456567876",
+        "dateOfIssue": "2011-02-06",
+        "placeOfIssue": "mumbai",
+        "issuingAuthority": "gov",
+        "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh"
+      }
+    ],
+    "currentMobileConnections": [
+      {
+        "operatorName": "",
+        "noOfConnections": ""
+      }
+    ],
+    "form61Details": {
+      "lastTaxReturnFiled": "",
+      "reasonForNoPAN": ""
+    },
+    "localReferenceDetails": {
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "address": {
+      "addressId": "",
+        "buildingId": "NVMBBD0063702",
+        "addressType": "REF_ADD",
+        "houseNameORNumber": "yuu",
+        "buildingNameORNumber": "TC23- C Block",
+        "streetNameORNumber": "yui",
+        "landmark": "",
+        "areaORTehsil": "Ghansoli",
+        "pincode": "400096",
+        "villageORCity": "Mumbai",
+        "district": "Mumbai-City",
+        "state": "MH",
+        "country": "IN"
+      },
+      "contactNumber": "",
+      "eMailId": ""
+    },
+    "referringCustomerDetails": {
+      "id": "",
+      "referenceMobileNumber": ""
+    },
+    "localReferenceVerification": {
+      "callingPartyNumber": ""
+    }
+  },
+  "orderDetails": [
+    {
+      "accountId": "",
+      "offerId": "OC200008",
+      "eWalletReservationReferenceId": "",
+      "planOffering": {
+        "id": ""
+     },
+      "billingAddress": {
+        "addressId": "",
+        "buildingId": "NVMBBD0063702",
+        "addressType": "BILL_TO",
+        "houseNameORNumber": "yuu",
+        "buildingNameORNumber": "TC23- C Block",
+        "streetNameORNumber": "yui",
+        "landmark": "",
+        "areaORTehsil": "Ghansoli",
+        "pincode": "400096",
+        "villageORCity": "Mumbai",
+        "district": "Mumbai-City",
+        "state": "MH",
+        "country": "IN"
+      },
+      "products": [
+        {
+          "action": "ADD",
+          "productId": "P10003",
+          "characteristics": [
+            {
+              "name": "DND_PREFERENCE",
+              "value": ""
+            },
+            {
+              "name": "SERVICE_ID",
+              "value": ""
+            }
+          ],
+          "mnpPortDetails": {
+            "uniquePortingCode": "",
+            "upcGenerationDate": "",
+            "existingOperatorCode": "",
+            "existingProduct": "",
+            "lastPaidBillReceiptURI": ""
+          },
+          "inventory": {
+            "inventoryType": "",
+            "inventoryValue": ""
+          },
+          "componentPrice": {
+            "id": ""
+          },
+          "devices": [
+            {
+              "action": "ADD",
+              "productCode": "DEV100012",
+              "boqType": "MiFi",
+              "characteristics": [
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "action": "ADD",
+              "productCode": "DEV100001",
+              "boqType": "LTE SIM",
+              "characteristics": [
+                {
+                  "name": "I9",
+                  "value": "8991978081200000280"
+                }
+              ]
+            }
+          ],
+          "customerFacingServices": [
+            {
+              "serviceId": "",
+              "features": [
+                {
+                  "action": "",
+                  "productId": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+
+Response json:
+
+{
+    "orderNumber": "",
+    "orderReferenceNumber": "NO00000001GW",
+    "orderEntryDateAndTimeStamp": "",
+    "orderDetails": {
+        "orderLineID": "",
+        "expectedDeliveryDate": ""
+    }
+}
+
+

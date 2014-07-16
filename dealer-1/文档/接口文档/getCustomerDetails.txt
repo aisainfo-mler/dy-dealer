@@ -1,0 +1,80 @@
+HTTP GET Request
+
+https://fqdn/v3/customers/get?customerId=&serviceId=&technicalId=
+
+
+HTTP Successful Response
+
+{
+  "customerCategory": "",
+  "customerStatus": "",
+  "personalDetails": {
+    "salutation": "",
+    "firstName": "SATISH",
+    "middleName": "",
+    "lastName": "PUJARI",
+    "dateOfBirth": "1980-09-29",
+    "gender": "",
+    "nationality": "",
+    "passportNo": "",
+    "visaNo": "",
+    "visaValidityDate": "",
+    "maritalStatus": "",
+    "anniversaryDate": "",
+    "occupation": "",
+    "occupationDescription": "",
+    "preferredLanguage": "EN",
+    "preferredCommunicationChannel": "",
+    "photoURL": "",
+    "typeOfHouse": "LEASED",
+    "panNumber": "ABCDE0000A",
+    "ltrDetails": "",
+    "aadhaarNumber": "",
+    "isBlacklisted": "",
+    "isVIP": "",
+    "customerSegment": "",
+    "blacklistingReason": "",
+    "roles": [
+      "CRM000"
+    ],
+    "familyContactDetails": {
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "relationship": ""
+    },
+    "contactDetails": {
+      "mobileNumber": "9819253878",
+      "alternateContactNumberHome": "2244798989",
+      "alternateContactNumberWork": "",
+      "emailId": "retest@gmail.com"
+    },
+    "permanentAddress": {
+      "addressId": "",
+      "buildingId": "NVMBBD0063702",
+      "addressType": "PER_ADD",
+      "careOf": "",
+      "houseNameORNumber": "yuu",
+      "buildingNameORNumber": "TC23- C Block",
+      "societyName": "",
+      "streetNameORNumber": "yui",
+      "landmark": "",
+      "subLocality": "",
+      "areaORTehsil": "Ghansoli",
+      "pincode": "400096",
+      "villageORCity": "Mumbai",
+      "district": "Mumbai-City",
+      "state": "MH",
+      "country": "IN",
+      "totalFloors": "",
+      "jioCentreId": ""
+    }
+  }
+}
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

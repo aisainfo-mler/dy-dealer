@@ -1,0 +1,32 @@
+https://fqdn/v3/numbers/
+
+POST
+
+Request json:
+
+{
+  "circleID": "",
+  "type": "",
+  "searchPattern": "",
+  "includeVanityNumber": "",
+  "vanityName": "",
+  "paging": {
+    "pageSize": "",
+    "offset": ""
+  }
+}
+
+Response json:
+
+{
+  "listOfNumber": [
+    {
+      "number": [
+        {
+          "id": "",
+	  "vanityName":""
+        }
+      ]
+    }
+  ]
+}

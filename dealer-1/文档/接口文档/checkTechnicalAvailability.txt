@@ -1,0 +1,55 @@
+https://fqdn/v3/services/availability
+
+HTTP POST Request
+
+{
+  "buildingId": "",
+  "accessTechnologyList": [
+    "LTE",
+    "FTTX",
+    "WIFI"
+  ]
+}
+
+HTTP Successful Response
+
+{
+  "buildingId": "",
+  "address": {
+            "addressId": "",
+            "buildingId": "NVMBBD0063702",
+            "addressType": "PER_ADD",
+            "careOf": "",
+            "houseNameORNumber": "yuu",
+            "buildingNameORNumber": "TC23- C Block",
+            "societyName": "",
+            "streetNameORNumber": "yui",
+            "landmark": "",
+            "subLocality": "",
+            "areaORTehsil": "Ghansoli",
+            "pincode": "400096",
+            "villageORCity": "Mumbai",
+            "district": "Mumbai-City",
+            "state": "MH",
+            "country": "IN",
+            "totalFloors": "",
+            "jioCentreId": ""
+        },
+  "availabilityList":[
+    {
+      "accessTechnology": "",
+      "isAvailable": "",
+      "freeCapacity": "",
+      "slaStatus": "",
+      "slaDays": ""
+    }
+  ]
+}
+
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

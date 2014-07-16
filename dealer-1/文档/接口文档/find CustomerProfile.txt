@@ -1,0 +1,49 @@
+
+HTTP GET Request
+
+https://fqdn/v3/customers/get/?mobileNumber={mobileNumber}&emailId={emailId}&businessPartnerRole={businessPartnerRole}&aadhaarNumber={aadhaarNumber}&panNumber={panNumber}&pageSize={pageSize}&offset={offset}
+
+
+HTTP Successful Response
+{
+    "totalNoOfRecords": "",
+    "customers": [
+        {
+            "customerId": "1100000925",
+            "customerStatus": "",
+    	
+            "personalDetails": {
+                "salutation": "",
+                "firstName": "?",
+                "middleName": "?",
+                "lastName": "?"
+            },
+            "contactDetails": {
+                "mobileNumber": "",
+                "emailId": ""
+            },
+            "customerPictureURL": "",
+            "isBlacklisted": "false",
+             "roles": [
+                {
+                    "roleIndicator": ""
+                }
+            ],
+            
+            "user":
+            {
+                "userId":"",
+                "displayName":""
+            }           
+        }]
+
+} 
+
+
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

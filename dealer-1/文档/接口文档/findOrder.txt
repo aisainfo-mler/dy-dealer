@@ -1,0 +1,46 @@
+
+https://fqdn/v3/customers/orders/find
+
+HTTP POST Request
+
+{
+  "customerId": "",
+  "dateFrom":"",
+  "dateTo":"",
+  "status":"",
+  "serviceId":"",
+  "orderType":"",
+  "referenceNumber":"",
+  "registeredMobileNumber":"",
+  "pageSize":"",
+  "offset":""  
+}
+
+HTTP Successful Response
+
+{
+  "totalNumberOfRecords": "",
+  "orders": [
+    {
+      "referenceNumber": "",
+      "customerId": "",
+      "orderType": "",
+      "orderNumber": "",
+      "orderDateTime": "",
+      "orderStatus": "",
+      "estimatedCompletionDate": "",
+      "paymentDetails": {
+        "modeOfPayment": "",
+        "amountPayable": ""
+      }
+    }
+  ]
+}
+
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}

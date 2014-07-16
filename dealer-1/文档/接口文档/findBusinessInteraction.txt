@@ -1,0 +1,40 @@
+http://fqdn/v4/business/interactions/find
+
+HTTP POST Request:
+
+{
+    "productId": "",
+    "serviceSpecId": "",
+    "resourceSpecId": "",
+    "interactionType": "",
+    "interactionReason": "",
+    "channel": ""
+}
+
+HTTP Successful Response:
+
+{
+    "interactionType": "",
+    "interactionReasons": [{
+        "id": "",
+        "name": "",
+        "componentPrice": [{
+            "id": "",
+            "priceType": "",
+            "priceSubType": "",
+            "price": "",
+            "currency": ""
+        }],
+        "time": {
+            "value": "",
+            "unitOfMeasure": ""
+        }
+    }]
+}
+
+HTTP Error Response
+
+{
+  "responseCode": "",
+  "responseText": ""
+}

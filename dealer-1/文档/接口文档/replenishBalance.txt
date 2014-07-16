@@ -1,0 +1,63 @@
+https://fqdn/v3/balances/replenish
+
+HTTP POST Request
+{
+    "refillId": "OT000KAL1050",
+    "transactionDateTime": "2014-03-04T11:42:19.739+05:30",
+    "customerId": "1100013159",
+    "merchantCode": "POSR4G",
+    "channel": "40",
+    "posAgentCode": "",
+    "paymentDetails": {
+        "modeOfPayment": "CC",
+        "totalAmount": "100",
+        "gatewayTransId": "",
+        "cpTransactionId": ""
+    },
+    "orderDetails": [{
+        "productId": "TP100005",
+        "amount": "300",
+        "eWalletReservationReferenceId": "",
+        "accountId": "001000005711",
+        "circleId": "",
+        "products": [{
+            "serviceId": "110000092512",
+            "services": [{
+                "serviceType": "",
+                "technicalId": ""
+            }]
+        }],
+        "characteristics": [{
+            "name": "",
+            "value": ""
+        }]
+    }]
+}
+
+HTTP Successful Response
+{
+    "refillId": "OT000KAL1050",
+    "eWalletReservationReferenceId": "",
+    "accountId": "",
+    "circleId": "",
+    "products": [{
+        "serviceId": "110000092512",
+        "services": [{
+            "serviceType": "",
+            "technicalId": ""
+        }]
+    }],
+    "characteristics": [{
+        "name": "",
+        "value": ""
+    }]
+}
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}
+
+

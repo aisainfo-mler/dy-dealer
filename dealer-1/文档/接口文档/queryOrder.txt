@@ -1,0 +1,475 @@
+
+https://fqdn/v4/customers/orders/?referenceNumber=OT00000000HL&orderNumber=0005014977&customerId=&orderStatus=&returnCompleteOrder=2
+
+HTTP success Response
+{
+  "referenceNumber": "OT00000000HL",
+  "customerId": "1100008129",
+  "orderType": "MODIFY",
+  "appointmentDateTimeFrom": "2014-04-23T12:10:47",
+  "appointmentDateTimeTo": "2014-04-23T12:13:47",
+  "deliveryMode": "",
+  "orderNumber": "0005014977",
+  "orderEntryDateAndTimeStamp": "",
+  "orderStatus": "Z02",
+  "estimatedCompletionDateTime": "",
+  "customerDetails": {
+    "prospectId": "",
+    "customerCategory": "0001",
+    "salutation": "0001",
+    "firstName": "Geeta",
+    "middleName": "QE",
+    "lastName": "TEST",
+    "familyContactDetails": {
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "relationship": ""
+    },
+    "dateOfBirth": "1986-01-10",
+    "gender": "1",
+    "nationality": "IN",
+    "passportNo": "",
+    "visaNo": "",
+    "visaValidityDate": "",
+    "contactDetails": {
+      "mobileNumber": "1100008129",
+      "alternateContactNumberHome": "8939353200",
+      "alternateContactNumberWork": "8939353200",
+      "emailId": "SBL155TC02@RIL.COM"
+    },
+    "permanentAddress": {
+      "addressId": "",
+      "buildingId": "NVMBBD0063702",
+      "addressType": "PER_ADD",
+      "careOf": "",
+      "houseNameORNumber": "110",
+      "buildingNameORNumber": "TC23- C Block",
+      "societyName": "",
+      "streetNameORNumber": "yui",
+      "landmark": "",
+      "subLocality": "",
+      "areaORTehsil": "Ghansoli",
+      "pincode": "400096",
+      "villageORCity": "Mumbai",
+      "district": "Mumbai-City",
+      "state": "MH",
+      "country": "IN",
+      "totalFloors": "",
+      "jioCentreId": ""
+    },
+    "panNumber": "AUIPR2700Q",
+    "preferredLanguage": "EN",
+    "preferredCommunicationChannel": "",
+    "aadhaarNumber": "",
+    "maritalStatus": "0",
+    "anniversaryDate": "",
+    "occupation": "0001",
+    "occupationDescription": "I AM A STUDENT",
+    "typeOfHouse": "",
+    "customerPictureURL": ""
+  },
+  "paymentDetails": {
+    "modeOfPayment": "01",
+    "totalAmount": "1000",
+    "paymentInstrumentNumber": "",
+    "paymentInstrumentDate": "",
+    "bankName": "",
+    "branchNameAndAddress": "",
+    "receiptNumber": "",
+    "cpTransactionId": ""
+  },
+  "installationAddress": [
+    {
+      "addressId": "",
+      "buildingId": "NVMBBD0063702",
+      "addressType": "SHIP_TO",
+      "careOf": "",
+      "houseNameORNumber": "110",
+      "buildingNameORNumber": "TC23- C Block",
+      "societyName": "",
+      "streetNameORNumber": "yui",
+      "landmark": "",
+      "subLocality": "",
+      "areaORTehsil": "Ghansoli",
+      "pincode": "400096",
+      "villageORCity": "Mumbai",
+      "district": "Mumbai-City",
+      "state": "MH",
+      "country": "IN",
+      "totalFloors": "",
+      "jioCentreId": ""
+    }
+  ],
+  "cafDetails": {
+    "log": "",
+    "merchantCode": "",
+    "posAgentCode": "",
+    "posAgentSignatureDate": "",
+    "customerDeclarationPlace": "",
+    "customerDeclarationDate": "",
+    "proofs": [
+      {
+        "proofIdentifier": "POA",
+        "idProofType": "Z00005",
+        "documentNumber": "343456567876",
+        "dateOfIssue": "2011-02-06",
+        "placeOfIssue": "mumbai",
+        "issuingAuthority": "gov",
+        "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh",
+        "aadhaarTransactionRefNo": ""
+      },
+      {
+        "proofIdentifier": "POI",
+        "idProofType": "Z00005",
+        "documentNumber": "343456567876",
+        "dateOfIssue": "2011-02-06",
+        "placeOfIssue": "mumbai",
+        "issuingAuthority": "gov",
+        "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh",
+        "aadhaarTransactionRefNo": ""
+      }
+    ],
+    "currentMobileConnections": [
+      {
+        "operatorName": "",
+        "noOfConnections": ""
+      }
+    ],
+    "form61Details": {
+      "lastTaxReturnFiled": "",
+      "reasonForNoPAN": ""
+    },
+    "localReferenceDetails": {
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "address": {
+        "addressId": "",
+        "buildingId": "NVMBBD0063702",
+        "addressType": "REF_ADD",
+        "careOf": "",
+        "houseNameORNumber": "110",
+        "buildingNameORNumber": "TC23- C Block",
+        "societyName": "",
+        "streetNameORNumber": "yui",
+        "landmark": "",
+        "subLocality": "",
+        "areaORTehsil": "Ghansoli",
+        "pincode": "400096",
+        "villageORCity": "Mumbai",
+        "district": "Mumbai-City",
+        "state": "MH",
+        "country": "IN",
+        "totalFloors": "",
+        "jioCentreId": ""
+      },
+      "contactNumber": "",
+      "eMailId": ""
+    },
+    "referringCustomerDetails": {
+      "id": "",
+      "referenceMobileNumber": ""
+    },
+    "localReferenceVerification": {
+      "callingPartyNumber": ""
+    }
+  },
+  "orderDetails": [
+    {
+      "businessInteraction": {
+        "name": "OFFER_CHANGE"
+      },
+      "offerId": "OC300036",
+      "offerName": "LTE Residential Elite Offer ECS,MobiTV",
+      "orderLineItemStatus": "",
+      "planOffering": {
+        "id": "",
+        "name": ""
+      },
+      "account": {
+        "subscriptionType": "",
+        "billingAddress": {
+          "addressId": "",
+          "buildingId": "NVMBBD0063702",
+          "addressType": "BILL_TO",
+          "careOf": "",
+          "houseNameORNumber": "110",
+          "buildingNameORNumber": "TC23- C Block",
+          "societyName": "",
+          "streetNameORNumber": "yui",
+          "landmark": "",
+          "subLocality": "",
+          "areaORTehsil": "Ghansoli",
+          "pincode": "400096",
+          "villageORCity": "Mumbai",
+          "district": "Mumbai-City",
+          "state": "MH",
+          "country": "IN",
+          "totalFloors": "",
+          "jioCentreId": ""
+        }
+      },
+      "products": [
+        {
+          "businessInteraction": {
+            "name": "OFFER_CHANGE",
+            "reasonId": "",
+            "reasonDesc": ""
+          },
+          "productId": "P30001",
+          "productName": "Enhanced Communication Service",
+          "orderLineId": "",
+          "starterKitCode": "",
+          "estimatedCompletionDateTime": "",
+          "installationDateTime": "",
+          "isTeleverificationRequired": "",
+          "callingPartyNumber": "",
+          "teleVerificationStatus": "",
+          "characteristics": [
+            {
+              "name": "DND_PREFERENCE",
+              "value": ""
+            }
+          ],
+          "dependancyInfo": {
+            "parentProductId": "",
+            "identifier": [
+              {
+                "name": "",
+                "type": "",
+                "value": "",
+                "category": "",
+                "subcategory": ""
+              }
+            ]
+          },
+          "cafDetails": {
+            "cafNumber": "",
+            "cafURI": ""
+          },
+          "proofs": [
+            {
+              "proofIdentifier": "POA",
+              "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh"
+            },
+            {
+              "proofIdentifier": "POI",
+              "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&amp;pVersion=0045&amp;contRep=CAF&amp;docId=OT00000001UW_118864_1_181824&amp;ixUser=SIDCDEVOTAS&amp;ixAppl=libdsh"
+            }
+          ],
+          "mnpPortDetails": {
+            "uniquePortingCode": "",
+            "upcGenerationDate": "",
+            "existingOperatorCode": "",
+            "existingOperatorName": "",
+            "existingMobileNumber": "",
+            "existingProduct": "",
+            "lastPaidBillReceiptURI": "",
+            "existingSubscriberType": ""
+          },
+          "identifier": [
+            {
+              "name": "",
+              "type": "",
+              "value": "",
+              "category": "",
+              "subcategory": ""
+            }
+          ],
+          "componentPrice": [
+            {
+              "id": "",
+              "priceType": "",
+              "priceTypeDesc": "",
+              "price": "",
+              "unitOfMeasure": ""
+            }
+          ],
+          "devices": [
+            {
+              "businessInteraction": {
+                "name": "OFFER_CHANGE"
+              },
+              "productId": "DEV100002",
+              "productName": "",
+              "boqType": "ODU",
+              "identifier": [
+                {
+                  "name": "",
+                  "value": "",
+                  "category": "",
+                  "subcategory": ""
+                }
+              ]
+            },
+            {
+              "businessInteraction": {
+                "name": "OFFER_CHANGE"
+              },
+              "productId": "DEV100001",
+              "productName": "",
+              "boqType": "LTE SIM",
+              "identifier": [
+                {
+                  "name": "",
+                  "value": "",
+                  "category": "",
+                  "subcategory": ""
+                }
+              ]
+            }
+          ],
+          "customerFacingServices": [
+            {
+              "businessInteraction": {
+                "name": "OFFER_CHANGE"
+              },
+              "serviceId": "S30001",
+              "serviceName": "Voice Calling",
+              "serviceType": "",
+              "identifier": [
+                {
+                  "name": "",
+                  "value": "",
+                  "category": "",
+                  "subcategory": ""
+                }
+              ],
+              "features": [
+                {
+                  "businessInteraction": {
+                    "name": "ADD"
+                  },
+                  "featureId": "F30001",
+                  "name": "",
+                  "characteristics": [
+                    {
+                      "name": "",
+                      "value": ""
+                    }
+                  ],
+                  "features": [
+                    {
+                      "businessInteraction": {
+                        "name": "ADD"
+                      },
+                      "featureId": "",
+                      "name": "",
+                      "characteristics": [
+                        {
+                          "name": "",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "businessInteraction": {
+                "name": "OFFER_CHANGE"
+              },
+              "serviceId": "S30002",
+              "serviceName": "Video Calling",
+              "serviceType": "",
+              "identifier": [
+                {
+                  "name": "",
+                  "value": "",
+                  "category": "",
+                  "subcategory": ""
+                }
+              ],
+              "features": [
+                {
+                  "businessInteraction": {
+                    "name": "ADD"
+                  },
+                  "featureId": "F30001",
+                  "name": "",
+                  "characteristics": [
+                    {
+                      "name": "",
+                      "value": ""
+                    }
+                  ],
+                  "features": [
+                    {
+                      "businessInteraction": {
+                        "name": "ADD"
+                      },
+                      "productId": "",
+                      "name": "",
+                      "characteristics": [
+                        {
+                          "name": "",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "businessInteraction": {
+                "name": "OFFER_CHANGE"
+              },
+              "serviceId": "S30003",
+              "serviceName": "Messaging",
+              "serviceType": "",
+              "identifier": [
+                {
+                  "name": "",
+                  "value": "",
+                  "category": "",
+                  "subcategory": ""
+                }
+              ],
+              "features": [
+                {
+                  "businessInteraction": {
+                    "name": "ADD"
+                  },
+                  "featureId": "F30001",
+                  "name": "",
+                  "characteristics": [
+                    {
+                      "name": "",
+                      "value": ""
+                    }
+                  ],
+                  "features": [
+                    {
+                      "businessInteraction": {
+                        "name": "ADD"
+                      },
+                      "featureId": "",
+                      "name": "",
+                      "characteristics": [
+                        {
+                          "name": "",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+HTTP Error Response
+
+{   
+    "responseCode": "",
+    "responseText":""   
+}
