@@ -29,9 +29,9 @@ public class HW0010Request extends YDBody {
 		private String customerDeclarationDate;
 		//Connection
 		
-		Map<String,String> operators;
-//		private String operatorName;
-//		private String noOfConnections;
+//		Map<String,String> operators;
+		private String operatorName;
+		private String noOfConnections;
 		//poi & poa
 		private Proof poi;
 		private Proof poa;
@@ -59,11 +59,23 @@ public class HW0010Request extends YDBody {
 		public void setCafNo(String cafNo) {
 			this.cafNo = cafNo;
 		}
-		public Map<String, String> getOperators() {
-			return operators;
+//		public Map<String, String> getOperators() {
+//			return operators;
+//		}
+//		public void setOperators(Map<String, String> operators) {
+//			this.operators = operators;
+//		}
+		public String getOperatorName() {
+			return operatorName;
 		}
-		public void setOperators(Map<String, String> operators) {
-			this.operators = operators;
+		public void setOperatorName(String operatorName) {
+			this.operatorName = operatorName;
+		}
+		public String getNoOfConnections() {
+			return noOfConnections;
+		}
+		public void setNoOfConnections(String noOfConnections) {
+			this.noOfConnections = noOfConnections;
 		}
 		public Proof getPoi() {
 			return poi;

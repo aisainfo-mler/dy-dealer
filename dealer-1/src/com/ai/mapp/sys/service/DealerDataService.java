@@ -43,6 +43,10 @@ public class DealerDataService {
 	@Autowired
 	private ProductFilterService productFilterService;
 	
+	private final String IDENTIFIER_TARGET_PRODUCTSPEC = "1";
+	private final String IDENTIFIER_TARGET_RESOURCESPEC = "2";
+	private final String IDENTIFIER_TARGET_SERVICESPEC = "3";
+	
 	public static final ObjectMapper mapper = new ObjectMapper();
 	private Map<String, Map<String,Object>> productMap 		= new HashMap<String, Map<String,Object>>();// key为proSpec编码，value为Map
 	private Map<String, Map<String,Object>> productSpecMap 	= new HashMap<String, Map<String,Object>>();// key为proSpec编码，value为Map
@@ -55,6 +59,12 @@ public class DealerDataService {
 	private Map<String, Map<String,Object>> compositePriceMap = new HashMap<String,Map<String,Object>>(0);
 	private Map<String, Map<String,Object>> geographicLocationMap = new HashMap<String,Map<String,Object>>(0);
 	private Map<String, Map<String,Map<String,Object>>> propMap = new HashMap<String,Map<String,Map<String,Object>>>(0);
+	/**
+	 * Map<identifier类型(见静态变量IDENTIFIER_TARGET),Map<(productSpecId/resourceSpecId/serviceSpecId),Map<ID属性,Map<属性名，属性值>>>>
+	 */
+	private Map<String, Map<String,Map<String,Map<String,Object>>>> identifierMap = new HashMap<String, Map<String,Map<String,Map<String,Object>>>>(0);
+	
+	
 	
 	public void updateProductInfoByFile(String url) throws Exception {
 		File inputXml = new File(url);
@@ -178,22 +188,26 @@ public class DealerDataService {
 				
 				ProductSpecMapping productSpecMapping = mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
 				if(productSpecMapping == null || productSpecMapping.getProductSpecs()==null || productSpecMapping.getProductSpecs().isEmpty())
-					break;
-				
-				List<ProductSpecMapping.ProductSpec> productSpecList = productSpecMapping.getProductSpecs();
-				
-				for(ProductSpecMapping.ProductSpec ps : productSpecList)
 				{
-					if(ps.getServiceSpecList() != null && ps.getServiceSpecList().isEmpty() == false)
+					
+				}
+				else
+				{
+					List<ProductSpecMapping.ProductSpec> productSpecList = productSpecMapping.getProductSpecs();
+					
+					for(ProductSpecMapping.ProductSpec ps : productSpecList)
 					{
-						product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_SERVICE_TYPE, new HashSet<String>(0));
-						for(ProductSpecMapping.ServiceSpec ss : ps.getServiceSpecList())
+						if(ps.getServiceSpecList() != null && ps.getServiceSpecList().isEmpty() == false)
 						{
-							product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_SERVICE_TYPE).add(ss.getServiceType());
-							
-							/**
-							 * TODO 如果serviceType为lte-data,则可以有speed类型的filter
-							 */
+							product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_SERVICE_TYPE, new HashSet<String>(0));
+							for(ProductSpecMapping.ServiceSpec ss : ps.getServiceSpecList())
+							{
+								product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_SERVICE_TYPE).add(ss.getServiceType());
+								
+								/**
+								 * TODO 如果serviceType为lte-data,则可以有speed类型的filter
+								 */
+							}
 						}
 					}
 				}
@@ -206,14 +220,18 @@ public class DealerDataService {
 				
 				GeographicLocationMapping geographicLocationMapping = mapper.readValue(p.getGeographicLocationList(), GeographicLocationMapping.class);
 				if(geographicLocationMapping.getGeographicLocations() == null || geographicLocationMapping.getGeographicLocations().isEmpty())
-					break;
-				
-				List<GeographicLocationMapping.GeographicLocation> geographicLocationList = geographicLocationMapping.getGeographicLocations();
-				
-				product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION, new HashSet<String>(0));
-				for(GeographicLocationMapping.GeographicLocation ggh : geographicLocationList)
 				{
-					product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add(ggh.getGeographicLocationMasterId());
+					
+				}
+				else
+				{
+					List<GeographicLocationMapping.GeographicLocation> geographicLocationList = geographicLocationMapping.getGeographicLocations();
+					
+					product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION, new HashSet<String>(0));
+					for(GeographicLocationMapping.GeographicLocation ggh : geographicLocationList)
+					{
+						product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_GEOGRAPHICLOCATION).add(ggh.getGeographicLocationMasterId());
+					}
 				}
 			}
 			
@@ -227,16 +245,20 @@ public class DealerDataService {
 				
 				PlanSpecMapping planSpecMapping = mapper.readValue(p.getPlanSpecList(),PlanSpecMapping.class);
 				if(planSpecMapping == null || planSpecMapping.getPlanSpecs()==null || planSpecMapping.getPlanSpecs().isEmpty())
-					continue;
-				
-				List<PlanSpecMapping.PlanSpec> planSpecList = planSpecMapping.getPlanSpecs();
-				
-				if(planSpecList != null && planSpecList.isEmpty() == false)
 				{
-					product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_SERVICE_TYPE, new HashSet<String>(0));
-					for(PlanSpecMapping.PlanSpec ps : planSpecList)
+				
+				}
+				else
+				{
+					List<PlanSpecMapping.PlanSpec> planSpecList = planSpecMapping.getPlanSpecs();
+					
+					if(planSpecList != null && planSpecList.isEmpty() == false)
 					{
-						product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_SERVICE_TYPE).add(ps.getServiceType());
+						product_filter_map.get(productId).put(ProductFilter.FILTER_TYPE_SERVICE_TYPE, new HashSet<String>(0));
+						for(PlanSpecMapping.PlanSpec ps : planSpecList)
+						{
+							product_filter_map.get(productId).get(ProductFilter.FILTER_TYPE_SERVICE_TYPE).add(ps.getServiceType());
+						}
 					}
 				}
 			}
@@ -311,6 +333,54 @@ public class DealerDataService {
 		System.err.println("***********ResourceSpecification*************************************************************************************");
 		propMap = handlePropMap(root);
 		System.err.println("***********ReferenceValueMaster**************************************************************************************");
+		identifierMap = handlerIdentifierMap(handleItemList(root, "Identifier", "id"));
+		System.err.println("***********Identifier*************************************************************************************");
+	}
+	
+	public Map<String, Map<String,Map<String,Map<String,Object>>>> handlerIdentifierMap(Map<String,Map<String,Object>> identifierMap)
+	{
+		if(identifierMap == null || identifierMap.isEmpty())
+			return null;
+		
+		Map<String, Map<String,Map<String,Map<String,Object>>>> result_map = new HashMap<String, Map<String,Map<String,Map<String,Object>>>>(0);
+		
+		for(Map<String,Object> idf_map : identifierMap.values())
+		{
+			if(StringUtils.isBlank((String)idf_map.get("productSpecificationId")) == false)
+			{
+				if(result_map.get(IDENTIFIER_TARGET_PRODUCTSPEC) == null)
+					result_map.put(IDENTIFIER_TARGET_PRODUCTSPEC, new HashMap<String, Map<String,Map<String,Object>>>(0));
+				
+				if(result_map.get(IDENTIFIER_TARGET_PRODUCTSPEC).get(idf_map.get("productSpecificationId")) == null)
+					result_map.get(IDENTIFIER_TARGET_PRODUCTSPEC).put((String)idf_map.get("productSpecificationId"),new HashMap<String, Map<String,Object>>(0));
+				
+				result_map.get(IDENTIFIER_TARGET_PRODUCTSPEC).get(idf_map.get("productSpecificationId")).put((String)idf_map.get("id"), idf_map);
+			}
+			
+			if(StringUtils.isBlank((String)idf_map.get("resourceSpecificationId")) == false)
+			{
+				if(result_map.get(IDENTIFIER_TARGET_RESOURCESPEC) == null)
+					result_map.put(IDENTIFIER_TARGET_RESOURCESPEC, new HashMap<String, Map<String,Map<String,Object>>>(0));
+				
+				if(result_map.get(IDENTIFIER_TARGET_RESOURCESPEC).get(idf_map.get("resourceSpecificationId")) == null)
+					result_map.get(IDENTIFIER_TARGET_RESOURCESPEC).put((String)idf_map.get("resourceSpecificationId"),new HashMap<String, Map<String,Object>>(0));
+				
+				result_map.get(IDENTIFIER_TARGET_RESOURCESPEC).get(idf_map.get("resourceSpecificationId")).put((String)idf_map.get("id"), idf_map);
+			}
+			
+			if(StringUtils.isBlank((String)idf_map.get("serviceSpecificationId")) == false)
+			{
+				if(result_map.get(IDENTIFIER_TARGET_SERVICESPEC) == null)
+					result_map.put(IDENTIFIER_TARGET_SERVICESPEC, new HashMap<String, Map<String,Map<String,Object>>>(0));
+				
+				if(result_map.get(IDENTIFIER_TARGET_SERVICESPEC).get(idf_map.get("serviceSpecificationId")) == null)
+					result_map.get(IDENTIFIER_TARGET_SERVICESPEC).put((String)idf_map.get("serviceSpecificationId"),new HashMap<String, Map<String,Object>>(0));
+				
+				result_map.get(IDENTIFIER_TARGET_SERVICESPEC).get(idf_map.get("serviceSpecificationId")).put((String)idf_map.get("id"), idf_map);
+			}
+		}
+		
+		return result_map;
 	}
 
 	public static Map<String, Map<String,Map<String,Object>>> handlePropMap(Element root) 
@@ -382,6 +452,10 @@ public class DealerDataService {
 		for (Iterator<Element> it=itemListElement.iterator(); it.hasNext();) 
 		{
 			Element itemElement = (Element) it.next();
+			
+			if(StringUtils.isBlank(itemElement.elementText(keyName)))
+				continue;
+			
 			List<Element> subElements = itemElement.elements();
 			
 			if(subElements == null || subElements.isEmpty())
@@ -391,6 +465,7 @@ public class DealerDataService {
 			
 			for(Iterator<Element> sub_it = subElements.iterator(); sub_it.hasNext();)
 			{
+				
 				Element subElement = (Element) sub_it.next();
 				
 				if(subElement.elements("item") != null && subElement.elements("item").isEmpty()==false)
@@ -532,7 +607,7 @@ public class DealerDataService {
 			productSpec.setMaxValue((String)productSpec_vo.get("maxValue"));
 			productSpec.setMappingTtype((String)productSpec_vo.get("type"));
 			productSpec.setAssociationType((String)productSpec_vo.get("associationType"));
-			productSpec.setAssociationType((String)productSpec_vo.get("associationType"));
+			
 			if(componentPriceMap != null 
 					&& productSpec_vo.get("componentPriceId") != null 
 					&& componentPriceMap.get((String)productSpec_vo.get("componentPriceId")) != null)
@@ -578,7 +653,7 @@ public class DealerDataService {
 					productSpec.setGeographicLocationMapping(new GeographicLocationMapping(geographicLocationList));
 				
 				/**  **/
-				if(StringUtils.isBlank((String)productSpec_vo2.get("productSpecToCharacteristicMapping")) == false)
+				if(productSpec_vo2.get("productSpecToCharacteristicMapping") != null && ((Map)productSpec_vo2.get("productSpecToCharacteristicMapping")).isEmpty() == false)
 				{
 					List<ProductSpecMapping.ProductSpecCharacteristic> productSpecCharList = getProductSpecCharList((Map<String,Map<String,Object>>)productSpec_vo2.get("productSpecToCharacteristicMapping"));
 					productSpec.setProductSpecCharList(productSpecCharList);
@@ -590,9 +665,40 @@ public class DealerDataService {
 				
 				/**设置硬件资源**/
 				List<ProductSpecMapping.ResourceSpec> resourceSpecList = getResourceSpecList((Map<String,Map<String,Object>>)productSpec_vo2.get("productSpecHasResourceSpec"));
+				
 				productSpec.setResourceSpecList(resourceSpecList);
 			}
 			
+			if(identifierMap != null && identifierMap.get(IDENTIFIER_TARGET_PRODUCTSPEC) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_PRODUCTSPEC).isEmpty() == false
+					&& identifierMap.get(IDENTIFIER_TARGET_PRODUCTSPEC).get(productSpecId) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_PRODUCTSPEC).get(productSpecId).isEmpty() == false)
+			{
+				productSpec.setIdentifiers(new ArrayList<ProductSpecMapping.Identifier>(0));
+				for(Object idf_obj : identifierMap.get(IDENTIFIER_TARGET_PRODUCTSPEC).get(productSpecId).values())
+				{
+					Map<String,Object> idf_map = (Map<String,Object>)idf_obj;
+					ProductSpecMapping.Identifier identifier = new ProductSpecMapping.Identifier();
+					identifier.setId((String)idf_map.get("id"));
+					identifier.setValue((String)idf_map.get("name"));
+					identifier.setType((String)idf_map.get("type"));
+					identifier.setCategory((String)idf_map.get("category"));
+					identifier.setSubCategory((String)idf_map.get("subCategory"));
+					identifier.setIsCustomerSelectable((String)idf_map.get("isCustomerSelectable"));
+					identifier.setStatus((String)idf_map.get("status"));
+					identifier.setComponentPriceId((String)idf_map.get("componentPriceId"));
+					
+					if(componentPriceMap != null 
+							&& idf_map.get("componentPriceId") != null 
+							&& componentPriceMap.get((String)idf_map.get("componentPriceId")) != null)
+					{
+						Map<String,Object> cpMap = componentPriceMap.get(idf_map.get("componentPriceId"));
+						identifier.setComponentPrice((String)cpMap.get("price"));
+					}
+					
+					productSpec.getIdentifiers().add(identifier);
+				}
+			}
 			
 			productSpecList.add(productSpec);
 		}
@@ -655,13 +761,49 @@ public class DealerDataService {
 				
 				if(componentPriceMap != null 
 						&& rs_vo2.get("resourceSpecificationToComponentPriceMapping") != null 
-						&& compositePriceMap.get((String)rs_vo2.get("resourceSpecificationToComponentPriceMapping")) != null)
+						&& ((Map)rs_vo2.get("resourceSpecificationToComponentPriceMapping")).isEmpty() == false)
 				{
-					Map<String,Object> cpMap = componentPriceMap.get((String)rs_vo2.get("resourceSpecificationToComponentPriceMapping"));
-					rs.setComponentPrice((String)cpMap.get("price"));
+					String componentPriceId =  (String)((Map)rs_vo2.get("resourceSpecificationToComponentPriceMapping")).get("componentPriceId");
+					if(StringUtils.isBlank(componentPriceId) == false)
+					{
+						Map<String,Object> cpMap = componentPriceMap.get(componentPriceId);
+						rs.setComponentPrice((String)cpMap.get("price"));
+					}
 				}
-				
 			}
+			
+
+			if(identifierMap != null && identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).isEmpty() == false
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).get(resourceSpecificationId) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).get(resourceSpecificationId).isEmpty() == false)
+			{
+				rs.setIdentifiers(new ArrayList<ProductSpecMapping.Identifier>(0));
+				for(Object idf_obj : identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).get(resourceSpecificationId).values())
+				{
+					Map<String,Object> idf_map = (Map<String,Object>)idf_obj;
+					ProductSpecMapping.Identifier identifier = new ProductSpecMapping.Identifier();
+					identifier.setId((String)idf_map.get("id"));
+					identifier.setValue((String)idf_map.get("name"));
+					identifier.setType((String)idf_map.get("type"));
+					identifier.setCategory((String)idf_map.get("category"));
+					identifier.setSubCategory((String)idf_map.get("subCategory"));
+					identifier.setIsCustomerSelectable((String)idf_map.get("isCustomerSelectable"));
+					identifier.setStatus((String)idf_map.get("status"));
+					identifier.setComponentPriceId((String)idf_map.get("componentPriceId"));
+					
+					if(componentPriceMap != null 
+							&& idf_map.get("componentPriceId") != null 
+							&& componentPriceMap.get((String)idf_map.get("componentPriceId")) != null)
+					{
+						Map<String,Object> cpMap = componentPriceMap.get(idf_map.get("componentPriceId"));
+						identifier.setComponentPrice((String)cpMap.get("price"));
+					}
+					
+					rs.getIdentifiers().add(identifier);
+				}
+			}
+			
 			resourceSpecList.add(rs);
 		}
 		
@@ -750,6 +892,38 @@ public class DealerDataService {
 				{
 					Map<String,Map<String,Object>> ss_glMap = (Map<String,Map<String,Object>>)ss_vo2.get("geographicLocations");
 					ss.setGeographicLocations(getGeographicLocation(ss_glMap));
+				}
+			}
+			
+
+			if(identifierMap != null && identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).isEmpty() == false
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).get(serviceSpecificationId) != null
+					&& identifierMap.get(IDENTIFIER_TARGET_RESOURCESPEC).get(serviceSpecificationId).isEmpty() == false)
+			{
+				ss.setIdentifiers(new ArrayList<ProductSpecMapping.Identifier>(0));
+				for(Object idf_obj : identifierMap.get(IDENTIFIER_TARGET_SERVICESPEC).get(serviceSpecificationId).values())
+				{
+					Map<String,Object> idf_map = ( Map<String,Object>)idf_obj;
+					ProductSpecMapping.Identifier identifier = new ProductSpecMapping.Identifier();
+					identifier.setId((String)idf_map.get("id"));
+					identifier.setValue((String)idf_map.get("name"));
+					identifier.setType((String)idf_map.get("type"));
+					identifier.setCategory((String)idf_map.get("category"));
+					identifier.setSubCategory((String)idf_map.get("subCategory"));
+					identifier.setIsCustomerSelectable((String)idf_map.get("isCustomerSelectable"));
+					identifier.setStatus((String)idf_map.get("status"));
+					identifier.setComponentPriceId((String)idf_map.get("componentPriceId"));
+					
+					if(componentPriceMap != null 
+							&& idf_map.get("componentPriceId") != null 
+							&& componentPriceMap.get((String)idf_map.get("componentPriceId")) != null)
+					{
+						Map<String,Object> cpMap = componentPriceMap.get(idf_map.get("componentPriceId"));
+						identifier.setComponentPrice((String)cpMap.get("price"));
+					}
+					
+					ss.getIdentifiers().add(identifier);
 				}
 			}
 			

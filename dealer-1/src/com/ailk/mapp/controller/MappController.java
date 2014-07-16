@@ -1,7 +1,5 @@
 package com.ailk.mapp.controller;
 
-import java.io.File;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,25 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.mapp.bss.util.BSSConstant;
 import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.service.DealerDataService;
-import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.MappConstant;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.client.JsonClientHandler;
 import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.web.BaseController;
-import com.ailk.yd.mapp.model.UserInfo;
 import com.ailk.yd.mapp.model.YDDatapackage;
-import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 @Controller
 @RequestMapping("/mapp")
@@ -46,27 +38,25 @@ public class MappController extends BaseController {
 	public String getJsonRsp(String msg, HttpServletRequest request,HttpServletResponse response) throws Exception 
 	{		
 		
-//		try
-//		{
-//			String path = TibcoUtil.class.getResource("/").getPath();
-//			File file = new File(path+"/tibco_product.xml");
-//			SAXReader saxReader = new SAXReader();
-//			Document document = saxReader.read(file);
-//			dealerDataService.updateProductInfoByFile(file);
-//		}
-//		catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
-//		
+//		dealerDataService.updateProductInfoByFile("/Users/luyang/Desktop/Sales.xml");
 		
-//		System.out.println(msg);
 		MappContext.clearContext();
 		
 		Map<String,Object> attrMap = new HashMap<String, Object>(0);
 		attrMap.put(MappContext.MAPPCONTEXT_REQUEST_IP,request.getRemoteHost());
 		attrMap.put(MappContext.MAPPCONTEXT_SESSIONID, request.getSession().getId());
 		attrMap.put(MappContext.MAPPCONTEXT_USER, request.getSession().getAttribute(MappConstant.MAPP_SESSION_USER));
+		
+//		IUserinfo user = new UserInfo();
+//		user.setUserId(1L);
+//		user.setUserName("m01");
+//		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
+//		
+//		IUserinfo u = new UserInfo();
+//		u.setUserId(1l);
+//		u.setUserName("m01");
+//		
+//		attrMap.put(MappContext.MAPPCONTEXT_USER, u);
 		
 		try
 		{

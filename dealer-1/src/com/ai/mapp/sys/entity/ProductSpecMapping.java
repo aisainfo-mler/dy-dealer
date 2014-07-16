@@ -18,6 +18,84 @@ public class ProductSpecMapping  extends IBody {
 		this.productSpecs = productSpecs;
 	}
 
+	public static class Identifier  extends IBody  {
+		
+		private String id;
+		private String name;
+		private String value;
+		private String type;
+		private String category;
+		private String subCategory;
+		private String isCustomerSelectable;
+		private String status;
+		private String componentPriceId;
+		private String componentPrice;
+//		private String productSpecificationId;
+//		private String resourceSpecificationId;
+//		private String serviceSpecificationId;
+		
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+		public String getType() {
+			return type;
+		}
+		public void setType(String type) {
+			this.type = type;
+		}
+		public String getCategory() {
+			return category;
+		}
+		public void setCategory(String category) {
+			this.category = category;
+		}
+		public String getSubCategory() {
+			return subCategory;
+		}
+		public void setSubCategory(String subCategory) {
+			this.subCategory = subCategory;
+		}
+		public String getIsCustomerSelectable() {
+			return isCustomerSelectable;
+		}
+		public void setIsCustomerSelectable(String isCustomerSelectable) {
+			this.isCustomerSelectable = isCustomerSelectable;
+		}
+		public String getStatus() {
+			return status;
+		}
+		public void setStatus(String status) {
+			this.status = status;
+		}
+		public String getComponentPrice() {
+			return componentPrice;
+		}
+		public void setComponentPrice(String componentPrice) {
+			this.componentPrice = componentPrice;
+		}
+		public String getComponentPriceId() {
+			return componentPriceId;
+		}
+		public void setComponentPriceId(String componentPriceId) {
+			this.componentPriceId = componentPriceId;
+		}
+	}
+	
 	public static class ProductSpec  extends IBody {
 	
 		private String id;
@@ -45,7 +123,6 @@ public class ProductSpecMapping  extends IBody {
 		private List<ServiceSpec> serviceSpecList;
 		private String compositePrice;
 		
-		
 		private String mappingTtype;
 		private String productSpecificationId;
 		private String minValue;
@@ -53,6 +130,15 @@ public class ProductSpecMapping  extends IBody {
 		private String associationType;
 		private String componentPrice;
 		
+		private List<Identifier> identifiers;
+
+		public List<Identifier> getIdentifiers() {
+			return identifiers;
+		}
+
+		public void setIdentifiers(List<Identifier> identifiers) {
+			this.identifiers = identifiers;
+		}
 
 		public String getId() {
 			return id;
@@ -314,8 +400,14 @@ public class ProductSpecMapping  extends IBody {
 		private String isActivationRequired;
 		private String serviceType;
 		private List<GeographicLocation> geographicLocations;
+		private List<Identifier> identifiers;
 		
-		
+		public List<Identifier> getIdentifiers() {
+			return identifiers;
+		}
+		public void setIdentifiers(List<Identifier> identifiers) {
+			this.identifiers = identifiers;
+		}
 		public String getId() {
 			return id;
 		}
@@ -434,7 +526,14 @@ public class ProductSpecMapping  extends IBody {
 		private String fixedMobile;
 		private GeographicLocationMapping geographicLocationMapping;
 		private String componentPrice;
+		private List<Identifier> identifiers;
 		
+		public List<Identifier> getIdentifiers() {
+			return identifiers;
+		}
+		public void setIdentifiers(List<Identifier> identifiers) {
+			this.identifiers = identifiers;
+		}
 		public String getMaxValue() {
 			return maxValue;
 		}

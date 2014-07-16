@@ -132,7 +132,7 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 					
 					String errorMsg = method.getResponseBodyAsString();
 					if(StringUtils.isEmpty(errorMsg) == false)
-						throw new Exception(getError(errorMsg));
+						throw new Exception(errorMsg);
 					
 					String redirectLocation;
 					Header locationHeader = method.getResponseHeader("location");

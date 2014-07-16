@@ -185,7 +185,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.getCustomerDetails().setPassportNo(hw_customer.getForeignNational().getPassportNo()==null?"":hw_customer.getForeignNational().getPassportNo());
 			req.getCustomerDetails().setVisaNo(hw_customer.getForeignNational().getVisaNo()==null?"":hw_customer.getForeignNational().getVisaNo());
 			
-			if(hw_customer.getDateOfBirth() != null)
+			if(StringUtils.isBlank(hw_customer.getForeignNational().getVisaValidityDate()) == false)
 			{
 				Date d = DateUtils.formatDate(hw_customer.getForeignNational().getVisaValidityDate(), "dd/MM/yyyy");
 				req.getCustomerDetails().setVisaValidityDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
@@ -260,7 +260,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCustomerDetails().setAadhaarNumber(hw_customer.getAadhaarNumber()==null?"":hw_customer.getAadhaarNumber());
 		req.getCustomerDetails().setMaritalStatus(hw_customer.getMaritalStatus()==null?"":hw_customer.getMaritalStatus());
 		req.getCustomerDetails().setAnniversaryDate("2014-06-26");
-		if(hw_customer.getAnniversaryDate() != null)
+		if(StringUtils.isBlank(hw_customer.getAnniversaryDate()) == false)
 		{
 			Date d = DateUtils.formatDate(hw_customer.getAnniversaryDate(), "dd/MM/yyyy");
 			req.getCustomerDetails().setAnniversaryDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
@@ -279,7 +279,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			req.getPaymentDetails().setModeOfPayment(payInfo.getModeOfPayment()==null?"":payInfo.getModeOfPayment());
 			req.getPaymentDetails().setPaymentInstrumentNumber(payInfo.getPaymentInstrumentNumber()==null?"":payInfo.getPaymentInstrumentNumber());
 			req.getPaymentDetails().setPaymentInstrumentDate("");
-			if(payInfo.getPaymentInstrumentDate() != null)
+			if(StringUtils.isBlank(payInfo.getPaymentInstrumentDate()) == false)
 			{
 				Date d = DateUtils.formatDate(payInfo.getPaymentInstrumentDate(), "dd/MM/yyyy");
 				req.getPaymentDetails().setPaymentInstrumentDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
@@ -364,7 +364,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		req.getCafDetails().setMerchantCode(caf.getMerchantCode()==null?"":caf.getMerchantCode());
 		req.getCafDetails().setPosAgentCode(caf.getPosAgentCode()==null?"":caf.getPosAgentCode());
 		req.getCafDetails().setPosAgentSignatureDate("");
-		if(caf.getPosAgentSignatureDate() != null)
+		if(StringUtils.isBlank(caf.getPosAgentSignatureDate()) == false)
 		{
 			Date d = DateUtils.formatDate(caf.getPosAgentSignatureDate(), "dd/MM/yyyy");
 			req.getCafDetails().setPosAgentSignatureDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
@@ -372,7 +372,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 //		req.getCafDetails().setPosAgentSignatureDate(caf.getPosAgentSignatureDate()==null?"":DateUtils.parse(caf.getPosAgentSignatureDate().getTime(),"yyyy-MM-dd"));
 		req.getCafDetails().setCustomerDeclarationPlace(caf.getCustomerDeclarationPlace()==null?"":caf.getCustomerDeclarationPlace());
 		req.getCafDetails().setCustomerDeclarationDate("");
-		if(caf.getCustomerDeclarationDate() != null)
+		if(StringUtils.isBlank(caf.getCustomerDeclarationDate()) == false)
 		{
 			Date d = DateUtils.formatDate(caf.getCustomerDeclarationDate(), "dd/MM/yyyy");
 			req.getCafDetails().setPosAgentSignatureDate(DateUtils.parse(d.getTime(), "yyyy-MM-dd"));
@@ -423,15 +423,15 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 		}
 		
 		req.getCafDetails().setCurrentMobileConnections(new ArrayList<YD0010Request.Connection>(0));
-		if(caf.getOperators() != null && caf.getOperators().isEmpty() == false)
-		{
-			for(String name : caf.getOperators().keySet())
-			{
-				YD0010Request.Connection conn = new YD0010Request.Connection();
-				conn.setOperatorName(name);
-				conn.setNoOfConnections(caf.getOperators().get(name));
-			}
-		}
+//		if(caf.getOperators() != null && caf.getOperators().isEmpty() == false)
+//		{
+//			for(String name : caf.getOperators().keySet())
+//			{
+//				YD0010Request.Connection conn = new YD0010Request.Connection();
+//				conn.setOperatorName(name);
+//				conn.setNoOfConnections(caf.getOperators().get(name));
+//			}
+//		}
 		
 		Connection conn = new Connection();
 //		conn.setOperatorName(caf.getOperatorName()==null?"":caf.getOperatorName());

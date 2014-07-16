@@ -184,6 +184,7 @@ public class HW0001Response extends YDBody {
 		private String isCAFRequired;
 		private List<ServiceSpec> serviceSpecList;
 		private List<ResourceSpec> resourceSpecList;
+		private List<Identifier> identifierList;
 	
 		public String getCode() {
 			return code;
@@ -233,6 +234,12 @@ public class HW0001Response extends YDBody {
 		public void setIsCAFRequired(String isCAFRequired) {
 			this.isCAFRequired = isCAFRequired;
 		}
+		public List<Identifier> getIdentifierList() {
+			return identifierList;
+		}
+		public void setIdentifierList(List<Identifier> identifierList) {
+			this.identifierList = identifierList;
+		}
 	}
 	
 	public static class ResourceSpec extends YDBody {
@@ -240,6 +247,8 @@ public class HW0001Response extends YDBody {
 		private String name;
 		private String type;
 		private BigDecimal price;
+		private List<Identifier> identifierList;
+		
 		public String getCode() {
 			return code;
 		}
@@ -264,7 +273,12 @@ public class HW0001Response extends YDBody {
 		public void setPrice(BigDecimal price) {
 			this.price = price;
 		}
-		
+		public List<Identifier> getIdentifierList() {
+			return identifierList;
+		}
+		public void setIdentifierList(List<Identifier> identifierList) {
+			this.identifierList = identifierList;
+		}
 	}
 	
 	public static class ServiceSpec extends YDBody {
@@ -272,6 +286,8 @@ public class HW0001Response extends YDBody {
 		private String name;
 		private String type;
 		private BigDecimal price;
+		private List<Identifier> identifierList;
+		
 		public String getCode() {
 			return code;
 		}
@@ -296,8 +312,12 @@ public class HW0001Response extends YDBody {
 		public void setPrice(BigDecimal price) {
 			this.price = price;
 		}
-		
-		
+		public List<Identifier> getIdentifierList() {
+			return identifierList;
+		}
+		public void setIdentifierList(List<Identifier> identifierList) {
+			this.identifierList = identifierList;
+		}
 	}
 	
 	public static class PlanSpecChar extends YDBody {
@@ -330,6 +350,46 @@ public class HW0001Response extends YDBody {
 			this.price = price;
 		}
 		
+	}
+	
+	public static class Identifier extends YDBody
+	{
+		private String code;
+		private String name;
+		private String selectable;
+		private BigDecimal price;
+		private String componentPriceId;
+		
+		public String getCode() {
+			return code;
+		}
+		public void setCode(String code) {
+			this.code = code;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getSelectable() {
+			return selectable;
+		}
+		public void setSelectable(String selectable) {
+			this.selectable = selectable;
+		}
+		public BigDecimal getPrice() {
+			return price;
+		}
+		public void setPrice(BigDecimal price) {
+			this.price = price;
+		}
+		public String getComponentPriceId() {
+			return componentPriceId;
+		}
+		public void setComponentPriceId(String componentPriceId) {
+			this.componentPriceId = componentPriceId;
+		}
 	}
 	
 }

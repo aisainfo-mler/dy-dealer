@@ -21,12 +21,17 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 		return post2Tibco(request, paramters, true);
 	}
 	public Rsp post2Tibco(Req request,Map<String,?> paramters,boolean autoCheck) throws Exception {
-		String json = convertRequest(request);
-		System.out.println("tibco request:"+json);
-		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), json, paramters,null,true);
-		if(autoCheck==true)
-			checkSucc(rsp_string);
-		return convertResponse(rsp_string);
+		try{
+			String json = convertRequest(request);
+			System.out.println("tibco request:"+json);
+			String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), json, paramters,null,true);
+			if(autoCheck==true)
+				checkSucc(rsp_string);
+			return convertResponse(rsp_string);
+		}catch (Exception e) {
+			// TODO: handle exception
+			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
+		}
 		
 	}
 	
@@ -37,11 +42,17 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 	}
 	
 	public Rsp get2Tibco(Map<String,?> paramters,boolean autoCheck) throws Exception {
-		String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), null , paramters,null,false);
-		if(autoCheck==true){
-			checkSucc(rsp_string);
+		try
+		{
+			String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), null , paramters,null,false);
+			if(autoCheck==true){
+				checkSucc(rsp_string);
+			}
+			return convertResponse(rsp_string);
+		}catch (Exception e) {
+			// TODO: handle exception
+			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
 		}
-		return convertResponse(rsp_string);
 	}
 
 	/**
