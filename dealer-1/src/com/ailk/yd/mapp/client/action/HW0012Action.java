@@ -85,6 +85,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 			/**
 			 * 如果成功，设置订单上tibco发送成功的标记位
 			 */
+			
 			ao.setTibcoSendFlag("1");
 			agentOrderService.saveAgentOrder(ao);
 			resourceMap = getResource(hw0010Request);
