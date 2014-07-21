@@ -131,6 +131,10 @@
 			<param-name>kaptcha.obscurificator.impl</param-name>
 			<param-value>com.google.code.kaptcha.impl.ShadowGimpy</param-value>
 		</init-param>
+		<init-param>
+			<param-name>kaptcha.noise.impl</param-name>
+			<param-value>com.google.code.kaptcha.impl.NoNoise </param-value>
+		</init-param>
 	</servlet>
 
 	<servlet-mapping>
