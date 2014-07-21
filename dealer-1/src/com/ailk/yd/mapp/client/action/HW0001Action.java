@@ -179,7 +179,7 @@ public class HW0001Action extends
 		for (ProductSpecMapping.ProductSpec ps : productSpecList) {
 			HW0001Response.ProductSpec hw_ps = new HW0001Response.ProductSpec();
 			hw_productSpecList.add(hw_ps);
-			
+
 			// xuzhou 获取ProductSpec下的identifiers
 			List<HW0001Response.Identifier> hw_Pro_IdentifierList = new ArrayList<HW0001Response.Identifier>();
 			if (ps.getIdentifiers() != null
@@ -219,12 +219,12 @@ public class HW0001Action extends
 						.getServiceSpecList()) {
 					HW0001Response.ServiceSpec hw_ss = new HW0001Response.ServiceSpec();
 					hw_serviceSpecList.add(hw_ss);
-					
+
 					// xuzhou 获取ServiceSpec下的identifiers
 					List<HW0001Response.Identifier> hw_Ser_IdentifierList = new ArrayList<HW0001Response.Identifier>();
-					if (ps.getIdentifiers() != null
-							&& ps.getIdentifiers().isEmpty() == false) {
-						for (ProductSpecMapping.Identifier idf : ps
+					if (ss.getIdentifiers() != null
+							&& ss.getIdentifiers().isEmpty() == false) {
+						for (ProductSpecMapping.Identifier idf : ss
 								.getIdentifiers()) {
 							HW0001Response.Identifier hw_idf = new HW0001Response.Identifier();
 							hw_idf.setCode(idf.getId());
@@ -264,9 +264,9 @@ public class HW0001Action extends
 
 					// xuzhou 获取ServiceSpec下的identifiers
 					List<HW0001Response.Identifier> hw_Rs_IdentifierList = new ArrayList<HW0001Response.Identifier>();
-					if (ps.getIdentifiers() != null
-							&& ps.getIdentifiers().isEmpty() == false) {
-						for (ProductSpecMapping.Identifier idf : ps
+					if (rs.getIdentifiers() != null
+							&& rs.getIdentifiers().isEmpty() == false) {
+						for (ProductSpecMapping.Identifier idf : rs
 								.getIdentifiers()) {
 							HW0001Response.Identifier hw_idf = new HW0001Response.Identifier();
 							hw_idf.setCode(idf.getId());
