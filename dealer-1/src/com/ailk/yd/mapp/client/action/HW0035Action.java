@@ -42,10 +42,6 @@ public class HW0035Action extends
 	@Override
 	protected void doAction() throws BusinessException, SystemException,Exception {
 		
-		if(request.getCustomerIds()!=null){
-			request.getCustomerIds().add("1100009566");
-		}
-		
 		YD0021Request yd0021Request = new YD0021Request();
 		response = new HW0035Response();
 		List list = new ArrayList();
