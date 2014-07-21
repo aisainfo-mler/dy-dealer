@@ -6,17 +6,17 @@
 	<welcome-file-list>
 		<welcome-file>/index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<servlet>
 		<servlet-name>appImage</servlet-name>
 		<servlet-class>com.ailk.yd.mapp.action.AppImageServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>appImage</servlet-name>
 		<url-pattern>/appImage.so</url-pattern>
 	</servlet-mapping>
-	
+
 	<filter>
 		<filter-name>hibernateFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -37,8 +37,8 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
-<!-- Filter 定义  -->
-	
+	<!-- Filter 定义 -->
+
 	<!-- Character Encoding filter -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -59,11 +59,11 @@
 	</filter-mapping>
 
 	<context-param>
-	    <param-name>contextConfigLocation</param-name>
-<!-- 	     <param-value>,classpath:mapp-base.xml,WEB-INF/spring-servlet.xml</param-value> -->
-  
-	    <param-value>classpath:mapp-base.xml,classpath:applicationContext*.xml,classpath*:com/ailk/butterfly/**/*applicationContext-butterfly.xml,WEB-INF/springServlet-servlet.xml</param-value>
-  	</context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- <param-value>,classpath:mapp-base.xml,WEB-INF/spring-servlet.xml</param-value> -->
+
+		<param-value>classpath:mapp-base.xml,classpath:applicationContext*.xml,classpath*:com/ailk/butterfly/**/*applicationContext-butterfly.xml,WEB-INF/springServlet-servlet.xml</param-value>
+	</context-param>
 
 	<servlet>
 		<servlet-name>springServlet</servlet-name>
@@ -80,17 +80,75 @@
 	</servlet-mapping>
 
 	<servlet>
-	  <servlet-name>MAPPService</servlet-name>
-	  <servlet-class>com.ai.mapp.base.http.MAPPHTTPService</servlet-class>
+		<servlet-name>MAPPService</servlet-name>
+		<servlet-class>com.ai.mapp.base.http.MAPPHTTPService</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
-	  <servlet-name>MAPPService</servlet-name>
-	  <url-pattern>/MAPPService</url-pattern>
+		<servlet-name>MAPPService</servlet-name>
+		<url-pattern>/MAPPService</url-pattern>
 	</servlet-mapping>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 		<listener-class>com.ailk.yd.mapp.client.action.DealerContextListener</listener-class>
+		<listener-class>com.ailk.butterfly.core.spring.SpringInitListener</listener-class>
 	</listener>
+
+	<servlet>
+		<servlet-name>Kaptcha</servlet-name>
+		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+		<init-param>
+			<param-name>kaptcha.image.width</param-name>
+			<param-value>110</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.image.height</param-name>
+			<param-value>50</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>kaptcha.textproducer.char.length</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.size</param-name>
+			<param-value>40</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.noise.color</param-name>
+			<param-value>31,97,152</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.color</param-name>
+			<param-value>31,97,152</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.names</param-name>
+			<param-value>宋体,楷体,微软雅黑</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.obscurificator.impl</param-name>
+			<param-value>com.google.code.kaptcha.impl.ShadowGimpy</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Kaptcha</servlet-name>
+		<url-pattern>/Kaptcha.jpg</url-pattern>
+		<url-pattern>/lang/Kaptcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<!-- 404 页面不存在错误 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.html</location>
+	</error-page>
+	<!-- 500 服务器内部错误 -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.html</location>
+	</error-page>
+
+
 </web-app>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"  "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 指标 -->
+	<package name="busicfg-package" namespace="/busicfg" extends="nologin-default">
+		<action name="*" method="{1}"
+			class="com.ai.mapp.commission.action.BusiCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+	<package name="busicfgSimple-package" namespace="/busicfgSimple"
+		extends="crud-default">
+		<action name="*" method="toPage"
+			class="com.ai.mapp.commission.action.BusiCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+	<!-- 模块 -->
+	<package name="modcfg-package" namespace="/modcfg" extends="nologin-default">
+		<action name="*" method="{1}"
+			class="com.ai.mapp.commission.action.ModCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+	<package name="modcfgSimple-package" namespace="/modcfgSimple"
+		extends="crud-default">
+		<action name="*" method="toPage"
+			class="com.ai.mapp.commission.action.ModCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+	<!-- 规则 -->
+	<package name="rulecfg-package" namespace="/rulecfg" extends="nologin-default">
+		<action name="*" method="{1}"
+			class="com.ai.mapp.commission.action.RuleCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+	<package name="rulecfgSimple-package" namespace="/rulecfgSimple"
+		extends="crud-default">
+		<action name="*" method="toPage"
+			class="com.ai.mapp.commission.action.RuleCfgAction">
+			<result>/commission/{1}.jsp</result>
+		</action>
+	</package>
+
+</struts>

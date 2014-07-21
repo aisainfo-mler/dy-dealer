@@ -5,6 +5,7 @@ String.prototype.trim = function(){
 function checkLogin(loginType){
 	var username = document.getElementById("username").value.trim();
 	var password = document.getElementById("password").value.trim();
+	var checkCode = document.getElementById("checkCode").value.trim();
 	if(username == null || username == undefined || username == ""){
 		$j("#username").css("color","red");
 		return false;
@@ -13,9 +14,14 @@ function checkLogin(loginType){
 		$j("#password").css("color","red");
 		return false;
 	}
+	if(checkCode == null || checkCode == undefined || checkCode == ""){
+		$j("#checkCode").css("color","red");
+		return false;
+	}
 	var data = {
 			'user.userCode':username,
-			'user.password':password
+			'user.password':password,
+			'checkCode':checkCode
 			}
 	var url = baseUrl + "/common/check.do?request_locale=" + _lang;
 	var options = { 
@@ -48,6 +54,7 @@ function checkLogin(loginType){
 
 $j(document).ready(function(){
 	var indexLocation = window.location.href;
+	
 //	alert(indexLocation);
 
 //	var replaceLocation = window.location.search;
@@ -71,6 +78,9 @@ $j(document).ready(function(){
 	};
 }
 	
+	$j("#code").val(this.src='Kaptcha.jpg?now=' + new Date().getTime());
+	
+	
 	$j("#username").keyup(function(){
 		var value = $j("#username").val();
 		if (value != "" && value != null) {
@@ -81,6 +91,12 @@ $j(document).ready(function(){
 		var value = $j("#password").val();
 		if (value != "" && value != null) {
 			$j("#password").css("color","gray");
+		}
+	 });
+	$j("#checkcode").keyup(function(){
+		var value = $j("#checkcode").val();
+		if (value != "" && value != null) {
+			$j("#checkcode").css("color","gray");
 		}
 	 });
 	document.onkeydown = function(e){

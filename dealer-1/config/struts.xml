@@ -123,4 +123,5 @@
 	</package>
 	
 	<include file="order-struts.xml"></include>
+	<include file="commi-struts.xml"></include>
 </struts>
