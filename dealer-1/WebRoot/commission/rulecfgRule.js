@@ -136,7 +136,7 @@ function addReceiver(obj) {
 							+ dataType
 							+ "' /><input type='hidden' name='busiCodeList' value='"
 							+ busiCode
-							+ "' /></td><td><select name='operationList' notnull='true' ><option value='=='>==</option><option value='>='>>=</option><option value='>'>></option><option value='<='><=</option><option value='<'><</option></select></td><td><input type='text' name='oValueList'   value=''/></td><td><a onclick='goDeal(this)'>删除</a></td></tr>");
+							+ "' /></td><td><select name='operationList' notnull='true' ><option value='=='>==</option><option value='>='>>=</option><option value='>'>></option><option value='<='><=</option><option value='<'><</option></select></td><td><input type='text' name='oValueList'/></td><td><a onclick='goDeal(this)'>删除</a></td></tr>");
 
 }
 
