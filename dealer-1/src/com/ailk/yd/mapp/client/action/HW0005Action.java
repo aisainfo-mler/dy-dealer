@@ -33,7 +33,7 @@ public class HW0005Action extends AbstractYDBaseActionHandler<HW0005Request, IBo
 		User user = userService.loadValidUser(request.getUserName(), request.getPassWd());
 		
 		if(user == null)
-			throw new BusinessException(LanguageInfo.USERNAME_PASSWORD_ERROR);
+			throw new Exception(LanguageInfo.USERNAME_PASSWORD_ERROR);
 		
 		/**
 		 * 先存入终端相关信息
