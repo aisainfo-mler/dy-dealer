@@ -122,11 +122,21 @@
          <appender-ref ref="default"/>
      </logger> 
       
+      
+     <logger name="com.ibatis" additivity="true">
+     	<appender-ref ref="default"/>
+     	<level value="debug"></level>
+     </logger>
+     <logger name="java.sql" additivity="true">
+     	<appender-ref ref="default"/>
+     	<level value="debug"></level>
+     </logger>
+      
      <logger name="jdbc.sqltiming" additivity="true">
      	<appender-ref ref="default"/>
-     	<level value="INFO"></level>
+     	<level value="debug"></level>
      </logger>
-      -->
+      
       <logger name="org.hibernate.sql">   
          <level value="debug"/>    
          <appender-ref ref="default"/>  
@@ -135,6 +145,7 @@
 		<level value="debug" />
 		<appender-ref ref="default" />
 	</logger>
+	 -->
 	<root>
 		<level value="error" />
 		<appender-ref ref="default" />
