@@ -3,6 +3,7 @@ package com.ailk.yd.mapp.client.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
+import com.ai.mapp.sys.entity.ProductSpecMapping.Identifier;
 import com.ai.mapp.sys.service.AgentOrderService;
 import com.ai.mapp.sys.service.DealerDataService;
 import com.ai.mapp.sys.service.ProductService;
@@ -41,6 +43,7 @@ import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameAndValueObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.NameObject;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Order;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.PayInfo;
+import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ProductIdentifier;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.Proof;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Request.ReferringCustomer;
 import com.ailk.yd.mapp.tibco.model.YD0010.YD0010Response;
@@ -593,6 +596,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						ps.setBusinessInteraction(new NameObject("ADD"));
 						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
 						ps.setStarterKitCode("Y");
+						//xuzhou start
+						List<YD0010Request.ProductIdentifier> list = new ArrayList<YD0010Request.ProductIdentifier>();
+						for(int i=0;i<productSpec.getIdentifiers().size();i++){
+							Identifier idt = (Identifier)productSpec.getIdentifiers().get(i);
+							ProductIdentifier pit = new ProductIdentifier();
+							pit.setName(idt.getName());
+							pit.setValue(idt.getValue());
+						}
+						ps.setIdentifiers(list);
+						//xuzhou end
 						order.getProducts().add(ps);
 						if(req.getCafDetails() != null && req.getCafDetails().getProofs().isEmpty() == false)
 						{
@@ -618,8 +631,17 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 							device.setBoqType(resourceSpec.getType()==null?"":resourceSpec.getType());
 							device.setBusinessInteraction(new NameObject("ADD"));
 							device.setProductId(resourceSpec.getResourceSpecificationId()==null?"":resourceSpec.getResourceSpecificationId());
-							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
-							
+							//xuzhou start
+							List<YD0010Request.NameAndValueObject> listNavo = new ArrayList<YD0010Request.NameAndValueObject>();
+							for(int i=0;i<resourceSpec.getIdentifiers().size();i++){
+								Identifier idt = (Identifier)resourceSpec.getIdentifiers().get(i);
+								NameAndValueObject navo = new NameAndValueObject();
+								navo.setName(idt.getName());
+								navo.setValue(idt.getValue());
+								listNavo.add(navo);
+							}
+							device.setIdentifier(listNavo);
+							//xuzhou end
 							if(deviceMap.get(resourceSpec.getResourceSpecificationId()) == null || deviceMap.get(resourceSpec.getResourceSpecificationId()).isEmpty())
 								continue;
 							
