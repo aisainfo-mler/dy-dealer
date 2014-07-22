@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
+import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
 
 /**
  * @author mler
@@ -182,11 +183,21 @@ public class YD0007Response implements TibcoRequest {
 		System.err.println(new ObjectMapper().writeValueAsString(rm));
 	}
 
+	/**
+	 * 将seco(Tibco)返回的串，解析成对象。利用反射
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IllegalAccessException
+	 */
 	public static YD0007Response fillVal(String in) throws IOException,
 			JsonParseException, JsonMappingException, IllegalAccessException {
+		
 		Map m = new ObjectMapper().readValue(in, Map.class);
 		YD0007Response rm = new YD0007Response();
-		extractStrVal(m, rm);
+		YD0021Response.extractStrValObj(m, rm);
 		Object cl = m.get("customers");
 		if (cl != null) {
 			List customerList = (List) cl;
@@ -195,14 +206,14 @@ public class YD0007Response implements TibcoRequest {
 			for (Iterator it = customerList.iterator(); it.hasNext();) {
 				Map oneCustomerMap = (Map) it.next();
 				Customer cu = new Customer();
-				extractStrVal(oneCustomerMap, cu);
+				YD0021Response.extractStrValObj(oneCustomerMap, cu);
 				PersonalDetails pd = new PersonalDetails();
 				cu.setPersonalDetails(pd);
-				extractStrVal(oneCustomerMap.get("personalDetails"), pd);
+				YD0021Response.extractStrValObj(oneCustomerMap.get("personalDetails"), pd);
 
 				ContactDetails cd = new ContactDetails();
 				cu.setContactDetails(cd);
-				extractStrVal(oneCustomerMap.get("contactDetails"), cd);
+				YD0021Response.extractStrValObj(oneCustomerMap.get("contactDetails"), cd);
 
 				Object obj = oneCustomerMap.get("roles");
 				if (obj != null) {
@@ -214,22 +225,6 @@ public class YD0007Response implements TibcoRequest {
 		return rm;
 	}
 
-	private static void extractStrVal(Object mapObj, Object rm)
-			throws IllegalAccessException {
-		if (!(mapObj instanceof Map))
-			return;
-		Map m = (Map) mapObj;
-		Field[] declaredFields = rm.getClass().getDeclaredFields();
-		for (int i = 0; i < declaredFields.length; i++) {
-			Field f = declaredFields[i];
-			String fieldname = f.getName();
-			Object fieldVal = m.get(fieldname);
-			if (f.getType().equals(String.class) && fieldVal != null) {
-				f.setAccessible(true);
-				f.set(rm, fieldVal.toString());
-			}
-		}
-	}
 
 	private static void extractNonStrVal(Map m, Object rm)
 			throws IllegalAccessException, InstantiationException {
@@ -243,7 +238,7 @@ public class YD0007Response implements TibcoRequest {
 				Object obj = f.getType().newInstance();
 				f.setAccessible(true);
 				f.set(rm, obj);
-				extractStrVal(m, obj);
+				YD0021Response.extractStrValObj(m, obj);
 			}
 		}
 	}
