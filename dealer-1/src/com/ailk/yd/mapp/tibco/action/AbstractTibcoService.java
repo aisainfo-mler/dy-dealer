@@ -51,6 +51,7 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 			return convertResponse(rsp_string);
 		}catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
 		}
 	}

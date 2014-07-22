@@ -70,6 +70,11 @@ public class ProductDao extends HibernateDao<Product, Long> {
 			c.add(Restrictions.in("bssRangeId", t.getBssReangeIds()));
 		}
 		
+		if(StringUtils.isBlank(t.getName()) == false)
+		{
+			c.add(Restrictions.or(Restrictions.like("packedName", t.getName(),MatchMode.ANYWHERE),Restrictions.eq("bssRangeId", t.getName())));
+		}
+		
 		if(t.getFilterCondition() != null)
 		{
 			int i=0;
