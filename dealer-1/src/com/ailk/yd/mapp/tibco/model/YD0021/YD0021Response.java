@@ -1,7 +1,6 @@
 package com.ailk.yd.mapp.tibco.model.YD0021;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,8 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.ailk.yd.mapp.model.YDBody;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 public class YD0021Response implements TibcoRequest {
 
@@ -314,7 +313,7 @@ public class YD0021Response implements TibcoRequest {
 		rm.setAccounts(acctsResponse);
 		for (Iterator it = accts.iterator(); it.hasNext();) {
 			Map oneAccountMap = (Map) it.next();
-			Account acc = (Account) extractStrValClass(oneAccountMap, Account.class);
+			Account acc = (Account) TibcoUtil.extractStrValClass(oneAccountMap, Account.class);
 			acctsResponse.add(acc);
 			List servicePackageListInAcc = new ArrayList();
 			acc.setServicePackage(servicePackageListInAcc);
@@ -324,17 +323,17 @@ public class YD0021Response implements TibcoRequest {
 				Object next = spit.next();
 				Map oneServicePackageMap = (Map) next;
 				List servicesInServicePackage = new ArrayList();
-				ServicePackage sp = (ServicePackage) extractStrValClass(oneServicePackageMap, ServicePackage.class);
+				ServicePackage sp = (ServicePackage) TibcoUtil.extractStrValClass(oneServicePackageMap, ServicePackage.class);
 				sp.setServices(servicesInServicePackage);
 				servicePackageListInAcc.add(sp);
 				List servicesList = (List) oneServicePackageMap.get("services");
 				for (Iterator sList = servicesList.iterator(); sList
 						.hasNext();) {
 					Map oneServiceMap = (Map) sList.next();
-					Services oneService = (Services) extractStrValClass(oneServiceMap, Services.class);
+					Services oneService = (Services) TibcoUtil.extractStrValClass(oneServiceMap, Services.class);
 					servicesInServicePackage.add(oneService);
 					Map identifierMap = (Map) oneServiceMap.get("identifier");
-					Identifier identifier = (Identifier) extractStrValClass(identifierMap, Identifier.class);
+					Identifier identifier = (Identifier) TibcoUtil.extractStrValClass(identifierMap, Identifier.class);
 					oneService.setIdentifier(identifier);
 					
 					//下面是待处理的2014-06-26
@@ -350,30 +349,5 @@ public class YD0021Response implements TibcoRequest {
 		return rm;
 	}
 	
-	public static void extractStrValObj(Object mapObj, Object rm)
-			throws IllegalAccessException {
-		if (!(mapObj instanceof Map))
-			return;
-		Map m = (Map) mapObj;
-		Field[] declaredFields = rm.getClass().getDeclaredFields();
-		for (int i = 0; i < declaredFields.length; i++) {
-			Field f = declaredFields[i];
-			String fieldname = f.getName();
-			Object fieldVal = m.get(fieldname);
-			if (f.getType().equals(String.class) && fieldVal != null) {
-				f.setAccessible(true);
-				f.set(rm, fieldVal.toString());
-			}
-		}
-	}
-	public static Object extractStrValClass(Object mapObj, Class clazz)
-			throws IllegalAccessException, InstantiationException {
-		if (!(mapObj instanceof Map))
-			return null;
-		Object rm = clazz.newInstance();
-		extractStrValObj(mapObj, rm);
-		return rm;
-	}
-
 
 }

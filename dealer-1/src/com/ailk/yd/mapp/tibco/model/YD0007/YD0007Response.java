@@ -14,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 /**
  * @author mler
@@ -192,12 +193,13 @@ public class YD0007Response implements TibcoRequest {
 	 * @throws JsonMappingException
 	 * @throws IllegalAccessException
 	 */
+	@SuppressWarnings("rawtypes")
 	public static YD0007Response fillVal(String in) throws IOException,
 			JsonParseException, JsonMappingException, IllegalAccessException {
 		
 		Map m = new ObjectMapper().readValue(in, Map.class);
 		YD0007Response rm = new YD0007Response();
-		YD0021Response.extractStrValObj(m, rm);
+		TibcoUtil.extractStrValObj(m, rm);
 		Object cl = m.get("customers");
 		if (cl != null) {
 			List customerList = (List) cl;
@@ -206,14 +208,14 @@ public class YD0007Response implements TibcoRequest {
 			for (Iterator it = customerList.iterator(); it.hasNext();) {
 				Map oneCustomerMap = (Map) it.next();
 				Customer cu = new Customer();
-				YD0021Response.extractStrValObj(oneCustomerMap, cu);
+				TibcoUtil.extractStrValObj(oneCustomerMap, cu);
 				PersonalDetails pd = new PersonalDetails();
 				cu.setPersonalDetails(pd);
-				YD0021Response.extractStrValObj(oneCustomerMap.get("personalDetails"), pd);
+				TibcoUtil.extractStrValObj(oneCustomerMap.get("personalDetails"), pd);
 
 				ContactDetails cd = new ContactDetails();
 				cu.setContactDetails(cd);
-				YD0021Response.extractStrValObj(oneCustomerMap.get("contactDetails"), cd);
+				TibcoUtil.extractStrValObj(oneCustomerMap.get("contactDetails"), cd);
 
 				Object obj = oneCustomerMap.get("roles");
 				if (obj != null) {
@@ -238,7 +240,7 @@ public class YD0007Response implements TibcoRequest {
 				Object obj = f.getType().newInstance();
 				f.setAccessible(true);
 				f.set(rm, obj);
-				YD0021Response.extractStrValObj(m, obj);
+				TibcoUtil.extractStrValObj(m, obj);
 			}
 		}
 	}

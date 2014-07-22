@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
-import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 public class YD0022Response implements TibcoRequest {
 
@@ -516,7 +516,7 @@ public class YD0022Response implements TibcoRequest {
 			InstantiationException {
 		Map rv = new ObjectMapper().readValue(test, Map.class);
 		YD0022Response rm = new YD0022Response();
-		YD0021Response.extractStrValObj(rv, rm);
+		TibcoUtil.extractStrValObj(rv, rm);
 		Map personalDetailsMap = new HashMap();
 		Object obj = rv.get("personalDetails");
 		if(obj!=null){
@@ -526,7 +526,7 @@ public class YD0022Response implements TibcoRequest {
 			return rm;
 		}
 		
-		PersonalDetails pd = (PersonalDetails) YD0021Response.extractStrValClass(personalDetailsMap, PersonalDetails.class);
+		PersonalDetails pd = (PersonalDetails) TibcoUtil.extractStrValClass(personalDetailsMap, PersonalDetails.class);
 		rm.setPersonalDetails(pd);
 		
 		List roles = (List) personalDetailsMap.get("roles");
@@ -534,9 +534,9 @@ public class YD0022Response implements TibcoRequest {
 		Map familyContactDetailsMap = (Map) personalDetailsMap.get("familyContactDetails");
 		Map contactDetailsMap = (Map) personalDetailsMap.get("contactDetails");
 		Map permanentAddressMap = (Map) personalDetailsMap.get("permanentAddress");
-		FamilyContactDetails familyContactDetails = (FamilyContactDetails) YD0021Response.extractStrValClass(familyContactDetailsMap, FamilyContactDetails.class);
-		ContactDetails contactDetails = (ContactDetails) YD0021Response.extractStrValClass(contactDetailsMap, ContactDetails.class);
-		PermanentAddress permanentAddress = (PermanentAddress) YD0021Response.extractStrValClass(permanentAddressMap, PermanentAddress.class);
+		FamilyContactDetails familyContactDetails = (FamilyContactDetails) TibcoUtil.extractStrValClass(familyContactDetailsMap, FamilyContactDetails.class);
+		ContactDetails contactDetails = (ContactDetails) TibcoUtil.extractStrValClass(contactDetailsMap, ContactDetails.class);
+		PermanentAddress permanentAddress = (PermanentAddress) TibcoUtil.extractStrValClass(permanentAddressMap, PermanentAddress.class);
 		pd.setFamilyContactDetails(familyContactDetails);
 		pd.setPermanentAddress(permanentAddress);
 		pd.setContactDetails(contactDetails);

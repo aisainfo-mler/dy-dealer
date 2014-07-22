@@ -5,12 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sf.json.JSONObject;
@@ -158,6 +160,33 @@ public class TibcoUtil {
 		return encode;
 		
 	}
+	
+	
+	public static void extractStrValObj(Object mapObj, Object rm)
+			throws IllegalAccessException {
+		if (!(mapObj instanceof Map))
+			return;
+		Map m = (Map) mapObj;
+		Field[] declaredFields = rm.getClass().getDeclaredFields();
+		for (int i = 0; i < declaredFields.length; i++) {
+			Field f = declaredFields[i];
+			String fieldname = f.getName();
+			Object fieldVal = m.get(fieldname);
+			if (f.getType().equals(String.class) && fieldVal != null) {
+				f.setAccessible(true);
+				f.set(rm, fieldVal.toString());
+			}
+		}
+	}
+	public static Object extractStrValClass(Object mapObj, Class clazz)
+			throws IllegalAccessException, InstantiationException {
+		if (!(mapObj instanceof Map))
+			return null;
+		Object rm = clazz.newInstance();
+		extractStrValObj(mapObj, rm);
+		return rm;
+	}
+
 	
 	public static void main(String[] args) throws FileNotFoundException, BadElementException, MalformedURLException, DocumentException, IOException {
 		System.err.println(getCurTime());
