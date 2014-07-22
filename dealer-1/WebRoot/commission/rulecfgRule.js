@@ -61,7 +61,8 @@ function rulecfg_add() {
 function save() {
 	$j.messager.confirm("操作提示", "您确定要执行操作吗？", function(r) {
 		if (r) {
-			var data = getFormData($j("#rulecfg_save_check_form"), {});
+//			var data = getFormData($j("#rulecfg_save_check_form"), {});
+			var data = $j("#rulecfg_save_check_form").serialize(),
 			var url = getURL("/rulecfg/save.do");
 			var target = $j("#sub_Content");
 			$j.ajax({
