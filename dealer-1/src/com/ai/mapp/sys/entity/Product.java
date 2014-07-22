@@ -469,6 +469,17 @@ public class Product implements java.io.Serializable {
 	}
 	
 	@Transient
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Transient
 	private Collection<Long> ids;
 
 	public Collection<Long> getIds() {

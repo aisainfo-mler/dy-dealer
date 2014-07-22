@@ -5,22 +5,22 @@
             {
                 "proofIdentifier": "POA", 
                 "aadhaarTransactionRefNo": "", 
-                "idProofType": "Z00005", 
-                "placeOfIssue": "jju", 
-                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
-                "documentNumber": "hh", 
-                "issuingAuthority": "hj", 
-                "dateOfIssue": "2014-06-25"
+                "idProofType": "Z00044", 
+                "placeOfIssue": "943456", 
+                "identifierURL": "", 
+                "documentNumber": "943456", 
+                "issuingAuthority": "943456", 
+                "dateOfIssue": "2014-07-10"
             }, 
             {
                 "proofIdentifier": "POI", 
                 "aadhaarTransactionRefNo": "", 
-                "idProofType": "Z00005", 
-                "placeOfIssue": "jju", 
-                "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
-                "documentNumber": "hh", 
-                "issuingAuthority": "hj", 
-                "dateOfIssue": "2014-06-26"
+                "idProofType": "Z00044", 
+                "placeOfIssue": "246737", 
+                "identifierURL": "", 
+                "documentNumber": "943456", 
+                "issuingAuthority": "246737", 
+                "dateOfIssue": "2014-07-10"
             }
         ], 
         "form61Details": {
@@ -28,7 +28,12 @@
             "lastTaxReturnFiled": ""
         }, 
         "customerDeclarationDate": "", 
-        "currentMobileConnections": [ ], 
+        "currentMobileConnections": [
+            {
+                "operatorName": "", 
+                "noOfConnections": ""
+            }
+        ], 
         "posAgentSignatureDate": "", 
         "localReferenceVerification": {
             "callingPartyNumber": ""
@@ -48,11 +53,11 @@
             "address": {
                 "villageORCity": "", 
                 "careOf": "", 
-                "jioCentreId": "JC23", 
+                "jioCentreId": "", 
                 "state": "", 
                 "houseNameORNumber": "", 
                 "buildingNameORNumber": "", 
-                "addressType": "REF_ADD", 
+                "addressType": "", 
                 "addressId": "", 
                 "country": "", 
                 "pincode": "", 
@@ -73,20 +78,22 @@
                 "id": "52"
             }, 
             "billingAddress": {
-                "villageORCity": "Mumbai", 
+                "villageORCity": "", 
                 "careOf": "", 
-                "state": "MH", 
-                "houseNameORNumber": "ghh", 
-                "buildingNameORNumber": "TC23- C Block", 
+                "jioCentreId": "", 
+                "state": "", 
+                "houseNameORNumber": "", 
+                "buildingNameORNumber": "", 
                 "addressType": "BILL_TO", 
                 "addressId": "", 
-                "country": "IN", 
-                "pincode": "666888", 
-                "areaORTehsil": "ghh", 
+                "country": "", 
+                "pincode": "", 
+                "areaORTehsil": "", 
                 "landmark": "", 
+                "totalFloors": "", 
                 "societyName": "", 
-                "streetNameORNumber": "hjj", 
-                "district": "mum", 
+                "streetNameORNumber": "", 
+                "district": "", 
                 "subLocality": "", 
                 "buildingId": ""
             }, 
@@ -94,7 +101,7 @@
             "businessInteraction": {
                 "name": ""
             }, 
-            "eWalletReservationReferenceId": "1014689", 
+            "eWalletReservationReferenceId": "", 
             "products": [
                 {
                     "dependancyInfo": {
@@ -102,62 +109,17 @@
                     }, 
                     "proofs": [
                         {
-                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "identifierURL": "", 
                             "proofIdentifier": "POA"
                         }, 
                         {
-                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
+                            "identifierURL": "", 
                             "proofIdentifier": "POI"
                         }
                     ], 
                     "cafDetails": {
-                        "cafURI": "", 
-                        "cafNumber": ""
-                    }, 
-                    "starterKitCode": "N", 
-                    "characteristics": [ ], 
-                    "componentPrice": {
-                        "id": ""
-                    }, 
-                    "mnpPortDetails": {
-                        "uniquePortingCode": "", 
-                        "upcGenerationDate": "", 
-                        "existingSubscriberType": "", 
-                        "lastPaidBillReceiptURI": "", 
-                        "existingOperatorCode": ""
-                    }, 
-                    "businessInteraction": {
-                        "name": ""
-                    }, 
-                    "customerFacingServices": [
-                        {
-                            "features": [ ], 
-                            "serviceId": "S10009", 
-                            "businessInteraction": {
-                                "name": "ADD"
-                            }
-                        }
-                    ], 
-                    "devices": [ ], 
-                    "productId": "P10009"
-                }, 
-                {
-                    "dependancyInfo": {
-                        "identifier": [ ]
-                    }, 
-                    "proofs": [
-                        {
-                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167133_20140626_185110&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
-                            "proofIdentifier": "POA"
-                        }, 
-                        {
-                            "identifierURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167138_20140626_185113&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
-                            "proofIdentifier": "POI"
-                        }
-                    ], 
-                    "cafDetails": {
-                        "cafURI": "", 
-                        "cafNumber": ""
+                        "cafNumber": "", 
+                        "cafURI": ""
                     }, 
                     "starterKitCode": "Y", 
                     "characteristics": [ ], 
@@ -172,130 +134,145 @@
                         "existingOperatorCode": ""
                     }, 
                     "businessInteraction": {
-                        "name": ""
+                        "name": "ADD"
                     }, 
-                    "customerFacingServices": [
-                        {
-                            "features": [ ], 
-                            "serviceId": "S10003", 
-                            "businessInteraction": {
-                                "name": "ADD"
-                            }
-                        }
-                    ], 
-                    "devices": [
-                        {
-                            "identifier": [ ], 
-                            "boqType": "MiFi", 
-                            "productId": "DEV100012", 
-                            "businessInteraction": {
-                                "name": ""
-                            }
-                        }, 
-                        {
-                            "identifier": [
-                                {
-                                    "value": "5667766654444556677", 
-                                    "name": "ICCID"
-                                }
-                            ], 
-                            "boqType": "VOLTE SIM", 
-                            "productId": "DEV100022", 
-                            "businessInteraction": {
-                                "name": ""
-                            }
-                        }
-                    ], 
+                    "customerFacingServices": [ ], 
+                    "devices": [ ], 
                     "identifier": {
-                        "value": "4456667778", 
+                        "value": "", 
                         "type": "", 
                         "componentPrice": {
                             "id": ""
                         }, 
-                        "name": "MSISDN"
+                        "name": ""
+                    }, 
+                    "productId": "P10009"
+                }, 
+                {
+                    "dependancyInfo": {
+                        "identifier": [ ]
+                    }, 
+                    "proofs": [
+                        {
+                            "identifierURL": "", 
+                            "proofIdentifier": "POA"
+                        }, 
+                        {
+                            "identifierURL": "", 
+                            "proofIdentifier": "POI"
+                        }
+                    ], 
+                    "cafDetails": {
+                        "cafNumber": "", 
+                        "cafURI": ""
+                    }, 
+                    "starterKitCode": "Y", 
+                    "characteristics": [ ], 
+                    "componentPrice": {
+                        "id": ""
+                    }, 
+                    "mnpPortDetails": {
+                        "uniquePortingCode": "", 
+                        "upcGenerationDate": "", 
+                        "existingSubscriberType": "", 
+                        "lastPaidBillReceiptURI": "", 
+                        "existingOperatorCode": ""
+                    }, 
+                    "businessInteraction": {
+                        "name": "ADD"
+                    }, 
+                    "customerFacingServices": [ ], 
+                    "devices": [ ], 
+                    "identifier": {
+                        "value": "", 
+                        "type": "", 
+                        "componentPrice": {
+                            "id": ""
+                        }, 
+                        "name": ""
                     }, 
                     "productId": "P10003"
                 }
             ], 
-            "offerId": "OC402"
+            "offerId": "OC403"
         }
     ], 
     "customerId": "", 
     "installationAddress": [
         {
-            "villageORCity": "Mumbai", 
+            "villageORCity": "", 
             "careOf": "", 
-            "jioCentreId": "JC23", 
-            "state": "MH", 
-            "houseNameORNumber": "ghh", 
-            "buildingNameORNumber": "TC23- C Block", 
+            "jioCentreId": "", 
+            "state": "", 
+            "houseNameORNumber": "5201314", 
+            "buildingNameORNumber": "5201314", 
             "addressType": "SHIP_TO", 
             "addressId": "", 
-            "country": "IN", 
-            "pincode": "666888", 
-            "areaORTehsil": "ghh", 
+            "country": "", 
+            "pincode": "", 
+            "areaORTehsil": "", 
             "landmark": "", 
             "totalFloors": "", 
             "societyName": "", 
-            "streetNameORNumber": "hjj", 
-            "district": "mum", 
+            "streetNameORNumber": "53719", 
+            "district": "", 
             "subLocality": "", 
             "buildingId": ""
         }
     ], 
     "orderType": "CREATE", 
-    "referenceNumber": "OT000000LTMS", 
+    "referenceNumber": "NO000000LO2K", 
     "customerDetails": {
-        "dateOfBirth": "1996-06-25", 
-        "middleName": "", 
+        "dateOfBirth": "2014-07-10", 
+        "middleName": "polo", 
         "prospectId": "", 
-        "lastName": "GYY", 
-        "occupation": "0005", 
-        "passportNo": "", 
+        "lastName": "jason", 
+        "occupation": "", 
+        "passportNo": "E012312313", 
         "anniversaryDate": "2014-06-26", 
         "customerCategory": "0001", 
         "maritalStatus": "", 
-        "panNumber": "AUIPR0027Q", 
-        "visaNo": "", 
+        "panNumber": "211314", 
+        "visaNo": "6226 0293 2312 1231", 
         "familyContactDetails": {
-            "relationship": "0001", 
-            "middleName": "", 
-            "firstName": "GH", 
-            "lastName": "GGYY"
+            "firstName": "kevin", 
+            "middleName": "mac", 
+            "lastName": "yans", 
+            "relationship": "0001"
         }, 
-        "preferredLanguage": "EN", 
+        "preferredLanguage": "", 
         "occupationDescription": "", 
-        "customerPictureURL": "http://sidcdevotas.in.ril.com:8080/archive?get&pVersion=0045&contRep=CAF&docId=167140_20140626_185115&ixUser=SIDCDEVOTAS&ixAppl=libdsh", 
-        "preferredCommunicationChannel": "INT", 
-        "nationality": "IN", 
+        "customerPictureURL": "", 
+        "preferredCommunicationChannel": "", 
+        "nationality": "HR", 
         "aadhaarNumber": "", 
         "gender": "2", 
         "contactDetails": {
-            "mobileNumber": "5885555555", 
-            "emailId": "ggyy@bh.com", 
-            "alternateContactNumberWork": "", 
-            "alternateContactNumberHome": "5666777766"
+            "mobileNumber": "9198232120", 
+            "alternateContactNumberHome": "9198232120", 
+            "alternateContactNumberWork": "9198232120", 
+            "emailId": "jack1988@gmail.com"
         }, 
         "typeOfHouse": "", 
-        "firstName": "HH", 
+        "firstName": "yangttt", 
         "salutation": "0002", 
         "permanentAddress": {
-            "villageORCity": "Mumbai", 
+            "villageORCity": "", 
             "careOf": "", 
-            "jioCentreId": "JC23", 
-            "state": "MH", 
-            "houseNameORNumber": "ghh", 
-            "buildingNameORNumber": "TC23- C Block", 
+            "jioCentreId": "", 
+            "state": "", 
+            "houseNameORNumber": "", 
+            "buildingNameORNumber": "", 
             "addressType": "PER_ADD", 
             "addressId": "", 
-            "country": "IN", 
-            "pincode": "666888", 
-            "areaORTehsil": "Mumbai", 
+            "country": "", 
+            "pincode": "", 
+            "areaORTehsil": "", 
             "landmark": "", 
             "totalFloors": "", 
             "societyName": "", 
-            "streetNameORNumber": "hjj", 
-            "district": "mum", 
+            "streetNameORNumber": "", 
+            "district": "", 
             "subLocality": "", 
             "buildingId": ""
         }, 

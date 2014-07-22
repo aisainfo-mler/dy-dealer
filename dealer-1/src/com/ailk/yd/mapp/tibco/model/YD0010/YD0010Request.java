@@ -1,9 +1,11 @@
 package com.ailk.yd.mapp.tibco.model.YD0010;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ai.mapp.sys.service.DealerDataService;
+import com.ailk.yd.mapp.model.YDBody;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 
 /**
@@ -1687,6 +1689,39 @@ public class YD0010Request implements TibcoRequest {
 
 	public void setOrderDetails(List<Order> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+	
+	public static class Identifier extends YDBody
+	{
+		private String code;
+		private String name;
+		private String value;
+		private IdObject componentPriceId;
+		
+		public String getCode() {
+			return code;
+		}
+		public void setCode(String code) {
+			this.code = code;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+		public IdObject getComponentPriceId() {
+			return componentPriceId;
+		}
+		public void setComponentPriceId(IdObject componentPriceId) {
+			this.componentPriceId = componentPriceId;
+		}
 	}
 
 	public static final void main(String[] args) throws Exception {

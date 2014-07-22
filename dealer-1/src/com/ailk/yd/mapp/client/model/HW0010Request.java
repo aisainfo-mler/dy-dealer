@@ -852,7 +852,14 @@ public class HW0010Request extends YDBody {
 		private Set<String> imei;
 		//Map<productId,Map<imei,deviceType>>
 		private Map<String,Map<String,String>> devices;
+		private Map<String,Map<String,List<Identifier>>> identifier;//Map<类型，Map<code,identifier集合>>
 		
+		public Map<String, Map<String, List<Identifier>>> getIdentifier() {
+			return identifier;
+		}
+		public void setIdentifier(Map<String, Map<String, List<Identifier>>> identifier) {
+			this.identifier = identifier;
+		}
 		public Long getPid() {
 			return pid;
 		}
@@ -1014,6 +1021,39 @@ public class HW0010Request extends YDBody {
 			this.resources = resources;
 		}
 		
-		
 	}
+	
+	public static class Identifier extends YDBody
+	{
+		private String code;
+		private String name;
+		private String value;
+		private String componentPriceId;
+		
+		public String getCode() {
+			return code;
+		}
+		public void setCode(String code) {
+			this.code = code;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+		public String getComponentPriceId() {
+			return componentPriceId;
+		}
+		public void setComponentPriceId(String componentPriceId) {
+			this.componentPriceId = componentPriceId;
+		}
+	}
+	
 }

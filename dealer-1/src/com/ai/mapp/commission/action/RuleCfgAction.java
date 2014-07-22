@@ -56,7 +56,7 @@ public class RuleCfgAction extends BaseAction {
 	private List<String> dataTypeList;
 	private List<String> busiCodeList;
 	private List<String> operationList;
-	private List<String> oValueList;
+	private List<String> ovalueList;
 
 	private AiBusiConfig busi;
 
@@ -121,12 +121,12 @@ public class RuleCfgAction extends BaseAction {
 		this.operationList = operationList;
 	}
 
-	public List<String> getoValueList() {
-		return oValueList;
+	public List<String> getOvalueList() {
+		return ovalueList;
 	}
 
-	public void setoValueList(List<String> oValueList) {
-		this.oValueList = oValueList;
+	public void setOvalueList(List<String> ovalueList) {
+		this.ovalueList = ovalueList;
 	}
 
 	public AiRuleConfig getAbc() {
@@ -241,8 +241,9 @@ public class RuleCfgAction extends BaseAction {
 			acwb.setState("1");
 
 			aiRuleConfigService.insertRuleConfig(acwb, dataTypeList,
-					busiCodeList, operationList, oValueList);
-			return returnAjaxSuccess("保存成功", true);
+					busiCodeList, operationList, ovalueList);
+			
+			return returnAjaxSuccess("保存成功", false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return returnAjaxError("保存异常，请重试", false);
@@ -288,7 +289,7 @@ public class RuleCfgAction extends BaseAction {
 		try {
 			acwb.setUpdator(this.getSessionValue(HTTP_SESSION_LOGINCODE) + "");
 			aiRuleConfigService.updateRuleConfig(acwb, dataTypeList,
-					busiCodeList, operationList, oValueList);
+					busiCodeList, operationList, ovalueList);
 			return returnAjaxSuccess("更新成功", true);
 		} catch (Exception e) {
 			return returnAjaxError("更新异常，请重试", false);

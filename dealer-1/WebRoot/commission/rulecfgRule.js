@@ -62,7 +62,7 @@ function save() {
 	$j.messager.confirm("操作提示", "您确定要执行操作吗？", function(r) {
 		if (r) {
 //			var data = getFormData($j("#rulecfg_save_check_form"), {});
-			var data = $j("#rulecfg_save_check_form").serialize(),
+			var data = $j("#rulecfg_save_check_form").serialize();
 			var url = getURL("/rulecfg/save.do");
 			var target = $j("#sub_Content");
 			$j.ajax({
@@ -136,7 +136,7 @@ function addReceiver(obj) {
 							+ dataType
 							+ "' /><input type='hidden' name='busiCodeList' value='"
 							+ busiCode
-							+ "' /></td><td><select name='operationList' notnull='true' ><option value='=='>==</option><option value='>='>>=</option><option value='>'>></option><option value='<='><=</option><option value='<'><</option></select></td><td><input type='text' name='oValueList'/></td><td><a onclick='goDeal(this)'>删除</a></td></tr>");
+							+ "' /></td><td><select name='operationList' notnull='true' ><option value='=='>==</option><option value='>='>>=</option><option value='>'>></option><option value='<='><=</option><option value='<'><</option></select></td><td><input type='text' name='ovalueList'/></td><td><a onclick='goDeal(this)'>删除</a></td></tr>");
 
 }
 
