@@ -181,7 +181,8 @@ public class HW0001Action extends
 			hw_productSpecList.add(hw_ps);
 
 			// xuzhou 获取ProductSpec下的identifiers
-			List<HW0001Response.Identifier> hw_Pro_IdentifierList = new ArrayList<HW0001Response.Identifier>();
+			List<HW0001Response.Identifier> hw_Pro_IdentifierList = new ArrayList<HW0001Response.Identifier>(
+					0);
 			if (ps.getIdentifiers() != null
 					&& ps.getIdentifiers().isEmpty() == false) {
 				for (ProductSpecMapping.Identifier idf : ps.getIdentifiers()) {
@@ -194,9 +195,11 @@ public class HW0001Action extends
 					hw_idf.setSelectable(idf.getIsCustomerSelectable());
 					hw_Pro_IdentifierList.add(hw_idf);
 				}
-
+				hw_ps.setIdentifierList(hw_Pro_IdentifierList);
+			} else {
+				hw_ps.setIdentifierList(null);
 			}
-			hw_ps.setIdentifierList(hw_Pro_IdentifierList);
+
 			System.out.println("查看Pro" + hw_Pro_IdentifierList);
 			// xuzhou end
 
@@ -221,7 +224,8 @@ public class HW0001Action extends
 					hw_serviceSpecList.add(hw_ss);
 
 					// xuzhou 获取ServiceSpec下的identifiers
-					List<HW0001Response.Identifier> hw_Ser_IdentifierList = new ArrayList<HW0001Response.Identifier>();
+					List<HW0001Response.Identifier> hw_Ser_IdentifierList = new ArrayList<HW0001Response.Identifier>(
+							0);
 					if (ss.getIdentifiers() != null
 							&& ss.getIdentifiers().isEmpty() == false) {
 						for (ProductSpecMapping.Identifier idf : ss
@@ -237,9 +241,11 @@ public class HW0001Action extends
 							hw_idf.setSelectable(idf.getIsCustomerSelectable());
 							hw_Ser_IdentifierList.add(hw_idf);
 						}
-
+						hw_ss.setIdentifierList(hw_Ser_IdentifierList);
+					} else {
+						hw_ss.setIdentifierList(null);
 					}
-					hw_ss.setIdentifierList(hw_Ser_IdentifierList);
+
 					System.out.println("查看Ser" + hw_Ser_IdentifierList);
 					// xuzhou end
 
@@ -263,7 +269,8 @@ public class HW0001Action extends
 					hw_resourceSpecList.add(hw_rs);
 
 					// xuzhou 获取ServiceSpec下的identifiers
-					List<HW0001Response.Identifier> hw_Rs_IdentifierList = new ArrayList<HW0001Response.Identifier>();
+					List<HW0001Response.Identifier> hw_Rs_IdentifierList = new ArrayList<HW0001Response.Identifier>(
+							0);
 					if (rs.getIdentifiers() != null
 							&& rs.getIdentifiers().isEmpty() == false) {
 						for (ProductSpecMapping.Identifier idf : rs
@@ -279,9 +286,11 @@ public class HW0001Action extends
 							hw_idf.setSelectable(idf.getIsCustomerSelectable());
 							hw_Rs_IdentifierList.add(hw_idf);
 						}
-
+						hw_rs.setIdentifierList(hw_Rs_IdentifierList);
+					} else {
+						hw_rs.setIdentifierList(null);
 					}
-					hw_rs.setIdentifierList(hw_Rs_IdentifierList);
+
 					System.out.println("查看Ser" + hw_Rs_IdentifierList);
 					// xuzhou end
 

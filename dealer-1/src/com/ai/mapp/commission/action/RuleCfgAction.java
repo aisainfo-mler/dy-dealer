@@ -236,15 +236,6 @@ public class RuleCfgAction extends BaseAction {
 		}
 		try {
 
-			System.out.println(request.getParameter("dataTypeList"));
-			System.out.println(request.getParameter("busiCodeList"));
-			System.out.println(request.getParameter("operationList"));
-			System.out.println(request.getParameter("oValueList"));
-			String s[] = request.getParameterValues("dataTypeList");
-			String s2[] = request.getParameterValues("busiCodeList");
-			String s3[] = request.getParameterValues("operationList");
-			String s4[] = request.getParameterValues("oValueList");
-
 			acwb.setCreator(this.getSessionValue(HTTP_SESSION_LOGINCODE) + "");
 			acwb.setRuleState("1");
 			acwb.setState("1");
