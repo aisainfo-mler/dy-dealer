@@ -5,12 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sf.json.JSONObject;
@@ -158,6 +160,52 @@ public class TibcoUtil {
 		return encode;
 		
 	}
+	
+	
+	/**
+	 * 从mapObj中获取rm对象中key值为乘以变量名字的对象，通过反射设置到rm对象中
+	 * @param mapObj
+	 * @param rm
+	 * @throws IllegalAccessException
+	 */
+	@SuppressWarnings("rawtypes")
+	public static void extractStrValObj(Object mapObj, Object rm)
+			throws IllegalAccessException {
+		if (!(mapObj instanceof Map))
+			return;
+		Map m = (Map) mapObj;
+		//获取rm对象的成员变量的名称
+		Field[] declaredFields = rm.getClass().getDeclaredFields();
+		for (int i = 0; i < declaredFields.length; i++) {
+			Field f = declaredFields[i];
+			String fieldname = f.getName();
+			//判断成员遍历的名称再map中是否存在
+			Object fieldVal = m.get(fieldname);
+			if (f.getType().equals(String.class) && fieldVal != null) {
+				//成员变量名称和Map中key值相同，进行设置操作
+				f.setAccessible(true);
+				f.set(rm, fieldVal.toString());
+			}
+		}
+	}
+	
+	/**
+	 * 生成一个clazz类型的对象，并且从mapObj中获取成员遍历的值
+	 * @param mapObj
+	 * @param clazz
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	public static Object extractStrValClass(Object mapObj, Class clazz)
+			throws IllegalAccessException, InstantiationException {
+		if (!(mapObj instanceof Map))
+			return null;
+		Object rm = clazz.newInstance();
+		extractStrValObj(mapObj, rm);
+		return rm;
+	}
+
 	
 	public static void main(String[] args) throws FileNotFoundException, BadElementException, MalformedURLException, DocumentException, IOException {
 		System.err.println(getCurTime());

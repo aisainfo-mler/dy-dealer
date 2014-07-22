@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
-import com.ailk.yd.mapp.tibco.model.YD0021.YD0021Response;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 public class YD0022Response implements TibcoRequest {
 
@@ -503,6 +503,77 @@ public class YD0022Response implements TibcoRequest {
 		this.personalDetails = personalDetails;
 	}
 	
+	
+/*
+ * 串的例子：
+{
+    "customerId": "1100009566", 
+    "customerCategory": "0001", 
+    "customerStatus": "", 
+    "personalDetails": {
+        "salutation": "", 
+        "firstName": "VLR", 
+        "middleName": "", 
+        "lastName": "SRI", 
+        "dateOfBirth": "1996-06-03", 
+        "gender": "2", 
+        "nationality": "IN", 
+        "passportNo": "", 
+        "visaNo": "", 
+        "visaValidityDate": "", 
+        "maritalStatus": "1", 
+        "anniversaryDate": "2014-06-18", 
+        "occupation": "", 
+        "occupationDescription": "test others", 
+        "preferredLanguage": "6E", 
+        "preferredCommunicationChannel": "INT", 
+        "customerPictureURL": "", 
+        "typeOfHouse": "RENTED", 
+        "panNumber": "", 
+        "ltrDetails": "", 
+        "aadhaarNumber": "AADHAAR", 
+        "isBlacklisted": "1", 
+        "customerSegment": "YN01", 
+        "isVip": "false", 
+        "blacklistingReason": "", 
+        "roles": [
+            "CRM000"
+        ], 
+        "familyContactDetails": {
+            "firstName": "GHH", 
+            "middleName": "MN", 
+            "lastName": "BN", 
+            "relationship": "0001"
+        }, 
+        "contactDetails": {
+            "mobileNumber": "9999988888", 
+            "alternateContactNumberHome": "100", 
+            "alternateContactNumberWork": "11111111111", 
+            "emailId": "VLR@ril.com"
+        }, 
+        "permanentAddress": {
+            "addressId": "0000075725", 
+            "buildingId": "", 
+            "addressType": "PER_ADD", 
+            "careOf": "", 
+            "houseNameORNumber": "yuu", 
+            "buildingNameORNumber": "TC23- C Block", 
+            "societyName": "", 
+            "streetNameORNumber": "yui", 
+            "landmark": "", 
+            "subLocality": "", 
+            "areaORTehsil": "Ghansoli", 
+            "pincode": "400096", 
+            "villageORCity": "Mumbai", 
+            "district": "Mumbai-City", 
+            "state": "MH", 
+            "country": "IN", 
+            "totalFloors": "", 
+            "jioCentreId": "JC23"
+        }
+    }
+}
+*/
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException, IllegalAccessException, InstantiationException {
 		String test = "{ \"customerId\": \"1100009566\", \"customerCategory\": \"0001\", \"customerStatus\":\"\", \"personalDetails\": { \"salutation\": \"\", \"firstName\": \"VLR\", \"middleName\": \"\", \"lastName\": \"SRI\", \"dateOfBirth\": \"1996-06-03\", \"gender\": \"2\", \"nationality\": \"IN\", \"passportNo\": \"\", \"visaNo\": \"\", \"visaValidityDate\": \"\", \"maritalStatus\": \"1\", \"anniversaryDate\": \"2014-06-18\", \"occupation\": \"\", \"occupationDescription\": \"test others\", \"preferredLanguage\": \"6E\", \"preferredCommunicationChannel\": \"INT\", \"customerPictureURL\": \"\", \"typeOfHouse\": \"RENTED\", \"panNumber\": \"\", \"ltrDetails\":\"\", \"aadhaarNumber\": \"AADHAAR\", \"isBlacklisted\": \"1\", \"customerSegment\": \"YN01\", \"isVip\":\"false\", \"blacklistingReason\": \"\", \"roles\":[ \"CRM000\" ], \"familyContactDetails\": { \"firstName\": \"GHH\", \"middleName\": \"MN\", \"lastName\": \"BN\", \"relationship\": \"0001\" }, \"contactDetails\": { \"mobileNumber\":\"9999988888\", \"alternateContactNumberHome\":\"100\", \"alternateContactNumberWork\":\"11111111111\", \"emailId\":\"VLR@ril.com\" }, \"permanentAddress\": { \"addressId\": \"0000075725\", \"buildingId\": \"\", \"addressType\": \"PER_ADD\", \"careOf\": \"\", \"houseNameORNumber\": \"yuu\", \"buildingNameORNumber\": \"TC23- C Block\", \"societyName\": \"\", \"streetNameORNumber\": \"yui\", \"landmark\": \"\", \"subLocality\": \"\", \"areaORTehsil\": \"Ghansoli\", \"pincode\": \"400096\", \"villageORCity\": \"Mumbai\", \"district\": \"Mumbai-City\", \"state\": \"MH\", \"country\": \"IN\", \"totalFloors\": \"\", \"jioCentreId\": \"JC23\" } } }";
 		System.err.println(test.replaceAll(" ", ""));
@@ -511,12 +582,24 @@ public class YD0022Response implements TibcoRequest {
 		
 	}
 
+	/**
+	 * 讲SECO(Tibco)返回的串解析成对象，并且设置到对象中
+	 * @param test
+	 * @return
+	 * @throws IOException
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
 	public static YD0022Response fillVal(String test) throws IOException,
 			JsonParseException, JsonMappingException, IllegalAccessException,
 			InstantiationException {
+		//讲json字符串转成对象
 		Map rv = new ObjectMapper().readValue(test, Map.class);
 		YD0022Response rm = new YD0022Response();
-		YD0021Response.extractStrValObj(rv, rm);
+		//解析第一层对象的值
+		TibcoUtil.extractStrValObj(rv, rm);
 		Map personalDetailsMap = new HashMap();
 		Object obj = rv.get("personalDetails");
 		if(obj!=null){
@@ -525,8 +608,8 @@ public class YD0022Response implements TibcoRequest {
 		if(personalDetailsMap.isEmpty()){
 			return rm;
 		}
-		
-		PersonalDetails pd = (PersonalDetails) YD0021Response.extractStrValClass(personalDetailsMap, PersonalDetails.class);
+		//解析personalDetails节点
+		PersonalDetails pd = (PersonalDetails) TibcoUtil.extractStrValClass(personalDetailsMap, PersonalDetails.class);
 		rm.setPersonalDetails(pd);
 		
 		List roles = (List) personalDetailsMap.get("roles");
@@ -534,9 +617,9 @@ public class YD0022Response implements TibcoRequest {
 		Map familyContactDetailsMap = (Map) personalDetailsMap.get("familyContactDetails");
 		Map contactDetailsMap = (Map) personalDetailsMap.get("contactDetails");
 		Map permanentAddressMap = (Map) personalDetailsMap.get("permanentAddress");
-		FamilyContactDetails familyContactDetails = (FamilyContactDetails) YD0021Response.extractStrValClass(familyContactDetailsMap, FamilyContactDetails.class);
-		ContactDetails contactDetails = (ContactDetails) YD0021Response.extractStrValClass(contactDetailsMap, ContactDetails.class);
-		PermanentAddress permanentAddress = (PermanentAddress) YD0021Response.extractStrValClass(permanentAddressMap, PermanentAddress.class);
+		FamilyContactDetails familyContactDetails = (FamilyContactDetails) TibcoUtil.extractStrValClass(familyContactDetailsMap, FamilyContactDetails.class);
+		ContactDetails contactDetails = (ContactDetails) TibcoUtil.extractStrValClass(contactDetailsMap, ContactDetails.class);
+		PermanentAddress permanentAddress = (PermanentAddress) TibcoUtil.extractStrValClass(permanentAddressMap, PermanentAddress.class);
 		pd.setFamilyContactDetails(familyContactDetails);
 		pd.setPermanentAddress(permanentAddress);
 		pd.setContactDetails(contactDetails);

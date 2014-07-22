@@ -1,7 +1,6 @@
 package com.ailk.yd.mapp.tibco.model.YD0021;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,8 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.ailk.yd.mapp.model.YDBody;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
+import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
 public class YD0021Response implements TibcoRequest {
 
@@ -293,7 +292,160 @@ public class YD0021Response implements TibcoRequest {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
+
 	
+/*
+ * 样例串的：
+ {
+    "customerId": "1100009566", 
+    "accounts": [
+        {
+            "prepaidAccountId": "001000009282", 
+            "companyCode": "TIBX", 
+            "circleId": "TC", 
+            "accountType": "", 
+            "servicePackage": [
+                {
+                    "packageCode": "OC401", 
+                    "packageName": "VOLTEBASICOFFER", 
+                    "services": [
+                        {
+                            "productCode": "P10016", 
+                            "productName": "VVMVOLTE", 
+                            "identifier": {
+                                "name": "SERVICE_NAME", 
+                                "type": "GPRS", 
+                                "value": "3334002189", 
+                                "category": "4", 
+                                "subCategory": "2"
+                            }, 
+                            "serviceContractReferenceNo": "", 
+                            "serviceStatus": "CMPD", 
+                            "statusDescription": "SERVICE_STATUS_DESC", 
+                            "serviceAlias": "SERVICE_", 
+                            "activationDate": "2014-07-11", 
+                            "dependancyInfo": {
+                                "parentProductId": "ParentID", 
+                                "identifier": [
+                                    {
+                                        "name": "SERVICE_NAME", 
+                                        "value": "1234", 
+                                        "category": "4", 
+                                        "subcategory": "", 
+                                        "type": "GPRS"
+                                    }
+                                ]
+                            }, 
+                            "action": [ ], 
+                            "characteristics": [
+                                {
+                                    "name": "Reason", 
+                                    "value": "DND"
+                                }, 
+                                {
+                                    "name": "ReasonDescription", 
+                                    "value": "REASON_DESC"
+                                }
+                            ], 
+                            "associatedUsers": [ ], 
+                            "customerFacingServices": [
+                                {
+                                    "serviceId": "S40002", 
+                                    "serviceName": "VOLTE-DATA", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "IMSI", 
+                                        "value": "600000000006535", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }, 
+                                {
+                                    "serviceId": "S40001", 
+                                    "serviceName": "VOICEVIDEOMESSAGING", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "R4GID", 
+                                        "value": "001900009190", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "prepaidAccountId": "001900009190", 
+            "companyCode": "", 
+            "circleId": "TC", 
+            "accountType": "", 
+            "servicePackage": [
+                {
+                    "packageCode": "OC401", 
+                    "packageName": "VOLTEBASICOFFER", 
+                    "services": [
+                        {
+                            "productCode": "P10016", 
+                            "productName": "VVMVOLTE", 
+                            "identifier": {
+                                "name": "", 
+                                "type": "", 
+                                "value": "9334002189", 
+                                "category": "4", 
+                                "subCategory": "2"
+                            }, 
+                            "serviceContractReferenceNo": "", 
+                            "serviceStatus": "Z020", 
+                            "statusDescription": "", 
+                            "serviceAlias": "", 
+                            "activationDate": "", 
+                            "dependancyInfo": {
+                                "parentProductId": "", 
+                                "identifier": [ ]
+                            }, 
+                            "action": [ ], 
+                            "characteristics": [ ], 
+                            "associatedUsers": [ ], 
+                            "customerFacingServices": [
+                                {
+                                    "serviceId": "S40002", 
+                                    "serviceName": "VOLTE-DATA", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "IMSI", 
+                                        "value": "600000000006535", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }, 
+                                {
+                                    "serviceId": "S40001", 
+                                    "serviceName": "VOICEVIDEOMESSAGING", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "R4GID", 
+                                        "value": "001900009190", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+  
+ */
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException, IllegalAccessException, InstantiationException {
 		String test = "{ \"customerId\": \"1100009566\", \"accounts\": [ { \"prepaidAccountId\": \"001000009282\", \"companyCode\": \"TIBX\", \"circleId\": \"TC\", \"accountType\": \"\", \"servicePackage\": [ { \"packageCode\": \"OC401\", \"packageName\": \"VOLTE BASIC OFFER\", \"services\": [ { \"productCode\": \"P10016\", \"productName\": \"VVM VOLTE\", \"identifier\": { \"name\": \"SERVICE_NAME\", \"type\": \"GPRS\", \"value\": \"3334002189\", \"category\": \"4\", \"subCategory\": \"2\" }, \"serviceContractReferenceNo\": \"\", \"serviceStatus\": \"CMPD\", \"statusDescription\": \"SERVICE_STATUS_DESC\", \"serviceAlias\": \"SERVICE_\", \"activationDate\": \"2014-07-11\", \"dependancyInfo\": { \"parentProductId\": \"ParentID\", \"identifier\": [ { \"name\": \"SERVICE_NAME\", \"value\": \"1234\", \"category\": \"4\", \"subcategory\": \"\", \"type\": \"GPRS\" } ] }, \"action\":[ ], \"characteristics\": [ { \"name\": \"Reason\", \"value\": \"DND\" } , { \"name\": \"Reason Description\", \"value\": \"REASON_DESC\" } ], \"associatedUsers\": [ ], \"customerFacingServices\": [ { \"serviceId\": \"S40002\", \"serviceName\": \"VOLTE-DATA\", \"serviceType\": \"\", \"identifier\": { \"name\": \"IMSI\", \"value\": \"600000000006535\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } , { \"serviceId\": \"S40001\", \"serviceName\": \"VOICE VIDEO MESSAGING\", \"serviceType\": \"\", \"identifier\": { \"name\": \"R4GID\", \"value\": \"001900009190\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } ] } ] } ] } , { \"prepaidAccountId\": \"001900009190\", \"companyCode\": \"\", \"circleId\": \"TC\", \"accountType\": \"\", \"servicePackage\": [ { \"packageCode\": \"OC401\", \"packageName\": \"VOLTE BASIC OFFER\", \"services\": [ { \"productCode\": \"P10016\", \"productName\": \"VVM VOLTE\", \"identifier\": { \"name\": \"\", \"type\": \"\", \"value\": \"9334002189\", \"category\": \"4\", \"subCategory\": \"2\" }, \"serviceContractReferenceNo\": \"\", \"serviceStatus\": \"Z020\", \"statusDescription\": \"\", \"serviceAlias\": \"\", \"activationDate\": \"\", \"dependancyInfo\": { \"parentProductId\": \"\", \"identifier\": [ ] }, \"action\":[ ], \"characteristics\": [ ], \"associatedUsers\": [ ], \"customerFacingServices\": [ { \"serviceId\": \"S40002\", \"serviceName\": \"VOLTE-DATA\", \"serviceType\": \"\", \"identifier\": { \"name\": \"IMSI\", \"value\": \"600000000006535\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } , { \"serviceId\": \"S40001\", \"serviceName\": \"VOICE VIDEO MESSAGING\", \"serviceType\": \"\", \"identifier\": { \"name\": \"R4GID\", \"value\": \"001900009190\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } ] } ] } ] } ] }";
@@ -303,6 +455,17 @@ public class YD0021Response implements TibcoRequest {
 		
 	}
 
+	/**
+	 * 将seco返回的字符串解析成对象
+	 * @param test
+	 * @return
+	 * @throws IOException
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws JsonGenerationException
+	 */
 	public static YD0021Response fillVal(String test) throws IOException,
 			JsonParseException, JsonMappingException, IllegalAccessException,
 			InstantiationException, JsonGenerationException {
@@ -314,7 +477,7 @@ public class YD0021Response implements TibcoRequest {
 		rm.setAccounts(acctsResponse);
 		for (Iterator it = accts.iterator(); it.hasNext();) {
 			Map oneAccountMap = (Map) it.next();
-			Account acc = (Account) extractStrValClass(oneAccountMap, Account.class);
+			Account acc = (Account) TibcoUtil.extractStrValClass(oneAccountMap, Account.class);
 			acctsResponse.add(acc);
 			List servicePackageListInAcc = new ArrayList();
 			acc.setServicePackage(servicePackageListInAcc);
@@ -324,17 +487,17 @@ public class YD0021Response implements TibcoRequest {
 				Object next = spit.next();
 				Map oneServicePackageMap = (Map) next;
 				List servicesInServicePackage = new ArrayList();
-				ServicePackage sp = (ServicePackage) extractStrValClass(oneServicePackageMap, ServicePackage.class);
+				ServicePackage sp = (ServicePackage) TibcoUtil.extractStrValClass(oneServicePackageMap, ServicePackage.class);
 				sp.setServices(servicesInServicePackage);
 				servicePackageListInAcc.add(sp);
 				List servicesList = (List) oneServicePackageMap.get("services");
 				for (Iterator sList = servicesList.iterator(); sList
 						.hasNext();) {
 					Map oneServiceMap = (Map) sList.next();
-					Services oneService = (Services) extractStrValClass(oneServiceMap, Services.class);
+					Services oneService = (Services) TibcoUtil.extractStrValClass(oneServiceMap, Services.class);
 					servicesInServicePackage.add(oneService);
 					Map identifierMap = (Map) oneServiceMap.get("identifier");
-					Identifier identifier = (Identifier) extractStrValClass(identifierMap, Identifier.class);
+					Identifier identifier = (Identifier) TibcoUtil.extractStrValClass(identifierMap, Identifier.class);
 					oneService.setIdentifier(identifier);
 					
 					//下面是待处理的2014-06-26
@@ -350,30 +513,5 @@ public class YD0021Response implements TibcoRequest {
 		return rm;
 	}
 	
-	public static void extractStrValObj(Object mapObj, Object rm)
-			throws IllegalAccessException {
-		if (!(mapObj instanceof Map))
-			return;
-		Map m = (Map) mapObj;
-		Field[] declaredFields = rm.getClass().getDeclaredFields();
-		for (int i = 0; i < declaredFields.length; i++) {
-			Field f = declaredFields[i];
-			String fieldname = f.getName();
-			Object fieldVal = m.get(fieldname);
-			if (f.getType().equals(String.class) && fieldVal != null) {
-				f.setAccessible(true);
-				f.set(rm, fieldVal.toString());
-			}
-		}
-	}
-	public static Object extractStrValClass(Object mapObj, Class clazz)
-			throws IllegalAccessException, InstantiationException {
-		if (!(mapObj instanceof Map))
-			return null;
-		Object rm = clazz.newInstance();
-		extractStrValObj(mapObj, rm);
-		return rm;
-	}
-
 
 }
