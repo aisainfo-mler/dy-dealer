@@ -79,6 +79,15 @@ public class RuleCfgAction extends BaseAction {
 	}
 
 	List<AiRuleConfig> modsList;
+	private Integer ruleId;
+
+	public Integer getRuleId() {
+		return ruleId;
+	}
+
+	public void setRuleId(Integer ruleId) {
+		this.ruleId = ruleId;
+	}
 
 	public List<AiRuleConfig> getModsList() {
 		return modsList;
@@ -226,7 +235,7 @@ public class RuleCfgAction extends BaseAction {
 			}
 		}
 		try {
-			
+
 			System.out.println(request.getParameter("dataTypeList"));
 			System.out.println(request.getParameter("busiCodeList"));
 			System.out.println(request.getParameter("operationList"));
@@ -255,8 +264,8 @@ public class RuleCfgAction extends BaseAction {
 	 */
 	public String rulecfgEdit() {
 		try {
-			abc = aiRuleConfigService.getRuleConfig(abc.getRuleId());
-			ralesList = aiRuleConfigService.getRuleRelas(abc.getRuleId());
+			abc = aiRuleConfigService.getRuleConfig(ruleId);
+			ralesList = aiRuleConfigService.getRuleRelas(ruleId);
 			// 得到模块类型
 			List<ViewCache> modTypeList = viewCacheService
 					.findCacheByKey("MODTYPES");

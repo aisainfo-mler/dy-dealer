@@ -113,7 +113,7 @@
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.textproducer.font.size</param-name>
-			<param-value>40</param-value>
+			<param-value>50</param-value>
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.noise.color</param-name>

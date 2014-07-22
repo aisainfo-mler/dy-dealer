@@ -220,7 +220,24 @@ public class ModCfgAction extends BaseAction {
 		try {
 			anrList = aiModConfigService.getRuleMods(modId);
 			mod = aiModConfigService.getModConfig(modId);
+			// 得到模块类型
+			List<ViewCache> modTypeList = viewCacheService
+					.findCacheByKey("MODTYPES");
+			map = new TreeMap<String, String>();
+			for (int i = 0; i < modTypeList.size(); i++) {
+				ViewCache vc = (ViewCache) modTypeList.get(i);
+				map.put(vc.getpValue(), vc.getpDesc());
+			}
+			// 得到返佣类型
+			List<ViewCache> comitems = viewCacheService
+					.findCacheByKey("COMM_ITEM_TYPE");
+			maps = new TreeMap<String, String>();
+			for (int i = 0; i < comitems.size(); i++) {
+				ViewCache vc = (ViewCache) comitems.get(i);
+				maps.put(vc.getpValue(), vc.getpDesc());
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return returnAjaxError("异常，请重试", false);
 		}
 		return SUCCESS;
