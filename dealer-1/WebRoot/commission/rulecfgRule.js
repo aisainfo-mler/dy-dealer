@@ -7,7 +7,7 @@ function rulecfg_detail(ruleId) {
 	var url = getURL("/rulecfg/rulecfgEdit.do");
 	var target = $j("#sub_Content");
 	var data = {
-		'abc.ruleId' : ruleId
+		'ruleId' : ruleId
 	};
 	loadPage(target, url, data, function(_d) {
 	});

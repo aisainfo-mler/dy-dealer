@@ -20,9 +20,9 @@
 			<td class="Hint">规则名称：</td>
 			<td><input name="abc.subSystemId" id="subSystemId" value="1"
 				type="hidden" /> <input type="hidden" name="abc.ruleId"
-				value="<s:property value="#abc.ruleId"/>" /> <input
+				value="<s:property value="abc.ruleId"/>" /> <input
 				name="abc.ruleName" notnull="true" id="ruleName"
-				value="<s:property value="#abc.ruleName"/>" type="text" size="17" />
+				value="<s:property value="abc.ruleName"/>" type="text" size="17" />
 				<span style="color:red;">&nbsp; *</span></td>
 			<td class="Hint">模型类型：</td>
 			<td><s:select list="map" listKey="key" value=""
@@ -34,7 +34,7 @@
 		<tr>
 			<td class="Hint">指标名称：</td>
 			<td><input name="busi.remark" notnull="true" type="text"
-				size="17" value="<s:property value="#busi.remark"/>" /></td>
+				size="17" value="<s:property value="busi.remark"/>" /></td>
 			<td colspan="2">
 				<button type="button" class="searchBtn"
 					onclick="rulecfg_Add_search();">

@@ -3,11 +3,11 @@
  * 
  * @param subSystemId,modCode
  */
-function modcfg_detail(subSystemId) {
+function modcfg_detail(modId) {
 	var url = getURL("/modcfg/modcfgEdit.do");
 	var target = $j("#sub_Content");
 	var data = {
-		'mod.subSystemId' : subSystemId
+		'modId' : modId
 	};
 	loadPage(target, url, data, function(_d) {
 	});
