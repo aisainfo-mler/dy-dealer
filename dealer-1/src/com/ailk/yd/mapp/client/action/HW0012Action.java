@@ -588,6 +588,18 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 				ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(),ProductSpecMapping.class);
 				order.setProducts(new ArrayList<YD0010Request.Product>(0));
 				
+				//xuzhou start
+				List<YD0010Request.ProductIdentifier> list = new ArrayList<YD0010Request.ProductIdentifier>();
+//				for(int i=0;i<productSpec.getIdentifiers().size();i++){
+//					Identifier idt = (Identifier)productSpec.getIdentifiers().get(i);
+//					ProductIdentifier pit = new ProductIdentifier();
+//					pit.setName(idt.getName());
+//					pit.setValue(idt.getValue());
+//				}
+				
+				//xuzhou end
+				
+				
 				if(productSpecMapping != null && productSpecMapping.getProductSpecs() != null && productSpecMapping.getProductSpecs().isEmpty() == false)
 				{
 					for(ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs())
@@ -596,16 +608,7 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 						ps.setBusinessInteraction(new NameObject("ADD"));
 						ps.setProductId(productSpec.getProductSpecificationId()==null?"":productSpec.getProductSpecificationId());
 						ps.setStarterKitCode("Y");
-						//xuzhou start
-						List<YD0010Request.ProductIdentifier> list = new ArrayList<YD0010Request.ProductIdentifier>();
-						for(int i=0;i<productSpec.getIdentifiers().size();i++){
-							Identifier idt = (Identifier)productSpec.getIdentifiers().get(i);
-							ProductIdentifier pit = new ProductIdentifier();
-							pit.setName(idt.getName());
-							pit.setValue(idt.getValue());
-						}
-						ps.setIdentifiers(list);
-						//xuzhou end
+						ps.setIdentifiers(new ArrayList<YD0010Request.ProductIdentifier>(0) );
 						order.getProducts().add(ps);
 						if(req.getCafDetails() != null && req.getCafDetails().getProofs().isEmpty() == false)
 						{
@@ -632,16 +635,16 @@ public class HW0012Action extends AbstractYDBaseActionHandler<HW0012Request, IBo
 							device.setBusinessInteraction(new NameObject("ADD"));
 							device.setProductId(resourceSpec.getResourceSpecificationId()==null?"":resourceSpec.getResourceSpecificationId());
 							//xuzhou start
-							List<YD0010Request.NameAndValueObject> listNavo = new ArrayList<YD0010Request.NameAndValueObject>();
-							for(int i=0;i<resourceSpec.getIdentifiers().size();i++){
-								Identifier idt = (Identifier)resourceSpec.getIdentifiers().get(i);
-								NameAndValueObject navo = new NameAndValueObject();
-								navo.setName(idt.getName());
-								navo.setValue(idt.getValue());
-								listNavo.add(navo);
-							}
-							device.setIdentifier(listNavo);
+//							List<YD0010Request.NameAndValueObject> listNavo = new ArrayList<YD0010Request.NameAndValueObject>();
+//							for(int i=0;i<resourceSpec.getIdentifiers().size();i++){
+//								Identifier idt = (Identifier)resourceSpec.getIdentifiers().get(i);
+//								NameAndValueObject navo = new NameAndValueObject();
+//								navo.setName(idt.getName());
+//								navo.setValue(idt.getValue());
+//								listNavo.add(navo);
+//							}
 							//xuzhou end
+							device.setIdentifier(new ArrayList<YD0010Request.NameAndValueObject>(0));
 							if(deviceMap.get(resourceSpec.getResourceSpecificationId()) == null || deviceMap.get(resourceSpec.getResourceSpecificationId()).isEmpty())
 								continue;
 							
