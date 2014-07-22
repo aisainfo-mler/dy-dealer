@@ -292,7 +292,160 @@ public class YD0021Response implements TibcoRequest {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
+
 	
+/*
+ * 样例串的：
+ {
+    "customerId": "1100009566", 
+    "accounts": [
+        {
+            "prepaidAccountId": "001000009282", 
+            "companyCode": "TIBX", 
+            "circleId": "TC", 
+            "accountType": "", 
+            "servicePackage": [
+                {
+                    "packageCode": "OC401", 
+                    "packageName": "VOLTEBASICOFFER", 
+                    "services": [
+                        {
+                            "productCode": "P10016", 
+                            "productName": "VVMVOLTE", 
+                            "identifier": {
+                                "name": "SERVICE_NAME", 
+                                "type": "GPRS", 
+                                "value": "3334002189", 
+                                "category": "4", 
+                                "subCategory": "2"
+                            }, 
+                            "serviceContractReferenceNo": "", 
+                            "serviceStatus": "CMPD", 
+                            "statusDescription": "SERVICE_STATUS_DESC", 
+                            "serviceAlias": "SERVICE_", 
+                            "activationDate": "2014-07-11", 
+                            "dependancyInfo": {
+                                "parentProductId": "ParentID", 
+                                "identifier": [
+                                    {
+                                        "name": "SERVICE_NAME", 
+                                        "value": "1234", 
+                                        "category": "4", 
+                                        "subcategory": "", 
+                                        "type": "GPRS"
+                                    }
+                                ]
+                            }, 
+                            "action": [ ], 
+                            "characteristics": [
+                                {
+                                    "name": "Reason", 
+                                    "value": "DND"
+                                }, 
+                                {
+                                    "name": "ReasonDescription", 
+                                    "value": "REASON_DESC"
+                                }
+                            ], 
+                            "associatedUsers": [ ], 
+                            "customerFacingServices": [
+                                {
+                                    "serviceId": "S40002", 
+                                    "serviceName": "VOLTE-DATA", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "IMSI", 
+                                        "value": "600000000006535", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }, 
+                                {
+                                    "serviceId": "S40001", 
+                                    "serviceName": "VOICEVIDEOMESSAGING", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "R4GID", 
+                                        "value": "001900009190", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "prepaidAccountId": "001900009190", 
+            "companyCode": "", 
+            "circleId": "TC", 
+            "accountType": "", 
+            "servicePackage": [
+                {
+                    "packageCode": "OC401", 
+                    "packageName": "VOLTEBASICOFFER", 
+                    "services": [
+                        {
+                            "productCode": "P10016", 
+                            "productName": "VVMVOLTE", 
+                            "identifier": {
+                                "name": "", 
+                                "type": "", 
+                                "value": "9334002189", 
+                                "category": "4", 
+                                "subCategory": "2"
+                            }, 
+                            "serviceContractReferenceNo": "", 
+                            "serviceStatus": "Z020", 
+                            "statusDescription": "", 
+                            "serviceAlias": "", 
+                            "activationDate": "", 
+                            "dependancyInfo": {
+                                "parentProductId": "", 
+                                "identifier": [ ]
+                            }, 
+                            "action": [ ], 
+                            "characteristics": [ ], 
+                            "associatedUsers": [ ], 
+                            "customerFacingServices": [
+                                {
+                                    "serviceId": "S40002", 
+                                    "serviceName": "VOLTE-DATA", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "IMSI", 
+                                        "value": "600000000006535", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }, 
+                                {
+                                    "serviceId": "S40001", 
+                                    "serviceName": "VOICEVIDEOMESSAGING", 
+                                    "serviceType": "", 
+                                    "identifier": {
+                                        "name": "R4GID", 
+                                        "value": "001900009190", 
+                                        "category": "2", 
+                                        "subcategory": "", 
+                                        "type": ""
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+  
+ */
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException, IllegalAccessException, InstantiationException {
 		String test = "{ \"customerId\": \"1100009566\", \"accounts\": [ { \"prepaidAccountId\": \"001000009282\", \"companyCode\": \"TIBX\", \"circleId\": \"TC\", \"accountType\": \"\", \"servicePackage\": [ { \"packageCode\": \"OC401\", \"packageName\": \"VOLTE BASIC OFFER\", \"services\": [ { \"productCode\": \"P10016\", \"productName\": \"VVM VOLTE\", \"identifier\": { \"name\": \"SERVICE_NAME\", \"type\": \"GPRS\", \"value\": \"3334002189\", \"category\": \"4\", \"subCategory\": \"2\" }, \"serviceContractReferenceNo\": \"\", \"serviceStatus\": \"CMPD\", \"statusDescription\": \"SERVICE_STATUS_DESC\", \"serviceAlias\": \"SERVICE_\", \"activationDate\": \"2014-07-11\", \"dependancyInfo\": { \"parentProductId\": \"ParentID\", \"identifier\": [ { \"name\": \"SERVICE_NAME\", \"value\": \"1234\", \"category\": \"4\", \"subcategory\": \"\", \"type\": \"GPRS\" } ] }, \"action\":[ ], \"characteristics\": [ { \"name\": \"Reason\", \"value\": \"DND\" } , { \"name\": \"Reason Description\", \"value\": \"REASON_DESC\" } ], \"associatedUsers\": [ ], \"customerFacingServices\": [ { \"serviceId\": \"S40002\", \"serviceName\": \"VOLTE-DATA\", \"serviceType\": \"\", \"identifier\": { \"name\": \"IMSI\", \"value\": \"600000000006535\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } , { \"serviceId\": \"S40001\", \"serviceName\": \"VOICE VIDEO MESSAGING\", \"serviceType\": \"\", \"identifier\": { \"name\": \"R4GID\", \"value\": \"001900009190\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } ] } ] } ] } , { \"prepaidAccountId\": \"001900009190\", \"companyCode\": \"\", \"circleId\": \"TC\", \"accountType\": \"\", \"servicePackage\": [ { \"packageCode\": \"OC401\", \"packageName\": \"VOLTE BASIC OFFER\", \"services\": [ { \"productCode\": \"P10016\", \"productName\": \"VVM VOLTE\", \"identifier\": { \"name\": \"\", \"type\": \"\", \"value\": \"9334002189\", \"category\": \"4\", \"subCategory\": \"2\" }, \"serviceContractReferenceNo\": \"\", \"serviceStatus\": \"Z020\", \"statusDescription\": \"\", \"serviceAlias\": \"\", \"activationDate\": \"\", \"dependancyInfo\": { \"parentProductId\": \"\", \"identifier\": [ ] }, \"action\":[ ], \"characteristics\": [ ], \"associatedUsers\": [ ], \"customerFacingServices\": [ { \"serviceId\": \"S40002\", \"serviceName\": \"VOLTE-DATA\", \"serviceType\": \"\", \"identifier\": { \"name\": \"IMSI\", \"value\": \"600000000006535\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } , { \"serviceId\": \"S40001\", \"serviceName\": \"VOICE VIDEO MESSAGING\", \"serviceType\": \"\", \"identifier\": { \"name\": \"R4GID\", \"value\": \"001900009190\", \"category\": \"2\", \"subcategory\": \"\", \"type\": \"\" } } ] } ] } ] } ] }";
@@ -302,6 +455,17 @@ public class YD0021Response implements TibcoRequest {
 		
 	}
 
+	/**
+	 * 将seco返回的字符串解析成对象
+	 * @param test
+	 * @return
+	 * @throws IOException
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws JsonGenerationException
+	 */
 	public static YD0021Response fillVal(String test) throws IOException,
 			JsonParseException, JsonMappingException, IllegalAccessException,
 			InstantiationException, JsonGenerationException {
