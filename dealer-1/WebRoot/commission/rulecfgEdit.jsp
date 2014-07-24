@@ -25,8 +25,7 @@
 				value="<s:property value="abc.ruleName"/>" type="text" size="17" />
 				<span style="color:red;">&nbsp; *</span></td>
 			<td class="Hint">模型类型：</td>
-			<td><s:select list="map" listKey="key" value=""
-					listValue="value"
+			<td><s:select list="map" listKey="key" listValue="value"
 					name="abc.modType"></s:select> <span style="color:red;">&nbsp;
 					*</span>
 			</td>
@@ -65,7 +64,28 @@
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody id="ruleBody">
+			<tbody>
+				<s:iterator var="ralesLists" value="ralesList" status="rowstatus">
+					<tr>
+						<td><s:property value="#ralesLists.busiCode"/> <input
+							type="hidden" name="dataTypeList"
+							value="<s:property value="#ralesLists.dataType" />"> <input
+							type="hidden" name="busiCodeList"
+							value="<s:property value="#ralesLists.busiCode" />">
+						</td>
+						<td><select name="operationList">
+								<s:property value="#ralesLists.operation" />
+								<option value="==">==</option>
+								<option value=">=">>=</option>
+								<option value=">">></option>
+								<option value="<="><=</option>
+								<option value="<"><</option>
+						</select></td>
+						<td><input type="text" name="ovalueList"
+							value="<s:property value="#ralesLists.ovalue" />" /></td>
+						<td><a href="#">删除</a></td>
+					</tr>
+				</s:iterator>
 			</tbody>
 		</table>
 	</div>

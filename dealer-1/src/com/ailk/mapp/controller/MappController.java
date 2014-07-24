@@ -3,13 +3,11 @@ package com.ailk.mapp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.plexus.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.service.DealerDataService;
+import com.ailk.butterfly.core.security.IUserinfo;
 import com.ailk.butterfly.mapp.core.MappConstant;
 import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.client.JsonClientHandler;
 import com.ailk.butterfly.sys.dal.ibatis.model.IUserInfo;
 import com.ailk.web.BaseController;
+import com.ailk.yd.mapp.model.UserInfo;
 import com.ailk.yd.mapp.model.YDDatapackage;
 
 @Controller
@@ -56,10 +56,10 @@ public class MappController extends BaseController {
 		
 		
 		
-//		IUserinfo user = new UserInfo();
-//		user.setUserId(1L);
-//		user.setUserName("m01");
-//		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
+		IUserinfo user = new UserInfo();
+		user.setUserId(1L);
+		user.setUserName("m01");
+		attrMap.put(MappContext.MAPPCONTEXT_USER, user);
 //		
 //		IUserinfo u = new UserInfo();
 //		u.setUserId(1l);

@@ -25,7 +25,7 @@
 							value="#ruleLists.rule" /> &nbsp;</td>
 					<td class="L" nowrap="nowrap"><s:property
 							value="@com.ai.mapp.sys.util.SYSConstant@getDictName('dataTypes',#ruleLists.modType + session.WW_TRANS_I18N_LOCALE)" />
-						&nbsp;</td>
+						&nbsp;<s:property value="#ruleLists.modType"/></td>
 					<td class="L" nowrap="nowrap"><a href="javascript:void(0)"
 						onclick="rulecfg_detail(<s:property value="#ruleLists.ruleId"/>)"><s:text
 								name="edit" />&nbsp;</a>

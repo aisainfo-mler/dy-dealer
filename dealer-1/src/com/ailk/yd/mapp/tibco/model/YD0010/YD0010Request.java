@@ -149,15 +149,15 @@ public class YD0010Request implements TibcoRequest {
 		private NameObject businessInteraction;
 		private List<FacingService> customerFacingServices;
 		private List<Device> devices;
-		private List<ProductIdentifier> identifiers;
+		private List<ProductIdentifier> identifier;
 		private String productId;
 
-		public List<ProductIdentifier> getIdentifiers() {
-			return identifiers;
+		public List<ProductIdentifier> getIdentifier() {
+			return identifier;
 		}
 
-		public void setIdentifiers(List<ProductIdentifier> identifiers) {
-			this.identifiers = identifiers;
+		public void setIdentifier(List<ProductIdentifier> identifier) {
+			this.identifier = identifier;
 		}
 
 		public NameObject getBusinessInteraction() {
@@ -1690,35 +1690,41 @@ public class YD0010Request implements TibcoRequest {
 	public void setOrderDetails(List<Order> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-	
-	public static class Identifier extends YDBody
-	{
+
+	public static class Identifier extends YDBody {
 		private String code;
 		private String name;
 		private String value;
 		private IdObject componentPriceId;
-		
+
 		public String getCode() {
 			return code;
 		}
+
 		public void setCode(String code) {
 			this.code = code;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public void setName(String name) {
 			this.name = name;
 		}
+
 		public String getValue() {
 			return value;
 		}
+
 		public void setValue(String value) {
 			this.value = value;
 		}
+
 		public IdObject getComponentPriceId() {
 			return componentPriceId;
 		}
+
 		public void setComponentPriceId(IdObject componentPriceId) {
 			this.componentPriceId = componentPriceId;
 		}
