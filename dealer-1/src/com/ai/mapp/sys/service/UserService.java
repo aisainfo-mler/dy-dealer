@@ -183,7 +183,7 @@ public class UserService {
 	
 	
 	
-	private boolean checkUser(User user)
+	public boolean checkUser(User user)
 	{
 		User condition = new User();
 		
