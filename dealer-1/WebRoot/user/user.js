@@ -212,6 +212,9 @@ function goQueryUnJoinCommissionRule(){
 function goJoinCommissionRuleBack(newRuleRelaId){
 		var unjoinRuleTXT=$j("input[name='globalCommRuleTXT']").val();
 		var iStart=parseInt($j("input[name='globalRownum']").val());
+		//hexu UPD Start 20140728 Start 添加佣金规则后把添加的这条规则从未使用规则列表中删除。
+		goQueryUnJoinCommissionRule();
+		//hexu UPD End
 		iStart++;
 		var objTb=document.getElementById("joined_rule_list_tab"); 	 
 		var newTR=objTb.insertRow(objTb.rows.length-0);  	
@@ -245,6 +248,10 @@ function goDeleJoinRuleBack(){
 	if(pos>-1){
 		objTb.deleteRow(pos);
 	}
+
+	//hexu UPD Start 20140728 Start 添加佣金规则后把添加的这条规则从未使用规则列表中删除。
+	goQueryUnJoinCommissionRule();
+	//hexu UPD End
 }
 
 
