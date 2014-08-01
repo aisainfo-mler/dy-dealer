@@ -75,7 +75,7 @@ public class MappController extends BaseController {
 			
 			updateSession(request);
 			
-			System.out.println(ret);
+//			System.out.println(ret);
 			
 			return ret;
 		}
@@ -88,7 +88,7 @@ public class MappController extends BaseController {
 	
 	private void updateSession(HttpServletRequest request) {
 		
-		System.out.println("==================MappContext.context:"+MappContext.getContext().hashCode()+"======================");
+//		System.out.println("==================MappContext.context:"+MappContext.getContext().hashCode()+"======================");
 		
 		for(String key : MappConstant.sessionKeys)
 		{

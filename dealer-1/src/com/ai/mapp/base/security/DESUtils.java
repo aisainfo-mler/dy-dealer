@@ -97,7 +97,7 @@ public class DESUtils {
 			System.out.println("加密前："+data);
 			String hex =  byte2hex(encrypt(data.getBytes("UTF-8"), pwd.getBytes()));
 //			String hex =  encryptBASE64(encrypt(data.getBytes("UTF-8"), pwd.getBytes()));
-			System.out.println("加密后："+hex);
+//			System.out.println("加密后："+hex);
 			
 			return hex;
 			

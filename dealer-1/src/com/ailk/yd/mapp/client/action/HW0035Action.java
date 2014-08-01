@@ -47,7 +47,7 @@ public class HW0035Action extends
 		List list = new ArrayList();
 		response.setServices(list); 
 		if(request.getCustomerIds()!=null && request.getCustomerIds().size()>0){
-			//request.getCustomerIds().add("1100010300");
+			request.getCustomerIds().add("1100010300");
 			for (Iterator it = request.getCustomerIds().iterator(); it.hasNext();) {
 				String customerId = (String) it.next();
 				yd0021Request.setCustomerId(customerId);
