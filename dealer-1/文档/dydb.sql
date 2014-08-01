@@ -885,6 +885,8 @@ insert into hw_product(rangeid,bss_accept_range_id,servicetype,packedname,produc
 values(88888,'FTP100005','PLAN','FLEXI TOP-UP','FLEXI TOP-UP','1','1')
 ;
 
-
-
+-- ----------------------------
+-- xin zeng jing tai chang liang
+-- ----------------------------
+INSERT INTO `hw_sys_prop` VALUES ('9001', 'PAY_STATUS', 'PAY_STATUS', null, 'PAY_STATUS', null, '1', null, null), ('9002', 'NOT_PAID', '0', 'PAY_STATUS', null, null, '1', null, null), ('9003', 'PAID', '1', 'PAY_STATUS', '', null, '1', null, null), ('9004', 'INVE_ORDER_STATUS', 'INVE_ORDER_STATUS', null, 'INVE_ORDER_STATUS', null, '1', null, null), ('9005', 'Waiting for paymen', '0', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9006', 'Waiting for confirmation', '1', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9007', 'Confirmed', '2', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9008', 'Shipped', '3', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9009', 'Closed', '4', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9010', 'Canceled', '5', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9011', 'Request for return', '6', 'INVE_ORDER_STATUS', null, null, '1', null, null), ('9012', 'SALE_ORDER_STATUS', 'SALE_ORDER_STATUS', null, 'SALE_ORDER_STATUS', null, '1', null, null), ('9013', 'Processing', '0', 'SALE_ORDER_STATUS', null, null, '1', null, null), ('9014', 'Paid', '1', 'SALE_ORDER_STATUS', null, null, '1', null, null), ('9015', 'Provisioning', '2', 'SALE_ORDER_STATUS', null, null, '1', null, null), ('9016', 'Closed', '3', 'SALE_ORDER_STATUS', null, null, '1', null, null), ('9017', 'Canceled', '9', 'SALE_ORDER_STATUS', null, null, '1', null, null), ('9018', 'PAY_MODE', 'PAY_MODE', null, 'PAY_MODE', null, '1', null, null), ('9019', 'CREDIT', '1', 'PAY_MODE', null, null, '1', null, null), ('9020', 'ACCOUNT', '2', 'PAY_MODE', null, null, '1', null, null);
 
