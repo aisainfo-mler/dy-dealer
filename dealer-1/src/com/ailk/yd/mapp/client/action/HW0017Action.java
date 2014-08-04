@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.base.util.DateUtils;
+import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.entity.OrderDetail;
 import com.ai.mapp.sys.entity.OrderInfo;
 import com.ai.mapp.sys.entity.User;
@@ -17,6 +18,7 @@ import com.ai.mapp.sys.service.OrderInfoService;
 import com.ai.mapp.sys.service.UserService;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
+import com.ailk.butterfly.mapp.core.MappContext;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0017Request;
 import com.ailk.yd.mapp.client.model.HW0017Response;
@@ -43,7 +45,9 @@ public class HW0017Action extends
 		condition.setStatus(req.getStatus());
 		condition.setSerialNumber(req.getOrderCode());
 		
-		User agent = userService.loadUserByUserCode(this.getUserinfo().getUserName());
+//		User agent = userService.loadUserByUserCode(this.getUserinfo().getUserName());
+		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
+		User agent = userService.loadUserByUserCode(userCode);
 		condition.setCreator(agent);
 		if(StringUtil.isEmpty(req.getGoodType()) == false)
 		{
