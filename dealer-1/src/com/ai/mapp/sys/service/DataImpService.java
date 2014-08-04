@@ -100,7 +100,7 @@ public class DataImpService {
 
 		
 		TibcoCache.districtInState = new LinkedHashMap<String,Map<String,String>>();
-		for (Iterator it = hwDirstrictService.lsitAllHwDistrict(null).iterator(); it.hasNext();) {
+		for (Iterator it = hwDirstrictService.listAllHwDistrict(null).iterator(); it.hasNext();) {
 			HwDistrict hd = (HwDistrict) it.next();
 			if(StringUtils.isNotBlank(hd.getStateCode())){
 				if(TibcoCache.districtInState.containsKey(hd.getStateCode())){

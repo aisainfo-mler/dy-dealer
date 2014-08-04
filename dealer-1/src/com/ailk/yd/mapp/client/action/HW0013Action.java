@@ -89,7 +89,7 @@ public class HW0013Action extends
 			HW0013Response.Order d = new HW0013Response.Order();
 			
 			d.setBalance(order.getBlance()== null?"":order.getBlance().toString());
-			d.setCreateTime(order.getCreateTime() == null ? "":DateUtils.getDateString(order.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+			d.setCreateTime(order.getCreateTime() == null ? "":DateUtils.getDateString(order.getCreateTime(), "dd/MM/yyyy HH:mm:ss"));
 			d.setOrderCode(order.getOrderCode()== null?"":order.getOrderCode().toString());
 			d.setOrderType(order.getOrderType()== null?"":order.getOrderType().toString());
 			d.setPreStore(order.getPreStore()== null?"":order.getPreStore().toString());

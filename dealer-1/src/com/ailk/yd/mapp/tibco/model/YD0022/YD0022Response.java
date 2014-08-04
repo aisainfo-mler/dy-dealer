@@ -650,19 +650,6 @@ public class YD0022Response implements TibcoRequest {
 		ContactDetails contactDetails = (ContactDetails) TibcoUtil.extractStrValClass(contactDetailsMap, ContactDetails.class);
 		PermanentAddress permanentAddress = (PermanentAddress) TibcoUtil.extractStrValClass(permanentAddressMap, PermanentAddress.class);
 		
-		if(StringUtils.isNotEmpty(permanentAddress.getState())){
-			permanentAddress.setStateName(TibcoCache.states.get(permanentAddress.getState()));
-			if(StringUtils.isNotEmpty(permanentAddress.getDistrict())){
-				permanentAddress.setDistrictName(TibcoCache.districtInState.get(permanentAddress.getState()).get(permanentAddress.getDistrict()));
-			}
-			
-			if(StringUtils.isNotEmpty(permanentAddress.getVillageORCityName())){
-				permanentAddress.setDistrictName(TibcoCache.getCityNameByCityCode(permanentAddress.getState(),permanentAddress.getVillageORCity()).getCityName());
-			}
-		}
-		
-		
-		permanentAddress.setStateName(TibcoCache.states.get(permanentAddress.getState()));
 		pd.setFamilyContactDetails(familyContactDetails);
 		pd.setPermanentAddress(permanentAddress);
 		pd.setContactDetails(contactDetails);

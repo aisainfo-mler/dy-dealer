@@ -1,13 +1,14 @@
 package com.ai.mapp.sys.service;
 
 import java.util.Collection;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ai.mapp.sys.dao.HwStateDao;
-import com.ai.mapp.sys.entity.HwDistrict;
 import com.ai.mapp.sys.entity.HwState;
 
 @Service
@@ -28,6 +29,18 @@ public class HwStateService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public HwState getStateByCode(String stateCode)throws Exception{
+		if(StringUtils.isNotEmpty(stateCode)){
+			HwState cond = new HwState();
+			cond.setStateCode(stateCode);
+			Collection<HwState> c = hwStateDao.listAll(cond);
+			if(c.isEmpty() == false){
+				return c.iterator().next();
+			}
+		}
+		return null;
 	}
 	
 	public void saveState(HwState state){

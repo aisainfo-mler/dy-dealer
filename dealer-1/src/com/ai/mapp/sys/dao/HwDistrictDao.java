@@ -2,6 +2,7 @@ package com.ai.mapp.sys.dao;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -19,18 +20,17 @@ public class HwDistrictDao extends HibernateDao<HwDistrict, Long> {
 		if( t == null) return c;
 	
 		if(StringUtils.isNotEmpty(t.getDistrictName())){
-			c.add(Restrictions.eq("district_name", t.getDistrictName()));
+			c.add(Restrictions.eq("districtName", t.getDistrictName()));
 		}
 		if(!StringUtils.isEmpty(t.getStateCode())){
-			c.add(Restrictions.eq("state_code", t.getStateCode()));
+			c.add(Restrictions.eq("stateCode", t.getStateCode()));
 		}
 		if(!StringUtils.isEmpty(t.getDistrictGisCode())){
-			c.add(Restrictions.eq("district_gis_code", t.getDistrictGisCode()));
-		}
-		if(!StringUtils.isEmpty(t.getDistrictName())){
-			c.add(Restrictions.eq("district_name", t.getDistrictName()));
+			c.add(Restrictions.eq("districtGisCode", t.getDistrictGisCode()));
 		}
 		
+		c.addOrder(Order.asc("districtName"));
+		c.addOrder(Order.asc("districtGisCode"));
 		return c;
 	}
 

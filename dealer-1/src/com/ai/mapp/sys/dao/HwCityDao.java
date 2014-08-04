@@ -39,6 +39,7 @@ public class HwCityDao extends HibernateDao<HwCity, Long> {
 			c.add(Restrictions.eq("districtCode", t.getDistrictCode()));
 		}
 		
+		c.addOrder(Order.asc("cityName"));
 		c.addOrder(Order.asc("cityCode"));
 		return c;
 	}

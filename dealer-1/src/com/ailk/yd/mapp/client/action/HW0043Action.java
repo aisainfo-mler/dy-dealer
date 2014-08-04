@@ -15,7 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.sys.entity.HwCity;
+import com.ai.mapp.sys.entity.HwDistrict;
+import com.ai.mapp.sys.entity.HwState;
 import com.ai.mapp.sys.service.HwCityService;
+import com.ai.mapp.sys.service.HwDistrictService;
+import com.ai.mapp.sys.service.HwStateService;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
@@ -38,6 +42,12 @@ public class HW0043Action extends AbstractYDBaseActionHandler<HW0043Request, HW0
 	@Autowired
 	private HwCityService hwCityService;
 	
+	@Autowired
+	private HwDistrictService hwDistrictService;
+	
+	@Autowired
+	private HwStateService hwStateService;
+	
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
@@ -45,20 +55,22 @@ public class HW0043Action extends AbstractYDBaseActionHandler<HW0043Request, HW0
 			List<Area> resultList = new ArrayList<Area>(); 
 			if(StringUtils.equals("1", this.request.getQueryType())){
 				//根部查询 
-				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode()) && TibcoCache.states.containsKey(this.request.getSelfKeyCode())){
-					Area area = new Area();
-					area.setSelfCode(this.request.getSelfKeyCode());
-					area.setSelfName(TibcoCache.states.get(this.request.getSelfKeyCode()));
-					resultList.add(area);
+				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode())){
+					HwState state = hwStateService.getStateByCode(this.request.getSelfKeyCode());
+					if(state != null){
+						Area area = new Area();
+						area.setSelfCode(this.request.getSelfKeyCode());
+						area.setSelfName(state.getStateName());
+						resultList.add(area);
+					}
+					
 				}else{
-					Map<String,String> allState = TibcoCache.states;
-					Set<String> key = allState.keySet();
+					Collection<HwState> allState = hwStateService.listAllHwState(null);
 					Area area = null;
-			        for (Iterator<String> it = key.iterator(); it.hasNext();) {
-			        	String s = (String) it.next();
+			        for (HwState state:allState) {
 			        	area = new Area();
-			        	area.setSelfCode(s);
-			        	area.setSelfName(allState.get(s));
+			        	area.setSelfCode(state.getStateCode());
+			        	area.setSelfName(state.getStateName());
 			        	resultList.add(area);
 			        }
 				}
@@ -66,20 +78,23 @@ public class HW0043Action extends AbstractYDBaseActionHandler<HW0043Request, HW0
 			
 			if(StringUtils.equals("2", this.request.getQueryType()) && StringUtils.isNotEmpty(this.request.getUpKeyCode())){
 				//district查询
-				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode()) && TibcoCache.states.containsKey(this.request.getSelfKeyCode())){
-					Area area = new Area();
-					area.setSelfCode(this.request.getSelfKeyCode());
-					area.setSelfName(TibcoCache.districtInState.get(this.request.getUpKeyCode()).get(this.request.getSelfKeyCode()));
-					resultList.add(area);
+				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode())){
+					HwDistrict district = hwDistrictService.getDistrictByCode(this.request.getSelfKeyCode());
+					if(district != null){
+						Area area = new Area();
+						area.setSelfCode(this.request.getSelfKeyCode());
+						area.setSelfName(district.getDistrictName());
+						resultList.add(area);
+					}
 				}else{
-					Map<String,String> allDistrict = TibcoCache.districtInState.get(this.request.getUpKeyCode());
-					Set<String> key = allDistrict.keySet();
+					HwDistrict cond = new HwDistrict();
+					cond.setStateCode(this.request.getUpKeyCode());
+					Collection<HwDistrict> allDistrict = hwDistrictService.listAllHwDistrict(cond);
 					Area area = null;
-			        for (Iterator<String> it = key.iterator(); it.hasNext();) {
-			        	String s = (String) it.next();
+			        for (HwDistrict district:allDistrict) {
 			        	area = new Area();
-			        	area.setSelfCode(s);
-			        	area.setSelfName(allDistrict.get(s));
+			        	area.setSelfCode(district.getDistrictGisCode());
+			        	area.setSelfName(district.getDistrictName());
 			        	area.setUpCode(this.request.getUpKeyCode());
 			        	resultList.add(area);
 			        }
@@ -88,16 +103,19 @@ public class HW0043Action extends AbstractYDBaseActionHandler<HW0043Request, HW0
 			
 			if(StringUtils.equals("3", this.request.getQueryType()) && StringUtils.isNotEmpty(this.request.getUpKeyCode())){
 				//city查询
-				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode()) && TibcoCache.states.containsKey(this.request.getSelfKeyCode())){
-					Area area = new Area();
-					area.setSelfCode(this.request.getSelfKeyCode());
-//					City city = TibcoCache.getCityNameByCityCode(this.request.getUpKeyCode(), this.request.getSelfKeyCode());
-//					area.setSelfName(city.getCityName());
-//					area.setCircleId(city.getCircleId());
-					HwCity city = hwCityService.getCityByCode( this.request.getSelfKeyCode());
-					area.setSelfName(city.getCityName());
-					area.setCircleId(city.getCircleCode());
-					resultList.add(area);
+				if(StringUtils.isNotEmpty(this.request.getSelfKeyCode())){
+					HwState state = hwStateService.getStateByCode(this.request.getSelfKeyCode());
+					if(state != null){
+						Area area = new Area();
+						area.setSelfCode(this.request.getSelfKeyCode());
+//						City city = TibcoCache.getCityNameByCityCode(this.request.getUpKeyCode(), this.request.getSelfKeyCode());
+//						area.setSelfName(city.getCityName());
+//						area.setCircleId(city.getCircleId());
+						HwCity city = hwCityService.getCityByCode( this.request.getSelfKeyCode());
+						area.setSelfName(city.getCityName());
+						area.setCircleId(city.getCircleCode());
+						resultList.add(area);
+					}
 				}else{
 					HwCity cond = new HwCity();
 					Area area = null;
@@ -127,6 +145,22 @@ public class HW0043Action extends AbstractYDBaseActionHandler<HW0043Request, HW0
 
 	public void setHwCityService(HwCityService hwCityService) {
 		this.hwCityService = hwCityService;
+	}
+
+	public HwDistrictService getHwDistrictService() {
+		return hwDistrictService;
+	}
+
+	public void setHwDistrictService(HwDistrictService hwDistrictService) {
+		this.hwDistrictService = hwDistrictService;
+	}
+
+	public HwStateService getHwStateService() {
+		return hwStateService;
+	}
+
+	public void setHwStateService(HwStateService hwStateService) {
+		this.hwStateService = hwStateService;
 	}
 	
 }
