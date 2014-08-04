@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.ailk.yd.mapp.tibco.TibcoCache;
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 import com.ailk.yd.mapp.tibco.util.TibcoUtil;
 
@@ -320,8 +322,11 @@ public class YD0022Response implements TibcoRequest {
 		private String areaORTehsil;
 		private String pincode;
 		private String villageORCity;
+		private String villageORCityName;
 		private String district;
+		private String districtName;
 		private String state;
+		private String stateName;
 		private String country;
 		private String totalFloors;
 		private String jioCentreId;
@@ -468,6 +473,30 @@ public class YD0022Response implements TibcoRequest {
 
 		public void setJioCentreId(String jioCentreId) {
 			this.jioCentreId = jioCentreId;
+		}
+
+		public String getVillageORCityName() {
+			return villageORCityName;
+		}
+
+		public void setVillageORCityName(String villageORCityName) {
+			this.villageORCityName = villageORCityName;
+		}
+
+		public String getDistrictName() {
+			return districtName;
+		}
+
+		public void setDistrictName(String districtName) {
+			this.districtName = districtName;
+		}
+
+		public String getStateName() {
+			return stateName;
+		}
+
+		public void setStateName(String stateName) {
+			this.stateName = stateName;
 		}
 	}
 
@@ -620,10 +649,23 @@ public class YD0022Response implements TibcoRequest {
 		FamilyContactDetails familyContactDetails = (FamilyContactDetails) TibcoUtil.extractStrValClass(familyContactDetailsMap, FamilyContactDetails.class);
 		ContactDetails contactDetails = (ContactDetails) TibcoUtil.extractStrValClass(contactDetailsMap, ContactDetails.class);
 		PermanentAddress permanentAddress = (PermanentAddress) TibcoUtil.extractStrValClass(permanentAddressMap, PermanentAddress.class);
+		
+		if(StringUtils.isNotEmpty(permanentAddress.getState())){
+			permanentAddress.setStateName(TibcoCache.states.get(permanentAddress.getState()));
+			if(StringUtils.isNotEmpty(permanentAddress.getDistrict())){
+				permanentAddress.setDistrictName(TibcoCache.districtInState.get(permanentAddress.getState()).get(permanentAddress.getDistrict()));
+			}
+			
+			if(StringUtils.isNotEmpty(permanentAddress.getVillageORCityName())){
+				permanentAddress.setDistrictName(TibcoCache.getCityNameByCityCode(permanentAddress.getState(),permanentAddress.getVillageORCity()).getCityName());
+			}
+		}
+		
+		
+		permanentAddress.setStateName(TibcoCache.states.get(permanentAddress.getState()));
 		pd.setFamilyContactDetails(familyContactDetails);
 		pd.setPermanentAddress(permanentAddress);
 		pd.setContactDetails(contactDetails);
-		
 		return rm;
 	}
 }

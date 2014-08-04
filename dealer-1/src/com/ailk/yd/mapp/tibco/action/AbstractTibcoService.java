@@ -1,5 +1,6 @@
 package com.ailk.yd.mapp.tibco.action;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,12 +26,14 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 			String json = convertRequest(request);
 			System.out.println("tibco request:"+json);
 			String rsp_string = tibcoHandler.sendMsg(getTibcoUrl(), json, paramters,null,true);
+			System.out.println(rsp_string);
 			if(autoCheck==true)
 				checkSucc(rsp_string);
 			return convertResponse(rsp_string);
 		}catch (Exception e) {
 			// TODO: handle exception
-			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
+			e.printStackTrace();
+			throw e;
 		}
 		
 	}
@@ -52,7 +55,8 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
+//			throw new Exception("Sorry. This service is temporarily unavailable. Please try again later.");
+			throw e;
 		}
 	}
 
@@ -67,8 +71,16 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 			Map jo = mapper.readValue(rsp_string,Map.class);
 			if (jo !=null && jo.get("success") != null) 
 			{
-				String errMsg = (String)jo.get("errors");
-				throw new Exception(errMsg);
+				Map errMsg = (Map)jo.get("errors");
+				if(errMsg.isEmpty() == false){
+					Iterator<String> it=errMsg.keySet().iterator();    
+//					while(it.hasNext()){    
+//					     String key = ;    
+//					     value=map.get(key);    
+//					}
+					throw new Exception((String)(errMsg.get(it.next())));//默认取第一个错误
+				}
+				
 			}
 		} 
 		catch (Exception e) {

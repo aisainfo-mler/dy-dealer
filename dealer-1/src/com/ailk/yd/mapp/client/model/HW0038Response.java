@@ -16,6 +16,7 @@ public class HW0038Response extends YDBody {
 		private String cityCode;
 		private String cityName;
 		private String circleId;
+		private String districtCode;
 		
 		public String getCityCode() {
 			return cityCode;
@@ -35,11 +36,18 @@ public class HW0038Response extends YDBody {
 		public void setCircleId(String circleId) {
 			this.circleId = circleId;
 		}
-		public City(String cityCode, String cityName, String circleId) {
+		public String getDistrictCode() {
+			return districtCode;
+		}
+		public void setDistrictCode(String districtCode) {
+			this.districtCode = districtCode;
+		}
+		public City(String cityCode, String cityName, String circleId,String districtCode) {
 			super();
 			this.cityCode = cityCode;
 			this.cityName = cityName;
 			this.circleId = circleId;
+			this.districtCode = districtCode;
 		}
 		public City() {
 			super();

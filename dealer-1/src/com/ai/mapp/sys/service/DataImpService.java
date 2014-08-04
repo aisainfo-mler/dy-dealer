@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import com.ai.mapp.sys.entity.HwState;
 import com.ailk.yd.mapp.client.model.HW0038Response;
 import com.ailk.yd.mapp.client.model.HW0038Response.City;
 import com.ailk.yd.mapp.tibco.TibcoCache;
+import com.ibm.db2.jcc.a.s;
 
 @Service
 @Scope("prototype")
@@ -89,7 +91,9 @@ public class DataImpService {
 	public void cacheDataStartUp(){
 
 		TibcoCache.states = new LinkedHashMap<String,String>();
-		for (Iterator it = hwStateService.listAllHwState(null).iterator(); it.hasNext();) {
+		Collection<HwState> sl = hwStateService.listAllHwState(null);
+		System.out.println("**************" + sl.size());
+		for (Iterator it = sl.iterator(); it.hasNext();) {
 			HwState hs = (HwState) it.next();
 			TibcoCache.states.put(hs.getStateName(), hs.getStateCode());
 		}
@@ -124,10 +128,10 @@ public class DataImpService {
 				String stateCode = st.getStateCode();
 				if(!TibcoCache.cityInState.containsKey(stateCode)){
 					List cism = new ArrayList();
-					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
+					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode(),hc.getDistrictCode()));
 					TibcoCache.cityInState.put(stateCode,cism);
 				}else{
-					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
+					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode(),hc.getDistrictCode());
 					((List)TibcoCache.cityInState.get(stateCode)).add(c);
 				}
 			}
@@ -376,5 +380,47 @@ public class DataImpService {
 		}
 
 	}
+
+	public HwCountryService getHwCountryService() {
+		return hwCountryService;
+	}
+
+	public void setHwCountryService(HwCountryService hwCountryService) {
+		this.hwCountryService = hwCountryService;
+	}
+
+	public HwStateService getHwStateService() {
+		return hwStateService;
+	}
+
+	public void setHwStateService(HwStateService hwStateService) {
+		this.hwStateService = hwStateService;
+	}
+
+	public HwCircleService getHwCircleService() {
+		return hwCircleService;
+	}
+
+	public void setHwCircleService(HwCircleService hwCircleService) {
+		this.hwCircleService = hwCircleService;
+	}
+
+	public HwCityService getHwCityService() {
+		return hwCityService;
+	}
+
+	public void setHwCityService(HwCityService hwCityService) {
+		this.hwCityService = hwCityService;
+	}
+
+	public HwDistrictService getHwDirstrictService() {
+		return hwDirstrictService;
+	}
+
+	public void setHwDirstrictService(HwDistrictService hwDirstrictService) {
+		this.hwDirstrictService = hwDirstrictService;
+	}
+	
+	
 
 }

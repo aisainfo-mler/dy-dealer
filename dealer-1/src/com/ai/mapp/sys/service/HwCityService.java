@@ -1,6 +1,8 @@
 package com.ai.mapp.sys.service;
 
 import java.util.Collection;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,17 @@ public class HwCityService {
 		}
 	}
 	
+	public HwCity getCityByCode(String cityCode)throws Exception{
+		if(StringUtils.isNotEmpty(cityCode)){
+			HwCity cond = new HwCity();
+			cond.setCityCode(cityCode);
+			Collection<HwCity> c = hwCityDao.listAll(cond);
+			if(c.isEmpty() == false){
+				return c.iterator().next();
+			}
+		}
+		return null;
+	}
 	
 	public void saveCity(HwCity city){
 		try{

@@ -130,9 +130,10 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 //				if (responseCode < 400 && responseCode >= 300) {
 					logger.debug(""+method.getStatusLine());
 					
-					String errorMsg = method.getResponseBodyAsString();
-					if(StringUtils.isEmpty(errorMsg) == false)
-						throw new Exception(errorMsg);
+					result = method.getResponseBodyAsString();
+//					System.out.println(errorMsg);
+//					if(StringUtils.isEmpty(result) == false)
+//						throw new Exception(errorMsg);
 					
 					String redirectLocation;
 					Header locationHeader = method.getResponseHeader("location");

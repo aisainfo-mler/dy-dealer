@@ -100,7 +100,7 @@ public class HW0010Action extends
 			if (TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state)
 					|| (StringUtils.isEmpty(number_orn) == false && caf
 							.getOrder().getOrn().equals(number_orn) == false))
-				throw new Exception("Number has blocked by order: "
+				throw new Exception("Number has locked by order: "
 						+ number_orn + "," + msg);
 		}
 

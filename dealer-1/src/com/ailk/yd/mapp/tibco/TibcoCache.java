@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.ai.mapp.sys.entity.HwCircle;
 import com.ai.mapp.sys.entity.HwCity;
 import com.ai.mapp.sys.entity.HwCountry;
@@ -50,5 +52,18 @@ public class TibcoCache {
 	 */
 	public static Map dicts;
 	
+	public static City getCityNameByCityCode(String stateCode,String cityCode){
+		if(StringUtils.isNotEmpty(stateCode) && StringUtils.isNotEmpty(cityCode)){
+			List<City> cities = cityInState.get(stateCode);
+			if(cities.isEmpty() == false){
+				for(City city:cities){
+					if(StringUtils.equals(city.getCityCode(), cityCode)){
+						return city;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 }

@@ -26,6 +26,9 @@ public class HW0016Action extends AbstractYDBaseActionHandler<HW0016Request, IBo
 	@Override
 	protected void doAction() throws BusinessException, SystemException,Exception 
 	{
+		if(this.request.getPayMode() == null){
+			throw new Exception("pay mode is null");
+		}
 		agentOrderService.payOrder(request.getOrderCode(), request.getPayMode(),request.getVoucherNo(),request.getPayPwd());
 	}
 

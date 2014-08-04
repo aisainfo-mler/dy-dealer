@@ -389,11 +389,39 @@ public class HW0040Response extends YDBody {
 		private String areaORTehsil;
 		private String pincode;
 		private String villageORCity;
+		private String villageORCityName;
 		private String district;
+		private String districtName;
 		private String state;
+		private String stateName;
 		private String country;
 		private String totalFloors;
 		private String jioCentreId;
+
+		
+		public String getVillageORCityName() {
+			return villageORCityName;
+		}
+
+		public void setVillageORCityName(String villageORCityName) {
+			this.villageORCityName = villageORCityName;
+		}
+
+		public String getDistrictName() {
+			return districtName;
+		}
+
+		public void setDistrictName(String districtName) {
+			this.districtName = districtName;
+		}
+
+		public String getStateName() {
+			return stateName;
+		}
+
+		public void setStateName(String stateName) {
+			this.stateName = stateName;
+		}
 
 		public String getAddressId() {
 			return addressId;

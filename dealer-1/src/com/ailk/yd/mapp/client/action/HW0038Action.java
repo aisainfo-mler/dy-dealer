@@ -61,7 +61,6 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 			Map<String,Map<String,String>> dsm = new LinkedHashMap();
 			dsm.put(request.getStateCode(), ds);
 			response.setDistrictInState(dsm);
-			
 		}
 	}
 
