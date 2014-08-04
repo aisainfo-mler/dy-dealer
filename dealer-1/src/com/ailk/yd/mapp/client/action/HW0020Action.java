@@ -43,8 +43,10 @@ public class HW0020Action extends AbstractYDBaseActionHandler<HW0020Request, HW0
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		
-		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
-		User user = userService.loadUserByUserCode(userCode);
+//		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
+		User user = userService.loadUserByUserCode(this.getUserinfo().getUserName());
+		
+//		User user = userService.loadUserByUserCode(userCode);
 		
 		OrderDetail orderDetail = null;
 		List<OrderDetail> list = new ArrayList<OrderDetail>();

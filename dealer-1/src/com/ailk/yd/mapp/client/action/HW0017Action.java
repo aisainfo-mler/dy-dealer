@@ -45,9 +45,9 @@ public class HW0017Action extends
 		condition.setStatus(req.getStatus());
 		condition.setSerialNumber(req.getOrderCode());
 		
-//		User agent = userService.loadUserByUserCode(this.getUserinfo().getUserName());
-		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
-		User agent = userService.loadUserByUserCode(userCode);
+		User agent = userService.loadUserByUserCode(this.getUserinfo().getUserName());
+//		String userCode = (String)MappContext.getAttribute(BSSConstantParam.USERCODE);
+//		User agent = userService.loadUserByUserCode(userCode);
 		condition.setCreator(agent);
 		if(StringUtil.isEmpty(req.getGoodType()) == false)
 		{
