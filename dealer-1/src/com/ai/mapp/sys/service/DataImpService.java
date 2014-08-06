@@ -34,6 +34,7 @@ import com.ai.mapp.sys.entity.HwCountry;
 import com.ai.mapp.sys.entity.HwDistrict;
 import com.ai.mapp.sys.entity.HwState;
 import com.ailk.yd.mapp.client.model.HW0038Response;
+import com.ailk.yd.mapp.client.model.HW0036Response.Country;
 import com.ailk.yd.mapp.client.model.HW0038Response.City;
 import com.ailk.yd.mapp.tibco.TibcoCache;
 import com.ibm.db2.jcc.a.s;
@@ -95,7 +96,8 @@ public class DataImpService {
 		System.out.println("**************" + sl.size());
 		for (Iterator it = sl.iterator(); it.hasNext();) {
 			HwState hs = (HwState) it.next();
-			TibcoCache.states.put(hs.getStateName(), hs.getStateCode());
+//			TibcoCache.states.put(hs.getStateName(), hs.getStateCode());
+			TibcoCache.states.put(hs.getStateCode(),hs.getStateName());
 		}
 
 		
@@ -104,22 +106,35 @@ public class DataImpService {
 			HwDistrict hd = (HwDistrict) it.next();
 			if(StringUtils.isNotBlank(hd.getStateCode())){
 				if(TibcoCache.districtInState.containsKey(hd.getStateCode())){
-					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictName(), hd.getDistrictGisCode());
+					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictGisCode(),hd.getDistrictName());
 				}else{
 					TibcoCache.districtInState.put(hd.getStateCode(), new LinkedHashMap());
+					((Map)TibcoCache.districtInState.get(hd.getStateCode())).put(hd.getDistrictGisCode(),hd.getDistrictName());
 				}
 			}
 		}
 		
-		TibcoCache.countrys = new LinkedHashMap<String,String>();
-		TibcoCache.countrys.put("India", "IN");//印度排第一个
+		TibcoCache.countrys = new LinkedHashMap<String,Country>();
+		Country indiaC = new Country();
+		indiaC.setCountryCode("IN");
+		indiaC.setCountryName("India");
+		indiaC.setNationalltyName("Indian");
+		indiaC.setCountryPhone("+91");
+		TibcoCache.countrys.put("India", indiaC);//印度排第一个
 		for (Iterator it = hwCountryService.listAllHwCountry(null).iterator(); it.hasNext();) {
 			HwCountry hw = (HwCountry) it.next();
 			if(StringUtils.equals(hw.getCountryCode(), "IN"))
 				continue;
-			TibcoCache.countrys.put(hw.getCountryName(), hw.getCountryCode());
+			indiaC = new Country();
+			indiaC.setCountryCode(hw.getCountryCode());
+			indiaC.setCountryName(hw.getCountryName());
+			indiaC.setNationalltyName(hw.getNationalltyName());
+			indiaC.setCountryPhone(hw.getPhoneCode());
+//			TibcoCache.countrys.put(hw.getCountryName(), hw.getCountryCode());
+			TibcoCache.countrys.put(hw.getCountryCode(), indiaC);
 		}
 		
+		/**
 		TibcoCache.cityInState = new LinkedHashMap();
 		for (Iterator iterator = hwCityService.listAllHwCity(null).iterator(); iterator.hasNext();) {
 			HwCity hc = (HwCity) iterator.next();
@@ -136,11 +151,28 @@ public class DataImpService {
 				}
 			}
 		}
+		* 
+		 */
+		TibcoCache.cityInDistrict = new LinkedHashMap();
+		for (Iterator iterator = hwCityService.listAllHwCity(null).iterator(); iterator.hasNext();) {
+			HwCity hc = (HwCity) iterator.next();
+			String districtCode = hc.getDistrictCode();
+			if(StringUtils.isNotEmpty(districtCode)){
+				if(!TibcoCache.cityInDistrict.containsKey(districtCode)){
+					List cism = new ArrayList();
+					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode(),hc.getDistrictCode()));
+					TibcoCache.cityInDistrict.put(districtCode,cism);
+				}else{
+					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode(),hc.getDistrictCode());
+					((List)TibcoCache.cityInDistrict.get(districtCode)).add(c);
+				}
+			}
+		}
 		
 		TibcoCache.circles = new LinkedHashMap<String,String>();
 		for (Iterator it = hwCircleService.lsitAllHwCircle(null).iterator(); it.hasNext();) {
 			HwCircle hc = (HwCircle) it.next();
-			TibcoCache.circles.put(hc.getCircle_name(), hc.getCircle_code());
+			TibcoCache.circles.put(hc.getCircle_code(), hc.getCircle_name());
 		}
 
 		//排序

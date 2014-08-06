@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.yd.mapp.client.model.HW0036Request;
 import com.ailk.yd.mapp.client.model.HW0036Response;
+import com.ailk.yd.mapp.client.model.HW0036Response.Country;
+import com.ailk.yd.mapp.client.model.HW0036Response.State;
+import com.ailk.yd.mapp.client.model.HW0043Response.Area;
 import com.ailk.yd.mapp.tibco.TibcoCache;
 import com.ailk.yd.mapp.tibco.TibcoConstant;
 
@@ -40,6 +45,9 @@ import com.ailk.yd.mapp.tibco.TibcoConstant;
 @Action(bizcode="hw0036",userCheck=true)
 @Scope("prototype")
 public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW0036Response>{
+	
+	@Autowired
+	private HwStateService hwStateService;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -50,14 +58,44 @@ public class HW0036Action extends AbstractYDBaseActionHandler<HW0036Request , HW
 		this.response = new HW0036Response();
 		response.setDicts(m);
 		
-		response.setStates(TibcoCache.states);
+		Map<String,String> states = TibcoCache.states;
+		Set<String> key = states.keySet();
+		State state = null;
+//		response.setStates(new ArrayList<State>());
+		response.setStates(new HashMap<String, String>());
+        for (Iterator<String> it = key.iterator(); it.hasNext();) {
+        	String s = (String) it.next();
+        	response.getStates().put(states.get(s),s);
+//        	response.getStates().add(state);
+        }
+		
+//		Collection<HwState> sl = hwStateService.listAllHwState(null);
+//		for (Iterator it = sl.iterator(); it.hasNext();) {
+//			HwState hs = (HwState) it.next();
+//			state = new State();
+//        	state.setStateCode(hs.getStateCode());
+//        	state.setStateName(hs.getStateName());
+//        	response.getStates().add(state);
+//		}
+		
+		response.setCountrys(new ArrayList<Country>());
+		
+		
+		Map<String,Country> countries = TibcoCache.countrys;
+		key = countries.keySet();
+        for (Iterator<String> it = key.iterator(); it.hasNext();) {
+        	String s = (String) it.next();
+        	response.getCountrys().add(countries.get(s));
+        }
+		
+	}
 
-		
-		response.setCountrys(TibcoCache.countrys);
-		
-		
-		
-		
+	public HwStateService getHwStateService() {
+		return hwStateService;
+	}
+
+	public void setHwStateService(HwStateService hwStateService) {
+		this.hwStateService = hwStateService;
 	}
 
 }

@@ -12,6 +12,7 @@ import com.ai.mapp.sys.entity.HwCity;
 import com.ai.mapp.sys.entity.HwCountry;
 import com.ai.mapp.sys.entity.HwDistrict;
 import com.ai.mapp.sys.entity.HwState;
+import com.ailk.yd.mapp.client.model.HW0036Response.Country;
 import com.ailk.yd.mapp.client.model.HW0038Response.City;
 
 public class TibcoCache {
@@ -37,9 +38,10 @@ public class TibcoCache {
 	/**
 	 * code:name
 	 */
-	public static Map<String,String> countrys;
+	public static Map<String,Country> countrys;
 	
-	public static Map<String,List<City>> cityInState;
+//	public static Map<String,List<City>> cityInState;
+	public static Map<String,List<City>> cityInDistrict;
 	
 	/**
 	 * code:name
@@ -52,18 +54,4 @@ public class TibcoCache {
 	 */
 	public static Map dicts;
 	
-	public static City getCityNameByCityCode(String stateCode,String cityCode){
-		if(StringUtils.isNotEmpty(stateCode) && StringUtils.isNotEmpty(cityCode)){
-			List<City> cities = cityInState.get(stateCode);
-			if(cities.isEmpty() == false){
-				for(City city:cities){
-					if(StringUtils.equals(city.getCityCode(), cityCode)){
-						return city;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
 }

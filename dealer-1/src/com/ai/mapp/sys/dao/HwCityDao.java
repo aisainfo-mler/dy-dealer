@@ -13,7 +13,8 @@ public class HwCityDao extends HibernateDao<HwCity, Long> {
 	
 	@Override
 	public Criteria createCriteria(Criteria c, HwCity t) {
-		
+		c.addOrder(Order.asc("cityName"));
+		c.addOrder(Order.asc("cityCode"));
 		if( t == null) return c;
 	
 //		if(StringUtils.isNotEmpty(t.getStateCode())){
@@ -39,8 +40,7 @@ public class HwCityDao extends HibernateDao<HwCity, Long> {
 			c.add(Restrictions.eq("districtCode", t.getDistrictCode()));
 		}
 		
-		c.addOrder(Order.asc("cityName"));
-		c.addOrder(Order.asc("cityCode"));
+		
 		return c;
 	}
 }

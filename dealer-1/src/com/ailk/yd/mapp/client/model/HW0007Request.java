@@ -9,8 +9,21 @@ public class HW0007Request extends YDBody{
 	 */
 	private String mdn;
 	
+	/**
+	 * emailId
+	 */
+	private String emailId;
+	
 	private Integer page;
 	private Integer size;
+	
+	
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 	public String getMdn() {
 		return mdn;
 	}

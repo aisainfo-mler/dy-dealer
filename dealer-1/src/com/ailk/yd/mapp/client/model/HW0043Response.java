@@ -17,6 +17,20 @@ public class HW0043Response extends YDBody {
 	 */
 	private List<Area> areaInfo;
 	
+	/**
+	 * 地区信息
+	 */
+	private List<Area> defaultChildren;
+	
+	
+	public List<Area> getDefaultChildren() {
+		return defaultChildren;
+	}
+
+	public void setDefaultChildren(List<Area> defaultChildren) {
+		this.defaultChildren = defaultChildren;
+	}
+
 	public List<Area> getAreaInfo() {
 		return areaInfo;
 	}

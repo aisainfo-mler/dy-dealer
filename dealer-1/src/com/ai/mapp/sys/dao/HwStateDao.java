@@ -13,6 +13,8 @@ public class HwStateDao extends HibernateDao<HwState, Long> {
 	
 	@Override
 	public Criteria createCriteria(Criteria c, HwState t) {
+		c.addOrder(Order.asc("stateName"));
+		c.addOrder(Order.asc("stateCode"));
 		
 		if( t == null) return c;
 	
@@ -22,8 +24,7 @@ public class HwStateDao extends HibernateDao<HwState, Long> {
 		if(StringUtils.isNotEmpty(t.getFlag())){
 			c.add(Restrictions.eq("flag", t.getFlag()));
 		}
-		c.addOrder(Order.asc("stateName"));
-		c.addOrder(Order.asc("stateCode"));
+		
 		return c;
 	}
 

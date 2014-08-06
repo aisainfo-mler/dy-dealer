@@ -53,15 +53,24 @@ public class HW0007Action extends
 //		yd0007Req.setEmailid(request.getMdn());
 		yd0007Req.setPage(request.getPage());
 		yd0007Req.setSize(request.getSize());
-		if(StringUtils.indexOf(request.getMdn(), "@")>-1){
-			yd0007Req.setEmailid(request.getMdn());
-		}else{
+		if(StringUtils.isNotEmpty(this.request.getEmailId()) &&  StringUtils.indexOf(request.getEmailId(), "@")>-1){
+			yd0007Req.setEmailid(request.getEmailId());
+		}
+		if(StringUtils.isNotEmpty(this.request.getMdn())){
 			yd0007Req.setMdn(request.getMdn());
 		}
 		
 		yd0007Req.setPage(request.getPage());
 		yd0007Req.setSize(request.getSize());
-		YD0007Response g2t = yd0007.get2Tibco(yd0007Req.returnGetParam());
+		YD0007Response g2t = null;
+//		try {
+			g2t = yd0007.get2Tibco(yd0007Req.returnGetParam());
+//		} catch (Exception e) {
+//			if(e.getMessage().toLowerCase().indexOf("")){
+//				
+//			}
+//		}
+		
 		this.response = new HW0007Response();
 		String totalRecords = g2t.getTotalRecords();
 		try {

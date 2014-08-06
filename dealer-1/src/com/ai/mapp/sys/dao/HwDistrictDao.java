@@ -16,6 +16,8 @@ public class HwDistrictDao extends HibernateDao<HwDistrict, Long> {
 
 	@Override
 	public Criteria createCriteria(Criteria c, HwDistrict t) throws Exception {
+		c.addOrder(Order.asc("districtName"));
+		c.addOrder(Order.asc("districtGisCode"));
 		
 		if( t == null) return c;
 	
@@ -29,8 +31,6 @@ public class HwDistrictDao extends HibernateDao<HwDistrict, Long> {
 			c.add(Restrictions.eq("districtGisCode", t.getDistrictGisCode()));
 		}
 		
-		c.addOrder(Order.asc("districtName"));
-		c.addOrder(Order.asc("districtGisCode"));
 		return c;
 	}
 

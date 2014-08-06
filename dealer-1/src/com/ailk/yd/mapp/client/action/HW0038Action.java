@@ -32,30 +32,21 @@ public class HW0038Action extends AbstractYDBaseActionHandler<HW0038Request, HW0
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 		// TODO Auto-generated method stub
-//		Collection<HwCity> citys = TibcoCache.citys;
-//		Map cityInStateMap = new HashMap();
-//		String sc = this.request.getStateCode();
-//		for (Iterator iterator = citys.iterator(); iterator.hasNext();) {
-//			HwCity hc = (HwCity) iterator.next();
-//			HwState st = hc.getState();
-//			if(st!=null && StringUtils.equals(sc, st.getStateCode())){
-//				String stateCode = st.getStateCode();
-//				if(!cityInStateMap.containsKey(stateCode)){
-//					List cism = new ArrayList();
-//					cism.add(new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode()));
-//					cityInStateMap.put(stateCode,cism);
-//				}else{
-//					HW0038Response.City c = new HW0038Response.City(hc.getCityCode(),hc.getCityName(),hc.getCircleCode());
-//					((List)cityInStateMap.get(stateCode)).add(c);
-//				}
-//			}
+//		List<City> rm = TibcoCache.cityInState.get(request.getStateCode());
+//		if(rm!=null && rm.size()>0){
+//			Map<String,List<City>> p = new LinkedHashMap();
+//			p.put(request.getStateCode(),rm);
+//			response.setCityInState(p);
 //		}
-		List<City> rm = TibcoCache.cityInState.get(request.getStateCode());
+		
+		List<City> rm = TibcoCache.cityInDistrict.get(request.getDistrictCode());
 		if(rm!=null && rm.size()>0){
 			Map<String,List<City>> p = new LinkedHashMap();
-			p.put(request.getStateCode(),rm);
-			response.setCityInState(p);
+			p.put(request.getDistrictCode(),rm);
+//			response.setCityInState(p);
+			response.setCityInDistrict(p);
 		}
+		
 		Map<String, String> ds = TibcoCache.districtInState.get(request.getStateCode());
 		if(ds!=null && ds.keySet().size()>0){
 			Map<String,Map<String,String>> dsm = new LinkedHashMap();

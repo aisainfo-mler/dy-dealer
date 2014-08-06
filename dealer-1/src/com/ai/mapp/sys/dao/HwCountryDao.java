@@ -17,13 +17,16 @@ public class HwCountryDao extends HibernateDao<HwCountry, Long> {
 	@Override
 	public Criteria createCriteria(Criteria c, HwCountry t) {
 		
+		c.addOrder(Order.asc("countryName"));
+		c.addOrder(Order.asc("countryCode"));
+		
 		if( t == null) return c;
 	
 		if(StringUtils.isNotEmpty(t.getCountryCode())){
-			c.add(Restrictions.eq("country_code", t.getCountryCode()));
+			c.add(Restrictions.eq("countryCode", t.getCountryCode()));
 		}
 		if(!StringUtils.isEmpty(t.getCountryName())){
-			c.add(Restrictions.eq("county_name", t.getCountryName()));
+			c.add(Restrictions.eq("countryName", t.getCountryName()));
 		}
 		if(!StringUtils.isEmpty(t.getNationalltyName())){
 			c.add(Restrictions.eq("nationalltyName", t.getNationalltyName()));

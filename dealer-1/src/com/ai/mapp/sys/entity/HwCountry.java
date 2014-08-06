@@ -27,6 +27,9 @@ public class HwCountry implements Serializable {
 	
 	@Column(name = "NATIONALLTY_NAME")
 	private String nationalltyName;
+	
+	@Column(name = "PHONE_CODE")
+	private String phoneCode;
 
 	public Long getCountryId() {
 		return countryId;
@@ -58,5 +61,13 @@ public class HwCountry implements Serializable {
 
 	public void setNationalltyName(String nationalltyName) {
 		this.nationalltyName = nationalltyName;
+	}
+
+	public String getPhoneCode() {
+		return phoneCode;
+	}
+
+	public void setPhoneCode(String phoneCode) {
+		this.phoneCode = phoneCode;
 	}
 }

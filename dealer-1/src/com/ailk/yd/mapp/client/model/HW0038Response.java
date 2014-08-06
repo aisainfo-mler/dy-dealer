@@ -6,10 +6,12 @@ import java.util.Map;
 import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0038Response extends YDBody {
-	
+	//暂弃
 	private Map<String,List<City>> cityInState;
 	
 	private Map<String,Map<String,String>> districtInState;
+	
+	private Map<String,List<City>> cityInDistrict;
 
 	
 	public static class City{
@@ -69,6 +71,14 @@ public class HW0038Response extends YDBody {
 
 	public void setDistrictInState(Map<String, Map<String, String>> districtInState) {
 		this.districtInState = districtInState;
+	}
+
+	public Map<String, List<City>> getCityInDistrict() {
+		return cityInDistrict;
+	}
+
+	public void setCityInDistrict(Map<String, List<City>> cityInDistrict) {
+		this.cityInDistrict = cityInDistrict;
 	}
 
 }
