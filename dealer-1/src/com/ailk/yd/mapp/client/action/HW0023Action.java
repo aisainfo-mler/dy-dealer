@@ -15,6 +15,7 @@ import com.ai.mapp.sys.entity.Commission;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.CommissionService;
 import com.ai.mapp.sys.service.UserService;
+import com.ai.mapp.sys.util.SYSConstant;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.core.security.IUserinfo;
@@ -93,7 +94,7 @@ public class HW0023Action extends
 				order.setPayTime(tmp.getPayTime() == null ? "" : DateUtils
 						.getDateString(tmp.getPayTime(), "dd/MM/yyyy HH:mm:ss"));
 				order.setChargeType(commissionService.getOrderTypeByChargeType(
-						tmp.getChargeType(), BSSConstantParam.LANGUAGE));
+						tmp.getChargeType(), SYSConstant.LANGUAGE_ENGLISH));
 				order.setCreateTime(tmp.getCreateTime() == null ? ""
 						: DateUtils.getDateString(tmp.getCreateTime(),
 								"dd/MM/yyyy HH:mm:ss"));

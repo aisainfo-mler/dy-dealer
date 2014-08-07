@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
 import com.ai.mapp.base.util.DateUtils;
-import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.entity.CommonBean;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.CommissionService;
@@ -62,15 +61,19 @@ public class HW0022Action extends
 		List<CommonBean> result = commissionService.countIncome(userId,
 				req.getCommissionType(), req.getPayStatus(),
 				req.getOrderType(), startTime, endTime);
-
+ 
 		if (result != null && result.size() != 0) {
 			List<HW0022Response.OrderType> orderTypeList = new ArrayList<HW0022Response.OrderType>();
 			for (CommonBean bean : result) {
+			 
 				HW0022Response.OrderType orderType = new HW0022Response.OrderType();
 				orderType.setValue(bean.getStr1());
-				orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), BSSConstantParam.LANGUAGE));
+				//orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), (String)(bean.getParameter(BSSConstantParam.LANGUAGE))));
+				orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), SYSConstant.LANGUAGE_ENGLISH));
+				orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+SYSConstant.LANGUAGE_ENGLISH);
+				
 				orderType.setIncome(bean.getStr2());
-				orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+ BSSConstantParam.LANGUAGE);
+			//	orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+ param.getParameter(BSSConstantParam.LANGUAGE));
 				orderTypeList.add(orderType);
 			}
 			response.setList(orderTypeList);
