@@ -45,7 +45,9 @@ public class HW0023Response extends YDBody {
 		private java.lang.String createTime;
 
 		private java.lang.String chargeType;
-
+		
+		private String svn;
+		
 		public java.lang.String getOrderCode() {
 			return orderCode;
 		}
@@ -140,6 +142,14 @@ public class HW0023Response extends YDBody {
 
 		public void setChargeType(java.lang.String chargeType) {
 			this.chargeType = chargeType;
+		}
+
+		public String getSvn() {
+			return svn;
+		}
+
+		public void setSvn(String svn) {
+			this.svn = svn;
 		}
 
 	}
