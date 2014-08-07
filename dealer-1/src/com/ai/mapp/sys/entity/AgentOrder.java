@@ -144,6 +144,9 @@ public class AgentOrder implements Serializable {
 	@NotFound(action=NotFoundAction.IGNORE)
 	private User updater;
 	
+	@Column(name="ACCOUNTLEVEL")
+	private String accountLevel;
+	
 	public AgentOrder() {
 		super();
 	}
@@ -176,6 +179,14 @@ public class AgentOrder implements Serializable {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public String getAccountLevel() {
+		return accountLevel;
+	}
+
+	public void setAccountLevel(String accountLevel) {
+		this.accountLevel = accountLevel;
 	}
 
 	public void setStatus(String status) {

@@ -58,8 +58,19 @@ public class HW0013Response extends YDBody {
 		
 		private java.lang.String orn;
 		
+		private Boolean accountLevel;
+		
 		private Map<String,BigDecimal> feeDetail;
 		
+		
+		public Boolean getAccountLevel() {
+			return accountLevel;
+		}
+
+		public void setAccountLevel(Boolean accountLevel) {
+			this.accountLevel = accountLevel;
+		}
+
 		public java.lang.String getOrn() {
 			return orn;
 		}

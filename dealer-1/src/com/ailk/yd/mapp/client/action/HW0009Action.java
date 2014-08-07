@@ -81,6 +81,10 @@ public class HW0009Action extends AbstractYDBaseActionHandler<HW0009Request, HW0
 			order.setOptType(req.getRechargeTypeId());
 			order.setTibcoOrderNumber(req.getOrnNum());
 			order.setSaleFee(Long.parseLong(req.getPayedAmount()));
+			if(this.request.getAccountLevel() != null){
+				order.setAccountLevel(this.request.getAccountLevel()?"1":"0");//true代表子帐户,本账户是false
+			}
+			
 			if(StringUtils.isNotBlank(this.topupProductId)){
 				Product pro = productService.loadProductByBSSId(topupProductId);
 				if(pro!=null){

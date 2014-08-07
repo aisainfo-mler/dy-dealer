@@ -86,7 +86,7 @@ public class AgentOrderDao extends HibernateDao<AgentOrder, Long> {
 		
 		if(StringUtil.isEmpty(t.getSvn()) == false)
 		{
-			c.add(Restrictions.eq("svn", t.getSvn()));
+			c.add(Restrictions.like("svn", t.getSvn(),MatchMode.ANYWHERE));
 		}
 		
 		if(t.getStartTime() != null)

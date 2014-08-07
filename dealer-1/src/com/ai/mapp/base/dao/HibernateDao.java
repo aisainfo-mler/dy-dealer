@@ -480,8 +480,8 @@ public abstract class HibernateDao<T, PK extends Serializable> extends Hibernate
 			Criteria c = createCriteria(t);
 			Page<T> page = new Page<T>();
 			page.setAutoCount(false);
-//			page.setPageNo(start);
-//			page.setPageSize(limit);
+			page.setPageNo(start);
+			page.setPageSize(limit);
 			if(ifOffset != null && ifOffset.length > 0 && ifOffset[0] == true)
 			{
 				page.setStart(start);

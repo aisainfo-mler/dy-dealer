@@ -10,6 +10,8 @@ public class HW0009Request extends YDBody {
 	private java.lang.String payedAmount;
 
 	private java.lang.String payMethodId;
+	
+	private Boolean accountLevel;
 
 	/**
 	 * tibco的订单编号。
@@ -54,6 +56,14 @@ public class HW0009Request extends YDBody {
 
 	public void setOrnNum(String ornNum) {
 		this.ornNum = ornNum;
+	}
+
+	public Boolean getAccountLevel() {
+		return accountLevel;
+	}
+
+	public void setAccountLevel(Boolean accountLevel) {
+		this.accountLevel = accountLevel;
 	}
 
 }

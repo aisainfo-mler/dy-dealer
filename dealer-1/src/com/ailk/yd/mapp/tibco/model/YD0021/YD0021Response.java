@@ -491,10 +491,12 @@ public class YD0021Response implements TibcoRequest {
 				sp.setServices(servicesInServicePackage);
 				servicePackageListInAcc.add(sp);
 				List servicesList = (List) oneServicePackageMap.get("services");
+				List<Services> services = new ArrayList<Services>();
+				Services oneService = null;
 				for (Iterator sList = servicesList.iterator(); sList
 						.hasNext();) {
 					Map oneServiceMap = (Map) sList.next();
-					Services oneService = (Services) TibcoUtil.extractStrValClass(oneServiceMap, Services.class);
+					oneService = (Services) TibcoUtil.extractStrValClass(oneServiceMap, Services.class);
 					servicesInServicePackage.add(oneService);
 					Map identifierMap = (Map) oneServiceMap.get("identifier");
 					Identifier identifier = (Identifier) TibcoUtil.extractStrValClass(identifierMap, Identifier.class);
@@ -502,10 +504,36 @@ public class YD0021Response implements TibcoRequest {
 					
 					//下面是待处理的2014-06-26
 					Map dependancyInfoMap = (Map) oneServiceMap.get("dependancyInfo");
+					DependancyInfo dependancyInfo = (DependancyInfo) TibcoUtil.extractStrValClass(dependancyInfoMap, DependancyInfo.class);
+					oneService.setDependancyInfo(dependancyInfo);
+					
 					List characteristicsList = (List) oneServiceMap.get("characteristics");
 					List customerFacingServicesList = (List) oneServiceMap.get("customerFacingServices");
+					if(customerFacingServicesList != null && customerFacingServicesList.isEmpty() == false){
+						CustomerFacingServices oneCustomerFacingService = null;
+						List<CustomerFacingServices> customerFS = new ArrayList<CustomerFacingServices>();
+						for(Iterator csL = customerFacingServicesList.iterator(); csL.hasNext();){
+							Map oneCustomerFacingServiceMap = (Map) csL.next();
+							oneCustomerFacingService = (CustomerFacingServices) TibcoUtil.extractStrValClass(oneCustomerFacingServiceMap, CustomerFacingServices.class);
+							customerFS.add(oneCustomerFacingService);
+						}
+						oneService.setCustomerFacingServices(customerFS);
+					}
 					
+					if(characteristicsList != null && characteristicsList.isEmpty() == false){
+						Characteristics oneCharacteristics = null;
+						List<Characteristics> ctl = new ArrayList<Characteristics>();
+						for(Iterator cl = characteristicsList.iterator(); cl.hasNext();){
+							Map oneCharacteristicsMap = (Map) cl.next();
+							oneCharacteristics = (Characteristics) TibcoUtil.extractStrValClass(oneCharacteristicsMap, Characteristics.class);
+							ctl.add(oneCharacteristics);
+						}
+						oneService.setCharacteristics(ctl);
+					}
+					
+					services.add(oneService);
 				}
+				
 				
 				
 			}

@@ -112,6 +112,7 @@ public class HW0013Action extends
 			d.setSIMFee(order.getSimFee() == null?"0":order.getSimFee().toString());
 			d.setNumberFee(order.getNumberFee() == null?"0":order.getNumberFee().toString());
 			d.setOrn(order.getTibcoOrderNumber() == null?"":order.getTibcoOrderNumber());
+			d.setAccountLevel(StringUtils.equals(order.getAccountLevel(), "1"));
 			
 			if(StringUtils.isNotBlank(order.getFeeDetail()))
 			{

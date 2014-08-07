@@ -91,12 +91,12 @@ public class HW0023Action extends
 				order.setPayStatus(tmp.getPayStatus() == null ? "0" : tmp
 						.getPayStatus());
 				order.setPayTime(tmp.getPayTime() == null ? "" : DateUtils
-						.getDateString(tmp.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
+						.getDateString(tmp.getPayTime(), "dd/MM/yyyy HH:mm:ss"));
 				order.setChargeType(commissionService.getOrderTypeByChargeType(
 						tmp.getChargeType(), BSSConstantParam.LANGUAGE));
 				order.setCreateTime(tmp.getCreateTime() == null ? ""
 						: DateUtils.getDateString(tmp.getCreateTime(),
-								"yyyy-MM-dd HH:mm:ss"));
+								"dd/MM/yyyy HH:mm:ss"));
 				orderList.add(order);
 			}
 		}

@@ -55,7 +55,6 @@ public class HW0032Action extends
 //		order.setSaleFee(Long.parseLong(req.getAmount()));
 //		order = agentOrderService.createTopUpOrder(order);
 		
-		
 		String circleId = creator.getCircleId();
 		if(StringUtils.isBlank(circleId)){
 			circleId = "TC";
