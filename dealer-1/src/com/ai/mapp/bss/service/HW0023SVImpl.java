@@ -57,9 +57,9 @@ public class HW0023SVImpl extends ISVTemplate {
 				order.setCommissionId(tmp.getId() == null?"":tmp.getId().toString());
 				order.setComment(tmp.getComment() == null?"":tmp.getComment());
 				order.setPayStatus(tmp.getPayStatus() == null?"0":tmp.getPayStatus());
-				order.setPayTime(tmp.getPayTime() == null?"":DateUtils.getDateString(tmp.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
+				order.setPayTime(tmp.getPayTime() == null?"":DateUtils.getDateString(tmp.getPayTime(), "dd/MM/yyyy HH:mm:ss"));
 				order.setChargeType(commissionService.getOrderTypeByChargeType(tmp.getChargeType(),(String)param.getParameter(BSSConstantParam.LANGUAGE)));
-				order.setCreateTime(tmp.getCreateTime() == null?"":DateUtils.getDateString(tmp.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+				order.setCreateTime(tmp.getCreateTime() == null?"":DateUtils.getDateString(tmp.getCreateTime(), "dd/MM/yyyy HH:mm:ss"));
 				
 				orderList.addOrder(order);
 			}

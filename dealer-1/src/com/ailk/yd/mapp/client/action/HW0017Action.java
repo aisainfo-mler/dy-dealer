@@ -70,12 +70,12 @@ public class HW0017Action extends
 				long realFee = order.getRealFee() == null ? 0 : order.getRealFee().longValue();
 				long discount = fee-realFee;
 				
-				o.setCreateTime(order.getCreateTime() == null ? "":DateUtils.getDateString(order.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+				o.setCreateTime(order.getCreateTime() == null ? "":DateUtils.getDateString(order.getCreateTime(), "dd/MM/yyyy HH:mm:ss"));
 				o.setDiscount(discount+"");
 				o.setOrderCode(order.getSerialNumber());
 				o.setOrderStatus(order.getStatus());
 				o.setOrderType(order.getType());
-				o.setPayTime(order.getPayTime() == null ? "":DateUtils.getDateString(order.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
+				o.setPayTime(order.getPayTime() == null ? "":DateUtils.getDateString(order.getPayTime(), "dd/MM/yyyy HH:mm:ss"));
 				o.setRealFee(realFee+"");
 				o.setSaleFee(fee+"");
 				

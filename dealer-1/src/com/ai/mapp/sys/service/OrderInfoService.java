@@ -216,8 +216,8 @@ public class OrderInfoService {
 			/**
 			 * 现在不往tibco发订单，因此将此状态值为1
 			 */
-//			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_NO);
-			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_YES);
+			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_NO);
+//			info.setPlaceTibco(SYSConstant.ORDER_PLACE_TIBCO_YES);
 			info.setStatus(SYSConstant.ORDER_STATUS_WAIT_PAY);//待支付状态
 			info.setCreator(creator);
 			info.setCreateTime(new Date());

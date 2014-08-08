@@ -10,6 +10,8 @@ import com.ailk.yd.mapp.model.YDBody;
 
 public class HW0026Request extends YDBody {
 	private String orderCode;
+	
+	private String dealerOrderCode;
 
 	public String getOrderCode() {
 		return orderCode;
@@ -18,4 +20,14 @@ public class HW0026Request extends YDBody {
 	public void setOrderCode(String orderCode) {
 		this.orderCode = orderCode;
 	}
+
+	public String getDealerOrderCode() {
+		return dealerOrderCode;
+	}
+
+	public void setDealerOrderCode(String dealerOrderCode) {
+		this.dealerOrderCode = dealerOrderCode;
+	}
+	
+	
 }

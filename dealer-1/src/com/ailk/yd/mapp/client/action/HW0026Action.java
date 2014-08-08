@@ -32,11 +32,19 @@ public class HW0026Action extends AbstractYDBaseActionHandler<HW0026Request, HW0
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
-		if(StringUtil.isEmpty(request.getOrderCode())){
+		if(StringUtil.isEmpty(request.getOrderCode()) && StringUtil.isEmpty(request.getDealerOrderCode())){
 			throw new Exception("lost the orderCode");
 		}else{
+			ResultJson result = null;
 			if(!StringUtil.isEmpty(request.getOrderCode())){
-				ResultJson result = agentOrderService.cancelOrder(request.getOrderCode());
+				result = agentOrderService.cancelOrder(request.getOrderCode());
+				if(!result.getFlag()){
+					throw new Exception(result.getMsg());
+				}
+			}
+			
+			if(!StringUtil.isEmpty(request.getDealerOrderCode())){
+				result = orderInfoService.cancelOrder(request.getDealerOrderCode(),this.getUserinfo().getUserName());
 				if(!result.getFlag()){
 					throw new Exception(result.getMsg());
 				}

@@ -66,4 +66,16 @@ public class YDHeader implements IHeader {
 		this.mode = mode;
 	}
 
+//	@Override
+//	public String getToken() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public void setToken(String arg0) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
 }

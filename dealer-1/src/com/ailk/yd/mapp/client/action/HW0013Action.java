@@ -93,7 +93,7 @@ public class HW0013Action extends
 			d.setOrderCode(order.getOrderCode()== null?"":order.getOrderCode().toString());
 			d.setOrderType(order.getOrderType()== null?"":order.getOrderType().toString());
 			d.setPreStore(order.getPreStore()== null?"":order.getPreStore().toString());
-			d.setProductId(order.getProduct()== null?"":order.getProduct().getRangeId().toString());
+			d.setProductId(order.getProduct()== null?"":order.getProduct().getBssRangeId().toString());
 			d.setSim(order.getSim()== null?"":order.getSim());
 			d.setSvn(order.getSvn());
 			d.setDiscountFee(order.getDiscountFee()== null?"":order.getDiscountFee().toString());
