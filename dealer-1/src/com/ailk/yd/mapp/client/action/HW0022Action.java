@@ -67,9 +67,9 @@ public class HW0022Action extends
 			for (CommonBean bean : result) {
 			 
 				HW0022Response.OrderType orderType = new HW0022Response.OrderType();
-				orderType.setValue(bean.getStr1());
+				orderType.setValue(commissionService.getOrderTypeByChargeType(bean.getStr1(), null,true));
 				//orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), (String)(bean.getParameter(BSSConstantParam.LANGUAGE))));
-				orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), SYSConstant.LANGUAGE_ENGLISH));
+				orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), SYSConstant.LANGUAGE_ENGLISH,false));
 				orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+SYSConstant.LANGUAGE_ENGLISH);
 				
 				orderType.setIncome(bean.getStr2());

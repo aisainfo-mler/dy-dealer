@@ -46,8 +46,8 @@ public class Hw0022SVImpl extends ISVTemplate {
 			
 	        for (CommonBean bean:result) {
 	        	com.ai.mapp.model.HW0022.OrderType orderType = new com.ai.mapp.model.HW0022.OrderType();
-	            orderType.setValue(bean.getStr1());
-	            orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(),(String)(param.getParameter(BSSConstantParam.LANGUAGE))));
+	            orderType.setValue(commissionService.getOrderTypeByChargeType(bean.getStr1(), null,true));
+	            orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(),(String)(param.getParameter(BSSConstantParam.LANGUAGE)),false));
 	            orderType.setIncome(bean.getStr2());
 	            orderType.setProductType(bean.getStr3() == null?"":SYSConstant.payTypes.get(bean.getStr3()) + param.getParameter(BSSConstantParam.LANGUAGE));
 	            orderTypeList.addOrderType(orderType);

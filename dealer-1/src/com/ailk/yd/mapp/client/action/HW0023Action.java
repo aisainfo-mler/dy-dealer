@@ -83,6 +83,7 @@ public class HW0023Action extends
 				order.setOrderCode(tmp.getAgentOrder().getOrderCode());
 				order.setOrderType(tmp.getAgentOrder().getOrderType());
 				order.setRealFee("");
+				order.setSvn(tmp.getAgentOrder().getSvn());
 				order.setCommissionCode(tmp.getCommissionCode() == null ? ""
 						: tmp.getCommissionCode().toString());
 				order.setCommissionId(tmp.getId() == null ? "" : tmp.getId()
@@ -94,7 +95,7 @@ public class HW0023Action extends
 				order.setPayTime(tmp.getPayTime() == null ? "" : DateUtils
 						.getDateString(tmp.getPayTime(), "dd/MM/yyyy HH:mm:ss"));
 				order.setChargeType(commissionService.getOrderTypeByChargeType(
-						tmp.getChargeType(), SYSConstant.LANGUAGE_ENGLISH));
+						tmp.getChargeType(), SYSConstant.LANGUAGE_ENGLISH,false));
 				order.setCreateTime(tmp.getCreateTime() == null ? ""
 						: DateUtils.getDateString(tmp.getCreateTime(),
 								"dd/MM/yyyy HH:mm:ss"));

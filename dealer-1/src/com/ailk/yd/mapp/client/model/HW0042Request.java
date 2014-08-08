@@ -17,6 +17,16 @@ public class HW0042Request extends IBody {
 	 * 用这个编码区分照片属于哪个订单
 	 */
 	private String ornNum;
+	
+	private byte[] fileBlob;// 文件流
+	
+	public byte[] getFileBlob() {
+		return fileBlob;
+	}
+
+	public void setFileBlob(byte[] fileBlob) {
+		this.fileBlob = fileBlob;
+	}
 
 	public String getFileContents() {
 		return fileContents;

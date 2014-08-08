@@ -87,7 +87,7 @@ public class AgentOrderService {
 			if(start < 0){
 				c = agentOrderDao.listAll(agentOrder);
 			}else{
-				c = agentOrderDao.list(agentOrder, start, limit);
+				c = agentOrderDao.list(agentOrder, start, limit,true);
 			}
 			
 			return c;

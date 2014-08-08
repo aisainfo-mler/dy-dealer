@@ -71,7 +71,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 			if(start < 0){
 				c = commissionDao.listAll(commission);
 			}else{
-				c = commissionDao.list(commission, start, limit);
+				c = commissionDao.list(commission, start, limit,true);
 			}
 			
 			return c;
@@ -272,24 +272,40 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 	}
 	
 	
-	public String getOrderTypeByChargeType(String chargeType,String language) throws Exception
+	public String getOrderTypeByChargeType(String chargeType,String language,boolean ifKey) throws Exception
 	{
 		
 		if(SYSConstant.COMMISSION_CHARGE_TYPE_NEW.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_NEW + language);
+			if(ifKey){
+				return SYSConstant.AGENT_ORDER_TYPE_NEW;
+			}else{
+				return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_NEW + language);
+			}
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_TOP_UP.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_TOPUP + language);
+			if(ifKey){
+				return SYSConstant.AGENT_ORDER_TYPE_TOPUP;
+			}else{
+				return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_TOPUP + language);
+			}
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_SIM.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_SIMCARD + language);
+			if(ifKey){
+				return SYSConstant.AGENT_ORDER_TYPE_SIMCARD;
+			}else{
+				return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_SIMCARD + language);
+			}
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_BOLT_ON.equals(chargeType))
 		{
-			return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + language);
+			if(ifKey){
+				return SYSConstant.AGENT_ORDER_TYPE_RECHARGE;
+			}else{
+				return SYSConstant.agentOrderTypes.get(SYSConstant.AGENT_ORDER_TYPE_RECHARGE + language);
+			}
 		}
 		else if(SYSConstant.COMMISSION_CHARGE_TYPE_COMMON.equals(chargeType))
 		{
@@ -317,7 +333,7 @@ public final Log log = LogFactory.getLog(CommissionService.class);
 		}
 		
 		if(StringUtil.isEmpty(orderType) == false)
-			condition.setChargeType(orderType);
+			condition.setChargeType(getChargeTypeByOrderType(orderType));
 		if(startTime != null)
 			condition.setStartTime(startTime);
 		if(endTime != null)
