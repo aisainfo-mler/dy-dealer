@@ -21,7 +21,18 @@ public class HW0021Request extends YDBody{
 	 * POS票号
 	 */
 	private String voucherNo;
-	
+	  /**
+     * 支付密码
+     */
+    private String payPwd;
+    
+    
+	public String getPayPwd() {
+		return payPwd;
+	}
+	public void setPayPwd(String payPwd) {
+		this.payPwd = payPwd;
+	}
 	public String getOrderCode() {
 		return orderCode;
 	}

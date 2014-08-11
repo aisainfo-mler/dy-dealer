@@ -13,6 +13,7 @@ import com.ai.mapp.sys.entity.OrderInfo;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.OrderInfoService;
 import com.ai.mapp.sys.service.UserService;
+import com.ai.mapp.sys.util.LanguageInfo;
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
 import com.ailk.butterfly.core.security.IUserinfo;
@@ -25,41 +26,52 @@ import com.ailk.yd.mapp.client.model.HW0021Request;
 import com.ailk.yd.mapp.tibco.model.YD0012.YD0012Request;
 
 /**
- * @author Zhengwj 
- * @version 创建时间：2014-5-7 下午02:40:50
- * 类说明:库存支付订单---延用原21接口
+ * @author Zhengwj
+ * @version 创建时间：2014-5-7 下午02:40:50 类说明:库存支付订单---延用原21接口
  */
 
 @Service("hw0021")
-@Action(bizcode="hw0021",userCheck=true)
+@Action(bizcode = "hw0021", userCheck = true)
 @Scope("prototype")
-public class HW0021Action extends AbstractYDBaseActionHandler<HW0021Request, IBody>{
+public class HW0021Action extends
+		AbstractYDBaseActionHandler<HW0021Request, IBody> {
 	@Autowired
-	private OrderInfoService orderInfoService; 
+	private OrderInfoService orderInfoService;
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
-		if(StringUtils.isEmpty(this.request.getOrderCode())){
-			throw new BusinessException(ErrorCodeDefine.EXPECT_ERROR,"订单流水号为空");
+		if (StringUtils.isEmpty(this.request.getOrderCode())) {
+			throw new BusinessException(ErrorCodeDefine.EXPECT_ERROR, "订单流水号为空");
 		}
-		orderInfoService.payOrderInfo(this.request.getOrderCode(), this.request.getPayMode(), this.request.getVoucherNo());
-		IUserinfo u = (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+		IUserinfo u = (IUserinfo) MappContext
+				.getAttribute(MappContext.MAPPCONTEXT_USER);
 		User user = userService.loadUserByUserCode(u.getUserName());
-		OrderInfo order = orderInfoService.loadOrderInfoByOrderCode(this.request.getOrderCode());
+		//验证用户支付密码xuzhou
+		if(request.getPayPwd()==null)
+			throw new Exception(""+" " + LanguageInfo.PAY_PWD_EMPTY);
+		
+		if(!StringUtils.equals(request.getPayPwd(), user.getPayPwd()))
+			throw new Exception(""+" " + LanguageInfo.PAY_PWD_WRONG);
+		
+		orderInfoService.payOrderInfo(this.request.getOrderCode(),
+				this.request.getPayMode(), this.request.getVoucherNo());
+	
+		OrderInfo order = orderInfoService
+				.loadOrderInfoByOrderCode(this.request.getOrderCode());
 		YD0012Request ydReq = new YD0012Request();
 		ydReq.setDealerId(user.getUserId());
-		Map<Long,Long> goodMap = new HashMap<Long, Long>();
-		if(order.getDetails() != null && order.getDetails().isEmpty() == false){
-			for(OrderDetail detail:order.getDetails()){
-//				goodMap.put(detail.getGood().getBssId(), value)
+		Map<Long, Long> goodMap = new HashMap<Long, Long>();
+		if (order.getDetails() != null && order.getDetails().isEmpty() == false) {
+			for (OrderDetail detail : order.getDetails()) {
+				// goodMap.put(detail.getGood().getBssId(), value)
 			}
 		}
-//		goodMap.put(this.request.get, value)
-		
+		// goodMap.put(this.request.get, value)
+
 	}
 
 	public OrderInfoService getOrderInfoService() {
