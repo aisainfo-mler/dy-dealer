@@ -50,6 +50,7 @@ public class HW0042Action extends
 		TibcoUtil.checkNotNull(ornNum, "ornNumber");
 		TibcoUtil.checkNotNull(request.getFileType(), "picType");
 		
+		/**
 		final String webinf = this.getClass().getResource("/").getPath();
 		final String dir = webinf+filePath;
 		final File dirFile = new File(dir);
@@ -68,12 +69,14 @@ public class HW0042Action extends
 			l.add(poaFile.getAbsolutePath());
 			l.add(poiFile.getAbsolutePath());
 			l.add(cusFile.getAbsolutePath());
-			String pdfFile = dir+"/"+request.getOrnNum()+"_pdf";
+			String pdfFile = dir+"/"+request.getOrnNum()+"_pdf.pdf";
 			TibcoUtil.converImgToPdf(l, pdfFile);
 			final String pdfFileContent = TibcoUtil.convertFileToBase64Str(pdfFile);
 			
+			
 			//上传了3个全的图片，转成pdf文件
 			YD0023Request yd23 = new YD0023Request(pdfFileContent);
+//			YD0023Request yd23 = new YD0023Request(fc);
 			YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
 			response = new HW0042Response();
 			String url = g2t.getUrl();
@@ -89,7 +92,16 @@ public class HW0042Action extends
 		}else{
 			uploadFile(fc, ornNum, dir);
 		}
+		*/
 		
+		YD0023Request yd23 = new YD0023Request(fc);
+		YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
+		response = new HW0042Response();
+		String url = g2t.getUrl();
+		if(StringUtils.isBlank(url)){
+			throw new Exception("url from tibco is null");
+		}
+		response.setUrl(url);
 		
 
 	}

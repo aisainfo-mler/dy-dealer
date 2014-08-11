@@ -56,8 +56,14 @@ public class HW0007Action extends
 		if(StringUtils.isNotEmpty(this.request.getEmailId()) &&  StringUtils.indexOf(request.getEmailId(), "@")>-1){
 			yd0007Req.setEmailid(request.getEmailId());
 		}
-		if(StringUtils.isNotEmpty(this.request.getMdn())){
+		if(StringUtils.isNotEmpty(this.request.getEmailId()) && StringUtils.indexOf(request.getEmailId(), "@") == -1){
+			yd0007Req.setMdn(request.getEmailId());
+		}
+		if(StringUtils.isNotEmpty(this.request.getMdn()) && StringUtils.indexOf(request.getMdn(), "@") == -1){
 			yd0007Req.setMdn(request.getMdn());
+		}
+		if(StringUtils.isNotEmpty(this.request.getMdn()) && StringUtils.indexOf(request.getMdn(), "@") > -1){
+			yd0007Req.setEmailid(request.getMdn());
 		}
 		
 		yd0007Req.setPage(request.getPage());

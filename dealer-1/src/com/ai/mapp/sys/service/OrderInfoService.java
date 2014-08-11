@@ -320,7 +320,7 @@ public class OrderInfoService {
 		if(SYSConstant.ORDER_PLACE_TIBCO_YES.equals(order.getPlaceTibco()))
 		{
 			result.setFlag(false);
-//			result.setMsg(orderCode+" " + LanguageInfo.ORDER_IS_PLACE_TIBCO_YES);
+			result.setMsg(orderCode+" " + LanguageInfo.ORDER_IS_PLACE_TIBCO_YES);
 			return result;
 		}
 		
@@ -365,7 +365,8 @@ public class OrderInfoService {
 	}
 	
 	public void processOrder(Long orderId) throws Exception {
-		String hql="update OrderInfo obj set obj.status='2' where obj.status='1' and obj.id = "+orderId;
+//		String hql="update OrderInfo obj set obj.status='2' where obj.status='1' and obj.id = "+orderId;
+		String hql="update OrderInfo obj set obj.status='2',obj.placeTibco='1' where obj.status='1' and obj.id = "+orderId;
 		orderInfoDao.excute(hql, null);
 	}
 	

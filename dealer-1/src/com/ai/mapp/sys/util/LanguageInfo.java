@@ -146,6 +146,8 @@ public class LanguageInfo {
 	public static String ITEM_ERR_STATUS_NOT_UNUSE = "status isn't unuse";
 	public static String ITEM_ERR_NOT_EXIST = "不存在";
 	
+	public static String ORDER_IS_PLACE_TIBCO_YES = "Tibco is dealing";
+	
 	
 	
 }

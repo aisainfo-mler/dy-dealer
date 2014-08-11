@@ -51,11 +51,11 @@ public class HW0021Action extends
 				.getAttribute(MappContext.MAPPCONTEXT_USER);
 		User user = userService.loadUserByUserCode(u.getUserName());
 		//验证用户支付密码xuzhou
-		if(request.getPayPwd()==null)
-			throw new Exception(""+" " + LanguageInfo.PAY_PWD_EMPTY);
-		
-		if(!StringUtils.equals(request.getPayPwd(), user.getPayPwd()))
-			throw new Exception(""+" " + LanguageInfo.PAY_PWD_WRONG);
+//		if(request.getPayPwd()==null)
+//			throw new Exception(""+" " + LanguageInfo.PAY_PWD_EMPTY);
+//		
+//		if(!StringUtils.equals(request.getPayPwd(), user.getPayPwd()))
+//			throw new Exception(""+" " + LanguageInfo.PAY_PWD_WRONG);
 		
 		orderInfoService.payOrderInfo(this.request.getOrderCode(),
 				this.request.getPayMode(), this.request.getVoucherNo());
