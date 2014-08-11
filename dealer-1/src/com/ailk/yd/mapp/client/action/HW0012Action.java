@@ -86,7 +86,7 @@ public class HW0012Action extends
 			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(),
 					HW0010Request.class);
 			YD0010Request yd0010Request = convertByHW0010(hw0010Request);
-			System.out.println(mapper.writeValueAsString(yd0010Request));
+			 
 			YD0010Response yd0010Response = yd0010.post2Tibco(
 					PO2VOUtils.replaceNull(yd0010Request), null);
 			/**
