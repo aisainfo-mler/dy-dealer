@@ -497,7 +497,8 @@ public class AgentOrderService {
 		}
 		order.setOrderCode(orderCode);
 		order.setOrderType(SYSConstant.AGENT_ORDER_TYPE_TOPUP);
-		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
+//		order.setPayStatus(SYSConstant.PAY_STATUS_PAID);
+		order.setPayStatus(SYSConstant.PAY_STATUS_NOT_PAID);
 		order.setPayTime(now);
 //		order.setPreStore((long)0);
 		Long rf = (long) (order.getSaleFee().intValue()-discountFeeB.intValue());

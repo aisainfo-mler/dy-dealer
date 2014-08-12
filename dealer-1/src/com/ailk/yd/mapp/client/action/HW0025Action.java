@@ -94,16 +94,16 @@ public class HW0025Action extends
 		}
 		order.setPackageFee(packageFee);
 		order.setSvn(req.getMdn());
-		Product p = new Product();
+//		Product p = new Product();
 		
-		p.setRangeId(Long.parseLong(req.getProductId()));
+//		p.setRangeId(Long.parseLong(req.getProductId()));
 		Product pro = productService.loadProductByBSSId(req.getProductId());
 		if(pro!=null){
 			order.setProduct(pro);
 		}
 //		order.setProduct(req.getProductId()==null ? null
 //				: new Product(Long.valueOf(req.getProductId())));
-		order.setProduct(p);
+//		order.setProduct(p);
 		order.setSaleFee(packageFee);
 		order.setOptType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 //		order.setFeeDetail(feeDtl);
