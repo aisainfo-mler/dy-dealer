@@ -16,6 +16,8 @@ public class YDHeader implements IHeader {
 	
 	private String sign;
 	
+	private String token;
+	
 	public String getSign() {
 		return sign;
 	}
@@ -66,16 +68,14 @@ public class YDHeader implements IHeader {
 		this.mode = mode;
 	}
 
-//	@Override
-//	public String getToken() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public void setToken(String arg0) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public String getToken() {
+		return token;
+	}
+
+	@Override
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }
