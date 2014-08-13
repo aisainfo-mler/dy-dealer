@@ -68,12 +68,12 @@ public class YDHeader implements IHeader {
 		this.mode = mode;
 	}
 
-	@Override
+//	@Override
 	public String getToken() {
 		return token;
 	}
 
-	@Override
+//	@Override
 	public void setToken(String token) {
 		this.token = token;
 	}
