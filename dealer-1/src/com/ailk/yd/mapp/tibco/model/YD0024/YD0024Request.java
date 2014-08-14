@@ -1,5 +1,10 @@
 package com.ailk.yd.mapp.tibco.model.YD0024;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.ailk.yd.mapp.tibco.model.TibcoRequest;
 
 /**
@@ -96,6 +101,17 @@ public class YD0024Request implements TibcoRequest {
 
 	public void setReturnCompleteOrder(String returnCompleteOrder) {
 		this.returnCompleteOrder = returnCompleteOrder;
+	}
+
+	public Map returnGetParam() {
+		Map rm = new HashMap();
+		if (StringUtils.isNotBlank(orderReferenceNumber)) {
+			rm.put("referenceNumber", orderReferenceNumber);
+		}
+		if (StringUtils.isNotBlank(returnCompleteOrder)) {
+			rm.put("returnCompleteOrder", returnCompleteOrder);
+		}
+		return rm;
 	}
 	
 }

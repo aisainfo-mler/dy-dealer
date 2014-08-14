@@ -1,14 +1,14 @@
 package com.ailk.yd.mapp.client.model;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ailk.yd.mapp.model.YDBody;
-
 public class HW0040Response extends YDBody {
 
 	private Map<String, Customer> customers;
 
-	public static class Customer {
+	public static class Customer extends YDBody {
 
 		private String customerId;
 		private String customerCategory;
@@ -44,6 +44,13 @@ public class HW0040Response extends YDBody {
 		private ContactDetails contactDetails;
 		private PermanentAddress permanentAddress;
 
+		private List<OrderDetail> orderDetails;
+		
+		/**
+		 * poa,poi 的存放地址
+		 */
+		private List<Proof> proofs;
+		
 		public String getSalutation() {
 			return salutation;
 		}
@@ -138,6 +145,22 @@ public class HW0040Response extends YDBody {
 
 		public void setAnniversaryDate(String anniversaryDate) {
 			this.anniversaryDate = anniversaryDate;
+		}
+
+		public List<OrderDetail> getOrderDetails() {
+			return orderDetails;
+		}
+
+		public void setOrderDetails(List<OrderDetail> orderDetails) {
+			this.orderDetails = orderDetails;
+		}
+
+		public List<Proof> getProofs() {
+			return proofs;
+		}
+
+		public void setProofs(List<Proof> proofs) {
+			this.proofs = proofs;
 		}
 
 		public String getOccupation() {
@@ -295,7 +318,7 @@ public class HW0040Response extends YDBody {
 		}
 	}
 
-	public static class FamilyContactDetails {
+	public static class FamilyContactDetails extends YDBody {
 		private String firstName;
 		private String middleName;
 		private String lastName;
@@ -334,7 +357,7 @@ public class HW0040Response extends YDBody {
 		}
 	}
 
-	public static class ContactDetails {
+	public static class ContactDetails extends YDBody {
 		private String mobileNumber;
 		private String alternateContactNumberHome;
 		private String alternateContactNumberWork;
@@ -375,7 +398,7 @@ public class HW0040Response extends YDBody {
 		}
 	}
 
-	public static class PermanentAddress {
+	public static class PermanentAddress extends YDBody {
 		private String addressId;
 		private String buildingId;
 		private String addressType;
@@ -576,4 +599,398 @@ public class HW0040Response extends YDBody {
 		this.customers = customers;
 	}
 
+	public static class OrderDetail extends YDBody {
+		private BusinessInteraction businessInteraction;
+		
+		private String offerId;
+		private String offerName;
+		private String orderLineItemStatus;
+		
+		private PlanOffering planOffering;
+		
+		private Account account;
+		
+		private List<Product> products;
+
+		public List<Product> getProducts() {
+			return products;
+		}
+
+		public void setProducts(List<Product> products) {
+			this.products = products;
+		}
+
+		public BusinessInteraction getBusinessInteraction() {
+			return businessInteraction;
+		}
+
+		public void setBusinessInteraction(BusinessInteraction businessInteraction) {
+			this.businessInteraction = businessInteraction;
+		}
+
+		public String getOfferId() {
+			return offerId;
+		}
+
+		public void setOfferId(String offerId) {
+			this.offerId = offerId;
+		}
+
+		public String getOfferName() {
+			return offerName;
+		}
+
+		public void setOfferName(String offerName) {
+			this.offerName = offerName;
+		}
+
+		public String getOrderLineItemStatus() {
+			return orderLineItemStatus;
+		}
+
+		public void setOrderLineItemStatus(String orderLineItemStatus) {
+			this.orderLineItemStatus = orderLineItemStatus;
+		}
+
+		public PlanOffering getPlanOffering() {
+			return planOffering;
+		}
+
+		public void setPlanOffering(PlanOffering planOffering) {
+			this.planOffering = planOffering;
+		}
+
+		public Account getAccount() {
+			return account;
+		}
+
+		public void setAccount(Account account) {
+			this.account = account;
+		}
+	}
+	
+	public static class BusinessInteraction extends YDBody{
+		private String name;
+		
+		private String reasonId;
+		
+		private String reasonDesc;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getReasonId() {
+			return reasonId;
+		}
+
+		public void setReasonId(String reasonId) {
+			this.reasonId = reasonId;
+		}
+
+		public String getReasonDesc() {
+			return reasonDesc;
+		}
+
+		public void setReasonDesc(String reasonDesc) {
+			this.reasonDesc = reasonDesc;
+		}
+	}
+	
+	public static class PlanOffering extends YDBody {
+		private String id;
+		private String name;
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
+	
+	public static class Account extends YDBody {
+		private String subscriptionType;
+
+		private PermanentAddress billingAddress;
+		
+		public String getSubscriptionType() {
+			return subscriptionType;
+		}
+
+		public void setSubscriptionType(String subscriptionType) {
+			this.subscriptionType = subscriptionType;
+		}
+
+		public PermanentAddress getBillingAddress() {
+			return billingAddress;
+		}
+
+		public void setBillingAddress(PermanentAddress billingAddress) {
+			this.billingAddress = billingAddress;
+		}
+		
+	}
+	
+	public static class Product extends YDBody {
+		private BusinessInteraction businessInteraction; 
+		private String productId;
+		private String productName;
+		private String orderLineId;
+		private String starterKitCode;
+		private String estimatedCompletionDateTime;
+		private String installationDateTime;
+		private String isTeleverificationRequired;
+		private String callingPartyNumber;
+		private String teleVerificationStatus;
+		
+		
+		private Caf cafDetails;
+		
+
+		public BusinessInteraction getBusinessInteraction() {
+			return businessInteraction;
+		}
+
+		public void setBusinessInteraction(BusinessInteraction businessInteraction) {
+			this.businessInteraction = businessInteraction;
+		}
+
+		public String getProductId() {
+			return productId;
+		}
+
+		public void setProductId(String productId) {
+			this.productId = productId;
+		}
+
+		public String getProductName() {
+			return productName;
+		}
+
+		public void setProductName(String productName) {
+			this.productName = productName;
+		}
+
+		public String getOrderLineId() {
+			return orderLineId;
+		}
+
+		public void setOrderLineId(String orderLineId) {
+			this.orderLineId = orderLineId;
+		}
+
+		public String getStarterKitCode() {
+			return starterKitCode;
+		}
+
+		public void setStarterKitCode(String starterKitCode) {
+			this.starterKitCode = starterKitCode;
+		}
+
+		public String getEstimatedCompletionDateTime() {
+			return estimatedCompletionDateTime;
+		}
+
+		public void setEstimatedCompletionDateTime(String estimatedCompletionDateTime) {
+			this.estimatedCompletionDateTime = estimatedCompletionDateTime;
+		}
+
+		public String getInstallationDateTime() {
+			return installationDateTime;
+		}
+
+		public void setInstallationDateTime(String installationDateTime) {
+			this.installationDateTime = installationDateTime;
+		}
+
+		public String getIsTeleverificationRequired() {
+			return isTeleverificationRequired;
+		}
+
+		public void setIsTeleverificationRequired(String isTeleverificationRequired) {
+			this.isTeleverificationRequired = isTeleverificationRequired;
+		}
+
+		public String getCallingPartyNumber() {
+			return callingPartyNumber;
+		}
+
+		public void setCallingPartyNumber(String callingPartyNumber) {
+			this.callingPartyNumber = callingPartyNumber;
+		}
+
+		public String getTeleVerificationStatus() {
+			return teleVerificationStatus;
+		}
+
+		public void setTeleVerificationStatus(String teleVerificationStatus) {
+			this.teleVerificationStatus = teleVerificationStatus;
+		}
+
+		public Caf getCafDetails() {
+			return cafDetails;
+		}
+
+		public void setCafDetails(Caf cafDetails) {
+			this.cafDetails = cafDetails;
+		}
+
+	}
+	
+	public static class Caf extends YDBody {
+		private String log;
+		private String merchantCode;
+		private String posAgentCode;
+		private String posAgentSignatureDate;
+		private String customerDeclarationPlace;
+		private String customerDeclarationDate;
+		private List<Proof> proofs;
+		private List<Object> currentMobileConnections;
+		private String cafNumber;
+		private String cafURI;
+		
+		public String getLog() {
+			return log;
+		}
+		public void setLog(String log) {
+			this.log = log;
+		}
+		public String getMerchantCode() {
+			return merchantCode;
+		}
+		public void setMerchantCode(String merchantCode) {
+			this.merchantCode = merchantCode;
+		}
+		public String getPosAgentCode() {
+			return posAgentCode;
+		}
+		public void setPosAgentCode(String posAgentCode) {
+			this.posAgentCode = posAgentCode;
+		}
+		public String getPosAgentSignatureDate() {
+			return posAgentSignatureDate;
+		}
+		public void setPosAgentSignatureDate(String posAgentSignatureDate) {
+			this.posAgentSignatureDate = posAgentSignatureDate;
+		}
+		public String getCustomerDeclarationPlace() {
+			return customerDeclarationPlace;
+		}
+		public void setCustomerDeclarationPlace(String customerDeclarationPlace) {
+			this.customerDeclarationPlace = customerDeclarationPlace;
+		}
+		public String getCustomerDeclarationDate() {
+			return customerDeclarationDate;
+		}
+		public void setCustomerDeclarationDate(String customerDeclarationDate) {
+			this.customerDeclarationDate = customerDeclarationDate;
+		}
+		public List<Proof> getProofs() {
+			return proofs;
+		}
+		public void setProofs(List<Proof> proofs) {
+			this.proofs = proofs;
+		}
+		public List<Object> getCurrentMobileConnections() {
+			return currentMobileConnections;
+		}
+		public void setCurrentMobileConnections(List<Object> currentMobileConnections) {
+			this.currentMobileConnections = currentMobileConnections;
+		}
+		public String getCafNumber() {
+			return cafNumber;
+		}
+		public void setCafNumber(String cafNumber) {
+			this.cafNumber = cafNumber;
+		}
+		public String getCafURI() {
+			return cafURI;
+		}
+		public void setCafURI(String cafURI) {
+			this.cafURI = cafURI;
+		}
+	}
+	
+	/**
+	 * "proofIdentifier": "POA",
+        "idProofType": "Z00046",
+        "documentNumber": "89897978798798798798",
+        "dateOfIssue": "2014-07-01",
+        "placeOfIssue": "chennai",
+        "issuingAuthority": "GOV",
+        "identifierURL": "",
+        "aadhaarTransactionRefNo": ""
+	 */
+	public static class Proof extends YDBody {
+		private String proofIdentifier;
+		private String idProofType;
+		private String documentNumber;
+		private String dateOfIssue;
+		private String placeOfIssue;
+		private String issuingAuthority;
+		private String identifierURL;
+		private String aadhaarTransactionRefNo;
+		
+		public String getProofIdentifier() {
+			return proofIdentifier;
+		}
+		public void setProofIdentifier(String proofIdentifier) {
+			this.proofIdentifier = proofIdentifier;
+		}
+		public String getIdProofType() {
+			return idProofType;
+		}
+		public void setIdProofType(String idProofType) {
+			this.idProofType = idProofType;
+		}
+		public String getDocumentNumber() {
+			return documentNumber;
+		}
+		public void setDocumentNumber(String documentNumber) {
+			this.documentNumber = documentNumber;
+		}
+		public String getDateOfIssue() {
+			return dateOfIssue;
+		}
+		public void setDateOfIssue(String dateOfIssue) {
+			this.dateOfIssue = dateOfIssue;
+		}
+		public String getPlaceOfIssue() {
+			return placeOfIssue;
+		}
+		public void setPlaceOfIssue(String placeOfIssue) {
+			this.placeOfIssue = placeOfIssue;
+		}
+		public String getIssuingAuthority() {
+			return issuingAuthority;
+		}
+		public void setIssuingAuthority(String issuingAuthority) {
+			this.issuingAuthority = issuingAuthority;
+		}
+		public String getIdentifierURL() {
+			return identifierURL;
+		}
+		public void setIdentifierURL(String identifierURL) {
+			this.identifierURL = identifierURL;
+		}
+		public String getAadhaarTransactionRefNo() {
+			return aadhaarTransactionRefNo;
+		}
+		public void setAadhaarTransactionRefNo(String aadhaarTransactionRefNo) {
+			this.aadhaarTransactionRefNo = aadhaarTransactionRefNo;
+		}
+		
+	}
+	
 }

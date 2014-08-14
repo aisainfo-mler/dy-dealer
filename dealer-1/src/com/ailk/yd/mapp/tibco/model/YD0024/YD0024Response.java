@@ -31,6 +31,7 @@ public class YD0024Response implements TibcoRequest {
 	private Payment paymentDetails;
 	private List<Address> installationAddress;
 	private Caf cafDetails; 
+	private List<OrderDetail> orderDetails;
 	
 	public static class Customer{
 		private String customerCategory;
@@ -38,7 +39,7 @@ public class YD0024Response implements TibcoRequest {
 		private String firstName;
 		private String middleName;
 		private String lastName;
-		private familyContact familyContactDetails;
+		private FamilyContact familyContactDetails;
 		private String dateOfBirth;
 		private String gender;
 		private String nationality;
@@ -95,10 +96,10 @@ public class YD0024Response implements TibcoRequest {
 		public void setLastName(String lastName) {
 			this.lastName = lastName;
 		}
-		public familyContact getFamilyContactDetails() {
+		public FamilyContact getFamilyContactDetails() {
 			return familyContactDetails;
 		}
-		public void setFamilyContactDetails(familyContact familyContactDetails) {
+		public void setFamilyContactDetails(FamilyContact familyContactDetails) {
 			this.familyContactDetails = familyContactDetails;
 		}
 		public String getDateOfBirth() {
@@ -237,7 +238,7 @@ public class YD0024Response implements TibcoRequest {
 	}
 	
 	
-	public static class familyContact{
+	public static class FamilyContact{
 		private String firstName;
 		private String middleName;
 		private String lastName;
@@ -1177,6 +1178,12 @@ public class YD0024Response implements TibcoRequest {
 	public void setCafDetails(Caf cafDetails) {
 		this.cafDetails = cafDetails;
 	}
-	
-	
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 }

@@ -51,8 +51,11 @@ public class TibcoHandler implements ApplicationContextAware,ExternalRequest<Obj
 
 	public String sendMsg(String url, Object json , Map<String,?> parameters,String token,boolean isPost) throws Exception
 	{
-		System.out.println("支撑平台Json请求："+json);
-		System.out.println("支撑平台Json请求："+parameters);
+		System.out.println("支撑平台Json请求url："+url);
+//		url = "https://api-st.ril.com:8443/v4/customers/orders/?referenceNumber=NO000000LO0N&returnCompleteOrder=1";
+		System.out.println("支撑平台Json请求json："+json);
+		System.out.println("支撑平台Json请求parameters："+parameters);
+//		parameters = null;
 		
 //		String url = getTibcoUrl(bizcode);
 		
