@@ -87,29 +87,23 @@ public class FileUploadService {
 	}
 	
 	
-	public String saveFileUpload(List<FileUpload> list,Long appId){
-		try{
-			if(list == null || list.size() == 0){
-				return ConvertUtils.converReturnJson(false,"缺少保存对象 ！");
-			}
-			String result = "";
-			for(int i = 0; i < list.size(); i++){
-				if(list.get(i) != null){
-					list.get(i).setCreateDate(new Date());
-					list.get(i).setFileMappingId(appId);
-					fileUploadDao.save(list.get(i));
-					result += list.get(i).getFileId();
-					if( i != list.size()){
-						result += ",";
-					}
+	public String saveFileUpload(List<FileUpload> list,Long appId)throws Exception{
+		if(list == null || list.size() == 0){
+			return ConvertUtils.converReturnJson(false,"缺少保存对象 ！");
+		}
+		String result = "";
+		for(int i = 0; i < list.size(); i++){
+			if(list.get(i) != null){
+				list.get(i).setCreateDate(new Date());
+				list.get(i).setFileMappingId(appId);
+				fileUploadDao.save(list.get(i));
+				result += list.get(i).getFileId();
+				if( i != list.size()){
+					result += ",";
 				}
 			}
-			return ConvertUtils.converReturnJson(true,result);
-		}catch (Exception e) {
-			e.printStackTrace();
-			return ConvertUtils.converReturnJson(false, e.getMessage());
 		}
-		
+		return ConvertUtils.converReturnJson(true,result);
 	}
 	
 	/**

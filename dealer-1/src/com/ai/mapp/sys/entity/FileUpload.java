@@ -19,11 +19,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 
 /**
  * @author zwj
  * @version 创建时间：2012-4-5 下午06:54:29
- * 类说明
+ * 类说明  上传的文件
  */
 
 @Entity
@@ -186,6 +189,7 @@ public class FileUpload implements java.io.Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY,targetEntity=FileUpload.class)
 	@JoinColumn(name="origId",referencedColumnName="file_Id",nullable=true)
+	@NotFound(action=NotFoundAction.IGNORE)
 	public FileUpload getParent() {
 		return parent;
 	}

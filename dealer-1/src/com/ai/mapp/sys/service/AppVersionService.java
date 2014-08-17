@@ -17,7 +17,7 @@ import com.ai.mapp.sys.entity.AppVersion;
 @Service
 @Transactional
 public class AppVersionService {
-	public final Log log = LogFactory.getLog(AppVersionService.class);
+public final Log log = LogFactory.getLog(AppVersionService.class);
 	
 	@Autowired
 	private AppVersionDao appVersionDao;

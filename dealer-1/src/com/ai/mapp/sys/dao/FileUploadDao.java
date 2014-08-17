@@ -23,7 +23,7 @@ import com.ai.mapp.sys.entity.FileUpload;
  * 类�???
  */
 
-@Repository("mappFileUploadDao")
+@Repository("fileUploadDao")
 public class FileUploadDao extends HibernateDao<FileUpload, Serializable>{
 
 	@Override
