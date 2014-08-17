@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.ProductSpecMapping;
@@ -83,25 +84,18 @@ public class HW0010Action extends
 			yd0002_req.setBusinessChannelInteraction(new YD0002Request.Channel(
 					caf.getOrder().getChannel()));
 			yd0002_req.setNumberList(new ArrayList<YD0002Request.SvcNumber>(0));
-			yd0002_req.getNumberList().add(
-					new YD0002Request.SvcNumber("TC", caf.getOrder().getMdn(),
-							"MSISDN"));
-			yd0002_req.setServiceProviderEmployee(new YD0002Request.Order(caf
-					.getOrder().getOrn()));
+			yd0002_req.getNumberList().add(new YD0002Request.SvcNumber("TC", caf.getOrder().getMdn(),"MSISDN"));
+			yd0002_req.setServiceProviderEmployee(new YD0002Request.Order(caf.getOrder().getOrn()));
 
 			YD0002Response yd0002_rsp = yd0002.post2Tibco(
 					PO2VOUtils.replaceNull(yd0002_req), null);
 
 			String number_orn = yd0002_rsp.getServiceProviderEmployee();
 			String msg = yd0002_rsp.getMessage();
-			String state = yd0002_rsp.getResponse() == null ? null : yd0002_rsp
-					.getResponse().getInteractionStatus();
+			String state = yd0002_rsp.getResponse() == null ? null : yd0002_rsp.getResponse().getInteractionStatus();
 
-			if (TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state)
-					|| (StringUtils.isEmpty(number_orn) == false && caf
-							.getOrder().getOrn().equals(number_orn) == false))
-				throw new Exception("Number has locked by order: "
-						+ number_orn + "," + msg);
+			if (TibcoConstant.SELECT_SPEC_NUM_STATUS_ERR.equals(state)|| (StringUtils.isEmpty(number_orn) == false && caf.getOrder().getOrn().equals(number_orn) == false))
+				throw new Exception("Number has locked by order: "+ number_orn + "," + msg);
 		}
 
 		AgentOrder order = new AgentOrder();
@@ -110,55 +104,42 @@ public class HW0010Action extends
 		order.setPackageFee(0L);//
 		order.setSim(caf.getOrder().getSim());
 		order.setSvn(caf.getOrder().getMdn());
-		order.setNumberFee(caf.getOrder().getMdnFee() == null ? 0L : caf
-				.getOrder().getMdnFee().longValue());
-		if (caf.getOrder().getImei() != null
-				&& caf.getOrder().getImei().isEmpty() == false)
+		order.setNumberFee(caf.getOrder().getMdnFee() == null ? 0L : ConvertUtils.getMoneyLong(caf.getOrder().getMdnFee()+""));
+		if (caf.getOrder().getImei() != null&& caf.getOrder().getImei().isEmpty() == false)
 			order.setSim(mapper.writeValueAsString(caf.getOrder().getImei()));
 		// order.setImsi(req.getImsi());
-		order.setProduct(caf.getOrder().getPid() == null ? null : new Product(
-				caf.getOrder().getPid()));
-		order.setPayMode(caf.getPayInfo() == null ? null : caf.getPayInfo()
-				.getModeOfPayment());
-		order.setBankSerial(caf.getPayInfo() == null ? null : caf.getPayInfo()
-				.getReceiptNumber());
-		order.setBankCode(caf.getPayInfo() == null ? null : caf.getPayInfo()
-				.getBankName());
+		order.setProduct(caf.getOrder().getPid() == null ? null : new Product(caf.getOrder().getPid()));
+		order.setPayMode(caf.getPayInfo() == null ? null : caf.getPayInfo().getModeOfPayment());
+		order.setBankSerial(caf.getPayInfo() == null ? null : caf.getPayInfo().getReceiptNumber());
+		order.setBankCode(caf.getPayInfo() == null ? null : caf.getPayInfo().getBankName());
 		order.setCafInfo(mapper.writeValueAsString(request));
 		order.setTibcoOrderNumber(caf.getOrder().getOrn());
 
 		// 算费接口
 		BigDecimal totalFee = BigDecimal.ZERO;
-		BigDecimal numberFee = caf.getOrder().getMdnFee() == null ? BigDecimal.ZERO
-				: caf.getOrder().getMdnFee();
+		BigDecimal numberFee = caf.getOrder().getMdnFee() == null ? BigDecimal.ZERO: caf.getOrder().getMdnFee();
 		// xuzhou获取identifiers中各个套餐的price
 		BigDecimal totalprce = BigDecimal.ZERO;
-		Map<String, Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>>> identifier = caf
-				.getOrder().getIdentifiers();
-		for (Map.Entry<String, Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>>> entry : identifier
-				.entrySet()) {
+		Map<String, Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>>> identifier = caf.getOrder().getIdentifiers();
+		for (Map.Entry<String, Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>>> entry : identifier.entrySet()) {
 			Object key = entry.getKey();
-			Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>> value = entry
-					.getValue();
+			Map<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>> value = entry.getValue();
 			System.out.println(key + "\tkey");
 			System.out.println(value + "\tvalue");
 			if(value==null){
 				continue;
 			}
-			for (Map.Entry<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>> entrys : value
-					.entrySet()) {
+			for (Map.Entry<String, List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier>> entrys : value.entrySet()) {
 				Object key2 = entrys.getKey();
 				System.out.println(key2 + "\tkey2");
-				List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier> value2 = entrys
-						.getValue();
+				List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier> value2 = entrys.getValue();
 				System.out.println(value2 + "\tvalue2");
 				if(value2==null){
 					continue;
 				}
 				for (int i = 0; i < value2.size(); i++) {
 					Identifier itf = value2.get(i);
-					BigDecimal prc = itf.getPrice() == null ? BigDecimal.ZERO
-							: itf.getPrice();
+					BigDecimal prc = itf.getPrice() == null ? BigDecimal.ZERO: itf.getPrice();
 					System.out.println(prc + "\t prc");
 				
 
@@ -181,12 +162,10 @@ public class HW0010Action extends
 		if (pcodes != null && pcodes.isEmpty() == false) {
 			Product condition = new Product();
 			condition.setBssReangeIds(pcodes);
-			Collection<Product> products = productService
-					.listAllProducts(condition);
+			Collection<Product> products = productService.listAllProducts(condition);
 			if (products != null && products.isEmpty() == false) {
 				for (Product p : products)
-					productFee = productFee
-							.add(productService.calProductFee(p));
+					productFee = productFee.add(productService.calProductFee(p));
 			}
 		}
 
@@ -196,16 +175,14 @@ public class HW0010Action extends
 		feeMap.put("resource", getResourceFee(caf.getOrder().getOfferId()));
 		feeMap.put("plan", BigDecimal.ZERO);
 		if (StringUtils.isBlank(caf.getOrder().getPlanOffering()) == false) {
-			Product plan = productService.getProductByCode(caf.getOrder()
-					.getPlanOffering());
+			Product plan = productService.getProductByCode(caf.getOrder().getPlanOffering());
 			if (plan != null)
-				feeMap.put("plan", plan.getPrice() == null ? BigDecimal.ZERO
-						: BigDecimal.valueOf(plan.getPrice()));
+				feeMap.put("plan", plan.getPrice() == null ? BigDecimal.ZERO: BigDecimal.valueOf(plan.getPrice()));
 		}
 
-		order.setNumberFee(numberFee.longValue());
-		order.setPackageFee(productFee.longValue());
-		order.setSaleFee(totalFee.add(productFee).add(numberFee).longValue());
+		order.setNumberFee(ConvertUtils.getMoneyLong(numberFee.toString()));
+		order.setPackageFee(ConvertUtils.getMoneyLong(productFee.toString()));
+		order.setSaleFee(ConvertUtils.getMoneyLong(totalFee.add(productFee).add(numberFee).toString()));
 		order.setFeeDetail(mapper.writeValueAsString(feeMap));
 		order = agentOrderService.createNewOrderByAgent(order, creator);
 		this.response.setOrderCode(order.getOrderCode());
@@ -224,23 +201,16 @@ public class HW0010Action extends
 
 		/** 设置resourceSpec **/
 		if (StringUtils.isEmpty(p.getProductSpecList()) == false) {
-			ProductSpecMapping productSpecMapping = DealerDataService.mapper
-					.readValue(p.getProductSpecList(), ProductSpecMapping.class);
-			if (productSpecMapping != null
-					&& productSpecMapping.getProductSpecs() != null
-					&& productSpecMapping.getProductSpecs().isEmpty() == false) {
-				for (ProductSpecMapping.ProductSpec productSpec : productSpecMapping
-						.getProductSpecs()) {
-					if (productSpec.getResourceSpecList() == null
-							|| productSpec.getResourceSpecList().isEmpty())
+			ProductSpecMapping productSpecMapping = DealerDataService.mapper.readValue(p.getProductSpecList(), ProductSpecMapping.class);
+			if (productSpecMapping != null&& productSpecMapping.getProductSpecs() != null&& productSpecMapping.getProductSpecs().isEmpty() == false) {
+				for (ProductSpecMapping.ProductSpec productSpec : productSpecMapping.getProductSpecs()) {
+					if (productSpec.getResourceSpecList() == null|| productSpec.getResourceSpecList().isEmpty())
 						continue;
 
 					for (ProductSpecMapping.ResourceSpec resourceSpec : productSpec
 							.getResourceSpecList()) {
-						if (StringUtils.isBlank(resourceSpec
-								.getComponentPrice()) == false) {
-							resourceFee.add(new BigDecimal(resourceSpec
-									.getComponentPrice()));
+						if (StringUtils.isBlank(resourceSpec.getComponentPrice()) == false) {
+							resourceFee.add(new BigDecimal(resourceSpec.getComponentPrice()));
 						}
 					}
 				}
