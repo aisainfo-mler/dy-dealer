@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.base.util.DateUtils;
 import com.ai.mapp.bss.util.BSSConstantParam;
 import com.ai.mapp.sys.entity.Commission;
@@ -77,8 +78,7 @@ public class HW0023Action extends
 
 			for (Commission tmp : result) {
 				HW0023Response.Order order = new HW0023Response.Order();
-				order.setIncome(tmp.getPay() == null ? "0" : tmp.getPay()
-						.toString());
+				order.setIncome(tmp.getPay() == null ? "0" : ConvertUtils.getMoneyString(tmp.getPay()));
 				order.setSaleFee("");
 				order.setOrderCode(tmp.getAgentOrder().getOrderCode());
 				order.setOrderType(tmp.getAgentOrder().getOrderType());

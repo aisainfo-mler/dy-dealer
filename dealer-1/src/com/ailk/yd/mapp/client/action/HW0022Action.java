@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.ai.mapp.base.StringUtil;
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.base.util.DateUtils;
 import com.ai.mapp.sys.entity.CommonBean;
 import com.ai.mapp.sys.entity.User;
@@ -72,7 +73,7 @@ public class HW0022Action extends
 				orderType.setText(commissionService.getOrderTypeByChargeType(bean.getStr1(), SYSConstant.LANGUAGE_ENGLISH,false));
 				orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+SYSConstant.LANGUAGE_ENGLISH);
 				
-				orderType.setIncome(bean.getStr2());
+				orderType.setIncome(ConvertUtils.getMoneyString(Long.valueOf(bean.getStr2())));
 			//	orderType.setProductType(bean.getStr3() == null ? "": SYSConstant.payTypes.get(bean.getStr3())+ param.getParameter(BSSConstantParam.LANGUAGE));
 				orderTypeList.add(orderType);
 			}

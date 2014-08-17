@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.User;
@@ -76,11 +77,11 @@ public class HW0009Action extends AbstractYDBaseActionHandler<HW0009Request, HW0
 			
 			order.setCreator(new User(userCode));
 			order.setPayMode(req.getPayMethodId());
-			order.setPackageFee(Long.valueOf(req.getPayedAmount()));
+			order.setPackageFee(ConvertUtils.getMoneyLong(req.getPayedAmount()));
 			order.setSvn(req.getMdn());
 			order.setOptType(req.getRechargeTypeId());
 			order.setTibcoOrderNumber(req.getOrnNum());
-			order.setSaleFee(Long.parseLong(req.getPayedAmount()));
+			order.setSaleFee(ConvertUtils.getMoneyLong(req.getPayedAmount()));
 			if(this.request.getAccountLevel() != null){
 				order.setAccountLevel(this.request.getAccountLevel()?"1":"0");//true代表子帐户,本账户是false
 			}
