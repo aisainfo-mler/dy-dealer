@@ -74,10 +74,10 @@ public class DESUtils {
 	 */
 	public final static String decrypt(String hex,String pwd) {
 		try {
-			System.out.println("解密前："+hex);
+//			System.out.println("解密前："+hex);
 			String data = new String(decrypt(hex2byte(hex.getBytes("UTF-8")), pwd.getBytes()), "UTF-8");
 //			String data = new String(decrypt(decryptBASE64(hex), pwd.getBytes()), "UTF-8");
-			System.out.println("解密后："+data);
+//			System.out.println("解密后："+data);
 			return data;
 		} catch (Exception e) {
 			e.printStackTrace();

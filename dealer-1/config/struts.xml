@@ -122,6 +122,12 @@
     	</action>
 	</package>
 	
+	<package name="console-package" namespace="/console" extends="nologin-default">  
+   	 	<action name="*" method="{1}" class="com.ai.mapp.file.action.FileUploadAction">
+   	 	 	<result name="success" type="redirect">${url}</result>
+    	</action>
+    </package>
+	
 	<include file="order-struts.xml"></include>
 	<include file="commi-struts.xml"></include>
 </struts>

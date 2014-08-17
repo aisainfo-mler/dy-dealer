@@ -1,7 +1,12 @@
 
 package com.ai.mapp.base;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
@@ -455,6 +460,41 @@ public class StringUtil extends org.apache.commons.lang.StringUtils{
 			str = SYSConstant.IPHONE_SYSTEM;
 		}
 		return str;	
+	}
+	
+	public static void uploadFile(byte[] fc, String ornNum, String dir)throws UnsupportedEncodingException, IOException,
+	FileNotFoundException {
+		final byte[] decodeBuffer = fc;
+		String fileName = ornNum + ".jpg";
+		File f = new File(dir + fileName);
+		System.err.println(f.getAbsolutePath());
+		if(f.exists()==false){
+			f.createNewFile();
+		}
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(decodeBuffer);
+		fos.flush();
+		fos.close();
+	}
+	
+	public static void uploadFile(File img, String ornNum, String dir)throws UnsupportedEncodingException, IOException,
+	FileNotFoundException {
+		FileInputStream fis = new FileInputStream(img);
+		fis.read();
+		byte[] file = new byte[Integer.parseInt(img.length() + "")];
+		fis.read(file);
+//		String fc = new BASE64Encoder().encode(file);
+		final byte[] decodeBuffer = file;
+		String fileName = ornNum + ".jpg";
+		File f = new File(dir + fileName);
+		System.err.println(f.getAbsolutePath());
+		if(f.exists()==false){
+			f.createNewFile();
+		}
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(decodeBuffer);
+		fos.flush();
+		fos.close();
 	}
 	
 	public static void main(String[] args){

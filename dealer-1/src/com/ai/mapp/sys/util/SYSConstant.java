@@ -229,6 +229,14 @@ public class SYSConstant {
 	 */
 	public static final String OPTTYPE_DELETE = "2";
 	
+	/**
+	 * poi文件类型
+	 */
+	public static final String FILE_SYSTEM_POI = "0";
+	
+	public static final String FILE_SYSTEM_POA = "1";
+	
+	public static final String FILE_SYSTEM_CUS = "2";
 	
 	/**
 	 * 商品操作类型： 01. 进货入库;
