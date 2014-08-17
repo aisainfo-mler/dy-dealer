@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.sys.entity.AgentOrder;
 import com.ai.mapp.sys.entity.Product;
 import com.ai.mapp.sys.entity.User;
@@ -92,7 +93,7 @@ public class HW0025Action extends
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		order.setPackageFee(packageFee);
+		order.setPackageFee(ConvertUtils.getMoneyLong(packageFee.toString()));
 		order.setSvn(req.getMdn());
 //		Product p = new Product();
 		
@@ -101,10 +102,9 @@ public class HW0025Action extends
 		if(pro!=null){
 			order.setProduct(pro);
 		}
-//		order.setProduct(req.getProductId()==null ? null
-//				: new Product(Long.valueOf(req.getProductId())));
+//		order.setProduct(req.getProductId()==null ? null: new Product(Long.valueOf(req.getProductId())));
 //		order.setProduct(p);
-		order.setSaleFee(packageFee);
+		order.setSaleFee(ConvertUtils.getMoneyLong(packageFee.toString()));
 		order.setOptType(SYSConstant.AGENT_ORDER_TYPE_RECHARGE);
 //		order.setFeeDetail(feeDtl);
 		this.agentOrderService.createRechargeOrderByAgent(order);

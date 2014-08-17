@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.ai.mapp.base.util.ConvertUtils;
 import com.ai.mapp.sys.entity.AccountInfo;
 import com.ai.mapp.sys.entity.User;
 import com.ai.mapp.sys.service.UserService;
@@ -39,7 +40,7 @@ public class HW0039Action extends
 		}
 		Long amount = accounts.get(0).getAmount();
 		this.response=new HW0039Response();
-		this.response.setAmount(amount.toString());
+		this.response.setAmount(ConvertUtils.getMoneyString(amount));
 	}
 
 }
