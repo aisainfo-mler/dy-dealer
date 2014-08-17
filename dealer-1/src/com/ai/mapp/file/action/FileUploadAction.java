@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,12 @@ import com.ai.mapp.sys.entity.FileUpload;
 //import com.ai.mapp.sys.entity.FileUpload;
 import com.ai.mapp.sys.service.AppVersionService;
 import com.ai.mapp.sys.service.SysPropService;
+import com.ailk.butterfly.core.exception.BusinessException;
+import com.ailk.butterfly.core.security.IUserinfo;
+import com.ailk.butterfly.mapp.core.ErrorCodeDefine;
+import com.ailk.butterfly.mapp.core.MappConstant;
+import com.ailk.butterfly.mapp.core.MappContext;
+import com.ailk.yd.mapp.model.UserInfo;
 import com.ailk.yd.mapp.tibco.action.YD0023Action;
 import com.ailk.yd.mapp.tibco.model.YD0023.YD0023Request;
 import com.ailk.yd.mapp.tibco.model.YD0023.YD0023Response;
@@ -71,21 +78,15 @@ public class FileUploadAction extends BaseAction {
 	 */
 	private String downAppFileItemKey;
 	
-	
-	private List<String> tibcoUrls;
-	
 	private String url;
 	
-	private byte[] file1;
-	private String file1Name;
+	private File filePoa;
 	
-	private byte[] file2;
-	private String file2Name;
+	private File filePoi;
 	
-	private byte[] file3;
-	private String file3Name;
+	private File fileCus;
 	
-	private byte[] file;
+	private byte file;
 	
 
 	public String getCreator() {
@@ -98,45 +99,62 @@ public class FileUploadAction extends BaseAction {
 
 
 	public String sendToTibco()throws Exception{
-//		if(StringUtils.isEmpty(creator)){
-//			throw new Exception("您无权上传文件");
-//		}
-		InputStream in = request.getInputStream();
-		Map<String, Object> map = request.getParameterMap();
-		Set<String> key = map.keySet();
-        for (Iterator<String> it = key.iterator(); it.hasNext();) {
-            String s = (String) it.next();
-            System.out.println(s + ":" + map.get(s));
-        }
+		if(request.getSession().getAttribute(MappConstant.MAPP_SESSION_USER) == null){
+			IUserinfo user = (IUserinfo)request.getSession().getAttribute(MappConstant.MAPP_SESSION_USER);
+			throw new BusinessException(ErrorCodeDefine.NO_USER_INFO);
+		}
 		
-//		if(imgFile == null || imgFile.size() == 0){
-//			throw new Exception("未选择上传的文件");
-//		}
 		
-//		List<FileUpload> list = new ArrayList<FileUpload>();
-//		for(File img:imgFile){
-//			FileInputStream fis = new FileInputStream(img);
-//			fis.read();
-//			byte[] file = new byte[Integer.parseInt(img.length() + "")];
-//			fis.read(file);
-//			String fc = new BASE64Encoder().encode(file);
-//			YD0023Request yd23 = new YD0023Request(fc);
-//			YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
-//			tibcoUrls.add(g2t.getUrl());
-//		}
+		Map<String, String> tibcoUrls = new HashMap<String, String>();
+		
+		FileInputStream fis = null;
+		if(filePoa!= null){
+			fis = new FileInputStream(filePoa);
+			byte[] file = new byte[Integer.parseInt(filePoa.length() + "")];
+			fis.read(file);
+			String fc = new BASE64Encoder().encode(file);
+			YD0023Request yd23 = new YD0023Request(fc);
+			YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
+			tibcoUrls.put("POA",g2t.getUrl());
+			fis.close();
+		}
+		
+		if(filePoi != null){
+			fis = new FileInputStream(filePoi);
+			byte[] file = new byte[Integer.parseInt(filePoi.length() + "")];
+			fis.read(file);
+			String fc = new BASE64Encoder().encode(file);
+			YD0023Request yd23 = new YD0023Request(fc);
+			YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
+			tibcoUrls.put("POI",g2t.getUrl());
+			fis.close();
+		}
+		
+		if(fileCus != null){
+			fis = new FileInputStream(fileCus);
+			byte[] file = new byte[Integer.parseInt(fileCus.length() + "")];
+			fis.read(file);
+			String fc = new BASE64Encoder().encode(file);
+			YD0023Request yd23 = new YD0023Request(fc);
+			YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
+			tibcoUrls.put("CUS",g2t.getUrl());
+			fis.close();
+		}
         
-        final String webinf = this.getClass().getResource("/").getPath();
-        String filePath = "/PoaPoi/";
-		final String dir = webinf+filePath;
-		final File dirFile = new File(dir);
-		if(dirFile.exists()==false)
-			dirFile.mkdir();
-//		StringUtil.uploadFile(file, "12312312", dir);
-		StringUtil.uploadFile(file1, "12312312", dir);
+//        final String webinf = this.getClass().getResource("/").getPath();
+//        String filePath = "/PoaPoi/";
+//		final String dir = webinf+filePath;
+//		final File dirFile = new File(dir);
+//		if(dirFile.exists()==false)
+//			dirFile.mkdir();
+////		StringUtil.uploadFile(file, "12312312", dir);
+//		StringUtil.uploadFile(filePoa, "12312312", dir);
+//		jsonResult = mapper.writeValueAsString("uljlkjljlkjlk");
 		jsonResult = mapper.writeValueAsString(tibcoUrls);
 		return "jsonResult";
     }
 
+	
 	public ObjectMapper getMapper() {
 		return mapper;
 	}
@@ -217,14 +235,6 @@ public class FileUploadAction extends BaseAction {
 		this.downAppFileItemKey = downAppFileItemKey;
 	}
 
-	public List<String> getTibcoUrls() {
-		return tibcoUrls;
-	}
-
-	public void setTibcoUrls(List<String> tibcoUrls) {
-		this.tibcoUrls = tibcoUrls;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -237,60 +247,58 @@ public class FileUploadAction extends BaseAction {
 		return log;
 	}
 
-	public byte[] getFile1() {
-		return file1;
+	public File getFilePoa() {
+		return filePoa;
 	}
 
-	public void setFile1(byte[] file1) {
-		this.file1 = file1;
+	public void setFilePoa(File filePoa) {
+		this.filePoa = filePoa;
 	}
 
-	public String getFile1Name() {
-		return file1Name;
+	public File getFilePoi() {
+		return filePoi;
 	}
 
-	public void setFile1Name(String file1Name) {
-		this.file1Name = file1Name;
+	public void setFilePoi(File filePoi) {
+		this.filePoi = filePoi;
 	}
 
-	public byte[] getFile2() {
-		return file2;
+	public File getFileCus() {
+		return fileCus;
 	}
 
-	public void setFile2(byte[] file2) {
-		this.file2 = file2;
+	public void setFileCus(File fileCus) {
+		this.fileCus = fileCus;
 	}
 
-	public String getFile2Name() {
-		return file2Name;
-	}
-
-	public void setFile2Name(String file2Name) {
-		this.file2Name = file2Name;
-	}
-
-	public byte[] getFile3() {
-		return file3;
-	}
-
-	public void setFile3(byte[] file3) {
-		this.file3 = file3;
-	}
-
-	public String getFile3Name() {
-		return file3Name;
-	}
-
-	public void setFile3Name(String file3Name) {
-		this.file3Name = file3Name;
-	}
-
-	public byte[] getFile() {
+	public byte getFile() {
 		return file;
 	}
 
-	public void setFile(byte[] file) {
+	public void setFile(byte file) {
 		this.file = file;
+	}
+	
+	private void uploadFile(File img, String ornNum, String dir)throws UnsupportedEncodingException, IOException,
+	FileNotFoundException {
+		FileInputStream fis = new FileInputStream(img);
+		byte[] buffer = new byte[Integer.parseInt(img.length() + "")];
+		String fileName = ornNum + ".jpg";
+		File f = new File(dir + fileName);
+		System.err.println(f.getAbsolutePath());
+		if(f.exists()==false){
+			f.createNewFile();
+		}
+		int length = 0;  
+		//读取myFile文件输出到toFile文件中  
+		FileOutputStream fos = new FileOutputStream(f);
+        while ((length = fis.read(buffer)) > 0) {  
+        	fos.write(buffer, 0, length);  
+        }  
+		
+		fos.flush();
+		fos.close();
+		fis.close();
 	}
 
 }

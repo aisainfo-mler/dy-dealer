@@ -80,7 +80,7 @@ public class HW0012Action extends
 
 		if (StringUtils.equals(SYSConstant.AGENT_ORDER_TYPE_NEW,
 				ao.getOrderType())) {
-			// 心开户订单
+			// 新开户订单
 			if (StringUtils.isBlank(ao.getCafInfo()))
 				throw new Exception("caf information not found");
 			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(),
@@ -193,6 +193,7 @@ public class HW0012Action extends
 				hw_customer.getLastName() == null ? "" : hw_customer
 						.getLastName());
 
+		req.getCustomerDetails().setCustomerPictureURL(hw_customer.getCustomerPictureURL() ==  null ? "": hw_customer.getCustomerPictureURL());
 		/******** FamilyContact 设置 ***********/
 		req.getCustomerDetails().setFamilyContactDetails(new FamilyContact());
 		req.getCustomerDetails()
@@ -901,7 +902,7 @@ public class HW0012Action extends
 							YD0010Request.Device device = new YD0010Request.Device();
 							device.setBoqType(resourceSpec.getType() == null ? "": resourceSpec.getType());
 							device.setBusinessInteraction(new NameObject("ADD"));
-							device.setProductId(resourceSpec	.getResourceSpecificationId() == null ? "": resourceSpec.getResourceSpecificationId());
+							device.setProductId(resourceSpec.getResourceSpecificationId() == null ? "": resourceSpec.getResourceSpecificationId());
 							//xuzhou start
 							List<com.ailk.yd.mapp.client.model.HW0010Request.Identifier> identifierLists= identifierMap.get("3").get(resourceSpec.getResourceSpecificationId());
 							List<YD0010Request.NameAndValueObject> listNavoIdentifier  = new ArrayList<YD0010Request.NameAndValueObject>(0);

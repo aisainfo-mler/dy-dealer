@@ -480,21 +480,23 @@ public class StringUtil extends org.apache.commons.lang.StringUtils{
 	public static void uploadFile(File img, String ornNum, String dir)throws UnsupportedEncodingException, IOException,
 	FileNotFoundException {
 		FileInputStream fis = new FileInputStream(img);
-		fis.read();
-		byte[] file = new byte[Integer.parseInt(img.length() + "")];
-		fis.read(file);
-//		String fc = new BASE64Encoder().encode(file);
-		final byte[] decodeBuffer = file;
+		byte[] buffer = new byte[Integer.parseInt(img.length() + "")];
 		String fileName = ornNum + ".jpg";
 		File f = new File(dir + fileName);
 		System.err.println(f.getAbsolutePath());
 		if(f.exists()==false){
 			f.createNewFile();
 		}
+		int length = 0;  
+		//读取myFile文件输出到toFile文件中  
 		FileOutputStream fos = new FileOutputStream(f);
-		fos.write(decodeBuffer);
+        while ((length = fis.read(buffer)) > 0) {  
+        	fos.write(buffer, 0, length);  
+        }  
+		
 		fos.flush();
 		fos.close();
+		fis.close();
 	}
 	
 	public static void main(String[] args){
