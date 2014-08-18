@@ -51,11 +51,7 @@ public class HW0009Action extends AbstractYDBaseActionHandler<HW0009Request, HW0
 		/** 预存池充值 **/
 		if("1".equals(req.getRechargeTypeId()))
 		{
-			accountInfoService.chargeAccount(
-					userCode,
-					(req.getPayedAmount() == null ? 0 : Long.valueOf(req.getPayedAmount())), 
-					req.getPayMethodId(), 
-					req.getOrnNum());
+			accountInfoService.chargeAccount(userCode,(req.getPayedAmount() == null ? 0 : Long.valueOf(req.getPayedAmount())), req.getPayMethodId(), req.getOrnNum());
 		}
 		else
 		{

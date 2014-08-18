@@ -68,27 +68,22 @@ public class HW0012Action extends
 
 	@Override
 	protected void doAction() throws Exception {
-		// IUserinfo ui =
-		// (IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
+		// IUserinfo ui =(IUserinfo)MappContext.getAttribute(MappContext.MAPPCONTEXT_USER);
 		// User creator = userService.loadUserByUserCode(ui.getUserName());
-		AgentOrder ao = agentOrderService.loadAgentOrderByOrderCode(request
-				.getOrderCode());
+		AgentOrder ao = agentOrderService.loadAgentOrderByOrderCode(request.getOrderCode());
 		if (ao == null)
 			throw new Exception(request.getOrderCode() + ": not found");
 
 		Map<String, String> resourceMap = new HashMap<String, String>(0);
 
-		if (StringUtils.equals(SYSConstant.AGENT_ORDER_TYPE_NEW,
-				ao.getOrderType())) {
+		if (StringUtils.equals(SYSConstant.AGENT_ORDER_TYPE_NEW,ao.getOrderType())) {
 			// 新开户订单
 			if (StringUtils.isBlank(ao.getCafInfo()))
 				throw new Exception("caf information not found");
-			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(),
-					HW0010Request.class);
+			HW0010Request hw0010Request = mapper.readValue(ao.getCafInfo(),HW0010Request.class);
 			YD0010Request yd0010Request = convertByHW0010(hw0010Request);
 			 
-			YD0010Response yd0010Response = yd0010.post2Tibco(
-					PO2VOUtils.replaceNull(yd0010Request), null);
+			YD0010Response yd0010Response = yd0010.post2Tibco(PO2VOUtils.replaceNull(yd0010Request), null);
 			/**
 			 * 如果成功，设置订单上tibco发送成功的标记位
 			 */

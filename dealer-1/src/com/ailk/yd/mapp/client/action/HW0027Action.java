@@ -84,8 +84,8 @@ public class HW0027Action extends
 				log.setLogStatus(SYSConstant.ACCOUNT_LOG_STATUS_FAIL);
 				log.setTibcoSn("test_tibco_1111");
 				this.response.setTibcoSn("test_tibco_1111");
-				BigDecimal crush = (new BigDecimal(account.getAmount() == null ? 0 : account.getAmount())).add(this.request.getAmount());
-				account.setAmount(ConvertUtils.getMoneyLong(crush.toString()));
+				BigDecimal crush = (new BigDecimal(account.getAmount() == null ? 0 : account.getAmount())).add(new BigDecimal(ConvertUtils.getMoneyLong(request.getAmount().toString())));
+				account.setAmount(crush.longValue());
 				accountLogService.saveAccountLog(accountLog);
 				accountInfoService.saveAccountInfo(account);
 			} else {
@@ -113,7 +113,7 @@ public class HW0027Action extends
 					AccountLog log = accountLogService.loadAccountLog(logId);
 					log.setLogStatus(SYSConstant.ACCOUNT_LOG_STATUS_FAIL);
 					log.setTibcoSn(resp.getSn());
-					BigDecimal crush = (new BigDecimal(account.getAmount() == null ? 0: account.getAmount())).add(this.request.getAmount());
+					BigDecimal crush = (new BigDecimal(account.getAmount() == null ? 0: account.getAmount())).add(new BigDecimal(ConvertUtils.getMoneyLong(request.getAmount().toString())));
 					account.setAmount(crush.longValue());
 					accountInfoService.saveAccountInfo(account);
 					this.response.setTibcoSn(resp.getSn());

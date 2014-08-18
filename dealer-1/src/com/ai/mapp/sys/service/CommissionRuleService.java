@@ -240,7 +240,7 @@ public class CommissionRuleService {
 									from = Double.parseDouble(unitRection[0]);
 									to = Double.parseDouble(unitRection[1]);
 									backExpress = EvaluatorUtil.backExpress(unitRection[2]);
-									if(from <= doubleValue && doubleValue <= to){
+									if(from <= doubleValue/100 && doubleValue/100 <= to){
 										tmpR = new BigDecimal((EvaluatorUtil.getResult(backExpress, variantMap)) + "");
 										commissionValue = commissionValue.add(tmpR);
 									}
