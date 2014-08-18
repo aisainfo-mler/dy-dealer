@@ -78,7 +78,8 @@ public abstract class AbstractTibcoService<Req,Rsp> {
 //					     String key = ;    
 //					     value=map.get(key);    
 //					}
-					throw new Exception((String)(errMsg.get(it.next())));//默认取第一个错误
+					String errorKey = it.next();
+					throw new Exception((String)(errorKey + ":" + errMsg.get(errorKey)));//默认取第一个错误
 				}
 				
 			}

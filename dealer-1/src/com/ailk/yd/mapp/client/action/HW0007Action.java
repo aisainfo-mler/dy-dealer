@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
+import com.ailk.butterfly.mapp.core.ErrorCodeDefine;
 import com.ailk.butterfly.mapp.core.annotation.Action;
 import com.ailk.util.SetUtil;
 import com.ailk.yd.mapp.client.model.HW0007Request;
@@ -69,13 +70,13 @@ public class HW0007Action extends
 		yd0007Req.setPage(request.getPage());
 		yd0007Req.setSize(request.getSize());
 		YD0007Response g2t = null;
-//		try {
+		try {
 			g2t = yd0007.get2Tibco(yd0007Req.returnGetParam());
-//		} catch (Exception e) {
-//			if(e.getMessage().toLowerCase().indexOf("")){
-//				
-//			}
-//		}
+		} catch (Exception e) {
+			if(e.getMessage().toLowerCase().indexOf("findcustomerprofileexception") != -1 || e.getMessage().toLowerCase().indexOf("no data found in mdm for the given") != -1 ){
+				throw new BusinessException(ErrorCodeDefine.EXPECT_ERROR,e.getMessage());
+			}
+		}
 		
 		this.response = new HW0007Response();
 		String totalRecords = g2t.getTotalRecords();
