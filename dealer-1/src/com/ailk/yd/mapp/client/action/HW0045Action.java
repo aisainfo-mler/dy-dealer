@@ -25,7 +25,7 @@ import com.ailk.yd.mapp.tibco.TibcoCache;
  */
 
 @Service("hw0045")
-@Action(bizcode = "hw0045", userCheck = false,encrypt=false)
+@Action(bizcode = "hw0045", userCheck = false)
 @Scope("prototype")
 public class HW0045Action extends AbstractYDBaseActionHandler<HW0045Request, HW0045Response> {
 
@@ -49,7 +49,7 @@ public class HW0045Action extends AbstractYDBaseActionHandler<HW0045Request, HW0
 		this.response.setLastVersion(app.getLastVersion());
 		this.response.setUpdateURL(app.getUpdateUrl());
 		
-		AppUpdateLog updateLog = appVersionService.getLastAppUpdateLog(this.request.getItemKey());
+		AppUpdateLog updateLog = appVersionService.getLastAppUpdateLog(this.request.getItemKey(),app.getLastVersion());
 		if(updateLog != null){
 			this.response.setUpdateIssue(updateLog.getUpdateContent());
 		}

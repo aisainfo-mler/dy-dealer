@@ -60,10 +60,10 @@ public final Log log = LogFactory.getLog(AppVersionService.class);
 		
 	}
 
-	public AppUpdateLog getLastAppUpdateLog(String itemKey) throws Exception{
+	public AppUpdateLog getLastAppUpdateLog(String itemKey,String version) throws Exception{
 		AppUpdateLog condition = new AppUpdateLog();
 		condition.setItemKey(itemKey);
-		
+		condition.setVersion(version);
 		Collection<AppUpdateLog> list = appUpdateLogDao.list(condition, 1, 1);
 		
 		if(list == null || list.isEmpty())

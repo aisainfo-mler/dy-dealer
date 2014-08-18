@@ -22,6 +22,11 @@ public class AppUpdateLogDao extends HibernateDao<AppUpdateLog, Long> {
 			c.add(Restrictions.eq("itemKey", t.getItemKey()));
 		}
 	
+		if(StringUtils.isEmpty(t.getVersion()) ==false)
+		{
+			c.add(Restrictions.eq("version", t.getVersion()));
+		}
+		
 		c.addOrder(Order.desc("createDate"));
 		
 		return c;
