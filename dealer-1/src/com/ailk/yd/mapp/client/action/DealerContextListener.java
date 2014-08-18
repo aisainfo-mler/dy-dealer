@@ -91,6 +91,7 @@ public class DealerContextListener implements ServletContextListener {
 		TibcoCache.dicts = new HashMap();
 		for (Iterator it = mmm.iterator(); it.hasNext();) {
 			SysProp prop = (SysProp) it.next();
+			prop.setValid("1");
 			if (StringUtils.isBlank(prop.getParentKey())) {
 				continue;
 			}

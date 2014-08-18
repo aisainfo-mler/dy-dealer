@@ -93,7 +93,6 @@ public class SYSConstant {
 	//上传应用的目录
 	public static final String FILE_LOCAL_PATH = "mappFile";
 	//上传文件的路径
-	public static final String MAPP_UPLOAD_URL_HTTP = "MAPP_UPLOAD_URL_HTTP";//对应mapp_sys_prop
 	//console的路径
 	public static final String MAPP_CONSOLE_URL_HTTP = "MAPP_CONSOLE_URL_HTTP";//对应mapp_sys_prop
 	//上传的文件类型
@@ -116,7 +115,6 @@ public class SYSConstant {
 	public static final String IPAD_APP_CUR_VERSION = "IPAD_APP_CUR_VERSION";
 	public static final String IPAD_APP_REQ_VERSION = "IPAD_APP_REQ_VERSION";
 	public static final String IPAD_PLIST_ADDRESS = "IPAD_PLIST_ADDRESS";
-	public static final String IOS_DOWNLOAD_FRONT = "itms-services://?action=download-manifest&url=";
 
 	/**
 	 * ANDROID手机管理参数系统参数关键字
@@ -267,6 +265,13 @@ public class SYSConstant {
 	 */
 	public static final String SELL_DETAIL_OPTTYPE_USER_2_CHANNEL = "08";
 	
+	
+	public static final String IOS_DOWNLOAD_FRONT = "itms-services://?action=download-manifest&url=";
+	
+	public static final String MAPP_UPLOAD_URL_HTTP = "DOWN_LOAD_HOST";//对应mapp_sys_prop
+	
+	//ios plist的路径
+	public static final String MAPP_IOS_PLIST_URL = "MAPP_IOS_PLIST_URL";//对应mapp_sys_prop
 	
 	public static Map<String,String> variantMap = new LinkedHashMap<String, String>(0);
 	public static List<String> variantMapL = new ArrayList<String>();

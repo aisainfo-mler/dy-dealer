@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import com.ailk.butterfly.core.exception.BusinessException;
 import com.ailk.butterfly.core.exception.SystemException;
@@ -42,12 +43,14 @@ public class HW0042Action extends
 	protected void doAction() throws BusinessException, SystemException,
 			Exception {
 
+//		byte[] bb = request.getFileByte();
+//		String fc = new BASE64Encoder().encode(bb);
 		String fc = request.getFileContents();
 		if (StringUtils.isBlank(fc)) {
 			throw new Exception("File content is null!");
 		}
-		final String ornNum = request.getOrnNum();
-		TibcoUtil.checkNotNull(ornNum, "ornNumber");
+//		final String ornNum = request.getOrnNum();
+//		TibcoUtil.checkNotNull(ornNum, "ornNumber");
 		TibcoUtil.checkNotNull(request.getFileType(), "picType");
 		
 		/**
@@ -94,6 +97,14 @@ public class HW0042Action extends
 		}
 		*/
 		
+//		final String webinf = this.getClass().getResource("/").getPath();
+//		final String dir = webinf+filePath;
+//		final File dirFile = new File(dir);
+//		if(dirFile.exists()==false)
+//			dirFile.mkdir();
+//		uploadFile(fc, ornNum, dir);
+		
+		
 		YD0023Request yd23 = new YD0023Request(fc);
 		YD0023Response g2t = yd0023.post2Tibco(yd23, null,false);
 		response = new HW0042Response();
@@ -102,8 +113,7 @@ public class HW0042Action extends
 			throw new Exception("url from tibco is null");
 		}
 		response.setUrl(url);
-		
-
+		response.setFileType(this.request.getFileType());
 	}
 
 	private void uploadFile(String fc, final String ornNum, final String dir)

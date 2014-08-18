@@ -38,7 +38,6 @@ public class BSSConstant {
 	public static Map<String,String[]> articleType = new HashMap<String,String[]>();
 	
 	
-	
 	static {
 		
 		mdnPatternList.put("0","无号码样式");

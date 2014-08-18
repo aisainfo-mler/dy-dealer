@@ -6,7 +6,7 @@ public class HW0042Request extends IBody {
 
 	private String fileContents;
 	/**
-	 * poa,poi,cus
+	 * POA,POI,CUS
 	 */
 	private String fileType;
 	/**
@@ -17,16 +17,11 @@ public class HW0042Request extends IBody {
 	 * 用这个编码区分照片属于哪个订单
 	 */
 	private String ornNum;
+	/**
+	 * 用这个编码区分照片属于哪个订单
+	 */
+	private byte[] fileByte;
 	
-	private byte[] fileBlob;// 文件流
-	
-	public byte[] getFileBlob() {
-		return fileBlob;
-	}
-
-	public void setFileBlob(byte[] fileBlob) {
-		this.fileBlob = fileBlob;
-	}
 
 	public String getFileContents() {
 		return fileContents;
@@ -58,6 +53,14 @@ public class HW0042Request extends IBody {
 
 	public void setIfReturnUrl(String ifReturnUrl) {
 		this.ifReturnUrl = ifReturnUrl;
+	}
+
+	public byte[] getFileByte() {
+		return fileByte;
+	}
+
+	public void setFileByte(byte[] fileByte) {
+		this.fileByte = fileByte;
 	}
 
 }

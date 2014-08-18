@@ -57,8 +57,8 @@ public class AppVersion implements java.io.Serializable {
 	@Column(name="OPERATOR")
 	private String operator;
 	
-	@Column(name="UPDATETIME")
-	private Date updateTime;
+	@Column(name="CREATETIME")
+	private Date createTime;
 	
 	@Column(name="PRODUCT_KEY")
 	private String productKey;
@@ -159,12 +159,12 @@ public class AppVersion implements java.io.Serializable {
 		this.operator = operator;
 	}
 
-	public Date getUpdateTime() {
-		return updateTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public String getProductKey() {

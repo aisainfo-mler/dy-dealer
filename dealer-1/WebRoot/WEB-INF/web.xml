@@ -154,5 +154,46 @@
 		<location>/error/500.html</location>
 	</error-page>
 
+	<!-- 文件类型 -->
+	<mime-mapping>
+	  <extension>doc</extension>
+	  <mime-type>application/msword</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>htc</extension>
+	  <mime-type>text/x-component</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>pdf</extension>
+	  <mime-type>application/pdf</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>ppt</extension>
+	  <mime-type>application/vnd.ms-powerpoint</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>xls</extension>
+	  <mime-type>application/msexcel</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>xlsx</extension>
+	  <mime-type>application/msexcel</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+	  <extension>wsdl</extension>
+      <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+      <extension>xsd</extension>
+      <mime-type>text/xml</mime-type>
+    </mime-mapping>
+	<mime-mapping>
+      <extension>ipa</extension>
+      <mime-type>application/iphone</mime-type>
+    </mime-mapping>
+    <mime-mapping> 
+		<extension>apk</extension> 
+		<mime-type>application/vnd.android.package-archive</mime-type> 
+	</mime-mapping> 
 
 </web-app>
