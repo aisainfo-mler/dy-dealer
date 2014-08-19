@@ -123,7 +123,7 @@ public class HW0015SVImpl extends ISVTemplate {
 		
 		if(reps == null || reps.size() == 0){
 			param.setIfSuccess(false);
-			param.addError("该代理商不存在仓库");
+			param.addError("this agent have no resposity");
 			return param;
 		}
 		
